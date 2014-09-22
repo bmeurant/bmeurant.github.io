@@ -1,0 +1,17 @@
+{
+    "name": "cv",
+    "version": "0.0.1",
+    "authors": [
+        "Baptiste Meurant <baptiste.meurant@gmail.com>"
+    ],
+    "license": "Creative Commons",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components"
+    ],
+    "dependencies": {
+        "bootstrap": "~3.2.0"
+    }
+}

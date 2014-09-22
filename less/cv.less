@@ -1,0 +1,122 @@
+@import "/bower_components/bootstrap/less/bootstrap.less";
+@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
+
+@orange-color: #e75330;
+@mid-gray-color: #e2e0d8;
+
+@body-bg: #f0efe7;
+@text-color: #4e443c;
+@border-color: #e2e0d8;
+@icon-color: @orange-color;
+@link-color: #0388a6;
+@font-size-base: 18px;
+@font-size-h1: floor((@font-size-base * 3.6)); // ~50px
+@font-family-sans-serif: 'Lato', Arial, sans-serif;
+
+.flat {
+
+  padding-left: 0;
+
+  & li {
+    list-style: none;
+    display: inline;
+    padding: 0 10px;
+  }
+}
+
+section {
+  margin-top: 30px;
+  padding-top: 20px;
+  text-align: center;
+  background-color: #fcfcfa;
+  border: solid 1px @border-color;
+  border-radius: 5px;
+}
+
+article {
+  .make-row();
+  border-bottom: thin solid @border-color;
+  padding-bottom: 40px;
+  padding-top: 40px;
+}
+
+/*.profile-photo {
+  .make-lg-column(3);
+}*/
+
+.profile-summary {
+  .name {
+    font-weight: 700;
+    margin-bottom: 0.6em;
+  }
+
+  .description {
+    font-size: @font-size-large;
+    margin-bottom: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+  }
+
+  .social {
+    .flat();
+  }
+}
+
+i.fa {
+  color: @icon-color;
+}
+
+/*@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600);
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 140%;
+  color: #434343;
+}
+
+html {
+  display: table;
+}
+
+body {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+section {
+  width: 960px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 200%;
+  font-weight: 800;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul ul {
+  padding-left: 2em;
+}*/
+
+.profile-photo img {
+  border: 4px solid @border-color;
+  border-radius: 50%;
+  text-align: center;
+}

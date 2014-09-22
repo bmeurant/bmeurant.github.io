@@ -1,0 +1,15 @@
+{
+    "name": "cv",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.html",
+    "authors": [
+        "Baptiste Meurant <baptiste.meurant@gmail.com>"
+    ],
+    "license": "Creative Commons",
+    "devDependencies": {
+        "grunt": "~0.4.2",
+        "grunt-contrib-less": "~0.9.0",
+        "grunt-contrib-watch": "~0.5.3"
+    }
+}
