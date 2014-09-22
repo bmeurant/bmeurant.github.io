@@ -3,9 +3,11 @@
 
 @orange-color: #e75330;
 @mid-gray-color: #e2e0d8;
+@dark-gray-color: #4e443c;
+@white-color: #fcfcfa;
 
 @body-bg: #f0efe7;
-@text-color: #4e443c;
+@text-color: @dark-gray-color;
 @border-color: #e2e0d8;
 @icon-color: @orange-color;
 @link-color: #0388a6;
@@ -20,15 +22,15 @@
   & li {
     list-style: none;
     display: inline;
-    padding: 0 10px;
+    padding: 0 0.5em;
   }
 }
 
 section {
-  margin-top: 30px;
-  padding-top: 20px;
+  margin-top: 1.5em;
+  padding-top: 1em;
   text-align: center;
-  background-color: #fcfcfa;
+  background-color: @white-color;
   border: solid 1px @border-color;
   border-radius: 5px;
 }
@@ -36,8 +38,8 @@ section {
 article {
   .make-row();
   border-bottom: thin solid @border-color;
-  padding-bottom: 40px;
-  padding-top: 40px;
+  padding-bottom: 2em;
+  padding-top: 2em;
 }
 
 /*.profile-photo {
@@ -60,6 +62,42 @@ article {
 
   .social {
     .flat();
+  }
+
+  nav {
+    margin-top: 6em;
+    font-size: @font-size-large;
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+
+      li {
+        display: inline-block;
+        padding: 0.3em 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+        border: solid 1px @border-color;
+
+        &:hover {
+
+          a {
+            text-decoration: none;
+            color: @link-hover-color;
+          }
+
+          background-color: @mid-gray-color;
+
+          i.fa {
+            color: @white-color;
+          }
+        }
+      }
+    }
+
+    i.fa {
+      color: @mid-gray-color;
+    }
   }
 }
 

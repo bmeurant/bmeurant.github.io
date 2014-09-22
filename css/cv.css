@@ -6173,11 +6173,11 @@ article:after {
 .flat li {
   list-style: none;
   display: inline;
-  padding: 0 10px;
+  padding: 0 0.5em;
 }
 section {
-  margin-top: 30px;
-  padding-top: 20px;
+  margin-top: 1.5em;
+  padding-top: 1em;
   text-align: center;
   background-color: #fcfcfa;
   border: solid 1px #e2e0d8;
@@ -6187,8 +6187,8 @@ article {
   margin-left: -15px;
   margin-right: -15px;
   border-bottom: thin solid #e2e0d8;
-  padding-bottom: 40px;
-  padding-top: 40px;
+  padding-bottom: 2em;
+  padding-top: 2em;
 }
 /*.profile-photo {
   .make-lg-column(3);
@@ -6210,7 +6210,35 @@ article {
 .profile-summary .social li {
   list-style: none;
   display: inline;
-  padding: 0 10px;
+  padding: 0 0.5em;
+}
+.profile-summary nav {
+  margin-top: 6em;
+  font-size: 23px;
+}
+.profile-summary nav ul {
+  list-style: none;
+  padding-left: 0;
+}
+.profile-summary nav ul li {
+  display: inline-block;
+  padding: 0.3em 1em;
+  margin-left: 1em;
+  margin-right: 1em;
+  border: solid 1px #e2e0d8;
+}
+.profile-summary nav ul li:hover {
+  background-color: #e2e0d8;
+}
+.profile-summary nav ul li:hover a {
+  text-decoration: none;
+  color: #024a5b;
+}
+.profile-summary nav ul li:hover i.fa {
+  color: #fcfcfa;
+}
+.profile-summary nav i.fa {
+  color: #e2e0d8;
 }
 i.fa {
   color: #e75330;
