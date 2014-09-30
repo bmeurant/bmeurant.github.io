@@ -4,6 +4,7 @@
 @orange-color: rgba(215, 83, 48, 0.90);
 @blue-color: #0388a6;
 @mid-gray-color: #bab8b2;
+@light-gray-color: #e2e0d8;
 @dark-gray-color: #4e443c;
 @white-color: #fcfcfa;
 
@@ -35,7 +36,6 @@ section {
   padding-top: 2em;
   padding-bottom: 2em;
   width: 96%;
-  max-width: 1020px;
   margin: 0 auto;
   font-weight: 300;
 
@@ -47,6 +47,11 @@ section {
 
   article {
     .make-lg-column(9);
+
+
+    h3 {
+      margin-top: 0;
+    }
 
     p {
       margin-bottom: 1.5em;
@@ -183,10 +188,6 @@ section {
       .skills-cat {
         margin-bottom: 3em;
 
-        h3 {
-          margin-top: 0;
-        }
-
         .progress-bar {
           background-color: @dark-gray-color;
           text-transform: uppercase;
@@ -200,9 +201,42 @@ section {
   }
 }
 
-.experience {
-  background-color: @mid-gray-color;
+.experience, .education {
+  background-color: @light-gray-color;
   color: @dark-gray-color;
+
+  .exp {
+    margin-bottom: 3em;
+  }
+
+  .edu {
+    a, a:hover, a:visited {
+      color: @dark-gray-color;
+    }
+  }
+
+  .exp, .edu {
+    .make-row();
+
+    .details {
+      .make-lg-column(9);
+
+      .company, .school {
+        margin-bottom: 1.5em;
+        font-weight: 500;
+      }
+
+      .description p {
+        margin-bottom: 1em;
+      }
+    }
+
+    .date {
+      .make-lg-column(3);
+
+      font-size: @font-size-small - 1;
+    }
+  }
 }
 
 .education {

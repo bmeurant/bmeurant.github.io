@@ -5899,7 +5899,15 @@ button.close {
 .modal-footer:before,
 .modal-footer:after,
 .expertise .skills:before,
-.expertise .skills:after {
+.expertise .skills:after,
+.experience .exp:before,
+.experience .exp:after,
+.education .exp:before,
+.education .exp:after,
+.experience .edu:before,
+.experience .edu:after,
+.education .edu:before,
+.education .edu:after {
   content: " ";
   display: table;
 }
@@ -5918,7 +5926,11 @@ button.close {
 .pager:after,
 .panel-body:after,
 .modal-footer:after,
-.expertise .skills:after {
+.expertise .skills:after,
+.experience .exp:after,
+.education .exp:after,
+.experience .edu:after,
+.education .edu:after {
   clear: both;
 }
 .center-block {
@@ -6184,7 +6196,6 @@ section {
   padding-top: 2em;
   padding-bottom: 2em;
   width: 96%;
-  max-width: 1020px;
   margin: 0 auto;
   font-weight: 300;
 }
@@ -6204,6 +6215,9 @@ section article {
     float: left;
     width: 75%;
   }
+}
+section article h3 {
+  margin-top: 0;
 }
 section article p {
   margin-bottom: 1.5em;
@@ -6338,9 +6352,6 @@ section aside {
 .expertise .skills .skills-col .skills-cat {
   margin-bottom: 3em;
 }
-.expertise .skills .skills-col .skills-cat h3 {
-  margin-top: 0;
-}
 .expertise .skills .skills-col .skills-cat .progress-bar {
   background-color: #4e443c;
   text-transform: uppercase;
@@ -6349,9 +6360,83 @@ section aside {
   padding-left: 1em;
   color: #bab8b2;
 }
-.experience {
-  background-color: #bab8b2;
+.experience,
+.education {
+  background-color: #e2e0d8;
   color: #4e443c;
+}
+.experience .exp,
+.education .exp {
+  margin-bottom: 3em;
+}
+.experience .edu a,
+.education .edu a,
+.experience .edu a:hover,
+.education .edu a:hover,
+.experience .edu a:visited,
+.education .edu a:visited {
+  color: #4e443c;
+}
+.experience .exp,
+.education .exp,
+.experience .edu,
+.education .edu {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.experience .exp .details,
+.education .exp .details,
+.experience .edu .details,
+.education .edu .details {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 1200px) {
+  .experience .exp .details,
+  .education .exp .details,
+  .experience .edu .details,
+  .education .edu .details {
+    float: left;
+    width: 75%;
+  }
+}
+.experience .exp .details .company,
+.education .exp .details .company,
+.experience .edu .details .company,
+.education .edu .details .company,
+.experience .exp .details .school,
+.education .exp .details .school,
+.experience .edu .details .school,
+.education .edu .details .school {
+  margin-bottom: 1.5em;
+  font-weight: 500;
+}
+.experience .exp .details .description p,
+.education .exp .details .description p,
+.experience .edu .details .description p,
+.education .edu .details .description p {
+  margin-bottom: 1em;
+}
+.experience .exp .date,
+.education .exp .date,
+.experience .edu .date,
+.education .edu .date {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 15px;
+}
+@media (min-width: 1200px) {
+  .experience .exp .date,
+  .education .exp .date,
+  .experience .edu .date,
+  .education .edu .date {
+    float: left;
+    width: 25%;
+  }
 }
 .education {
   background-color: #0388a6;
