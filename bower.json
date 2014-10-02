@@ -12,6 +12,6 @@
         "bower_components"
     ],
     "dependencies": {
-        "bootstrap": "~3.2.0"
+        "foundation": "~5.1.0"
     }
 }
