@@ -54,7 +54,7 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // This is the default html and body font-size for the base rem value.
-// $rem-base: $base-font-size;
+
 
 // Allows the use of rem-calc() or lower-bound() in your settings
 @import "foundation/functions";
@@ -66,6 +66,7 @@
 // If you want your base font-size to be different and not have it affect the grid breakpoints,
 // set $rem-base to $base-font-size and make sure $base-font-size is a px value.
 $base-font-size: 18px;
+//$rem-base: $base-font-size;
 
 // The $base-font-size is 100% while $base-line-height is 150%
 $base-line-height: 1.7;
