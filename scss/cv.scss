@@ -39,9 +39,6 @@
 //   "foundation/components/offcanvas",
 //   "foundation/components/visibility";
 
-$large-font-size: ceil(($base-font-size * 1.25));
-$small-font-size: ceil(($base-font-size * 0.85));
-
 @mixin flat() {
   padding-left: 0;
   margin-left: 0;
@@ -98,18 +95,39 @@ section {
 
 .profile-summary {
   height: 100%;
+  min-height: 600px;
   text-align: center;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  section {
+    display: inline-block;
+    vertical-align: middle;
+
+    article {
+      @include grid-column(12);
+    }
+  }
 
   .name {
     font-weight: 700;
     margin-bottom: 0.6em;
   }
 
-  .description {
-    font-size: $large-font-size;
+  .description, .scroll {
     margin-left: auto;
     margin-right: auto;
-    width: 60%;
+    width: 75%;
+  }
+
+  .description {
+    font-size: 1.25em;
+
   }
 
   .social {
@@ -123,16 +141,12 @@ section {
   }
 
   .scroll {
-    font-size: $small-font-size;
+    font-size: 0.75em;
     margin-bottom: 2em;
   }
 
   nav {
-    position: absolute;
-    bottom: 1em;
-    left: 0;
-    right: 0;
-    font-size: $large-font-size;
+    font-size: 1.25em;
     font-weight: 500;
 
     ul {
