@@ -355,7 +355,7 @@ section {
 
       @media #{$large-up} {
         @include grid-column($columns:3,$push:9,$position:relative);
-        font-size: 1em;
+        font-size: 0.93em;
       }
     }
   }
