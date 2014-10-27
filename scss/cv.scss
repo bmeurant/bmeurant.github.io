@@ -294,12 +294,8 @@ section {
 }
 
 .expertise {
-  background-color: $orange;
-  color: $white;
-
-  h2, h3 {
-    color: $white;
-  }
+  background-color: $light-gray;
+  color: $dark-gray;
 
   .details {
     @include grid-column(12);
@@ -324,12 +320,12 @@ section {
           font-size: 0.95em;
 
           & > span {
-            @include progress-meter($dark-gray);
+            @include progress-meter($orange);
             text-transform: uppercase;
             font-weight: 500;
             text-align: left;
             padding-left: 1em;
-            color: $mid-gray;
+            color: $jet;
           }
         }
       }
@@ -372,24 +368,23 @@ section {
 }
 
 .experience {
-  background-color: $light-gray;
-  color: $dark-gray;
-
-  .exp {
-    margin-bottom: 2em;
-  }
-}
-
-.education {
   background-color: $blue;
   color: $white;
 
-  .edu {
-
+  .exp {
     margin-bottom: 2em;
 
     a, a:hover, a:visited {
       color: $dark-gray;
     }
+  }
+}
+
+.education {
+  background-color: $light-gray;
+  color: $dark-gray;
+
+  .edu {
+    margin-bottom: 2em;
   }
 }
