@@ -3,3 +3,5 @@ node_modules/
 *.iml
 .idea/
 npm-debug.log
+_site
+.sass-cache
