@@ -12,4 +12,4 @@ redcarpet:
     extensions: [with_toc_data]
 highlighter: pygment
 exclude: [package.json, bower.json, node_modules, bower_components, Gemfile, Gemfile.lock, less, Gruntfile.js]
-permalink: /news/:year/:month/:day/:title/
+permalink: /post/:year/:month/:day/:title/
