@@ -11,13 +11,13 @@ module.exports = function (grunt) {
                     outputStyle: 'compressed'
                 },
                 files: {
-                    'css/cv.css': 'scss/cv.scss'
+                    'css/cv.css': 'css/cv.scss'
                 }
             }
         },
         watch: {
             all: {
-                files: ['*.html', 'scss/**/*.scss'],
+                files: ['*.html', 'css/**/*.scss'],
                 tasks: ['sass']
             }
         }

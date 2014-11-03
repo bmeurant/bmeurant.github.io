@@ -1,7 +1,9 @@
 @import "settings";
 
 // Or selectively include components
-@import "foundation";
+@import "foundation/components/type",
+        "foundation/components/grid",
+        "foundation/components/progress-bars";
 
 @mixin flat() {
   padding-left: 0;
