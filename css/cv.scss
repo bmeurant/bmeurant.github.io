@@ -127,7 +127,7 @@ section {
 
   nav {
     font-weight: 500;
-    margin-top: 3em;
+    margin-top: 5em;
 
     .scroll {
       font-size: 0.70em;
@@ -154,17 +154,19 @@ section {
           margin-right: 1em;
         }
 
-        border: solid 1px $light-gray;
+        a {
+          color: $dark-gray;
+        }
 
         &:hover {
           a {
             text-decoration: none;
           }
 
-          background-color: $mid-gray;
+          //background-color: $mid-gray;
 
           i.fa {
-            color: $white;
+            color: $dark-gray;
           }
         }
       }
