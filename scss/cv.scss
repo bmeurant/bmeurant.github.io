@@ -1,45 +1,9 @@
 @import "settings";
-//@import "foundation";
 
-// Or selectively include components
 @import
-//   "foundation/components/accordion",
-//   "foundation/components/alert-boxes",
-//   "foundation/components/block-grid",
-//   "foundation/components/breadcrumbs",
-//   "foundation/components/button-groups",
-//   "foundation/components/buttons",
-//   "foundation/components/clearing",
-//   "foundation/components/dropdown",
-//   "foundation/components/dropdown-buttons",
-//   "foundation/components/flex-video",
-//   "foundation/components/forms",
 "foundation/components/type",
 "foundation/components/grid",
 "foundation/components/progress-bars";
-//   "foundation/components/inline-lists",
-//   "foundation/components/joyride",
-//   "foundation/components/keystrokes",
-//   "foundation/components/labels",
-//   "foundation/components/magellan",
-//   "foundation/components/orbit",
-//   "foundation/components/pagination",
-//   "foundation/components/panels",
-//   "foundation/components/pricing-tables",
-//   "foundation/components/progress-bars",
-//   "foundation/components/reveal",
-//   "foundation/components/side-nav",
-//   "foundation/components/split-buttons",
-//   "foundation/components/sub-nav",
-//   "foundation/components/switch",
-//   "foundation/components/tables",
-//   "foundation/components/tabs",
-//   "foundation/components/thumbs",
-//   "foundation/components/tooltips",
-//   "foundation/components/top-bar",
-//   "foundation/components/type",
-//   "foundation/components/offcanvas",
-//   "foundation/components/visibility";
 
 @mixin flat() {
   padding-left: 0;
@@ -162,7 +126,7 @@ section {
 
   nav {
     font-weight: 500;
-    margin-top: 3em;
+    margin-top: 5em;
 
     .scroll {
       font-size: 0.70em;
@@ -189,17 +153,17 @@ section {
           margin-right: 1em;
         }
 
-        border: solid 1px $light-gray;
+        a {
+          color: $dark-gray;
+        }
 
         &:hover {
           a {
             text-decoration: none;
           }
 
-          background-color: $mid-gray;
-
           i.fa {
-            color: $white;
+            color: $dark-gray;
           }
         }
       }
