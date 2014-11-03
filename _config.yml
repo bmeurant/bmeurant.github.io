@@ -3,6 +3,7 @@ title: Baptiste Meurant
 email: baptiste.meurant@gmail.com
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://bmeurant.github.io" # the base hostname & protocol for your site
+description: Software craftsman, full stack developer, architect, open source enthousiast
 twitter_username: bmeurant
 github_username:  bmeurant
 
