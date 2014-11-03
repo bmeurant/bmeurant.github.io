@@ -19,7 +19,7 @@
 
     &,
     &:visited {
-        color: $grey-color-dark;
+        color: $dark-gray ;
     }
 }
 
@@ -167,6 +167,7 @@
 
 .page-heading {
     font-size: 20px;
+    font-weight: 500;
 }
 
 .post-list {
@@ -186,6 +187,9 @@
 .post-link {
     display: block;
     font-size: 24px;
+    &:visited {
+      color: $dark-gray;
+    }
 }
 
 
