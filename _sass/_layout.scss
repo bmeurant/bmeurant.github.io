@@ -166,8 +166,8 @@
 }
 
 .page-heading {
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 30px;
+    font-weight: 700;
 }
 
 .post-list {
@@ -187,9 +187,7 @@
 .post-link {
     display: block;
     font-size: 24px;
-    &:visited {
-      color: $dark-gray;
-    }
+    color: $blue;
 }
 
 
@@ -205,6 +203,7 @@
     font-size: 42px;
     letter-spacing: -1px;
     line-height: 1;
+    color: $blue;
 
     @include media-query($on-laptop) {
         font-size: 36px;
