@@ -1,5 +1,4 @@
 @import "settings";
-
 @import
 "foundation/components/type",
 "foundation/components/grid",
@@ -112,7 +111,7 @@ section {
 
       font-size: 2em;
       &.fa-fw {
-        width: 1.25em;
+        width: 1.20em;
       }
 
       @media #{$large-up} {
