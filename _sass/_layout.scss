@@ -94,6 +94,10 @@
 .site-footer {
     border-top: 1px solid $grey-color-light;
     padding: $spacing-unit 0;
+
+    a {
+        color: $orange;
+    }
 }
 
 .footer-heading {
@@ -172,11 +176,8 @@
 
 .post-list {
     margin-left: 0;
+    margin-bottom: 30px;
     list-style: none;
-
-    > li {
-        margin-bottom: $spacing-unit;
-    }
 }
 
 .post-meta {
@@ -186,10 +187,17 @@
 
 .post-link {
     display: block;
-    font-size: 24px;
+    font-size: 20px;
     color: $blue;
 }
 
+.rss-subscribe {
+    a {
+        color: $orange;
+    }
+
+    margin-bottom: 0;
+}
 
 
 /**
