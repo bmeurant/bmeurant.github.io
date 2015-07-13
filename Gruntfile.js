@@ -8,10 +8,11 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
-                    outputStyle: 'compressed'
+                    outputStyle: 'nested'
                 },
                 files: {
-                    'css/cv.css': 'css/cv.scss'
+                    'css/cv.css': 'css/cv.scss',
+                    'css/main.css': 'css/main.scss'
                 }
             }
         },

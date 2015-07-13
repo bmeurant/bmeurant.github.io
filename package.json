@@ -1,16 +1,16 @@
 {
-    "name": "cv",
-    "version": "0.0.1",
-    "description": "",
-    "main": "index.html",
-    "authors": [
-        "Baptiste Meurant <baptiste.meurant@gmail.com>"
-    ],
-    "license": "Creative Commons",
-    "devDependencies": {
-        "grunt": "~0.4.2",
-        "grunt-contrib-watch": "~0.5.3",
-        "node-sass": "~0.9.3",
-        "grunt-sass": "~0.8.1"
-    }
+  "name": "cv",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.html",
+  "authors": [
+    "Baptiste Meurant <baptiste.meurant@gmail.com>"
+  ],
+  "license": "Creative Commons",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-sass": "1.0.0",
+    "node-sass": "2.0.1"
+  }
 }

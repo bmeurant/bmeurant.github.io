@@ -24,7 +24,6 @@ body {
 }
 
 
-
 /**
  * Set `margin-bottom` to maintain vertical rhythm
  */
@@ -88,7 +87,7 @@ h1, h2, h3, h4, h5, h6 {
 /**
  * Links
  */
-a {
+a:not(.button) {
     color: $brand-color;
     text-decoration: none;
 

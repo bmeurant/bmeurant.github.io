@@ -12,6 +12,6 @@
         "bower_components"
     ],
     "dependencies": {
-        "foundation": "~5.1.0"
+        "foundation": "~5.5.2"
     }
 }
