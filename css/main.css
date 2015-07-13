@@ -1917,6 +1917,9 @@ pre {
   .button.disabled, .button.disabled:hover {
     background-color: #828282; }
 
+blockquote code {
+  font-style: normal; }
+
 .highlight,
 p > pre,
 p > code,
