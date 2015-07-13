@@ -14,3 +14,4 @@ redcarpet:
 highlighter: pygments
 exclude: [package.json, bower.json, node_modules, bower_components, Gemfile, Gemfile.lock, less, Gruntfile.js]
 permalink: /blog/:year/:month/:day/:title/
+relative_permalinks: true
