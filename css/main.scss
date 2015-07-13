@@ -2,6 +2,7 @@
 
 @import "settings";
 @import "foundation/components/type";
+@import "foundation/components/grid";
 @import "foundation/components/buttons";
 
 @charset "utf-8";
@@ -34,4 +35,5 @@ $on-laptop:        900px;
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import "base";
 @import "layout";
+@import "page";
 @import "syntax-highlighting";

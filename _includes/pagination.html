@@ -1,0 +1,13 @@
+<nav class="section-nav row">
+    <div class="small-6 text-right columns">
+        <a href="{{ site.url }}/{{ page.prev }}/" class="button radius small prev {% if page.prev == null %}disabled{% endif %}">
+            <i class="fa fa-chevron-left"></i> Prev
+        </a>
+    </div>
+    <div class="small-6 text-left columns">
+        <a href="{{ site.url }}/{{ page.next }}/" class="button radius small next {% if page.next == null %}disabled{% endif %}">
+             Next <i class="fa fa-chevron-right"></i>
+        </a>
+    </div>
+    <div class="clear"></div>
+</nav>
