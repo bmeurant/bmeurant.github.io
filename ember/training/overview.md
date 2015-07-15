@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: ember-training
 title: Formation Ember
 permalink:  overview/
 prev: ember/training/

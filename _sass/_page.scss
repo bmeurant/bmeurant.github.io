@@ -1,7 +1,15 @@
 .page-content {
     padding-top: 30px;
 
-    @include grid-column(12);
+    @include grid-row();
+
+    .page-main {
+        @include grid-column(12);
+    }
+
+    .page-menu {
+        @include grid-column(12);
+    }
 }
 
 .page-header {
@@ -14,7 +22,46 @@
 
 @media #{$medium-up} {
     .page-content {
-        @include grid-column(9);
+        .page-main {
+            @include grid-column(9);
+        }
+
+        .page-menu {
+            @include grid-column(3);
+        }
+    }
+}
+
+.page-menu {
+    h4 {
+        font-size: 16px;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-bottom: 2px solid $blue;
+        padding-bottom: 5px;
+        color: $dark-gray;
+
+        a {
+            color: $dark-gray !important;
+        }
+    }
+
+    ol, ul {
+        padding-bottom: 10px;
+    }
+
+    ol > li, ul > li {
+        font-size: 16px;
+        padding-left: 5px;
+
+        &.active {
+            background-color: #5D5C59;
+            border-radius: 5px;
+
+            a {
+                color: $light-gray;
+            }
+        }
     }
 }
 

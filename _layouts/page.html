@@ -3,14 +3,23 @@ layout: simple
 ---
 <div class="page">
 
-  <header class="page-header">
-    {% if page.home != null %}<h1 class="page-title"><a href="{{ site.url }}/{{ page.home }}">{{ page.title }}</a></h1>{% endif %}
-    {% if page.home == null %}<h1 class="page-title">{{ page.title }}</h1>{% endif %}
-  </header>
+    <header class="page-header">
+        {% if page.home != null %}<h1 class="page-title"><a href="{{ site.url }}/{{ page.home }}">{{ page.title }}</a>
+    </h1>{% endif %}
+        {% if page.home == null %}<h1 class="page-title">{{ page.title }}</h1>{% endif %}
+    </header>
 
-  <article class="page-content">
-    {{ content }}
-    {% include pagination.html %}
-  </article>
+    <article class="page-content">
+        <div class="page-main">
+            {{ content }}
+            {% include pagination.html %}
+        </div>
+
+        <nav class="page-menu">
+            <div class="menu">
+                {% include {{ page.menu }} %}
+            </div>
+        </nav>
+    </article>
 
 </div>

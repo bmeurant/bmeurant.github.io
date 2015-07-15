@@ -1886,10 +1886,24 @@ pre {
 
 .page-content {
   padding-top: 30px;
-  padding-left: 0.9375rem;
-  padding-right: 0.9375rem;
-  width: 100%;
-  float: left; }
+  margin: 0 auto;
+  max-width: 62.5rem;
+  width: 100%; }
+  .page-content:before, .page-content:after {
+    content: " ";
+    display: table; }
+  .page-content:after {
+    clear: both; }
+  .page-content .page-main {
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+    width: 100%;
+    float: left; }
+  .page-content .page-menu {
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+    width: 100%;
+    float: left; }
 
 .page-header {
   margin: 0 auto;
@@ -1907,11 +1921,38 @@ pre {
     float: left; }
 
 @media only screen and (min-width: 40.0625em) {
-  .page-content {
+  .page-content .page-main {
     padding-left: 0.9375rem;
     padding-right: 0.9375rem;
     width: 75%;
+    float: left; }
+  .page-content .page-menu {
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+    width: 25%;
     float: left; } }
+
+.page-menu h4 {
+  font-size: 16px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 2px solid #0388a6;
+  padding-bottom: 5px;
+  color: #5D5C59; }
+  .page-menu h4 a {
+    color: #5D5C59 !important; }
+
+.page-menu ol, .page-menu ul {
+  padding-bottom: 10px; }
+
+.page-menu ol > li, .page-menu ul > li {
+  font-size: 16px;
+  padding-left: 5px; }
+  .page-menu ol > li.active, .page-menu ul > li.active {
+    background-color: #5D5C59;
+    border-radius: 5px; }
+    .page-menu ol > li.active a, .page-menu ul > li.active a {
+      color: #e2e0d8; }
 
 .section-nav {
   margin: 0 auto;
