@@ -171,7 +171,7 @@
 /**
  * Page content
  */
-.page-content {
+.page {
     padding: $spacing-unit 0;
 }
 
@@ -180,18 +180,18 @@
     font-weight: 700;
 }
 
-.post-list {
+.post-list, .page-list  {
     margin-left: 0;
     margin-bottom: 30px;
     list-style: none;
 }
 
-.post-meta {
+.post-meta, .page-meta {
     font-size: $small-font-size;
     color: $grey-color;
 }
 
-.post-link {
+.post-link, .page-link {
     display: block;
     font-size: 20px;
     color: $blue;
@@ -209,11 +209,11 @@
 /**
  * Posts
  */
-.post-header {
+.post-header, .page-header {
     margin-bottom: $spacing-unit;
 }
 
-.post-title {
+.post-title, .page-title {
     font-size: 42px;
     letter-spacing: -1px;
     line-height: 1;
@@ -224,7 +224,7 @@
     }
 }
 
-.post-content {
+.post-content, .page-content  {
     margin-bottom: $spacing-unit;
 
     h2 {
