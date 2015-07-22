@@ -72,6 +72,7 @@ Pour définir et utiliser un nouvel objet `Ember`, il est nécessaire d'étendre
     > one.logTitle("titre");
     > ```
 
+
 #### Initialisation
 
 1. On souhaite désormais initialiser l'objet à sa création avec un titre et afficher ce titre plutôt qu'un paramètre de méthode. Modifier la classe `Book` en conséquence et créer l'objet via la méthode [create()](http://emberjs.com/api/classes/Ember.Object.html#method_create) d'`Ember` en initialisant un champs `title`.
@@ -224,33 +225,32 @@ L'exemple suivant permet de se faire une idée de ce mécanisme. Copier le conte
 
 ```html
 <script>
+  Book = Ember.Object.extend({
+    init: function() {
+      this.displayTitle();
+    },
+    displayTitle: function() {
+      console.log(this.title);
+    },
+    logType: function() {
+      console.log("Book");
+    }
+  });
 
-Book = Ember.Object.extend({
-  init: function() {
-    this.displayTitle();
-  },
-  displayTitle: function() {
-    console.log(this.title);
-  },
-  logType: function() {
-    console.log("Book");
-  }
-});
+  Series = Book.extend({
+    logType: function() {
+      this._super();
+      console.log("Series");
+    }
+  });
 
-Series = Book.extend({
-  logType: function() {
-    this._super();
-    console.log("Series");
-  }
-});
+  one = Series.create({title: "My Title"});
 
-one = Series.create({title: "My Title"});
+  App = Ember.Application.create();
 
-App = Ember.Application.create();
-
-App.ApplicationController = Ember.Controller.extend({
-  series: one
-});
+  App.ApplicationController = Ember.Controller.extend({
+    series: one
+  });
 </script>
 
 <script type="text/x-handlebars">
@@ -266,5 +266,78 @@ Ce fonctionnement ainsi que tous les mécanismes d'observation à la base du fra
 de les utiliser systématiquement. Lorsque c'est possible, ``Ember`` nous y oblige. Cependant (notamment dans le cas des getters), il n'est pas toujours possible de forcer l'usage de ces accesseurs
 et il est donc important d'être vigilant sur ces points.
 
+
+#### Réouvrir une classe
+
+Les instances et les sous-classes d'``Ember.Object`` mettent également à disposition une méthode ``reopen``.
+Cette méthode permet de définir les classes et instances de manière itérative et d'enrichir
+les classes avec de nouvelles propriétés ou méthodes.
+
+1. Réouvrir la classe ``Book`` et lui ajouter une propriété ``pages``.
+
+       > ```javascript
+       >   Book.reopen({
+       >      pages: 10
+       >   });
+       > ```
+
+2. Afficher la valeur de ``pages`` sur l'instance existante ``one`` en utilisant l'accesseur. Que constate-t-on ?
+
+       > ```javascript
+       >   one.get('pages');
+       >   > undefined
+       > ```
+       >
+       > On constate que la propriété n'est pas définie.
+
+3. Créer une nouvelle instance ``two`` de ``Book`` puis afficher la valeur de ``pages`` sur cette instance. Afficher de nouveau la valeur de ``pages`` sur l'instance ``one``.
+
+       > ```javascript
+       >   two = Book.create({title: 'two'})
+       >   > two
+       >   two.get('pages');
+       >   > 10
+       >   one.get('pages');
+       >   > 10
+       > ```
+       >
+       > On constate que la propriété a bien été définie et initialisée dans nos deux instance. Y compris l'instance ``one`` qui existait déjà.
+       > Les propriétés et méthodes ajoutées par ``reopen`` ne sont donc ajoutées effectivement au prototype de la classe que lors de la prochaine
+       > création d'une instance de cette classe, en mode *lazy*. cf. [cette discussion](https://github.com/emberjs/ember.js/issues/3783)
+
+4. Lors de l'utilisation de ``reopen`` permet il est possible, tout comme dans le cas d'un héritage, de redéfinir une méthode existante mais également d'utiliser la méthode ``_super(...)``
+   pour appeler la méhode définie avant. Utiliser ``reopen`` pour redéfinir ``displayTitle`` et afficher une ligne ``Title:`` avant d'afficher le titre.
+
+       > ```javascript
+       >   Book.reopen({
+       >     displayTitle: function() {
+       >       console.log('Title:');
+       >       this._super();
+       >    });
+       >
+       >  three = Book.create({title: 'three'});
+       >  > Title:
+       >  > three
+       > ```
+
+La méthode ``reopen`` permet donc d'ajouter des propriétés et méthodes de classe. Cette méthode permet, de manière très pratique, de définir une classe de manière itérative et donc bien plus dynamiqe.
+Il faut tout de même être conscient que les nouvelles méthodes et propriétés ne sont disponibles dans les instances existantes qu'après la création d'une nouvelle instance. De manière
+générale, il est conseillé d'éviter d'appeler ``reopen`` sur une classe après en avoir créé des instances.
+
+``Ember.Object`` propose également une méthode ``reopenClass`` permettant d'ajouter des variables ou méthodes de classe statiques.
+
+1. Utiliser ``reopenClass`` pour ajouter une propriété ``canBeRead`` à la classe ``Book``. Afficher la valeur de cette propriété statique dans la console.
+
+       > ```javascript
+       >   Book.reopenClass({
+       >     canBeRead: true
+       >   })
+       >
+       >  Book.canBeRead
+       >  > true
+       >  four = Book.create({title: 'four'})
+       >  four.canBeRead
+       >  > undefined
+       > ```
 
 {% endraw %}
