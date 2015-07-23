@@ -3,7 +3,6 @@ layout: ember-training
 title: Formation Ember
 permalink:  /
 next: ember/training/overview
-home: ember/training/
 ---
 
 Cette formation en français a pour objectif d'introduire les **principes**, la **philosophie** ainsi que le **fonctionnement** du framework [Ember](http://emberjs.com).

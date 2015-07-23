@@ -4,7 +4,6 @@ title: Formation Ember
 permalink:  object-model/
 prev: ember/training/overview
 next: ember/training/ember-cli
-home: ember/training/
 ---
 
 {% raw %}
@@ -25,7 +24,7 @@ Nous allons explorer pas à pas certains de ces comprtements. Pour cela, il faut
         <head>
           <meta charset="utf-8">
           <title>Ember Object model</title>
-          <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+          <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
           <script src="http://builds.emberjs.com/tags/v1.13.3/ember.debug.js"></script>
           <script src="http://builds.emberjs.com/tags/v1.13.3/ember-template-compiler.js"></script>
         </head>

@@ -4,7 +4,6 @@ title: Formation Ember
 permalink:  overview/
 prev: ember/training/
 next: ember/training/object-model
-home: ember/training/
 ---
 
 {% raw %}

@@ -1632,7 +1632,9 @@ li > ol {
  * Headings
  */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
+  font-weight: 700; }
+
+h2, h3, h4, h5, h6 {
   color: #5D5C59 !important; }
 
 /**
@@ -1641,8 +1643,6 @@ h1, h2, h3, h4, h5, h6 {
 a:not(.button) {
   color: #0388a6;
   text-decoration: none; }
-  a:not(.button):visited {
-    color: #03738d; }
   a:not(.button):hover {
     color: #5D5C59;
     text-decoration: underline; }
@@ -1885,6 +1885,9 @@ pre {
   .post-content p, .page-content p {
     text-align: justify; }
 
+.hide-answers blockquote {
+  display: none; }
+
 .page-content {
   padding-top: 30px;
   margin: 0 auto;
@@ -1918,8 +1921,28 @@ pre {
   .page-header .page-title {
     padding-left: 0.9375rem;
     padding-right: 0.9375rem;
-    width: 100%;
-    float: left; }
+    width: 75%;
+    float: left;
+    border-bottom: 3px solid;
+    padding-bottom: 10px; }
+  .page-header .page-actions {
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+    width: 75%;
+    float: left;
+    text-align: right; }
+    .page-header .page-actions .toggle-answers {
+      border-radius: 3px;
+      margin: 5px 0 0 0;
+      padding: 5px 10px;
+      font-weight: 700;
+      box-shadow: inset 0px 0px 5px #007095, 0px 4px 0px 1px #007095, 0px 6px 5px #999; }
+      .page-header .page-actions .toggle-answers.active {
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5); }
+      .page-header .page-actions .toggle-answers:hover {
+        background-color: #0388a6; }
+      .page-header .page-actions .toggle-answers:focus {
+        outline: none; }
 
 @media only screen and (min-width: 40.0625em) {
   .page-content .page-main {
