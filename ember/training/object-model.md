@@ -3,7 +3,7 @@ layout: ember-training
 title: Formation Ember
 permalink:  object-model/
 prev: ember/training/overview
-next: ember/training/ember-cli
+next: ember/training/async
 ---
 
 {% raw %}
@@ -338,5 +338,11 @@ générale, il est conseillé d'éviter d'appeler ``reopen`` sur une classe apr�
        >  four.canBeRead
        >  > undefined
        > ```
+
+#### Computed properties
+
+#### Observers
+
+#### Bindings
 
 {% endraw %}
