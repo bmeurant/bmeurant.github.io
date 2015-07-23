@@ -3,7 +3,7 @@ layout: ember-training
 title: Formation Ember
 permalink:  object-model/
 prev: ember/training/overview
-next: ember/training/async
+next: ember/training/run-loop
 ---
 
 {% raw %}
