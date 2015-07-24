@@ -1908,6 +1908,8 @@ pre {
     padding-right: 0.9375rem;
     width: 100%;
     float: left; }
+  .page-content p, .page-content ol, .page-content ul {
+    font-weight: 300; }
 
 .page-header {
   margin: 0 auto;

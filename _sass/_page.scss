@@ -14,6 +14,10 @@
     .page-menu {
         @include grid-column(12);
     }
+
+    p, ol, ul {
+        font-weight: 300;
+    }
 }
 
 .page-header {
