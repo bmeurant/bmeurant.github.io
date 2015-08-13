@@ -525,13 +525,106 @@ NB : Il est nécessaire d'utiliser ``Ember.computed`` à cause de certaines inco
 
 ##### Propriétés calculées sur les collections
 
+Ember prévoit également que ses propriétés calculées puissent s'appuyer sur des évènements portant sur les éléments d'une collections (ajout, suppression, modification). Cela est possible au
+travers de la notation ``myCollection.@each.myProperty`` ou encore ``myCollection.[]``.
 
+Réouvrir ``Book`` pour y ajouter une propriété ``isPublished`` par défaut à false. Créer ensuite une nouvelle classe ``Collections`` contenant un ensemble de ``series``. Enfin, 
+créer deux nouvelles séries :
+
+```javascript
+> Book.reopen({
+    isPublished: false
+  });
+
+> Collection = Ember.Object.extend({ 
+    books: [] 
+  });
+
+> two = Series.create({title:'two', isPublished: true});
+> three = Series.create({title:'three'});
+```
+
+1. Réouvrir ``Collection`` pour y  ajouter une propriété calculée permettant de compter le nombre de livres publiés au sein de la collection. Cette propriété doit être déclenché
+lors de la modification de l'un des status ``isPublished`` des éléments de la collection ``books``, lors d'un ajout ou d'une suppression (``books.@each.isPublished``). Cette propriété
+retourne le nombre de livres publiés dans la collection. Placer un log dans la fonction de manière à tracer son exécution.
+
+    Créer ensuite une collection contenant les trois séries créées.
+    
+    Constater que cette propriété est bien mise à jour (calculée) lorsque l'on change la valeur de la propriété ``isPublished``
+    de l'une des trois série ou lorsque l'on en supprime une. En revanche, elle n'est pas exécutée lorsque n'importe quelle autre propriété
+    d'une série est modifiée.
+
+    > ```javascript
+    > > Collection.reopen({
+    >     numberOfPublished: function() {
+    >       console.log("compute numberOfPublished");
+    >   	return this.get('books').filterBy('isPublished', true).length;
+    >     }.property('books.@each.isPublished')
+    >   });
+    >   
+    > > newCollection.get('numberOfPublished');
+    > compute numberOfPublished
+    > 1
+    > > one.set('isPublished', true);
+    > true
+    > > newCollection.get('numberOfPublished');
+    > compute numberOfPublished
+    > 2
+    > > newCollection.get('books').removeAt(0);
+    > [Class, Class]
+    > > newCollection.get('numberOfPublished');
+    > compute numberOfPublished
+    > 1
+    > > two.set('writer', 'new writer');
+    > "new writer"
+    > > newCollection.get('numberOfPublished');
+    > 1
+    > ```
+
+2. Réouvrir ``Collection`` pour changer les conditions de dépendance de la propriété calculée en supprimant le filtre supplémentaire sur la
+propriété ``isPublished`` (``books.[]``).
+
+    Créer ensuite une collection contenant les trois séries créées.
+    
+    Constater que cette propriété n'est mise à jour (calculée) que lors d'un ajout ou d'une suppression dans la liste des séries. La modification
+    d'une propriété d'un élément de la liste (quelque soit cette propriété) ne déclenche pas l'éxécution de la fonction.
+    
+    > > Collection.reopen({
+    >   numberOfPublished: function() {
+    >     console.log("compute numberOfPublished");
+    > 	return this.get('books').filterBy('isPublished', true).length;
+    >   }.property('books.[]')
+    > });
+    > 
+    > > newCollection = Collection.create({books: [one, two, three]});
+    > 
+    > > newCollection.get('numberOfPublished');
+    > compute numberOfPublished
+    > 2
+    > > three.set('isPublished', true);
+    > true
+    > > newCollection.get('numberOfPublished');
+    > 2
+    > > newCollection.get('books').removeAt(0);
+    > [Class, Class]
+    > > newCollection.get('numberOfPublished');
+    > compute numberOfPublished
+    > 2
+    > > newCollection.get('books').removeAt(0);
+    > [Class]
+    > > newCollection.get('numberOfPublished');
+    > compute numberOfPublished
+    > 1
 
 #### Observers
 
+@TODO
+
 #### Bindings
 
-#### API Collections
+@TODO
+
+#### API Collections (``Enumerables``)
 
 Ember gère ses collections et énumérations (et nous propose de gérer les notres) au travers d'objets [Ember.Enumerable](http://emberjs.com/api/classes/Ember.Enumerable.html). Cette API
 s'appuie sur les opérations de l'API javascript standard (``array``). Cette API permet de gérer toutes les collections d'objets via une interface normalisée et commune et nous permet donc
