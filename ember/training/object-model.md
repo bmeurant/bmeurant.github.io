@@ -509,13 +509,13 @@ est de permettre la séquence suivante :
 > ```javascript
 > Series.reopen({
 >   authors: Ember.computed('writer', 'drawer', {
-> 	get: function(key) {
-> 	  return this.get('writer') + ' and ' + this.get('drawer');
+> 	  get: function(key) {
+> 	    return this.get('writer') + ' and ' + this.get('drawer');
 >     },
 >     set: function(key, value) {
-> 	  var  authors = value.split(/ and /);
-> 	  this.set('writer', authors[0]);
-> 	  this.set('drawer', authors[1]);
+> 	    var  authors = value.split(/ and /);
+> 	    this.set('writer', authors[0]);
+> 	    this.set('drawer', authors[1]);
 >     }
 >   })
 > });
@@ -525,8 +525,18 @@ NB : Il est nécessaire d'utiliser ``Ember.computed`` à cause de certaines inco
 
 ##### Propriétés calculées sur les collections
 
+
+
 #### Observers
 
 #### Bindings
+
+#### API Collections
+
+Ember gère ses collections et énumérations (et nous propose de gérer les notres) au travers d'objets [Ember.Enumerable](http://emberjs.com/api/classes/Ember.Enumerable.html). Cette API
+s'appuie sur les opérations de l'API javascript standard (``array``). Cette API permet de gérer toutes les collections d'objets via une interface normalisée et commune et nous permet donc
+d'utiliser et de proposer des structures de données complètements nouvelles sans impact sur le reste de notre application.
+
+Cette API est décrite de manière succinte [ici](http://guides.emberjs.com/v2.0.0/object-model/enumerables/) et exhaustive [ici](http://emberjs.com/api/classes/Ember.Enumerable.html).
 
 {% endraw %}
