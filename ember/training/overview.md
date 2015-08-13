@@ -42,7 +42,7 @@ var Book = DS.Model.extend({
 
 Cependant, l'ensemble des mécanismes décrits plus bas (les *bindings* notamment) peuvent parfaitement fonctionner en s'appuyant directement sur le modèle objet d'ember et la classe ``Ember.Object`` [en détail](http://eviltrout.com/2013/03/23/ember-without-data.html).
 
--> [doc officielle](http://guides.emberjs.com/v1.12.0/models/).
+-> [doc officielle](http://guides.emberjs.com/v2.0.0/models/).
 
 ### Routeur
 
@@ -79,7 +79,7 @@ App.BooksRoute = Ember.Route.extend({
 });
 ```
 
--> [doc officielle](http://guides.emberjs.com/v1.12.0/routing/).
+-> [doc officielle](http://guides.emberjs.com/v2.0.0/routing/).
 
 
 ### Contrôleurs
@@ -101,14 +101,8 @@ App.BooksController = Ember.ArrayController.extend({
 });
 ```
 
--> [doc officielle](http://guides.emberjs.com/v1.12.0/controllers/).
+-> [doc officielle](http://guides.emberjs.com/v2.0.0/controllers/).
 
-
-### Vues
-
-Il est très rare d'avoir à définir des vues en [Ember](http://emberjs.com) parce que les templates sont puissants et que les contrôleurs se chargent de la gestion de l'état de l'application.
-
--> [doc officielle](http://guides.emberjs.com/v1.12.0/views/).
 
 ### Templates
 
@@ -135,7 +129,7 @@ Dans [Ember](http://emberjs.com), les templates peuvent contenir un élément tr
 
 Tout élément de modèle injecté dans un template sera **automatiquement mis à jour** (binding) par [Ember](http://emberjs.com) lorsque le modèle associé au template sera modifié. Évidemment, seul cet élément sera rafraîchit et non le template entier. De la même manière, lorsque l'on agit sur le template (en remplissant un champ de formulaire, par exemple, le modèle est automatiquement mis à jour. Ce **binding bi-directionnel** est au coeur du focntionnement d'[Ember](http://emberjs.com).
 
--> [doc officielle](http://guides.emberjs.com/v1.12.0/templates/handlebars-basics/).
+-> [doc officielle](http://guides.emberjs.com/v2.0.0/templates/handlebars-basics/).
 
 
 ### Composants
