@@ -14,7 +14,7 @@ Avec `Ember`, la quasi totalité des objets utilisés est dérivée d'une classe
 
 C'est cette classe qui permet aux objets `Ember` de partager des comportements communs. Chaque objet `Ember` est ainsi capable d'observer les valeur de propriétés portées par d'autres objets, d'éventuellement lier leurs propres propriétés à celles des objets observer, de construire et d'exposer des propriétés calculées, etc.
 
-Nous allons explorer pas à pas certains de ces comprtements. Pour cela, il faut en premier lieu disposer de l'objet `Ember` lui-même.
+Nous allons explorer pas à pas certains de ces comportements. Pour cela, il faut en premier lieu disposer de l'objet `Ember` lui-même.
 
 1. Créer un fichier html mettant en place un contexte Ember simple :
 
@@ -218,7 +218,7 @@ La raison est qu'``Ember`` met en place un certain nombre de mécanismes que nou
 l'ensemble des mécanismes de binding du template qui permettent au framework de réagir de manière native et transparent aux changements survenant sur différents objets.
 
 Les mécanismes de binding sont, en particulier, au coeur du moteur de rendu d'``Ember``. Ces mécanismes permettent aux templates html de se mettre automatiquement à jour lors d'un changement
-sur un objet et cela de manière performante et ciblé, sans avoir à parcopurir l'ensemble des objets connus.
+sur un objet et cela de manière performante et ciblée, sans avoir à parcourir l'ensemble des objets connus.
 
 L'exemple suivant permet de se faire une idée de ce mécanisme. Copier le contenu suivant dans le fichier html créé, juste avant la balise ``</head>``:
 
@@ -304,7 +304,7 @@ les classes avec de nouvelles propriétés ou méthodes.
        > Les propriétés et méthodes ajoutées par ``reopen`` ne sont donc ajoutées effectivement au prototype de la classe que lors de la prochaine
        > création d'une instance de cette classe, en mode *lazy*. cf. [cette discussion](https://github.com/emberjs/ember.js/issues/3783)
 
-4. Lors de l'utilisation de ``reopen`` permet il est possible, tout comme dans le cas d'un héritage, de redéfinir une méthode existante mais également d'utiliser la méthode ``_super(...)``
+4. Lors de l'utilisation de ``reopen``, il est possible, tout comme dans le cas d'un héritage, de redéfinir une méthode existante mais également d'utiliser la méthode ``_super(...)``
    pour appeler la méhode définie avant. Utiliser ``reopen`` pour redéfinir ``displayTitle`` et afficher une ligne ``Title:`` avant d'afficher le titre.
 
        > ```javascript
@@ -319,7 +319,7 @@ les classes avec de nouvelles propriétés ou méthodes.
        >  three
        > ```
 
-La méthode ``reopen`` permet donc d'ajouter des propriétés et méthodes de classe. Cette méthode permet, de manière très pratique, de définir une classe de manière itérative et donc bien plus dynamiqe.
+La méthode ``reopen`` permet donc d'ajouter des propriétés et méthodes de classe. Cette méthode permet, de manière très pratique, de définir une classe de manière itérative et donc bien plus dynamique.
 Il faut tout de même être conscient que les nouvelles méthodes et propriétés ne sont disponibles dans les instances existantes qu'après la création d'une nouvelle instance. De manière
 générale, il est conseillé d'éviter d'appeler ``reopen`` sur une classe après en avoir créé des instances.
 
@@ -521,7 +521,7 @@ est de permettre la séquence suivante :
 > });
 > ```
 
-NB : Il est nécessaire d'utiliser ``Ember.computed`` à cause de certaines incompatibilités de syntaxe sur les navigeteurs actuels 
+NB : Il est nécessaire d'utiliser ``Ember.computed`` à cause de certaines incompatibilités de syntaxe sur les navigateurs actuels 
 
 ##### Propriétés calculées sur les collections
 
