@@ -12,7 +12,7 @@ next: ember/training/ember-data
 
 On a déjà évoqué le fait qu'``Ember`` était un framework avec des partis pris forts et un modèle de développement structurant. 
 
-Historiquement, cependant, ``Ember`` **ne faisait aucune choix particulier du point de vue de l'organisation de nos applications**.
+Historiquement, cependant, ``Ember`` **ne faisait aucun choix particulier du point de vue de l'organisation de nos applications**.
 
 Il existe donc différentes manières de structurer une application ``Ember``, de la plus basique à la plus complète.
 
@@ -61,7 +61,7 @@ de concaténer nos différents fichiers JavaScript en un seul, de sortir les gab
 
 ### Ember CLI
 
-La solution précédente peut suffir dans un certain nombre de cas. Cependant, la complexité et la richesse des applications ``Ember`` augmentant, le besoin de disposer d'un outillage plus complet
+La solution précédente peut suffire dans un certain nombre de cas. Cependant, la complexité et la richesse des applications ``Ember`` augmentant, le besoin de disposer d'un outillage plus complet
 et plus adapté s'est rapidement fait sentir. C'est suite à ce besoin que le projet [Ember CLI][ember-cli] est né, porté par une partie de la core team ``Ember``. Depuis, [Ember CLI][ember-cli] est
 devenu un standard *de facto* dans la communauté ``Ember`` et s'apprête à être officiellement supporté par l'équipe ``Ember``.
 
