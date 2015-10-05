@@ -385,7 +385,7 @@ précédentes séparées par ``' and '``. La propriété calculée ``authors`` d
        > ```
        >
        > On constate qu'une propriété calculée est bien différente d'une fonction en ce sens qu'Ember calcule sa valeur en fonction du contexte dont elle dépend. Cette valeur n'est ensuite
-       > recalculée que si ce contexte est modifié. Dans le cas contraire, Ember se contente de renvoyer la précédentes valeurs mise en cache, d'où l'absence de log dans ce cas.
+       > recalculée que si ce contexte est modifié. Dans le cas contraire, Ember se contente de renvoyer la précédente valeur mise en cache, d'où l'absence de log dans ce cas.
         
 2. Utiliser une autre syntaxe pour la déclaration de cette propriété calculée et vérifier que les deux notations sont strictement équivalentes.
 
@@ -510,9 +510,11 @@ est de permettre la séquence suivante :
 > Series.reopen({
 >   authors: Ember.computed('writer', 'drawer', {
 > 	  get: function(key) {
+>       console.log('computed property calculated');
 > 	    return this.get('writer') + ' and ' + this.get('drawer');
 >     },
 >     set: function(key, value) {
+>       console.log('computed property modified');
 > 	    var  authors = value.split(/ and /);
 > 	    this.set('writer', authors[0]);
 > 	    this.set('drawer', authors[1]);
@@ -589,36 +591,70 @@ propriété ``isPublished`` (``books.[]``).
     Constater que cette propriété n'est mise à jour (calculée) que lors d'un ajout ou d'une suppression dans la liste des séries. La modification
     d'une propriété d'un élément de la liste (quelque soit cette propriété) ne déclenche pas l'éxécution de la fonction.
     
-    > > Collection.reopen({
-    >   numberOfPublished: function() {
-    >     console.log("compute numberOfPublished");
-    > 	return this.get('books').filterBy('isPublished', true).length;
-    >   }.property('books.[]')
-    > });
-    > 
-    > > newCollection = Collection.create({books: [one, two, three]});
-    > 
-    > > newCollection.get('numberOfPublished');
-    > compute numberOfPublished
-    > 2
-    > > three.set('isPublished', true);
-    > true
-    > > newCollection.get('numberOfPublished');
-    > 2
-    > > newCollection.get('books').removeAt(0);
-    > [Class, Class]
-    > > newCollection.get('numberOfPublished');
-    > compute numberOfPublished
-    > 2
-    > > newCollection.get('books').removeAt(0);
-    > [Class]
-    > > newCollection.get('numberOfPublished');
-    > compute numberOfPublished
-    > 1
+    > ```javascript
+    >     > Collection.reopen({
+    >       numberOfPublished: function() {
+    >         console.log("compute numberOfPublished");
+    >     	return this.get('books').filterBy('isPublished', true).length;
+    >       }.property('books.[]')
+    >     });
+    >     
+    >     > newCollection = Collection.create({books: [one, two, three]});
+    >     
+    >     > newCollection.get('numberOfPublished');
+    >     compute numberOfPublished
+    >     2
+    >     > three.set('isPublished', true);
+    >     true
+    >     > newCollection.get('numberOfPublished');
+    >     2
+    >     > newCollection.get('books').removeAt(0);
+    >     [Class, Class]
+    >     > newCollection.get('numberOfPublished');
+    >     compute numberOfPublished
+    >     2
+    >     > newCollection.get('books').removeAt(0);
+    >     [Class]
+    >     > newCollection.get('numberOfPublished');
+    >     compute numberOfPublished
+    >     1
+    > ```
 
-#### Observers
+#### Observeurs (``Observers``)
 
-@TODO
+Des observeurs ``Ember`` peuvent également être déclarés sur toute propriété (y compris les propriétés calculées) et déclenchés au changement de la valeur de cette propriété.
+
+Déclarer un observeur du changement de la propriété calculée ``authors``. Créer une nouvelle instance de ``Series`` et noter le moment ou l'observeur est appelé.
+
+> ```javascript
+> > Series.reopen({
+>     authorsChanged: Ember.observer('authors', function() {
+>       console.log('authors observer called');
+>     })
+>   });
+>  
+> > six = Series.create({title:'six', writer: '6 writer', drawer: '6 drawer'});
+> Class {title: "six", writer: "6 writer", drawer: "6 drawer", __ember1444061327029: null, __nextSuper: undefined…}
+>  
+> > six.get('authors');
+> computed property calculated
+> "6 writer and 6 drawer"
+>  
+> > six.set('writer', 'new writer');
+> authors observer called
+> "new writer"
+> ```
+    
+La documentation est très complète sur le sujet et il n'est nul besoin de la paraphraser ici, je vous invite donc à vous y reporter [ici](http://guides.emberjs.com/v2.1.0/object-model/observers/).
+Cependant, pour résumer, il est bon de noter les points suivants : 
+
+* Les observeurs sont exécutés de manière **synchrône** comme on a pu le constater. le déclenchement a eu lieu immédiatement après la modification du de la propriété, avant même le calcul de la
+  propriété calculée qui en dépend.
+* Cela signifie que plusieurs modifications déclencherons plusieurs fois les observeurs de manière non optimisée. Si l'on souhaite maîtriser d'avantage ces déclenchements, il est nécessaire de
+  faire appel à la méthode ``Ember.run.once`` comme expliqué dans la [documentation](http://guides.emberjs.com/v2.1.0/object-model/observers/)
+  
+Les observeurs permettent donc de déclencher des traitements (et non de recalculer des propriétés) lors du changement d'une propriété. Ils sont en particulier très utiles lorsque l'on souhaite 
+déclencher un traitement après que le *binding* ait été effectué.
 
 #### Bindings
 
