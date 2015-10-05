@@ -339,10 +339,10 @@ générale, il est conseillé d'éviter d'appeler ``reopen`` sur une classe apr�
        >  undefined
        > ```
 
-#### Computed properties
+#### Propriétés calculées (``Computed properties``)
 
-Les ``computed properties`` (*propriétés calculées*) constituent un élément essentiel du modèle objet d'Ember. Une ``computed property`` permet de définir une propriété sous la forme d'une
-fonction. Cette fonction est exécutée automatiquement lorsque l'on accède à la propriété (via un classique ``get('myProp')``). Une ``computed property`` est classiquement déclarée comme dépendant d'une 
+Les propriétés calculées (``computed properties``) constituent un élément essentiel du modèle objet d'Ember. Une propriété calculée permet de définir une propriété sous la forme d'une
+fonction. Cette fonction est exécutée automatiquement lorsque l'on accède à la propriété (via un classique ``get('myProp')``). Une propriété calculée est classiquement déclarée comme dépendant d'une 
 ou plusieurs autres propriétés, permettant ainsi à Ember d'effectuer le calcul de la valeur de cette propriété au changement d'une ou plusieurs de ces propriétés.
 
 
