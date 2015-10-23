@@ -656,10 +656,6 @@ Cependant, pour résumer, il est bon de noter les points suivants :
 Les observeurs permettent donc de déclencher des traitements (et non de recalculer des propriétés) lors du changement d'une propriété. Ils sont en particulier très utiles lorsque l'on souhaite 
 déclencher un traitement après que le *binding* ait été effectué.
 
-#### Bindings
-
-@TODO
-
 #### API Collections (``Enumerables``)
 
 Ember gère ses collections et énumérations (et nous propose de gérer les notres) au travers d'objets [Ember.Enumerable](http://emberjs.com/api/classes/Ember.Enumerable.html). Cette API
