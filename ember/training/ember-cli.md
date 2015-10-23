@@ -1,7 +1,7 @@
 ---
 layout: ember-training
 title: Formation Ember
-permalink:  structure/
+permalink:  ember-cli/
 prev: ember/training/object-model
 next: ember/training/ember-data
 ---
@@ -45,7 +45,7 @@ sur l'outil de build [Broccoli][broccoli] et permet :
 Pour le reste, se reporter à la [doc officielle][ember-cli].
 
 
-* On installe [Node][node] : https://nodejs.org/en/
+* On installe Node : [ici](https://nodejs.org/en/)
  
 ```console
 $ node -v
@@ -121,7 +121,7 @@ Livereload server on http://localhost:49156
 Serving on http://localhost:4200/
 ```
 
-Ouvrir le navigateur à l'adresse http://localhost:4200/ et constater que l'application est lancée en ouvrant la console :
+Ouvrir le navigateur à [cette adresse](http://localhost:4200/) et constater que l'application est lancée en ouvrant la console :
 
 ```console
 DEBUG: -------------------------------
