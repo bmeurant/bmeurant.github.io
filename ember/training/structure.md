@@ -14,104 +14,115 @@ On a déjà évoqué le fait qu'``Ember`` était un framework avec des partis pr
 
 Historiquement, cependant, ``Ember`` **ne faisait aucun choix particulier du point de vue de l'organisation de nos applications**.
 
-Il existe donc différentes manières de structurer une application ``Ember``, de la plus basique à la plus complète.
+Il est donc tout à fait possible d'organiser son application ``Ember`` comme on le souhaite : 
 
+- dans un seul fichier JavaScript ou dans une balise `<script>`. On doit par contre impérativement respecter les conventions de 
+  nommage et enregistrer nos objets dans une variable globale
+- on peut essayer d'organiser nous-même notre application, nos fichiers, gérer des modules, etc. Tout ça va passer par l'utilisation 
+  d'un outil de build javascript de type [Grunt](http://gruntjs.com/), [Gulp](http://gulpjs.com/), [Broccoli][broccoli]. 
+  Ces outils vont nous permettre de concaténer nos différents fichiers JavaScript en un seul, de sortir les gabarits dans des fichiers
+  `.hbs` et de les précompiler. On n'aura ensuite qu'à importer ces fichiers dans notre index.html :
 
-### À la mano
-
-De base, avec ``Ember`` on peut donc déclarer nos routes, contrôleurs, modèles, etc. dans un seul fichier JavaScript ou dans une balise `<script>`.
-On doit par contre impérativement respecter les conventions de nommage et enregistrer nos objets dans une variable globale :
-
-```js
-App = Ember.Application.create();
-
-App.Router.map(function() {
-  ...
-});
-
-App.BookRoute = Ember.Route.extend({
-  ...
-});
-```
-
-De la même manière, on peut déclarer nos gabarits [Handlebars](http://handlebarsjs.com/) via des balises `<script>` :
-
-```html
-<script type="text/x-handlebars">
-  <div>
-    {{outlet}}
-  </div>
-</script>
-```
-
-### Outillé
-
-Comme on peut trouver ça un peu limité, on peut essayer d'organiser nous-même notre application, nos fichiers, gérer des modules, etc. Tout ça va passer par l'utilisation d'un outil de build
-javascript de type [Grunt](http://gruntjs.com/), [Gulp](http://gulpjs.com/), [Broccoli][broccoli]. Ces outils vont nous permettre
-de concaténer nos différents fichiers JavaScript en un seul, de sortir les gabarits dans des fichiers `.hbs` et de les précompiler. On n'aura ensuite qu'à importer ces fichiers dans notre index.html :
-
-```html
-...
-<script src="dist/libs/handlebars.min.js"></script>
-<script src="dist/libs/ember.js"></script>
-<script src="dist/application.js"></script>
-<script src="dist/templates.js"></script>
-...
-```
+Cependant, la complexité et la richesse des applications ``Ember`` augmentant, le besoin de disposer d'un outillage plus complet
+et plus adapté s'est rapidement fait sentir. C'est suite à ce besoin que le projet [Ember CLI][ember-cli] est né, porté par une partie de la core team ``Ember``. Depuis, [Ember CLI][ember-cli] est
+devenu un standard *de facto* dans la communauté ``Ember`` et a été ensuite officiellement supporté par l'équipe ``Ember``.
 
 ### Ember CLI
-
-La solution précédente peut suffire dans un certain nombre de cas. Cependant, la complexité et la richesse des applications ``Ember`` augmentant, le besoin de disposer d'un outillage plus complet
-et plus adapté s'est rapidement fait sentir. C'est suite à ce besoin que le projet [Ember CLI][ember-cli] est né, porté par une partie de la core team ``Ember``. Depuis, [Ember CLI][ember-cli] est
-devenu un standard *de facto* dans la communauté ``Ember`` et s'apprête à être officiellement supporté par l'équipe ``Ember``.
 
 [Ember CLI][ember-cli] est une **interface en ligne de commande** pour ``Ember``. Elle repose
 sur l'outil de build [Broccoli][broccoli] et permet : 
 
 * d'initialiser une application Ember avec, cette fois, une [structure de fichiers][folder-layout] et des
   [conventions de nommage](http://www.ember-cli.com/#naming-conventions)
-* de générer différents objets en mode scaffolding via des [commandes](http://www.ember-cli.com/#using-ember-cli). Autant le dire tout de suite, je ne suis pas fan du scaffolding mais on va regarder quand même pour ne pas mourir idiots.
+* de générer différents objets en mode scaffolding via des [commandes](http://www.ember-cli.com/#using-ember-cli).
 * d'utiliser des outils de build basés sur [Broccoli][broccoli] pour le prétraitement des pré-processeurs CSS par exemple
 * d'utiliser les [modules ES6](https://people.mozilla.org/~jorendorff/es6-draft.html) plutôt 
   qu'[AMD](http://en.wikipedia.org/wiki/Asynchronous_module_definition) ou 
   [CommonJS](http://en.wikipedia.org/wiki/CommonJS) pour la modularisation. Cette question a été
-  largement débattue. Si ça vous intéresse, je vous laisse découvrir un 
-  [article très intéressant](http://tomdale.net/2012/01/amd-is-not-the-answer/) à ce sujet.
+  largement débattue. ici un [article très intéressant](http://tomdale.net/2012/01/amd-is-not-the-answer/) à ce sujet.
 * ...
 
-Je ne vais pas vous détailler davantage le truc, vous trouverez vous-même la [doc officielle][ember-cli]. Et puis, on va tout de suite le mettre en pratique.
+Pour le reste, se reporter à la [doc officielle][ember-cli].
 
-_Note : là encore, [Ember CLI][ember-cli], c'est un parti pris. Ce sera probablement très bien accueilli par certains pour qui cela offre un cadre de travail structuré et structurant. Mais ce sera aussi rejeté par d'autres qui le verront comme une grosse machine inutile.
-Ici encore, question de goût, question de contexte, question de besoins._
 
-Trèves de bavardages, on s'y met sérieusement :
+* On installe [Node][node] : https://nodejs.org/en/
+ 
+```console
+$ node -v
+v4.2.1
+```
 
-On installe [Node][node], [Ember CLI][ember-cli], [Bower](http://bower.io/) :
+Puis [Ember CLI][ember-cli] : 
 
 ```console
 $ npm install -g ember-cli
-$ npm install -g bower
+$ ember -v
+version: 1.13.8
+node: 4.2.1
+npm: 2.13.4
 ```
 
-Ça y est, on peut maintenant demander gentiment à [Ember CLI][ember-cli] de nous créer notre application grâce à la 
-commande `ember` et voir ensuite une magnifique page de bienvenue sur http://localhost:4200/ :
+Créer une nouvelle application ``ember-training`` via [Ember CLI][ember-cli] et la ligne de commande `ember` :
 
 ```console
-$ ember new ember-articles
-$ cd ember-articles
-$ ember server
+$ ember new ember-training
+$ cd ember-training
+version: 1.13.8
+installing app
+  create .bowerrc
+  ...
+  create vendor\.gitkeep
+Installed packages for tooling via npm.
+Installed browser packages via Bower.
+Successfully initialized git.
 ```
 
-Je ne vous fais pas l'affront de détailler ici la structure de l'application, tout est décrit dans la 
-[documentation][folder-layout].
+Ouvrir le dossier de l'application et le fichier ``bower.json``. Dans les dépendances, changer les versions 
+d' ``ember`` et d' ``ember-data`` pour ``^2.0.0`` si ce n'est pas déjà le cas : 
+
+```javascript
+{
+  "name": "ember-training",
+  "dependencies": {
+    "ember": "^2.1.0",
+    ...
+    "ember-data": "^2.1.0",
+    ...
+}
+```
+
+Mettre à jour les dépendances via ``bower install``
+
+Lancer enfin cette nouvelle application via la ligne de commande : 
+
+```console
+$ cd ember-training
+$ ember serve
+version: 1.13.8
+Livereload server on http://localhost:49156
+Serving on http://localhost:4200/
+```
+
+Ouvrir le navigateur à l'adresse http://localhost:4200/ et constater que l'application est lancée en ouvrant la console :
+
+```console
+DEBUG: -------------------------------
+DEBUG: Ember      : 2.1.0
+DEBUG: Ember Data : 2.1.0
+DEBUG: jQuery     : 1.11.3
+DEBUG: -------------------------------
+```
+
+On en profite pour installer le plugin de développement pour [Chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
+ou [Firefox](https://addons.mozilla.org/fr/firefox/addon/ember-inspector/)
+
+On dispose donc désormais d'un template d'application opérationel. La structure complète du projet créé est décrite dans la 
+[documentation](folder-layout).
 
 {% endraw %}
 
 [ember]: http://emberjs.com
 [ember-cli]: http://www.ember-cli.com/
-[node]: http://nodejs.org/
-[broccoli]: https://github.com/broccolijs/broccoli
-[computed-prop]: http://emberjs.com/guides/object-model/computed-properties/
-[folder-layout]: http://www.ember-cli.com/#folder-layout
+[folder-layout]: http://www.ember-cli.com/user-guide/#folder-layout
 [html-bars]: https://github.com/tildeio/htmlbars
 [ember-data]: https://github.com/emberjs/data
