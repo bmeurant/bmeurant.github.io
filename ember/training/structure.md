@@ -93,6 +93,24 @@ d' ``ember`` et d' ``ember-data`` pour ``^2.0.0`` si ce n'est pas déjà le cas 
 
 Mettre à jour les dépendances via ``bower install``
 
+Changer également la version d' ``ember-data`` dans le fichier ``package.json`` : 
+
+```javascript
+{
+  "name": "ember-training",
+  
+  ...
+  
+  "devDependencies": {
+    ...
+    "ember-data": "2.1.0",
+    ...
+  }
+}
+``` 
+
+Mettre à jour les dépendances via ``npm install``
+
 Lancer enfin cette nouvelle application via la ligne de commande : 
 
 ```console
