@@ -137,6 +137,20 @@ ou [Firefox](https://addons.mozilla.org/fr/firefox/addon/ember-inspector/)
 On dispose donc désormais d'un template d'application opérationel. La structure complète du projet créé est décrite dans la 
 [documentation](folder-layout).
 
+Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de projet standard. Il s'agit d'un outil de build complet comprenant : 
+
+* Un **asset pipeline** complet : A la manière d'une succession de tâches ``Grunt`` ou ``Gulp``, [Ember CLI][ember-cli] propose des outils pour compiler les templates, exécuter les pré-processeurs CSS,
+  servir et minifier JS et CSS, etc. cf [Asset compilation](http://www.ember-cli.com/user-guide/#asset-compilation)
+* Exécuter les tests. cf. [Tests](http://www.ember-cli.com/user-guide/#testing)
+* La translation des conventions de nommage ``Ember`` en structure de fichiers. cf. [Naming conventions](http://www.ember-cli.com/user-guide/#naming-conventions)
+* La gestion des dépendances et librairies via ``Bower`` et ``Broccoli``. cf [Managing dependencies](http://www.ember-cli.com/user-guide/#naming-conventions)
+* La gestion des environnements. cf. [Environnements](http://www.ember-cli.com/user-guide/#Environments). Un certain nombre de configuration sont mises en place et adaptées en fonction des environnements 
+  (cache busting, etc.)
+* La gestion du packaging et du déploiement. cf. [Déploiements](http://www.ember-cli.com/user-guide/#deployments)
+* La transpilation de la syntaxe Ecmascript 6 et la gestion des modules dans une syntaxte Ecmascript 5 compatible avec tous les navigateurs. [Ember CLI][ember-cli] propose en effet d'utiliser en grande partie la
+  syntaxe Ecmascript 6 et notament la gestion des modules propre à cette version du language. Cette gestion de module permet de gérer les dépendances internes au projet (classes, modules, etc.) sans faire appel
+  à des librairies externes telles que ``requireJS``. cf. [Using Modules & the Resolver](http://www.ember-cli.com/user-guide/#using-modules)
+
 {% endraw %}
 
 [ember]: http://emberjs.com
