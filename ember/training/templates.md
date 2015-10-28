@@ -40,7 +40,20 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
 
 <div class="work">Exercice</div>
 
-* Commençons simplement par modifier le titre de l'application par `"Comic books library"`. On constate que l'application est mise à jour et rechargée à la volée par [Ember CLI][ember-cli] et à l'exécution préalable de la
+* Commençons simplement par modifier le titre de l'application par `"Comic books library"` et par faire quelques autres modifications destinées à intégrer le style [Bootstrap](http://getbootstrap.com/) :
+
+  ```html
+  <!-- /app/templates/application.hbs -->
+  <div class="container">
+  
+    <h1>Comic books library</h1>
+   
+    {{outlet}}
+  
+  </div>
+  ```  
+
+  On constate que l'application est mise à jour et rechargée à la volée par [Ember CLI][ember-cli] et à l'exécution préalable de la
   commande ``ember server``. Via cette commande, en effet, l'application est lancée et, lors de toute modification d'un fichier source, [Ember CLI][ember-cli] se charge d'exécuter l'*asset pipeline* et de recharger 
   l'application.
 
@@ -76,13 +89,17 @@ export default Ember.Route.extend({
 On peut ensuite utiliser cet objet dans notre template : 
 
 ```html
-<h2 id="title">Comic books library</h2>
+<div class="container">
 
-<ul>
-  <li>{{model.title}}</li>
-</ul>
+  <h1>Comic books library</h1>
 
-{{outlet}}
+  <div class="row">
+    <span class="col-xs-6 col-md-3">{{model.title}}</span>
+  </div>
+
+  {{outlet}}
+
+</div>
 ```
 
 On constate que notre application affiche désormais une liste avec le nom la série que nous avons créée et injectée dans le template
@@ -201,6 +218,11 @@ La liste complète des *helpers* [Ember][ember] est accessible dans la [document
 [Ember][ember] et [Handlebars][handlebars] facilitent enfin la création et la contribution de nouveaux *helpers* via la fonction ``registerHelper`` d'[Handlebars](http://handlebarsjs.com/#helpers),
 la commande ``ember generate helper helper-name`` ou la contribution directe dans le dossier ``app/helpers``. cf [Ember documentation](http://guides.emberjs.com/v2.1.0/templates/writing-helpers/) & 
 [Ember CLI documentation](http://www.ember-cli.com/user-guide/#resolving-handlebars-helpers) sur le sujet (attention au `-` obligatoire dans le nom pour [Ember CLI][ember-cli].
+
+
+<div class="work">Exercices</div>
+
+1. 
 
 {% endraw %}
 
