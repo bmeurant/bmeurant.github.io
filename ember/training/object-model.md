@@ -16,6 +16,8 @@ C'est cette classe qui permet aux objets `Ember` de partager des comportements c
 
 Nous allons explorer pas à pas certains de ces comportements. Pour cela, il faut en premier lieu disposer de l'objet `Ember` lui-même.
 
+<div class="work">Questions</div>
+
 1. Créer un fichier html mettant en place un contexte Ember simple :
 
     ```html
@@ -54,6 +56,8 @@ Nous allons explorer pas à pas certains de ces comportements. Pour cela, il fau
 
 Pour définir et utiliser un nouvel objet `Ember`, il est nécessaire d'étendre - au minimum - la classe `Ember.Object` via la méthode ``extend()``.
 
+<div class="work">Questions</div>
+
 1. Dans la console, créer une classe `Book` qui étend `Ember.Object` et définit une méthode `logTitle` affichant en console une châine de caractères (le titre) passée en paramètre.
 
     > ```javascript
@@ -74,22 +78,24 @@ Pour définir et utiliser un nouvel objet `Ember`, il est nécessaire d'étendre
 
 #### Initialisation
 
-1. On souhaite désormais initialiser l'objet à sa création avec un titre et afficher ce titre plutôt qu'un paramètre de méthode. Modifier la classe `Book` en conséquence et créer l'objet via la méthode [create()](http://emberjs.com/api/classes/Ember.Object.html#method_create) d'`Ember` en initialisant un champs `title`.
+On souhaite désormais initialiser l'objet à sa création avec un titre et afficher ce titre plutôt qu'un paramètre de méthode. Modifier la classe `Book` en conséquence et créer l'objet via la méthode [create()](http://emberjs.com/api/classes/Ember.Object.html#method_create) d'`Ember` en initialisant un champs `title`.
 
-    > ```javascript
-    > > Book = Ember.Object.extend({
-    >     logTitle: function() {
-    >       console.log(this.title);
-    >     }
-    >   });
-    >
-    > > one = Book.create({title: "My Title"});
-    > > one.logTitle();
-    > ```
+> ```javascript
+> > Book = Ember.Object.extend({
+>     logTitle: function() {
+>       console.log(this.title);
+>     }
+>   });
+>
+> > one = Book.create({title: "My Title"});
+> > one.logTitle();
+> ```
 
-    L'utilisation de la méthode [create()](http://emberjs.com/api/classes/Ember.Object.html#method_create) en lieu et place d'un simple `new` permet l'initialisation de propriétés via un objet passé en paramètre. La méthode `create` permet également d'effectuer des opérations d'initialisations complémentaires via l'appel de la méthode [init()](http://emberjs.com/api/classes/Ember.Object.html#method_init).
+L'utilisation de la méthode [create()](http://emberjs.com/api/classes/Ember.Object.html#method_create) en lieu et place d'un simple `new` permet l'initialisation de propriétés via un objet passé en paramètre. La méthode `create` permet également d'effectuer des opérations d'initialisations complémentaires via l'appel de la méthode [init()](http://emberjs.com/api/classes/Ember.Object.html#method_init).
 
-2. Ajouter une méthode d'initialisation qui réalise un simple log console du titre passé au create. Le résultat doit être le suivant :
+<div class="work">Question</div>
+
+1. Ajouter une méthode d'initialisation qui réalise un simple log console du titre passé au create. Le résultat doit être le suivant :
 
     ```javascript
     > one = Book.create({title: "My Title"});
@@ -122,6 +128,8 @@ Dans le cas d'une route, par exemple :
 ```
 
 Dans le cadre de l'héritage d'``Ember.Object``, l'ensemble des méthodes peuvent être surchargées. Les méthodes de la classe mère peuvent être accédées via l'appel de la méthode spéciale ``_super(...)``.
+
+<div class="work">Questions</div>
 
 1. Modifier la classe ``Book`` pour lui ajouter une méthode ``logType`` qui affiche "Book". Le résultat doit être le suivant :
 
@@ -186,6 +194,8 @@ Dans le cadre de l'héritage d'``Ember.Object``, l'ensemble des méthodes peuven
 #### Accesseurs
 
 Jusqu'à présent, nous ne nous sommes pas posé beaucoup de question sur la manière d'accéder aux propriétés des objects ``Ember``. Pourtant, tout ``Ember.Object`` expose des accesseurs qu'il est nécessaire d'utiliser.
+
+<div class="work">Questions</div>
 
 1. En se basant sur le code de la classe ``Book`` créée précédement et sur l'instance one, effectuer les opérations suivantes :
 
@@ -272,6 +282,8 @@ Les instances et les sous-classes d'``Ember.Object`` mettent également à dispo
 Cette méthode permet de définir les classes et instances de manière itérative et d'enrichir
 les classes avec de nouvelles propriétés ou méthodes.
 
+<div class="work">Questions</div>
+
 1. Réouvrir la classe ``Book`` et lui ajouter une propriété ``pages``.
 
        > ```javascript
@@ -325,6 +337,8 @@ générale, il est conseillé d'éviter d'appeler ``reopen`` sur une classe apr�
 
 ``Ember.Object`` propose également une méthode ``reopenClass`` permettant d'ajouter des variables ou méthodes de classe statiques.
 
+<div class="work">Questions</div>
+
 1. Utiliser ``reopenClass`` pour ajouter une propriété ``canBeRead`` à la classe ``Book``. Afficher la valeur de cette propriété statique dans la console.
 
        > ```javascript
@@ -345,6 +359,7 @@ Les propriétés calculées (``computed properties``) constituent un élément e
 fonction. Cette fonction est exécutée automatiquement lorsque l'on accède à la propriété (via un classique ``get('myProp')``). Une propriété calculée est classiquement déclarée comme dépendant d'une 
 ou plusieurs autres propriétés, permettant ainsi à Ember d'effectuer le calcul de la valeur de cette propriété au changement d'une ou plusieurs de ces propriétés.
 
+<div class="work">Questions</div>
 
 1. Réouvrir la classe ``Series`` pour y ajouter deux propriétés ``writer`` et ``drawer`` ainsi qu'une propriété calculée ``authors`` dont la valeur correspond à la concaténation des deux propriétés 
 précédentes séparées par ``' and '``. La propriété calculée ``authors`` doit afficher un log d'exécution quelconque et son exécution doit dépendre des deux propriétés ``writer`` et ``drawer``.
@@ -463,6 +478,8 @@ Que constate-t-on ?
 Les propriétés calculées peuvent être chaînées les unes avec les autres, permettant ainsi de mettre automatiquement à jour une série de propriétés en cascade lors de la modification de l'une 
 d'entre elles.
 
+<div class="work">Question</div>
+
 Réouvrir la classe ``Series`` et ajouter une nouvelle propriété calculée ``summary`` qui retourne une concaténation du titre et des auteurs de la série lorsque l'une des propriétés ``title`` ou
 ``authors`` change. Modifier ensuite la valeur de la propriété ``writer`` et constater que ``authors`` et ``summary`` ont été correctement mises à jour. (Ne pas oublier de redéclarer ``writer`` et 
 ``drawer`` comme propriétés dont ``authors`` dépend).
@@ -493,6 +510,8 @@ Réouvrir la classe ``Series`` et ajouter une nouvelle propriété calculée ``s
 
 Il est également possible de modifier une propriété calculée afin de mettre à jour en cascade les propriétés dont elle est dépendante. Cela se fait en passant à ``Ember.computed`` un objet
 javascript contenant à la fois une méthode get et une méthode set au lieu de la simple fonction utilisée précédement.
+ 
+<div class="work">Question</div>
  
 Réouvrir la classe ``Séries`` de manière à modifier la propriété ``authors`` pour lui fournir un setter afin de mettre à jour ``writer`` et ``drawer`` lorsque l'on modifie ``authors``. L'objectif
 est de permettre la séquence suivante : 
@@ -530,23 +549,25 @@ NB : Il est nécessaire d'utiliser ``Ember.computed`` à cause de certaines inco
 Ember prévoit également que ses propriétés calculées puissent s'appuyer sur des évènements portant sur les éléments d'une collections (ajout, suppression, modification). Cela est possible au
 travers de la notation ``myCollection.@each.myProperty`` ou encore ``myCollection.[]``.
 
-Réouvrir ``Book`` pour y ajouter une propriété ``isPublished`` par défaut à false. Créer ensuite une nouvelle classe ``Collections`` contenant un ensemble de ``series``. Enfin, 
+<div class="work">Questions</div>
+
+1. Réouvrir ``Book`` pour y ajouter une propriété ``isPublished`` par défaut à false. Créer ensuite une nouvelle classe ``Collections`` contenant un ensemble de ``series``. Enfin, 
 créer deux nouvelles séries :
 
-```javascript
-> Book.reopen({
-    isPublished: false
-  });
+    ```javascript
+    > Book.reopen({
+        isPublished: false
+      });
+    
+    > Collection = Ember.Object.extend({ 
+        books: [] 
+      });
+    
+    > two = Series.create({title:'two', isPublished: true});
+    > three = Series.create({title:'three'});
+    ```
 
-> Collection = Ember.Object.extend({ 
-    books: [] 
-  });
-
-> two = Series.create({title:'two', isPublished: true});
-> three = Series.create({title:'three'});
-```
-
-1. Réouvrir ``Collection`` pour y  ajouter une propriété calculée permettant de compter le nombre de livres publiés au sein de la collection. Cette propriété doit être déclenché
+2. Réouvrir ``Collection`` pour y  ajouter une propriété calculée permettant de compter le nombre de livres publiés au sein de la collection. Cette propriété doit être déclenché
 lors de la modification de l'un des status ``isPublished`` des éléments de la collection ``books``, lors d'un ajout ou d'une suppression (``books.@each.isPublished``). Cette propriété
 retourne le nombre de livres publiés dans la collection. Placer un log dans la fonction de manière à tracer son exécution.
 
@@ -583,7 +604,7 @@ retourne le nombre de livres publiés dans la collection. Placer un log dans la 
     > 1
     > ```
 
-2. Réouvrir ``Collection`` pour changer les conditions de dépendance de la propriété calculée en supprimant le filtre supplémentaire sur la
+3. Réouvrir ``Collection`` pour changer les conditions de dépendance de la propriété calculée en supprimant le filtre supplémentaire sur la
 propriété ``isPublished`` (``books.[]``).
 
     Créer ensuite une collection contenant les trois séries créées.
@@ -623,6 +644,8 @@ propriété ``isPublished`` (``books.[]``).
 #### Observeurs (``Observers``)
 
 Des observeurs ``Ember`` peuvent également être déclarés sur toute propriété (y compris les propriétés calculées) et déclenchés au changement de la valeur de cette propriété.
+
+<div class="work">Question</div>
 
 Déclarer un observeur du changement de la propriété calculée ``authors``. Créer une nouvelle instance de ``Series`` et noter le moment ou l'observeur est appelé.
 

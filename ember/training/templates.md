@@ -83,6 +83,8 @@ On peut ensuite utiliser cet objet dans notre template :
 
 On constate que notre application affiche désormais une liste avec le nom la série que nous avons créée et injectée dans le template
 
+<div class="work">Question</div>
+
 * Ouvrir la console javascript et modifier le titre de la série. Quels sont les deux constats majeurs que l'on peut effectuer ?
 
     > ```javascript
