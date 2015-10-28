@@ -152,6 +152,46 @@ Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de pro
   syntaxe Ecmascript 6 et notament la gestion des modules propre à cette version du language. Cette gestion de module permet de gérer les dépendances internes au projet (classes, modules, etc.) sans faire appel
   à des librairies externes telles que ``requireJS``. cf. [Using Modules & the Resolver](http://www.ember-cli.com/user-guide/#using-modules)
 
+
+### Bootstrap
+
+De manière à avoir un look correct pour notre application à moindre frais, nous allons utiliser l'écosystème [Ember CLI][ember-cli] pour installer et intégrer le framework CSS [Bootstrap](http://getbootstrap.com/) :
+
+<div class="work">Exercices</div>
+
+1. Installer bootstrap via bower : 
+
+    ```console
+    $ bower install --save bootstrap
+    bower cached        https://github.com/twbs/bootstrap.git#3.3.5
+    bower validate      3.3.5 against https://github.com/twbs/bootstrap.git#*
+    ```
+    
+    En ouvrant le fichier ``bower.json``, on constate que la dépendance bootstrap a été ajoutée : 
+    
+    ```javascript
+    ...
+      "dependencies": {
+        "ember": "^2.1.0",
+        ...
+        "bootstrap": "~3.3.5"
+      }
+    ...
+    ```
+
+2. Ouvrir ensuite le fichier ``ember-cli-build.js`` à la racine de l'application et importer les librairies récupérées par `bower` :
+
+    ```javascript
+    app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+    app.import('bower_components/bootstrap/dist/css/bootstrap.css.map', { destDir: 'assets' });
+    ```
+    
+3. Relancer l'application et constater qu'aucune erreur ne se produit :
+
+    ```console
+    ember server
+    ```
+
 {% endraw %}
 
 [ember]: http://emberjs.com
