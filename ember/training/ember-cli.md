@@ -6,8 +6,6 @@ prev: ember/training/object-model
 next: ember/training/templates
 ---
 
-{% raw %}
-
 ## Structure d'une application Ember
 
 On a déjà évoqué le fait qu'[Ember][ember] était un framework avec des partis pris forts et un modèle de développement structurant. 
@@ -44,7 +42,8 @@ sur l'outil de build [Broccoli][broccoli] et permet :
 
 Pour le reste, se reporter à la [doc officielle][ember-cli].
 
-<div class="work">Exercices</div>
+<div class="work no-answer">
+    {% capture m %}
 
 1. Installer Node : [ici](https://nodejs.org/en/)
  
@@ -63,7 +62,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
     npm: 2.13.4
     ```
 
-1. Créer une nouvelle application ``ember-training`` via [Ember CLI][ember-cli] et la ligne de commande `ember` :
+1. Créer une nouvelle application ``ember-training`` via [Ember CLI](http://www.ember-cli.com/) et la ligne de commande `ember` :
 
     ```console
     $ ember new ember-training
@@ -82,6 +81,8 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 d' [Ember][ember] et d' ``ember-data`` pour ``^2.0.0`` si ce n'est pas déjà le cas : 
 
     ```javascript
+    // bower.json
+    
     {
       "name": "ember-training",
       "dependencies": {
@@ -97,6 +98,8 @@ d' [Ember][ember] et d' ``ember-data`` pour ``^2.0.0`` si ce n'est pas déjà le
     Changer également la version d' ``ember-data`` dans le fichier ``package.json`` : 
 
     ```javascript
+    // package.json
+    
     {
       "name": "ember-training",
       
@@ -138,6 +141,9 @@ ou [Firefox](https://addons.mozilla.org/fr/firefox/addon/ember-inspector/)
 On dispose donc désormais d'un template d'application opérationel. La structure complète du projet créé est décrite dans la 
 [documentation](folder-layout).
 
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
 Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de projet standard. Il s'agit d'un outil de build complet comprenant : 
 
 * Un **asset pipeline** complet : A la manière d'une succession de tâches ``Grunt`` ou ``Gulp``, [Ember CLI][ember-cli] propose des outils pour compiler les templates, exécuter les pré-processeurs CSS,
@@ -157,7 +163,8 @@ Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de pro
 
 De manière à avoir un look correct pour notre application à moindre frais, nous allons utiliser l'écosystème [Ember CLI][ember-cli] pour installer et intégrer le framework CSS [Bootstrap](http://getbootstrap.com/) :
 
-<div class="work">Exercices</div>
+<div class="work no-answer">
+    {% capture m %}
 
 1. Installer bootstrap via bower : 
 
@@ -170,7 +177,10 @@ De manière à avoir un look correct pour notre application à moindre frais, no
     En ouvrant le fichier ``bower.json``, on constate que la dépendance bootstrap a été ajoutée : 
     
     ```javascript
+    // bower.json
+    
     ...
+    
       "dependencies": {
         "ember": "^2.1.0",
         ...
@@ -182,6 +192,8 @@ De manière à avoir un look correct pour notre application à moindre frais, no
 2. Ouvrir ensuite le fichier ``ember-cli-build.js`` à la racine de l'application et importer les librairies récupérées par `bower` :
 
     ```javascript
+    // ember-cli-build.js
+    
     app.import('bower_components/bootstrap/dist/css/bootstrap.css');
     app.import('bower_components/bootstrap/dist/css/bootstrap.css.map', { destDir: 'assets' });
     ```
@@ -191,8 +203,9 @@ De manière à avoir un look correct pour notre application à moindre frais, no
     ```console
     ember server
     ```
-
-{% endraw %}
+    
+  {% endcapture %}{{ m | markdownify }}
+</div>
 
 [ember]: http://emberjs.com
 [ember-cli]: http://www.ember-cli.com/

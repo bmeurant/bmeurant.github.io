@@ -38,79 +38,92 @@ On ignore pour le moment l'expression ``{{outlet}}`` liée aux opérations de ``
 placé à la racine du répertoire ``templates`` et nommé ``application``. Il s'agit là de l'application des conventions de nommage d'``Ember`` et est, une fois encore, très étroitement lié au routeur d'``Ember`` abordé
 au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du template principal de l'application dans lequel viendront s'imbriquer successivement l'ensemble des autres templates.
 
-<div class="work">Exercice</div>
+{% endraw %}
 
-* Commençons simplement par modifier le titre de l'application par `"Comic books library"` et par faire quelques autres modifications destinées à intégrer le style [Bootstrap](http://getbootstrap.com/) :
+<div class="work no-answer">
+    {% capture m %}
+    {% raw %}
 
-  ```html
-  <!-- /app/templates/application.hbs -->
-  <div class="container">
-  
-    <div class="page-header">
-      <h1>Comic books library</h1>
+1. Commençons simplement par modifier le titre de l'application par `"Comic books library"` et par faire quelques autres modifications destinées à intégrer le style [Bootstrap](http://getbootstrap.com/) :
+
+    ```html
+    <!-- /app/templates/application.hbs -->
+    <div class="container">
+    
+      <div class="page-header">
+        <h1>Comic books library</h1>
+      </div>
+     
+      {{outlet}}
+    
     </div>
-   
-    {{outlet}}
+    ```  
+    
+    On constate que l'application est mise à jour et rechargée à la volée par [Ember CLI](http://www.ember-cli.com/) et à l'exécution préalable de la
+    commande ``ember server``. Via cette commande, en effet, l'application est lancée et, lors de toute modification d'un fichier source, 
+    [Ember CLI](http://www.ember-cli.com/) se charge d'exécuter l'*asset pipeline* et de recharger l'application.
   
-  </div>
-  ```  
-
-  On constate que l'application est mise à jour et rechargée à la volée par [Ember CLI][ember-cli] et à l'exécution préalable de la
-  commande ``ember server``. Via cette commande, en effet, l'application est lancée et, lors de toute modification d'un fichier source, [Ember CLI][ember-cli] se charge d'exécuter l'*asset pipeline* et de recharger 
-  l'application.
+  {% endraw %}
+   
+  {% endcapture %}{{ m | markdownify }}
+</div>
 
 ### Data binding
 
 Un language et d'un moteur de templating tel qu'[Handlebars][handlebars] serait inutile si il ne s'agissait que d'afficher ou d'assembler que du HTML statique. L'intérêt consiste à injecter dans ce template des valeurs
 et expressions dynamiques en fonction des données et de la logique de l'application.
 
-<div class="work">Exercice</div>
+<div class="work">
+    {% capture m %}
+    {% raw %}
 
-Il est au préalable nécessaire de créer un objet javascript contenant les données que l'on souhaite injecter. Cette opération s'effectue en manipulant les notions de ``model`` et de ``Route`` de la manière suivante.
-On expliquera ces notions en détail dans le chapitre [routing](../routing), admettons pour le moment que nous avons un fichier ``app/routes/application.js`` :
+1. Créer un objet javascript contenant les données que l'on souhaite injecter. 
 
-(On note l'utilisation des modules Ecmascript 6 rendue possible par la transpilation par [Ember CLI][ember-cli]. cf. [chapitre précédent](../ember-cli))
- 
-```javascript
-// app/routes/application.js
+    Cette opération s'effectue en manipulant les notions de ``model`` et de ``Route`` de la manière suivante.
+    On expliquera ces notions en détail dans le chapitre [routing](../routing), admettons pour le moment que nous avons un fichier ``app/routes/application.js`` :
 
-import Ember from 'ember';
+    (On note l'utilisation des modules Ecmascript 6 rendue possible par la transpilation par [Ember CLI](http://www.ember-cli.com/). cf. [chapitre précédent](../ember-cli))
+     
+    ```javascript
+    // app/routes/application.js
+    
+    import Ember from 'ember';
+    
+    export default Ember.Route.extend({
+    
+      model: function() {
+        // WARN : SOULD NOT BE DONE : We should not affect anything to windows but 
+        // for the exercice, we want to access to series from console today
+        window.series = {title: "BlackSad"};
+    
+        return series;
+      }
+    });
+    ```
+    
+    On peut ensuite utiliser cet objet dans notre template : 
+    
+    ```html
+    <!-- /app/templates/application.hbs -->
+    
+    <div class="container">
+    
+      <div class="page-header">
+        <h1>Comic books library</h1>
+      </div>
+    
+      <div class="row">
+        <span class="col-xs-6 col-md-3">{{model.title}}</span>
+      </div>
+    
+      {{outlet}}
+    
+    </div>
+    ```
+    
+    On constate que notre application affiche désormais une liste avec le nom la série que nous avons créée et injectée dans le template
 
-export default Ember.Route.extend({
-
-  model: function() {
-    // WARN : SOULD NOT BE DONE : We should not affect anything to windows but 
-    // for the exercice, we want to access to series from console today
-    window.series = {title: "BlackSad"};
-
-    return series;
-  }
-});
-```
-
-On peut ensuite utiliser cet objet dans notre template : 
-
-```html
-<div class="container">
-
-  <div class="page-header">
-    <h1>Comic books library</h1>
-  </div>
-
-  <div class="row">
-    <span class="col-xs-6 col-md-3">{{model.title}}</span>
-  </div>
-
-  {{outlet}}
-
-</div>
-```
-
-On constate que notre application affiche désormais une liste avec le nom la série que nous avons créée et injectée dans le template
-
-<div class="work">Exercice</div>
-
-* Ouvrir la console javascript et modifier le titre de la série. Quels sont les deux constats majeurs que l'on peut effectuer ?
+1. Ouvrir la console javascript et modifier le titre de la série. Quels sont les deux constats majeurs que l'on peut effectuer ?
 
     > ```javascript
     > > series
@@ -128,6 +141,12 @@ On constate que notre application affiche désormais une liste avec le nom la s�
     > 1. L'objet 'series' créé a été enrichi par Ember. De ce fait, on ne peut doit plus et on ne peut plus manipuler directement ses propriétés sans accesseurs. cf [Modèle objet](../object-model)
     > 2. En utilisant les outils proposés par le modèle objet d'Ember, on constate que le template est automatiquement mis à jour lorsque l'on modifie l'objet. C'est ce que l'on appelle le **Data binding**.
 
+  {% endraw %}
+   
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
+{% raw %}
 
 ### Binding dans des attributs HTML
 
@@ -223,8 +242,11 @@ La liste complète des *helpers* [Ember][ember] est accessible dans la [document
 la commande ``ember generate helper helper-name`` ou la contribution directe dans le dossier ``app/helpers``. cf [Ember documentation](http://guides.emberjs.com/v2.1.0/templates/writing-helpers/) & 
 [Ember CLI documentation](http://www.ember-cli.com/user-guide/#resolving-handlebars-helpers) sur le sujet (attention au `-` obligatoire dans le nom pour [Ember CLI][ember-cli].
 
+{% endraw %}
 
-<div class="work">Exercices</div>
+<div class="work">
+    {% capture m %}
+    {% raw %}
 
 1. **Parcourir et afficher une liste** : Nous allons avoir plusieurs séries, transformer l'affichage du model seul par celui d'une liste complète de séries (un seul élément pour le moment).
 
@@ -292,7 +314,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
    en renseignant son auteur pour constater les changements. Modifier ensuite le premier objet de la liste en supprimant / ajoutant le champ `author`. Faire de même avec le second objet ajouté.
    
     Que constate-t-on ?
- 
+     
     > ```html
     > <!-- app/templates/application.hbs -->
     > 
@@ -382,8 +404,11 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
      >
      > Cette fois c'est le *helper* `each` et son branchement conditionnel `else` qui font le travail pour nous sans que l'on ait à écrire une seule ligne de code !
  
-{% endraw %}
-
+     {% endraw %}
+ 
+     {% endcapture %}{{ m | markdownify }}
+ </div>
+ 
 [handlebars]: http://handlebarsjs.com/
 [ember-cli]: http://www.ember-cli.com/
 [ember]: http://emberjs.com/
