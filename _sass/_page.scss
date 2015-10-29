@@ -41,7 +41,12 @@
         font-weight: 300;
     }
 
-
+    ul li ul,
+    ul li ol,
+    ol li ul,
+    ol li ul {
+        margin-bottom: 15px !important;
+    }
 }
 
 .page-header {

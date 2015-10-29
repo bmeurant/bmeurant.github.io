@@ -46,7 +46,9 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
   <!-- /app/templates/application.hbs -->
   <div class="container">
   
-    <h1>Comic books library</h1>
+    <div class="page-header">
+      <h1>Comic books library</h1>
+    </div>
    
     {{outlet}}
   
@@ -91,7 +93,9 @@ On peut ensuite utiliser cet objet dans notre template :
 ```html
 <div class="container">
 
-  <h1>Comic books library</h1>
+  <div class="page-header">
+    <h1>Comic books library</h1>
+  </div>
 
   <div class="row">
     <span class="col-xs-6 col-md-3">{{model.title}}</span>
@@ -176,7 +180,7 @@ C'est le cas du *helper* ``log`` :
 Ou d'une autre sorte de *helper* ``if`` :
 
 ```html
-<li>{{series.title}} by {{if series.author series.author "unknown author"}}</li>
+<li>{{user.lastname}} {{if user.firstname user.firstname "unknown firstname"}}</li>
 ```
 
 Les *helpers inline* sont fréquement utilisés pour dynamiser les valeurs d'attributs HTML :
@@ -222,8 +226,162 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
 <div class="work">Exercices</div>
 
-1. 
+1. **Parcourir et afficher une liste** : Nous allons avoir plusieurs séries, transformer l'affichage du model seul par celui d'une liste complète de séries (un seul élément pour le moment).
 
+    **styles** : 
+    * encapsuler la liste dans une ``<div class="col-xs-6 col-md-3">``
+    * la liste doit porter la classe ``list-group``
+    * chaque élément de liste doit porter la classe ``list-group-item``
+      
+    >  ```javascript
+    >  // app/routes/application.js
+    >  
+    >  ...
+    >  window.series = [{title: "BlackSad"}];
+    >  ...
+    >  ```
+    >  
+    >  ```html
+    >  <!-- app/templates/application.hbs -->
+    >  
+    >  ...
+    >
+    >  <div class="row">
+    >    <div class="col-xs-6 col-md-3">
+    >      <ul class="list-group">
+    >        {{#each model as |series|}}
+    >          <li class="list-group-item">{{series.title}}</li>
+    >        {{/each}}
+    >      </ul>
+    >    </div>
+    >  </div>
+    >
+    >  ...
+    >  ```
+        
+1. Via la console, accéder à l'objet `series` et ajouter un élément à la liste.
+    * Utiliser d'abord la méthode `push` native des arrays javascript : [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) 
+    * Puis la méthode `pushObject` d' [Ember][ember] : [pushObject](http://emberjs.com/api/classes/Ember.MutableArray.html#method_pushObject)
+     
+    Que constate-t-on ?
+    
+    > ```javascript
+    > > series
+    > [Object]
+    > 
+    > > series.push({title: "The Killer"})
+    > 2
+    > 
+    > > series.pushObject({title: "Akira"})
+    > Object {title: "Akira"}
+    > 
+    > > series
+    > [Object, Object, Object]
+    > ```
+    > 
+    > * Dans le premier cas, en utilisant la méthode native `push`, le template n'a pas été mis à jour alors que l'objet a bien été ajouté (on a maintenant 2 éléments).
+    > * Dans le second cas, en utilisant la méthode [Ember][ember] `pushObject`, le template a été correctement mis à jour avec le nouvel objet. On constate d'ailleurs que l'élément
+    >   ajouté précédemment apparaît également.
+    >   
+    > Cela s'explique par le fait que la méthode `pushObject` proposée par [Ember][ember] génère des évènements permettant de connaitre et de réagir aux changements. On dit qu'elle est
+    > compatible *KVO* - *Key-Value Observing*). Cette méthode est mise à disposition par [Ember][ember] alors même que nous utilisons un objet `array` natif et non pas un objet 
+    > [Ember][ember] parce que ce dernier enrichit le prototype de certains objets de manière transparente (note : ce comportement peut être désactivé). 
+    > cf. [documentation](http://guides.emberjs.com/v2.1.0/configuring-ember/disabling-prototype-extensions/)
+
+1. Pour chaque série afficher l'auteur si il existe à côté du titre sous la forme ``<titre> by <auteur>`` ou ``<titre> by unknown author`` si aucun auteur n'existe. Ajouter à la liste une série
+   en renseignant son auteur pour constater les changements. Modifier ensuite le premier objet de la liste en supprimant / ajoutant le champ `author`. Faire de même avec le second objet ajouté.
+   
+    Que constate-t-on ?
+ 
+    > ```html
+    > <!-- app/templates/application.hbs -->
+    > 
+    > ...
+    > 
+    > <ul class="list-group">
+    >   {{#each model as |series|}}
+    >     <li class="list-group-item">{{series.title}} by {{if series.author series.author "unknown author"}}</li>
+    >   {{/each}}
+    > </ul>
+    > 
+    > ...
+    > ```
+    > 
+    > ```javascript
+    > > series.pushObject({title: "The Killer", author: "Luc Jacamon"})
+    > Object {title: "The Killer", author: "Luc Jacamon"}
+    > 
+    > > Ember.set(series[0], 'author', "Juan Diaz Canales");
+    > "Juan Diaz Canales"
+    > 
+    > > Ember.set(series[1], 'author', "Matz");
+    > "Matz"
+    > ```
+    > 
+    > * Pour effectuer l'affichage conditionnel on a utilisé le *helper inline* if tertiaire : ``{{if <condition> <val_if_true> <val_if_false>}}``
+    > * Dans le premier cas, lorsqu'on ajoute une nouvelle propriété à un objet existant, le changement n'est pas detecté puisque la propriété n'était pas observée par [Ember][ember]. Le template
+    >   n'est pas mis à jour.
+    > * Dans le second cas, lorsque l'on modifie une propriété existante, le binding fonctionne parfaitement et le template est mis à jour
+    
+1. Modifier l'affichage de chaque série pour que la couleur de fond de l'élément soit rouge lorsque l'auteur n'est pas renseigné et vert sinon. Via la console, ajouter un nouvel objet contenant un 
+   auteur puis le modifier pour lui affecter un auteur null. Constater la mise à jour de l'affichage.
+
+    **style** : utiliser les classes `list-group-item-success` et `list-group-item-danger`.
+    
+    > ```html
+    > <!-- app/templates/application.hbs -->
+    > 
+    > ...
+    > 
+    > <ul class="list-group">
+    >   {{#each model as |series|}}
+    >     <li class="list-group-item {{if series.author 'list-group-item-success' 'list-group-item-danger'}}">
+    >       {{series.title}} by {{if series.author series.author "unknown author"}}
+    >     </li>
+    >   {{/each}}
+    > </ul>
+    > 
+    > ...
+    > ```
+    > 
+    > ```javascript
+    > > series.pushObject({title: "The Killer", author: "Luc Jacamon"})
+    >   Object {title: "The Killer", author: "Luc Jacamon"}
+    >
+    > > Ember.set(series[1], 'author', null);
+    >   null
+    > ```
+    >
+    > Ici encore, on utilise le *helper inline* `if` tertiaire mais cette fois au sein d'un attribut `class` et non dans un élément HTML. On note que cela ne perturbe en rien l'utilisation d'une
+    > classe CSS *statique* déjà présente. Cela permet de conditionner très facilement un affichage sans avoir à gérer soi-même la logique d'affichage / masquage, etc. 
+ 
+1. Modifier le template pour afficher un simple message `"Sorry, no comic found"` si la liste est vide. Via la console, supprimer tous les objets de la liste et constater les changements. 
+ 
+     > ```html
+     > <!-- app/templates/application.hbs -->
+     > 
+     > ...
+     > 
+     > <ul class="list-group">
+     >   {{#each model as |series|}}
+     >     <li class="list-group-item {{if series.author 'list-group-item-success' 'list-group-item-danger'}}">
+     >       {{series.title}} by {{if series.author series.author "unknown author"}}
+     >     </li>
+     >   {{else}}
+     >     Sorry, no comic found
+     >   {{/each}}
+     > </ul>
+     > 
+     > ...
+     > ```
+     > 
+     > ```javascript
+     > > series.removeAt(0);
+     >  []
+     > ```
+     >
+     > Cette fois c'est le *helper* `each` et son branchement conditionnel `else` qui font le travail pour nous sans que l'on ait à écrire une seule ligne de code !
+ 
 {% endraw %}
 
 [handlebars]: http://handlebarsjs.com/

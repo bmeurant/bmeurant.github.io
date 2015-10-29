@@ -1562,8 +1562,7 @@ blockquote {
   border-left: 4px solid #e8e8e8;
   padding-left: 15px;
   font-size: 18px;
-  letter-spacing: -1px;
-  font-style: italic; }
+  letter-spacing: -1px; }
   blockquote > :last-child {
     margin-bottom: 0; }
 
@@ -1836,6 +1835,11 @@ pre {
     float: left; }
   .page-content p, .page-content ol, .page-content ul {
     font-weight: 300; }
+  .page-content ul li ul,
+  .page-content ul li ol,
+  .page-content ol li ul,
+  .page-content ol li ul {
+    margin-bottom: 15px !important; }
 
 .page-header {
   margin: 0 auto;
