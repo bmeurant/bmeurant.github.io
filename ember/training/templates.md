@@ -93,10 +93,10 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
     
       model: function() {
         // WARN : SOULD NOT BE DONE : We should not affect anything to windows but 
-        // for the exercice, we want to access to series from console today
-        window.series = {title: "BlackSad"};
+        // for the exercice, we want to access to comic from console today
+        window.comic = {title: "BlackSad"};
     
-        return series;
+        return comic;
       }
     });
     ```
@@ -126,19 +126,19 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
 1. Ouvrir la console javascript et modifier le titre de la série. Quels sont les deux constats majeurs que l'on peut effectuer ?
 
     > ```javascript
-    > > series
+    > > comic
     > Object {__ember_meta__: Meta}
     > 
-    > > series.title = "new title"
+    > > comic.title = "new title"
     > Uncaught EmberError {description: undefined, fileName: undefined, lineNumber: undefined, message: "Assertion Failed: You must use Ember.set() to set … `title` property (of [object Object]) to `test`.", name: "Error"…}
     >
-    > > Ember.set(series, 'title', 'new title');
+    > > Ember.set(comic, 'title', 'new title');
     > "new title"
     > ```
     
     > On constate les choses suivantes : 
     >
-    > 1. L'objet 'series' créé a été enrichi par Ember. De ce fait, on ne peut doit plus et on ne peut plus manipuler directement ses propriétés sans accesseurs. cf [Modèle objet](../object-model)
+    > 1. L'objet 'comic' créé a été enrichi par Ember. De ce fait, on ne peut doit plus et on ne peut plus manipuler directement ses propriétés sans accesseurs. cf [Modèle objet](../object-model)
     > 2. En utilisant les outils proposés par le modèle objet d'Ember, on constate que le template est automatiquement mis à jour lorsque l'on modifie l'objet. C'est ce que l'on appelle le **Data binding**.
 
   {% endraw %}
@@ -156,7 +156,7 @@ d'un lien, etc.
 Depuis la [version 1.11](http://emberjs.com/deprecations/v1.x/#toc_bind-attr), la syntaxe pour le *binding* d'attributs est similaire à celle utilisée pour le *binding* d'éléméents :
  
 ```html
-<div title={{series.title}} class="series {{if series.author 'with-author' 'no-author'}}"></div>
+<div title={{comic.title}} class="comic {{if comic.author 'with-author' 'no-author'}}"></div>
 ```
 
 De la même manière que pour le *binding* d'éléments, le template est mis à jour automatiquement lors de la mise à jour du modèle. Cela peut s'avérer très utile pour conditionner les classes portées par
@@ -172,8 +172,8 @@ C'est le cas, par exemple du *helper* ``each`` :
 
 ```html
 <ul>
-  {{#each model as |series|}}
-    <li>{{series.title}}</li>
+  {{#each model as |comic|}}
+    <li>{{comic.title}}</li>
   {{/each}}
 </ul>
 ```
@@ -181,8 +181,8 @@ C'est le cas, par exemple du *helper* ``each`` :
 Ou encore du *helper* ``if`` :
 
 ```html
-{{#if series.author}}
-  by {{series.author}}
+{{#if comic.author}}
+  by {{comic.author}}
 {{else}}
   by unknown author
 {{/if}}
@@ -259,7 +259,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     >  // app/routes/application.js
     >  
     >  ...
-    >  window.series = [{title: "BlackSad"}];
+    >  window.comics = [{title: "BlackSad"}];
     >  ...
     >  ```
     >  
@@ -271,8 +271,8 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     >  <div class="row">
     >    <div class="col-xs-6 col-md-3">
     >      <ul class="list-group">
-    >        {{#each model as |series|}}
-    >          <li class="list-group-item">{{series.title}}</li>
+    >        {{#each model as |comic|}}
+    >          <li class="list-group-item">{{comic.title}}</li>
     >        {{/each}}
     >      </ul>
     >    </div>
@@ -281,23 +281,23 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     >  ...
     >  ```
         
-1. Via la console, accéder à l'objet `series` et ajouter un élément à la liste.
+1. Via la console, accéder à l'objet `comics` et ajouter un élément à la liste.
     * Utiliser d'abord la méthode `push` native des arrays javascript : [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) 
     * Puis la méthode `pushObject` d' [Ember][ember] : [pushObject](http://emberjs.com/api/classes/Ember.MutableArray.html#method_pushObject)
      
     Que constate-t-on ?
     
     > ```javascript
-    > > series
+    > > comics
     > [Object]
     > 
-    > > series.push({title: "The Killer"})
+    > > comics.push({title: "The Killer"})
     > 2
     > 
-    > > series.pushObject({title: "Akira"})
+    > > comics.pushObject({title: "Akira"})
     > Object {title: "Akira"}
     > 
-    > > series
+    > > comics
     > [Object, Object, Object]
     > ```
     > 
@@ -321,8 +321,8 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     > ...
     > 
     > <ul class="list-group">
-    >   {{#each model as |series|}}
-    >     <li class="list-group-item">{{series.title}} by {{if series.author series.author "unknown author"}}</li>
+    >   {{#each model as |comic|}}
+    >     <li class="list-group-item">{{comic.title}} by {{if comic.author comic.author "unknown author"}}</li>
     >   {{/each}}
     > </ul>
     > 
@@ -330,13 +330,13 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     > ```
     > 
     > ```javascript
-    > > series.pushObject({title: "The Killer", author: "Luc Jacamon"})
+    > > comics.pushObject({title: "The Killer", author: "Luc Jacamon"})
     > Object {title: "The Killer", author: "Luc Jacamon"}
     > 
-    > > Ember.set(series[0], 'author', "Juan Diaz Canales");
+    > > Ember.set(comics[0], 'author', "Juan Diaz Canales");
     > "Juan Diaz Canales"
     > 
-    > > Ember.set(series[1], 'author', "Matz");
+    > > Ember.set(comics[1], 'author', "Matz");
     > "Matz"
     > ```
     > 
@@ -356,9 +356,9 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     > ...
     > 
     > <ul class="list-group">
-    >   {{#each model as |series|}}
-    >     <li class="list-group-item {{if series.author 'list-group-item-success' 'list-group-item-danger'}}">
-    >       {{series.title}} by {{if series.author series.author "unknown author"}}
+    >   {{#each model as |comic|}}
+    >     <li class="list-group-item {{if comic.author 'list-group-item-success' 'list-group-item-danger'}}">
+    >       {{comic.title}} by {{if comic.author comic.author "unknown author"}}
     >     </li>
     >   {{/each}}
     > </ul>
@@ -367,10 +367,10 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     > ```
     > 
     > ```javascript
-    > > series.pushObject({title: "The Killer", author: "Luc Jacamon"})
+    > > comics.pushObject({title: "The Killer", author: "Luc Jacamon"})
     >   Object {title: "The Killer", author: "Luc Jacamon"}
     >
-    > > Ember.set(series[1], 'author', null);
+    > > Ember.set(comics[1], 'author', null);
     >   null
     > ```
     >
@@ -385,9 +385,9 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
      > ...
      > 
      > <ul class="list-group">
-     >   {{#each model as |series|}}
-     >     <li class="list-group-item {{if series.author 'list-group-item-success' 'list-group-item-danger'}}">
-     >       {{series.title}} by {{if series.author series.author "unknown author"}}
+     >   {{#each model as |comic|}}
+     >     <li class="list-group-item {{if comic.author 'list-group-item-success' 'list-group-item-danger'}}">
+     >       {{comic.title}} by {{if comic.author comic.author "unknown author"}}
      >     </li>
      >   {{else}}
      >     Sorry, no comic found
@@ -398,7 +398,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
      > ```
      > 
      > ```javascript
-     > > series.removeAt(0);
+     > > comics.removeAt(0);
      >  []
      > ```
      >

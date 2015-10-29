@@ -169,42 +169,46 @@ Les méthodes de la classe mère peuvent être accédées via l'appel de la mét
     >   });
     > ```
 
-1. Définir une classe ``Series`` qui étend ``Book`` et surcharge la méthode ``logType`` en affichant ``Series`` :
+1. Définir une classe ``Comic`` qui étend ``Book`` et surcharge la méthode ``logType`` en affichant ``Comic``.
+
+    On doit pouvoir effectuer les opérations suivantes :
 
     ```javascript
-    > one = Series.create({title: "My Title"});
+    > one = Comic.create({title: "My Title"});
     My Title
     
     > one.logType();
-    Series
+    Comic
     ```
 
     > ```javascript
-    > >  Book = Ember.Object.extend({
+    > >  Comic = Book.extend({
     >      ...
     >      logType: function() {
-    >        console.log("Series");
+    >        console.log("Comic");
     >      }
     >    });
     > ```
 
-3. Modifier ``Series`` de sorte que ``logType`` affiche également le type de la classe mère :
+3. Modifier ``Comic`` de sorte que ``logType`` affiche également le type de la classe mère.
+
+    On doit pouvoir effectuer les opérations suivantes :
 
     ```javascript
-    > one = Series.create({title: "My Title"});
+    > one = Comic.create({title: "My Title"});
     My Title
     
     > one.logType();
     Book
-    Series
+    Comic
     ```
 
     > ```javascript
-    > > Book = Ember.Object.extend({
+    > > Commic = Book.extend({
     >     ...
     >     logType: function() {
     >       this._super();
-    >       console.log("Series");
+    >       console.log("Comic");
     >     }
     >   });
     > ```
@@ -285,25 +289,25 @@ L'exemple suivant permet de se faire une idée de ce mécanisme.
         }
       });
     
-      Series = Book.extend({
+      Comic = Book.extend({
         logType: function() {
           this._super();
-          console.log("Series");
+          console.log("Comic");
         }
       });
     
-      one = Series.create({title: "My Title"});
+      one = Comic.create({title: "My Title"});
     
       App = Ember.Application.create();
     
       App.ApplicationController = Ember.Controller.extend({
-        series: one
+        comic: one
       });
     </script>
     
     <script type="text/x-handlebars">
       <p>
-        {{series.title}}
+        {{comic.title}}
       </p>
     </script>
     ```
@@ -416,14 +420,14 @@ ou plusieurs autres propriétés, permettant ainsi à Ember d'effectuer le calcu
 <div class="work">
     {% capture m %}
 
-1. Réouvrir la classe ``Series`` pour y ajouter deux propriétés ``writer`` et ``drawer`` ainsi qu'une propriété calculée ``authors`` dont la valeur correspond à la concaténation des deux propriétés 
+1. Réouvrir la classe ``Comic`` pour y ajouter deux propriétés ``writer`` et ``drawer`` ainsi qu'une propriété calculée ``authors`` dont la valeur correspond à la concaténation des deux propriétés 
 précédentes séparées par ``' and '``. La propriété calculée ``authors`` doit afficher un log d'exécution quelconque et son exécution doit dépendre des deux propriétés ``writer`` et ``drawer``.
  
-    Créer ensuite une instance de ``Series`` puis accéder plusieurs fois de suite à la propriété ``authors``. Changer ensuite l'une des deux propriétés ``writer`` et ``drawer`` (via un ``set``) 
+    Créer ensuite une instance de ``Comic`` puis accéder plusieurs fois de suite à la propriété ``authors``. Changer ensuite l'une des deux propriétés ``writer`` et ``drawer`` (via un ``set``) 
     et accéder de nouveau à ``authors``. Que constate-t-on lors de ces différentes opérations ? En quoi une propriété calculée est différente d'une simple méthode ?
 
     > ```javascript
-    >   > Series.reopen({
+    >   > Comic.reopen({
     >       writer: null, 
     >       drawer: null,
     >       authors: Ember.computed('writer', 'drawer', function() {
@@ -432,7 +436,7 @@ précédentes séparées par ``' and '``. La propriété calculée ``authors`` d
     >       })
     >     });
     >
-    >  > five = Series.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
+    >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
     >  five
     >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
     >
@@ -460,7 +464,7 @@ précédentes séparées par ``' and '``. La propriété calculée ``authors`` d
 1. Utiliser une autre syntaxe pour la déclaration de cette propriété calculée et vérifier que les deux notations sont strictement équivalentes.
 
     > ```javascript
-    >  >  Series.reopen({
+    >  >  Comic.reopen({
     >       writer: null, 
     >       drawer: null,
     >       authors: function() {
@@ -469,7 +473,7 @@ précédentes séparées par ``' and '``. La propriété calculée ``authors`` d
     >       }.property('writer', 'drawer')
     >     });
     >
-    >  > five = Series.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
+    >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
     >  five
     >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
     >
@@ -498,7 +502,7 @@ précédentes séparées par ``' and '``. La propriété calculée ``authors`` d
 Que constate-t-on ?
 
     > ```javascript
-    >  > Series.reopen({
+    >  > Comic.reopen({
     >       writer: null, 
     >       drawer: null,
     >       authors: function() {
@@ -507,7 +511,7 @@ Que constate-t-on ?
     >       }.property('writer', 'drawer')
     >     });
     >
-    >  > five = Series.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
+    >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
     >  five
     >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
     >
@@ -539,18 +543,18 @@ d'entre elles.
 <div class="work">
     {% capture m %}
 
-1. Réouvrir la classe ``Series`` et ajouter une nouvelle propriété calculée ``summary`` qui retourne une concaténation du titre et des auteurs de la série lorsque l'une des propriétés ``title`` ou
+1. Réouvrir la classe ``Comic`` et ajouter une nouvelle propriété calculée ``summary`` qui retourne une concaténation du titre et des auteurs de la série lorsque l'une des propriétés ``title`` ou
    ``authors`` change. Modifier ensuite la valeur de la propriété ``writer`` et constater que ``authors`` et ``summary`` ont été correctement mises à jour. (Ne pas oublier de redéclarer ``writer`` et 
    ``drawer`` comme propriétés dont ``authors`` dépend).
 
     > ```javascript
-    >  > Series.reopen({
+    >  > Comic.reopen({
     >      summary: function() {
     >    	return this.get('title') + ' by ' + this.get('authors');
     >      }.property('title', 'authors')
     >    });
     >
-    >  > five = Series.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
+    >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
     >  five
     >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
     >
@@ -591,7 +595,7 @@ est de permettre la séquence suivante :
     ```
 
     > ```javascript
-    > Series.reopen({
+    > Comic.reopen({
     >   authors: Ember.computed('writer', 'drawer', {
     > 	  get: function(key) {
     >       console.log('computed property calculated');
@@ -620,7 +624,7 @@ travers de la notation ``myCollection.@each.myProperty`` ou encore ``myCollectio
 <div class="work">
     {% capture m %}
 
-1. Réouvrir ``Book`` pour y ajouter une propriété ``isPublished`` par défaut à false. Créer ensuite une nouvelle classe ``Collections`` contenant un ensemble de ``series``. Enfin, 
+1. Réouvrir ``Book`` pour y ajouter une propriété ``isPublished`` par défaut à false. Créer ensuite une nouvelle classe ``Collections`` contenant un ensemble de ``comic``. Enfin, 
 créer deux nouvelles séries :
 
     ```javascript
@@ -632,8 +636,8 @@ créer deux nouvelles séries :
         books: [] 
       });
     
-    > two = Series.create({title:'two', isPublished: true});
-    > three = Series.create({title:'three'});
+    > two = Comic.create({title:'two', isPublished: true});
+    > three = Comic.create({title:'three'});
     ```
 
 1. Réouvrir ``Collection`` pour y  ajouter une propriété calculée permettant de compter le nombre de livres publiés au sein de la collection. Cette propriété doit être déclenché
@@ -720,16 +724,16 @@ Des observeurs [Ember][ember] peuvent également être déclarés sur toute prop
 <div class="work">
     {% capture m %}
 
-1. Déclarer un observeur du changement de la propriété calculée ``authors``. Créer une nouvelle instance de ``Series`` et noter le moment ou l'observeur est appelé.
+1. Déclarer un observeur du changement de la propriété calculée ``authors``. Créer une nouvelle instance de ``Comic`` et noter le moment ou l'observeur est appelé.
 
     > ```javascript
-    > > Series.reopen({
+    > > Comic.reopen({
     >     authorsChanged: Ember.observer('authors', function() {
     >       console.log('authors observer called');
     >     })
     >   });
     >  
-    > > six = Series.create({title:'six', writer: '6 writer', drawer: '6 drawer'});
+    > > six = Comic.create({title:'six', writer: '6 writer', drawer: '6 drawer'});
     > Class {title: "six", writer: "6 writer", drawer: "6 drawer", __ember1444061327029: null, __nextSuper: undefined…}
     >  
     > > six.get('authors');
