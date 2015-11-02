@@ -6,7 +6,6 @@ layout: simple
     <header class="page-header">
         {% if page.home != null %}<h1 class="page-title"><a href="{{ site.url }}/{{ page.home }}">{{ page.title }}</a></h1>{% endif %}
         {% if page.home == null %}<h1 class="page-title">{{ page.title }}</h1>{% endif %}
-        {% if page.answers == true %}<span class="page-actions"><button class="toggle-answers">Solutions</button></span>{% endif %}
     </header>
 
     <article class="page-content">
