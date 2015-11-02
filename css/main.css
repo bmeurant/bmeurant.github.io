@@ -1806,7 +1806,8 @@ pre {
     color: #0388a6;
     font-size: 30px;
     font-weight: 900;
-    margin-bottom: 15px; }
+    margin-bottom: 15px;
+    margin-top: 5px; }
     .work .title:before {
       content: "";
       display: block;
