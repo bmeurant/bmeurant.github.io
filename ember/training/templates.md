@@ -79,7 +79,7 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
 
 1. Créer un objet javascript contenant les données que l'on souhaite injecter. 
 
-    Cette opération s'effectue en manipulant les notions de ``model`` et de ``Route`` de la manière suivante.
+    Cette opération s'effectue en renvoyant un ``model`` au sein d'une ``Route`` de la manière suivante.
     On expliquera ces notions en détail dans le chapitre [routing](../routing), admettons pour le moment que nous avons un fichier ``app/routes/application.js`` :
 
     (On note l'utilisation des modules Ecmascript 6 rendue possible par la transpilation par [Ember CLI](http://www.ember-cli.com/). cf. [chapitre précédent](../ember-cli))
@@ -121,7 +121,7 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
     </div>
     ```
     
-    On constate que notre application affiche désormais une liste avec le nom la série que nous avons créée et injectée dans le template
+    On constate que notre application affiche désormais le nom du comic que nous avons créé et injecté dans le template
 
 1. Ouvrir la console javascript et modifier le titre de la série. Quels sont les deux constats majeurs que l'on peut effectuer ?
 
@@ -139,7 +139,7 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
     > On constate les choses suivantes : 
     >
     > 1. L'objet 'comic' créé a été enrichi par Ember. De ce fait, on ne peut doit plus et on ne peut plus manipuler directement ses propriétés sans accesseurs. cf [Modèle objet](../object-model)
-    > 2. En utilisant les outils proposés par le modèle objet d'Ember, on constate que le template est automatiquement mis à jour lorsque l'on modifie l'objet. C'est ce que l'on appelle le **Data binding**.
+    > 2. En utilisant les outils proposés par le modèle objet d'[Ember](http://emberjs.com), on constate que le template est automatiquement mis à jour lorsque l'on modifie l'objet. C'est ce que l'on appelle le **binding**.
 
   {% endraw %}
    

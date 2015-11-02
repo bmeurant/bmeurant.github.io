@@ -159,22 +159,44 @@ Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de pro
   à des librairies externes telles que ``requireJS``. cf. [Using Modules & the Resolver](http://www.ember-cli.com/user-guide/#using-modules)
 
 
-### Bootstrap
+### Bootstrap & Sass
 
-De manière à avoir un look correct pour notre application à moindre frais, nous allons utiliser l'écosystème [Ember CLI][ember-cli] pour installer et intégrer le framework CSS [Bootstrap](http://getbootstrap.com/) :
+De manière à avoir un look correct pour notre application à moindre frais, nous allons utiliser l'écosystème [Ember CLI][ember-cli] pour installer et intégrer 
+le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sass](http://sass-lang.com/):
 
 <div class="work no-answer">
     {% capture m %}
-
-1. Installer bootstrap via bower : 
+    
+1. Installer broccoli-sass via npm. Ce plugin permet d'intégrer la précompilation sass dans [Ember CLI](http://www.ember-cli.com/) : 
 
     ```console
-    $ bower install --save bootstrap
-    bower cached        https://github.com/twbs/bootstrap.git#3.3.5
-    bower validate      3.3.5 against https://github.com/twbs/bootstrap.git#*
+    npm install --save-dev broccoli-sass
     ```
     
-    En ouvrant le fichier ``bower.json``, on constate que la dépendance bootstrap a été ajoutée : 
+    En ouvrant le fichier ``package.json``, on constate que la dépendance broccoli-sass a été ajoutée : 
+        
+    ```javascript
+    // package.json
+    
+    ...
+    
+      "devDependencies": {
+        ...
+        "broccoli-sass": "^0.6.8",
+        ...
+      }
+    ...
+    ```
+
+1. Installer bootstrap-sass via bower. Celui-ci permet de disposer d'une distribution sass du framework bootstrap : 
+
+    ```console
+    $ bower install --save bootstrap-sass
+    bower cached        https://github.com/twbs/bootstrap-sass.git#3.3.5
+    bower validate      3.3.5 against https://github.com/twbs/bootstrap-sass.git#*
+    ```
+    
+    En ouvrant le fichier ``bower.json``, on constate que la dépendance bootstrap-sass a été ajoutée : 
     
     ```javascript
     // bower.json
@@ -184,25 +206,27 @@ De manière à avoir un look correct pour notre application à moindre frais, no
       "dependencies": {
         "ember": "^2.1.0",
         ...
-        "bootstrap": "~3.3.5"
+        "bootstrap-sass": "~3.3.5"
       }
     ...
     ```
 
-2. Ouvrir ensuite le fichier ``ember-cli-build.js`` à la racine de l'application et importer les librairies récupérées par `bower` :
+1. Renommer ensuite le fichier ``app/styles/app.css`` en ``app/styles/app.scss`` et importer le framework depuis les dépendances `bower` :
 
-    ```javascript
-    // ember-cli-build.js
+    ```console
+    // app/styles/app.scss
     
-    app.import('bower_components/bootstrap/dist/css/bootstrap.css');
-    app.import('bower_components/bootstrap/dist/css/bootstrap.css.map', { destDir: 'assets' });
+    @import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
     ```
     
-3. Relancer l'application et constater qu'aucune erreur ne se produit :
+1. Relancer l'application et constater qu'aucune erreur ne se produit. En particulier, le fichier ``ember-training.css`` doit avoir été chargé sans erreur et ne pas être vide :
 
     ```console
     ember server
     ```
+    
+1. De manière à bénéficier de styles adaptés aux futurs exercices, copier le contenu de [ce fichier](https://raw.githubusercontent.com/bmeurant/ember-training/master/app/styles/app.scss) 
+   dans le fichier ``app/styles.app.scss``.
     
   {% endcapture %}{{ m | markdownify }}
 </div>
