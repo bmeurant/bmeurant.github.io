@@ -49,7 +49,7 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
 
 1. Commençons simplement par modifier le titre de l'application par `"Comic books library"` et par faire quelques autres modifications destinées à intégrer le style [Bootstrap](http://getbootstrap.com/) :
 
-    **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 01 - Should include Bootstrap header`` passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js)).*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 01 - Should include Bootstrap header](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) passant.*
 
     ```html
     <!-- /app/templates/application.hbs -->
@@ -167,6 +167,36 @@ Depuis la [version 1.11](http://emberjs.com/deprecations/v1.x/#toc_bind-attr), l
 De la même manière que pour le *binding* d'éléments, le template est mis à jour automatiquement lors de la mise à jour du modèle. Cela peut s'avérer très utile pour conditionner les classes portées par
 un élément et donc son affichage d'un éléments en fonction de l'état des données injectées.
 
+
+### Binding bidirectionnel ou unidirectionnel
+
+Deux sortes de *bindings* sont régulièrement évoqués : le **binding bidirectionnel** (*two-way binding*) et le **binding unidirectionnel** (*one-way binding*). Dans chacun de ces deux modes, tout 
+changement survenant sur un objet du model est automatiquement répércuté dans l'ensemble des templates et fragments HTML qui y font référence. Dans le premier mode, en revanche, la réciproque est également 
+vraie et tout changement qui intervient au niveau HTML via un champ éditable (``input`` par exemple) est transmis au model et, par voie de conséquence, aux autres templates et fragments HTML.
+Comme nous l'illustrerons dans les chapitres suivants, ce fonctionnement permet de voir par exemple un changement de libellé immédiatement mis à jour dans une page alors même que l'on est encore en train de
+le saisir dans une autre zone de cette page - sans que nous ayions eu à implémenter une quelconque logique évènementielle pour cela. [Ember][ember] se charge de tout.
+ 
+Jusqu'à [Ember][ember] 2.0, tous les *bindings* étaient par défaut voire obligatoirement bidirectionnels. Or, si ce fonctionnement peut s'avérer extêmement puissant et utile, il est évidément plus coûteux qu'un 
+*binding* unidirectionnel et pas toujours pertinent. Dans le cas majoritaire où l'on souhaite simplement afficher une information non éditable qui sera mise à jour au changement du modèle mais non modifiable
+par les utilisateurs, la mise en place d'un tel mécanisme est inutile. 
+
+Depuis [Ember][ember] 2.0, le *binding* est unidirectionnel par défaut, y compris pour ce qui concerne les éléments éditables lorsque l'on utilise la notation *chevron* (`<` ou *angle-bracket*) pour nos composants, 
+standards ou custom :
+
+```html
+{{!-- one-way binding --}}
+<input type="text" value={{comic.title}} />
+```
+
+Le *binding* bidirectionnel peut être explicitement précisé en utilisant la notation *accolades* (`{{`) : 
+
+```html
+{{!-- two-way binding --}}
+{{input type="text" value=comic.title}}
+```
+
+Nous aurons l'occasion de constater et d'expérimenter ces comportements dans les sections suivantes et ne nous y attardons donc pas d'avantage ici.
+
 ## Helpers
 
 [Handlebars][handlebars] et [Ember][ember] propose de nombreux *helpers* qui permettent d'introduire un minimum de logique au sein de nos templates. Ces *helpers* peuvent être de types différents :
@@ -257,11 +287,10 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
     **Style** : encapsuler la liste dans une ``<div class="comics">``
     
-    **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 02 - Should display comics`` passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js)).*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 02 - Should display comics](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) passant.*
       
     >  ```javascript
     >  // app/routes/application.js
-    >  
     >  ...
     >  window.comics = [{title: "BlackSad"}, {title: "Calvin and Hobbes"}];
     >  ...
@@ -269,9 +298,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     >  
     >  ```html
     >  <!-- app/templates/application.hbs -->
-    >  
     >  ...
-    >
     >  <div class="row">
     >    <div class="comics">
     >      <ul>
@@ -281,7 +308,6 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     >      </ul>
     >    </div>
     >  </div>
-    >
     >  ...
     >  ```
         
@@ -320,8 +346,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
       Ajouter à la liste un comic en renseignant son auteur pour constater les changements.
      
      
-       **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 03 - Should display author if exists`` 
-       passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js)).*
+       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 03 - Should display author if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) passant.*
 
      
        >  ```javascript
@@ -366,8 +391,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     
     **style** : utiliser les classes `comic-with-author` et `comic-without-author`.
     
-    **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 04 - Should change class if no author`` 
-    passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js)).*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 04 - Should change class if no author](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) passant.*
     
     > ```html
     > <!-- app/templates/application.hbs -->
@@ -387,8 +411,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 1. Modifier le template pour afficher un simple message `"Sorry, no comic found"` si la liste est vide. 
     * Via la console, supprimer tous les objets de la liste et constater les changements. 
     
-       **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 05 - Should display message if empty`` 
-       passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js)).*
+       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 05 - Should display message if empty](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) passant.*
  
     > ```html
     > <!-- app/templates/application.hbs -->
@@ -415,6 +438,13 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
  
    {% endcapture %}{{ m | markdownify }}
  </div>
+ 
+## Conclusion
+
+Cette section a permi d'explorer les aspects principaux du fonctionnement des templates et du binding dans [Ember][ember]. Au travers d'un exemple simple, nous avons pu nous familiariser également 
+avec les *helpers* [Handlebars][handlebars]. Cependant nous n'avons couvert qu'une infime partie des caractéristiques et des outils proposés par [Ember][ember] dans ce domaine. Au fil des expérimentations
+à venir dans les sections suivantes, nous poursuivrons cette découverte au travers d'exemples concrêts et de mises en pratique. Des outils et *helpers* fondamentaux d'[Ember][ember] tels que ``link-to``, 
+``action``, ``input`` ou encore ``textarea`` n'ont pas été abordés ici et seront largement détaillés par la suite.
  
 [handlebars]: http://handlebarsjs.com/
 [ember-cli]: http://www.ember-cli.com/

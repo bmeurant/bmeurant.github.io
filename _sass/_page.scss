@@ -41,6 +41,10 @@
 
     @include grid-row();
 
+    a {
+        font-weight: 400;
+    }
+
     .page-main {
         @include grid-column(12);
     }

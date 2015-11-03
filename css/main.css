@@ -1831,6 +1831,8 @@ pre {
     display: table; }
   .page-content:after {
     clear: both; }
+  .page-content a {
+    font-weight: 400; }
   .page-content .page-main {
     padding-left: 0.9375rem;
     padding-right: 0.9375rem;
