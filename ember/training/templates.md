@@ -8,7 +8,7 @@ next: ember/training/routing
 
 {% raw %}
 
-**NB :** *Les exercices de cette section seront validés par le passage des [cas de tests associés](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js).
+**NB :** *Les exercices de cette section seront validés par le passage des [cas de tests associés](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js).
 Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet.*
 
 ## Templating
@@ -49,7 +49,7 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
 
 1. Commençons simplement par modifier le titre de l'application par `"Comic books library"` et par faire quelques autres modifications destinées à intégrer le style [Bootstrap](http://getbootstrap.com/) :
 
-    **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 01 - Should include Bootstrap header`` passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
+    **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 01 - Should include Bootstrap header`` passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js)).*
 
     ```html
     <!-- /app/templates/application.hbs -->
@@ -245,7 +245,7 @@ La liste complète des *helpers* [Ember][ember] est accessible dans la [document
 
 [Ember][ember] et [Handlebars][handlebars] facilitent enfin la création et la contribution de nouveaux *helpers* via la fonction ``registerHelper`` d'[Handlebars](http://handlebarsjs.com/#helpers),
 la commande ``ember generate helper helper-name`` ou la contribution directe dans le dossier ``app/helpers``. cf [Ember documentation](http://guides.emberjs.com/v2.1.0/templates/writing-helpers/) & 
-[Ember CLI documentation](http://www.ember-cli.com/user-guide/#resolving-handlebars-helpers) sur le sujet (attention au `-` obligatoire dans le nom pour [Ember CLI][ember-cli].
+[Ember CLI documentation](http://www.ember-cli.com/user-guide/#resolving-handlebars-helpers) sur le sujet (attention au `-` obligatoire dans le nom pour [Ember CLI][ember-cli]).
 
 {% endraw %}
 
@@ -257,7 +257,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
     **Style** : encapsuler la liste dans une ``<div class="comics">``
     
-    **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 02 - Should display comics`` passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
+    **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 02 - Should display comics`` passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js)).*
       
     >  ```javascript
     >  // app/routes/application.js
@@ -321,7 +321,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
      
      
        **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 03 - Should display author if exists`` 
-       passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
+       passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js)).*
 
      
        >  ```javascript
@@ -367,7 +367,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     **style** : utiliser les classes `comic-with-author` et `comic-without-author`.
     
     **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 04 - Should change class if no author`` 
-    passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
+    passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js)).*
     
     > ```html
     > <!-- app/templates/application.hbs -->
@@ -388,7 +388,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     * Via la console, supprimer tous les objets de la liste et constater les changements. 
     
        **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 05 - Should display message if empty`` 
-       passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
+       passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js)).*
  
     > ```html
     > <!-- app/templates/application.hbs -->
