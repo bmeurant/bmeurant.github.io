@@ -315,11 +315,13 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     > cf. [documentation](http://guides.emberjs.com/v2.1.0/configuring-ember/disabling-prototype-extensions/)
 
 1. Modifier l'application pour afficher les auteurs des comics.
-    * Dans la route, modifier la collection `comics` pour ajouter l'auteur `Bill Watterson` au comic `Calvin And Hobbes`
-    * Pour chaque comic afficher l'auteur si il existe à côté du titre sous la forme ``<titre> by <auteur>`` ou ``<titre> by unknown author`` si aucun auteur n'existe. Ajouter à la liste un comic en renseignant son auteur pour constater les changements.
+    * Dans la route, modifier la collection `comics` pour ajouter l'auteur au second comic
+    * Pour chaque comic afficher l'auteur si il existe à côté du titre sous la forme ``<titre> by <auteur>`` ou ``<titre> by unknown author`` si aucun auteur n'existe. 
+      Ajouter à la liste un comic en renseignant son auteur pour constater les changements.
      
      
-       **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 03 - Should display author if exists`` passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
+       **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 03 - Should display author if exists`` 
+       passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
 
      
        >  ```javascript
@@ -343,10 +345,8 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
      
 1. Via la console, modifier ensuite les objets de la liste.
-    * le premier objet d'abord (`BlackSad`) en supprimant / ajoutant le champ `author`. 
-    * Puis le second (`Calvin And Hobbes`) pour modifier la valeur de la propriété `author`.
-    
-       **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 04 - Should change class if no author`` passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
+    * Le premier objet d'abord (sans auteur) en supprimant / ajoutant le champ `author`. 
+    * Puis le second (avec auteur) pour modifier la valeur de la propriété `author`.
     
        Que constate-t-on ?
       
@@ -366,6 +366,9 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     
     **style** : utiliser les classes `comic-with-author` et `comic-without-author`.
     
+    **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 04 - Should change class if no author`` 
+    passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
+    
     > ```html
     > <!-- app/templates/application.hbs -->
     > ...
@@ -383,6 +386,9 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
  
 1. Modifier le template pour afficher un simple message `"Sorry, no comic found"` si la liste est vide. 
     * Via la console, supprimer tous les objets de la liste et constater les changements. 
+    
+       **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 05 - Should display message if empty`` 
+       passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
  
     > ```html
     > <!-- app/templates/application.hbs -->
