@@ -1,6 +1,6 @@
 ---
 layout: ember-training
-title: Formation Ember
+title: Formation Ember - Ember CLI
 permalink:  ember-cli/
 prev: ember/training/object-model
 next: ember/training/templates
@@ -25,7 +25,7 @@ Cependant, la complexité et la richesse des applications [Ember][ember] augment
 et plus adapté s'est rapidement fait sentir. C'est suite à ce besoin que le projet [Ember CLI][ember-cli] est né, porté par une partie de la core team [Ember][ember]. Depuis, [Ember CLI][ember-cli] est
 devenu un standard *de facto* dans la communauté [Ember][ember] et a été ensuite officiellement supporté par l'équipe [Ember][ember].
 
-### Ember CLI
+## Ember CLI
 
 [Ember CLI][ember-cli] est une **interface en ligne de commande** pour [Ember][ember]. Elle repose
 sur l'outil de build [Broccoli][broccoli] et permet : 
@@ -159,7 +159,7 @@ Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de pro
   à des librairies externes telles que ``requireJS``. cf. [Using Modules & the Resolver](http://www.ember-cli.com/user-guide/#using-modules)
 
 
-### Bootstrap & Sass
+## Bootstrap & Sass
 
 De manière à avoir un look correct pour notre application à moindre frais, nous allons utiliser l'écosystème [Ember CLI][ember-cli] pour installer et intégrer 
 le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sass](http://sass-lang.com/):

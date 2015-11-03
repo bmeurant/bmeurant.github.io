@@ -1,12 +1,12 @@
 ---
 layout: ember-training
-title: Formation Ember
+title: Formation Ember - Modèle objet
 permalink:  object-model/
 prev: ember/training/overview
 next: ember/training/ember-cli
 ---
 
-## Modèle objet
+## Ember.Object
 
 Avec [Ember][ember], la quasi totalité des objets utilisés est dérivée d'une classe de base, la classe ``Ember.Object`` : les contrôleurs, les vues, les modèles, l'application elle-même.
 
@@ -57,9 +57,9 @@ Nous allons explorer pas à pas certains de ces comportements. Pour cela, il fau
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-### Classes et instances
+## Classes et instances
 
-#### Definition
+### Definition
 
 Pour définir et utiliser un nouvel objet [Ember][ember], il est nécessaire d'étendre - au minimum - la classe `Ember.Object` via la méthode ``extend()``.
 
@@ -86,7 +86,7 @@ Pour définir et utiliser un nouvel objet [Ember][ember], il est nécessaire d'�
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-#### Initialisation
+### Initialisation
 
 On souhaite désormais initialiser l'objet à sa création avec un titre et afficher ce titre plutôt qu'un paramètre de méthode. 
 
@@ -130,7 +130,7 @@ On souhaite désormais initialiser l'objet à sa création avec un titre et affi
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-#### Héritage
+### Héritage
 
 On peut évidemment étendre une sous classe d'``Ember.Object`` plutôt que ``Ember.Object`` directement. 
 A noter que c'est ce qui est fait chaque fois que l'on étend un objet natif d'[Ember][ember] puisque
@@ -219,7 +219,7 @@ Les méthodes de la classe mère peuvent être accédées via l'appel de la mét
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-#### Accesseurs
+### Accesseurs
 
 Jusqu'à présent, nous ne nous sommes pas posé beaucoup de questions sur la manière d'accéder aux propriétés des objects [Ember][ember]. 
 Pourtant, tout ``Ember.Object`` expose des accesseurs qu'il est nécessaire d'utiliser.
@@ -323,7 +323,7 @@ de les utiliser systématiquement. Lorsque c'est possible, [Ember][ember] nous y
 et il est donc important d'être vigilant sur ces points.
 
 
-#### Réouvrir une classe
+### Réouvrir une classe
 
 Les instances et les sous-classes d'``Ember.Object`` mettent également à disposition une méthode ``reopen``.
 Cette méthode permet de définir les classes et instances de manière itérative et d'enrichir
@@ -411,7 +411,7 @@ générale, il est conseillé d'éviter d'appeler ``reopen`` sur une classe apr�
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-#### Propriétés calculées (``Computed properties``)
+## Propriétés calculées (``Computed properties``)
 
 Les propriétés calculées (``computed properties``) constituent un élément essentiel du modèle objet d'Ember. Une propriété calculée permet de définir une propriété sous la forme d'une
 fonction. Cette fonction est exécutée automatiquement lorsque l'on accède à la propriété (via un classique ``get('myProp')``). Une propriété calculée est classiquement déclarée comme dépendant d'une 
@@ -535,7 +535,7 @@ Que constate-t-on ?
   {% endcapture %}{{ m | markdownify }}
 </div>
       
-##### Enchaînement des propriétés calculées
+### Enchaînement des propriétés calculées
 
 Les propriétés calculées peuvent être chaînées les unes avec les autres, permettant ainsi de mettre automatiquement à jour une série de propriétés en cascade lors de la modification de l'une 
 d'entre elles.
@@ -572,7 +572,7 @@ d'entre elles.
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-##### Modification de propriétés calculées
+### Modification de propriétés calculées
 
 Il est également possible de modifier une propriété calculée afin de mettre à jour en cascade les propriétés dont elle est dépendante. Cela se fait en passant à ``Ember.computed`` un objet
 javascript contenant à la fois une méthode get et une méthode set au lieu de la simple fonction utilisée précédement.
@@ -616,7 +616,7 @@ est de permettre la séquence suivante :
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-##### Propriétés calculées sur les collections
+### Propriétés calculées sur les collections
 
 Ember prévoit également que ses propriétés calculées puissent s'appuyer sur des évènements portant sur les éléments d'une collections (ajout, suppression, modification). Cela est possible au
 travers de la notation ``myCollection.@each.myProperty`` ou encore ``myCollection.[]``.
@@ -717,7 +717,7 @@ propriété ``isPublished`` (``books.[]``).
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-#### Observeurs (``Observers``)
+## Observeurs (``Observers``)
 
 Des observeurs [Ember][ember] peuvent également être déclarés sur toute propriété (y compris les propriétés calculées) et déclenchés au changement de la valeur de cette propriété.
 
@@ -759,7 +759,7 @@ Cependant, pour résumer, il est bon de noter les points suivants :
 Les observeurs permettent donc de déclencher des traitements (et non de recalculer des propriétés) lors du changement d'une propriété. Ils sont en particulier très utiles lorsque l'on souhaite 
 déclencher un traitement après que le *binding* ait été effectué.
 
-#### API Collections (``Enumerables``)
+## API Collections (``Enumerables``)
 
 Ember gère ses collections et énumérations (et nous propose de gérer les notres) au travers d'objets [Ember.Enumerable](http://emberjs.com/api/classes/Ember.Enumerable.html). Cette API
 s'appuie sur les opérations de l'API javascript standard (``array``). Cette API permet de gérer toutes les collections d'objets via une interface normalisée et commune et nous permet donc

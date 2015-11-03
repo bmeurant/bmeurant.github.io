@@ -1,6 +1,6 @@
 ---
 layout: ember-training
-title: Formation Ember
+title: Formation Ember - Introduction
 permalink:  /
 next: ember/training/overview
 ---

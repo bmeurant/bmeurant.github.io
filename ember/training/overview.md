@@ -1,6 +1,6 @@
 ---
 layout: ember-training
-title: Formation Ember
+title: Formation Ember - Overview
 permalink:  overview/
 prev: ember/training/
 next: ember/training/object-model
@@ -8,15 +8,13 @@ next: ember/training/object-model
 
 {% raw %}
 
-## Overview
-
 [Ember][ember] se définit comme : "A framework for creating **ambitious** web applications". Deux mots sont à appuyer particulièrement :
 
 * **web** : l'une des caractéristiques majeures d'[Ember][ember] est son attachement au web et aux URLs en particulier. **Les URLs et donc le routeur sont au cœur d'Ember** là ou bien d'autres frameworks les considèrent au mieux comme un addon important.
 
 * **framework** : [Ember][ember] est réellement un framework. Pas une lib, pas une colonne vertébrale, pas une boîte à outils : un framework avec un véritable modèle de développement qu'il est nécessaire d'adopter.
 
-### Conventions de nommage - Conventions Over Configuration
+## Conventions de nommage - Conventions Over Configuration
 
 Ce modèle de développement commence par les conventions de nommage. [Ember][ember] applique en effet le principe de "*conventions over configuration*" et repose sur un nommage cohérent des différents composants de votre application.
 
@@ -25,7 +23,7 @@ Typiquement pour une URL `test`, [Ember][ember] s'attend à trouver une `TestRou
 -> [doc officielle](http://emberjs.com/guides/concepts/naming-conventions/).
 
 
-### Modèles
+## Modèles
 
 Un modèle est un objet avec des propriétés contenant des données métier. Le modèle est ensuite passé au template pour être rendu par lui
 en HTML. Typiquement, les modèles peuvent être récupérés d'un back end via une API REST JSON via [Ember Data](https://github.com/emberjs/data) abordé plus loin mais pas uniquement. Dans le premier cas, il s'agit d'un objet de type ``DS.Model``, ``DS`` étant le namespace commun à tous les éléments d'[Ember Data](https://github.com/emberjs/data).
@@ -44,7 +42,7 @@ Cependant, l'ensemble des mécanismes décrits plus bas (les *bindings* notammen
 
 -> [doc officielle](http://guides.emberjs.com/v2.1.0/models/).
 
-### Routeur
+## Routeur
 
 Le routeur permet de faire correspondre à une URL un ensemble de templates imbriqués permettant le rendu des modèles associés à
 chacun de ces templates.
@@ -67,7 +65,7 @@ App.Router.map(function() {
 });
 ```
 
-### Routes
+## Routes
 
 Les routes associent un modèle à un template et sont également impliquées dans les transitions entre les différentes URLs (et donc les différents états) de l'application. Elles gèrent notamment un certain nombre d'opérations sur un modèle lors de ces transitions.
 
@@ -82,7 +80,7 @@ App.BooksRoute = Ember.Route.extend({
 -> [doc officielle](http://guides.emberjs.com/v2.1.0/routing/).
 
 
-### Contrôleurs
+## Contrôleurs
 
 Le contrôleur gère l'état de l'application. Il est situé entre la route dont il récupère le modèle et le template dont il répond aux appels. Le template accède aux données du contrôleur et le contrôleur accède aux données du modèle. Le contrôleur est par exemple responsable du traitement des actions effectuées par l'utilisateur sur l'interface rendue par le template :
 
@@ -104,7 +102,7 @@ App.BooksController = Ember.ArrayController.extend({
 -> [doc officielle](http://guides.emberjs.com/v2.1.0/controllers/).
 
 
-### Templates
+## Templates
 
 Un template est un fragment de code HTML permettant, via des expressions, d'afficher les données du modèle associé. Les templates d'[Ember][ember] sont des templates [Handlebars](http://handlebarsjs.com/). 
 Les expressions Handlebars sont délimitées par `{{` et `}}`.
@@ -132,7 +130,7 @@ Tout élément de modèle injecté dans un template sera **automatiquement mis �
 -> [doc officielle](http://guides.emberjs.com/v2.1.0/templates/handlebars-basics/).
 
 
-### Composants
+## Composants
 
 Un composant [Ember][ember] permet de définir une balise HTML personnalisée, permettant ainsi de partager de puissants éléments réutilisables au sein d'une application [Ember][ember]. Depuis toujours [Ember][ember]
 met fortement en avant son approche composants. Avec la version 2, celle-ci s'est encore renforcée avec la disparition des *vues*, avantageusement remplacées par des composants. Les composants Ember peuvent embarquer
@@ -142,7 +140,7 @@ seuls obsolète.
 -> [doc officielle](http://emberjs.com/guides/components/).
 
 
-### Géneration d'objets
+## Géneration d'objets
 
 Pour qu'un template soit rendu lorsqu'une URL est demandée, il faut donc que le routeur définisse cette URL, qu'elle soit implémentée par une route qui récupèrera un modèle qu'elle mettra à disposition du 
 contrôleur et du template. Le contrôleur écoutera les évènements en provenance du template et y apportera la réponse adaptée. 
@@ -176,7 +174,7 @@ Ce module s'appelle **Ember Inspector** et est disponible pour [Chrome](https://
 et [Firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/). C'est absolument indispensable lorsqu'on développe en Ember.
 
 
-### Conclusion
+## Conclusion
 
 [Ember][ember] est donc un framework très riche et extrêmement plaisant à pratiquer. C'est aussi et surtout **un vrai framework avec un vrai parti pris et des vrais choix structurants.**
 

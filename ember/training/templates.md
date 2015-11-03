@@ -1,6 +1,6 @@
 ---
 layout: ember-training
-title: Formation Ember
+title: Formation Ember - Templates
 permalink:  templates/
 prev: ember/training/ember-cli
 next: ember/training/routing
@@ -73,7 +73,7 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-### Data binding
+## Binding
 
 Un language et d'un moteur de templating tel qu'[Handlebars][handlebars] serait inutile si il ne s'agissait que d'afficher ou d'assembler que du HTML statique. L'intérêt consiste à injecter dans ce template des valeurs
 et expressions dynamiques en fonction des données et de la logique de l'application.
@@ -167,7 +167,7 @@ Depuis la [version 1.11](http://emberjs.com/deprecations/v1.x/#toc_bind-attr), l
 De la même manière que pour le *binding* d'éléments, le template est mis à jour automatiquement lors de la mise à jour du modèle. Cela peut s'avérer très utile pour conditionner les classes portées par
 un élément et donc son affichage d'un éléments en fonction de l'état des données injectées.
 
-### Helpers
+## Helpers
 
 [Handlebars][handlebars] et [Ember][ember] propose de nombreux *helpers* qui permettent d'introduire un minimum de logique au sein de nos templates. Ces *helpers* peuvent être de types différents :
 
