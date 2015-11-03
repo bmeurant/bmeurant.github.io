@@ -318,6 +318,10 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     * Dans la route, modifier la collection `comics` pour ajouter l'auteur `Bill Watterson` au comic `Calvin And Hobbes`
     * Pour chaque comic afficher l'auteur si il existe à côté du titre sous la forme ``<titre> by <auteur>`` ou ``<titre> by unknown author`` si aucun auteur n'existe. Ajouter à la liste un comic en renseignant son auteur pour constater les changements.
      
+     
+       **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 03 - Should display author if exists`` passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
+
+     
        >  ```javascript
        >  // app/routes/application.js
        >  ...
@@ -342,7 +346,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     * le premier objet d'abord (`BlackSad`) en supprimant / ajoutant le champ `author`. 
     * Puis le second (`Calvin And Hobbes`) pour modifier la valeur de la propriété `author`.
     
-       **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 03 - Should change class if no author`` passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
+       **Test** : *Les modifications doivent permettre de rendre le test ``01 - Templates - 04 - Should change class if no author`` passant ([visible ici](https://github.com/bmeurant/ember-training/blob/master/tests/integration/01-templates-test.js)).*
     
        Que constate-t-on ?
       
