@@ -11,7 +11,7 @@ next: ember/training/routing
 ## Templating
 
 Les ``templates`` ou ``gabarits`` sont des fragments de code HTML qui peuvent être enrichis par des expressions (encadrées par la notation ``{{}}``) via le moteur de template [Handlebars][handlebars]. Ces expressions
-permettent d'intégrer dynamiquement dans les fragments HTML la ou les valeurs d'objets javascript ainsi que le résultats d'exécution d'opérateurs logiques (``helpers``) proposés par
+permettent d'intégrer dynamiquement dans les fragments HTML la ou les valeurs d'objets javascript ainsi que le résultat d'exécution d'opérateurs logiques (``helpers``) proposés par
 [Handlebars][handlebars], par [Ember][ember] ou développés au projet sous forme de contributions.
 
 Au sein de la structure de projet [Ember CLI][ember-cli] les templates se trouvent, dans le dossier ``app/templates`` puis, par convention, sont nommés et organisés en fonction de la route active (cf. chapitre [routing](../routing)).
@@ -35,7 +35,7 @@ tel qu'il a été généré par [Ember CLI][ember-cli] :
 ```
 
 On ignore pour le moment l'expression ``{{outlet}}`` liée aux opérations de ``routing`` sur lesquelles nous reviendrons juste après (cf. [routing](../routing)). On note tout de même la convention de nommage de ce fichier,
-placé à la racine du répertoire ``templates`` et nommé ``application``. Il s'agit là de l'application des conventions de nommage d'``Ember`` et est, une fois encore, très étroitement lié au routeur d'``Ember`` abordé
+placé à la racine du répertoire ``templates`` et nommé ``application``. Il s'agit là de l'application des conventions de nommage d'``Ember`` et est, une fois encore, très étroitement liée au routeur d'``Ember`` abordé
 au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du template principal de l'application dans lequel viendront s'imbriquer successivement l'ensemble des autres templates.
 
 {% endraw %}
@@ -70,7 +70,7 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
 
 ### Data binding
 
-Un language et d'un moteur de templating tel qu'[Handlebars][handlebars] serait inutile si il ne s'agissait que d'afficher ou d'assembler que du HTML statique. L'intérêt consiste à injecter dans ce template des valeurs
+Un language et d'un moteur de templating tel qu'[Handlebars][handlebars] serait inutile s'il ne s'agissait que d'afficher ou d'assembler que du HTML statique. L'intérêt consiste à injecter dans ce template des valeurs
 et expressions dynamiques en fonction des données et de la logique de l'application.
 
 <div class="work">
@@ -150,10 +150,10 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
 
 ### Binding dans des attributs HTML
 
-Le *binding*, via la notation ``{{}}`` peut s'effectuer au sein d'un élément HTML mais il peut également être nécessaire de dynamiser le contenu des attributs eux-même : noms de classes, url source d'une image ou
+Le *binding*, via la notation ``{{}}`` peut s'effectuer au sein d'un élément HTML mais il peut également être nécessaire de dynamiser le contenu des attributs eux-mêmes : noms de classes, url source d'une image ou
 d'un lien, etc.
 
-Depuis la [version 1.11](http://emberjs.com/deprecations/v1.x/#toc_bind-attr), la syntaxe pour le *binding* d'attributs est similaire à celle utilisée pour le *binding* d'éléméents :
+Depuis la [version 1.11](http://emberjs.com/deprecations/v1.x/#toc_bind-attr), la syntaxe pour le *binding* d'attributs est similaire à celle utilisée pour le *binding* d'éléments :
  
 ```html
 <div title={{comic.title}} class="comic {{if comic.author 'with-author' 'no-author'}}"></div>
@@ -231,7 +231,7 @@ On retiendra les *helpers* [Ember][ember] principaux :
 * accès dynamique à une propriété : ``get``
 * listes et collections : ``each-in`` pour parcourir les propriétés d'un objet ainsi q'une extension du ``each`` [Handlebars][handlebars] conservant le scope.
 * navigation : ``link-to`` en inline ou en block et ``query-param``, ``outlet``
-* évènements : ``action`` pour propager des évènements vers des composants depuis des interractions sur des éléments HTML
+* évènements : ``action`` pour propager des évènements vers des composants depuis des interactions sur des éléments HTML
 * formulaires : ``input``, ``textarea`` 
 * instantiation & rendering : ``component``, ``render``, ``partial``
 * développement : ``debugger``
@@ -341,9 +341,9 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     > ```
     > 
     > * Pour effectuer l'affichage conditionnel on a utilisé le *helper inline* if tertiaire : ``{{if <condition> <val_if_true> <val_if_false>}}``
-    > * Dans le premier cas, lorsqu'on ajoute une nouvelle propriété à un objet existant, le changement n'est pas detecté puisque la propriété n'était pas observée par [Ember][ember]. Le template
+    > * Dans le premier cas, lorsqu'on ajoute une nouvelle propriété à un objet existant, le changement n'est pas détecté puisque la propriété n'était pas observée par [Ember][ember]. Le template
     >   n'est pas mis à jour.
-    > * Dans le second cas, lorsque l'on modifie une propriété existante, le binding fonctionne parfaitement et le template est mis à jour
+    > * Dans le second cas, lorsqu'on modifie une propriété existante, le binding fonctionne parfaitement et le template est mis à jour.
     
 1. Modifier l'affichage de chaque série pour que la couleur de fond de l'élément soit rouge lorsque l'auteur n'est pas renseigné et vert sinon. Via la console, ajouter un nouvel objet contenant un 
    auteur puis le modifier pour lui affecter un auteur null. Constater la mise à jour de l'affichage.
