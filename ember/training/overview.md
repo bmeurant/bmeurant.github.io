@@ -126,7 +126,7 @@ Dans [Ember][ember], les templates peuvent contenir un élément très important
 ```
 
 Tout élément de modèle injecté dans un template sera **automatiquement mis à jour** (binding) par [Ember][ember] lorsque le modèle associé au template sera modifié. 
-Évidemment, seul cet élément sera rafraîchit et non le template entier. De la même manière, lorsque l'on agit sur le template (en remplissant un champ de formulaire, par exemple, le modèle est automatiquement mis à jour. Ce **binding bi-directionnel** est au coeur du focntionnement d'[Ember][ember].
+Évidemment, seul cet élément sera rafraîchit et non le template entier. De la même manière, lorsque l'on agit sur le template (en remplissant un champ de formulaire, par exemple, le modèle est automatiquement mis à jour. Ce **binding bi-directionnel** est au coeur du fonctionnement d'[Ember][ember].
 
 -> [doc officielle](http://guides.emberjs.com/v2.1.0/templates/handlebars-basics/).
 
@@ -165,7 +165,7 @@ App.Router.map(function() {
 * **contrôleur** : `AboutController`
 * **gabarit** : `about`
 
-Dans une application [Ember][ember], **il n'est donc nécessaire de ne définir que ce dont on a besoin !**
+Dans une application [Ember][ember], **il n'est donc nécessaire de définir que ce dont on a besoin !**
 
 -> [doc officielle](http://emberjs.com/guides/routing/generated-objects/).
 
