@@ -125,7 +125,8 @@ Dans [Ember][ember], les templates peuvent contenir un élément très important
 </div>
 ```
 
-Tout élément de modèle injecté dans un template sera **automatiquement mis à jour** (binding) par [Ember][ember] lorsque le modèle associé au template sera modifié. Évidemment, seul cet élément sera rafraîchit et non le template entier. De la même manière, lorsque l'on agit sur le template (en remplissant un champ de formulaire, par exemple, le modèle est automatiquement mis à jour. Ce **binding bi-directionnel** est au coeur du focntionnement d'[Ember][ember].
+Tout élément de modèle injecté dans un template sera **automatiquement mis à jour** (binding) par [Ember][ember] lorsque le modèle associé au template sera modifié. 
+Évidemment, seul cet élément sera rafraîchit et non le template entier. De la même manière, lorsque l'on agit sur le template (en remplissant un champ de formulaire, par exemple, le modèle est automatiquement mis à jour. Ce **binding bi-directionnel** est au coeur du focntionnement d'[Ember][ember].
 
 -> [doc officielle](http://guides.emberjs.com/v2.1.0/templates/handlebars-basics/).
 
