@@ -776,11 +776,18 @@ s'en en préoccuper et on peut parfaitement mettre en place une application [Emb
 ajoute nos propres `helpers` [Handlebars](http://handlebarsjs.com/) ou nos propres composants avancés. C'est de toutes façons essentiel d'en comprendre le fonctionnement.
 
 Comme son nom ne l'indique pas, la *RunLoop* n'est pas une loop mais un ensemble de queues permettant à [Ember][ember] de différer et d'organiser un certain nombre d'opérations
-qui seront ensuite exécutées en dépilant ces queues dans un ordre de priorité donné. Les queues sont `sync`, `actions`, `routerTransitions `, `render`, `afterRender`, et `destroy`.
-Je vous laisse découvrir par vous-même dans la [doc officielle](http://emberjs.com/guides/understanding-ember/run-loop/) et dans cette 
-[présentation d'Eric Bryn](http://talks.erikbryn.com/backburner.js-and-the-ember-run-loop) le contenu de ces queues et la manière dont est faite l'exécution.
+qui seront ensuite exécutées en dépilant ces queues dans un ordre de priorité donné. 
 
-Je voudrais juste insister sur un aspect particulier : c'est ce mécanisme qui permet, en quelque sorte, d'empiler les calculs de propriétés calculées lorsque les propriétés
+Les queues sont : 
+
+* `sync` : synchronisation des *bindings*
+* `actions` : exécution des tâches planifiées et résolution des *promises*
+* `routerTransitions` : transitions entre routes
+* `render` : mise à jour du DOM
+* `afterRender` : opérations devant s'exéuter après la mise à jour du DOM
+* `destroy` : destruction des objets
+
+C'est ce mécanisme qui permet, en quelque sorte, d'empiler les calculs de propriétés calculées lorsque les propriétés
 *observées* sont modifiées et surtout c'est grâce à ce mécanisme que le rendu n'est effectué qu'une seule fois lors de la modification d'un modèle.
 
 Pour reprendre l'exemple de la [doc officielle](http://emberjs.com/guides/understanding-ember/run-loop/), si l'on a l'objet suivant :
@@ -808,5 +815,8 @@ Et le template :
 
 Sans la *RunLoop*, on exécuterait le rendu deux fois si l'on modifie successivement `firstname` puis `lastname`. La *RunLoop* met tout ça (et plein d'autres
 choses) en queue et n'effectue le rendu qu'une seule et unique fois, lorsque nécessaire.
+
+our aller plus loin, se référer à la [documentation officielle](http://emberjs.com/guides/understanding-ember/run-loop/) et à cette 
+[présentation d'Eric Bryn](http://talks.erikbryn.com/backburner.js-and-the-ember-run-loop).
 
 [ember]: http://emberjs.com
