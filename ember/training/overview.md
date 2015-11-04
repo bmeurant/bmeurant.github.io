@@ -1,9 +1,9 @@
 ---
 layout: ember-training
-title: Formation Ember - Overview
+title: Formation Ember - Principes généraux
 permalink:  overview/
 prev: ember/training/
-next: ember/training/object-model
+next: ember/training/underlyings
 ---
 
 {% raw %}

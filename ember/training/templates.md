@@ -1,6 +1,6 @@
 ---
 layout: ember-training
-title: Formation Ember - Templates
+title: Formation Ember - Templates, les bases
 permalink:  templates/
 prev: ember/training/ember-cli
 next: ember/training/routing

@@ -2,7 +2,7 @@
 layout: ember-training
 title: Formation Ember - Ember CLI
 permalink:  ember-cli/
-prev: ember/training/object-model
+prev: ember/training/underlyings
 next: ember/training/templates
 ---
 
