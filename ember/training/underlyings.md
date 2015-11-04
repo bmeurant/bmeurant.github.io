@@ -767,4 +767,46 @@ d'utiliser et de proposer des structures de données complètements nouvelles sa
 
 Cette API est décrite de manière succinte [ici](http://guides.emberjs.com/v2.0.0/object-model/enumerables/) et exhaustive [ici](http://emberjs.com/api/classes/Ember.Enumerable.html).
 
+
+## *RunLoop*
+
+Un autre mécanisme extrêmement important est impliqué tant dans l'optimisation du moteur de rendu que dans le calcul et la synchronisation des propriétés entre elles : la *RunLoop*. Ce mécanisme est
+absolument central dans le fonctionnement d'[Ember][ember] et s'appuie sur la micro librairie [Backburner](https://github.com/ebryn/backburner.js/). Dans la plupart des cas, on n'a pas à
+s'en en préoccuper et on peut parfaitement mettre en place une application [Ember][ember] complète sans interagir directement avec la *RunLoop*. Il est cependant parfois nécessaire, lorsqu'on
+ajoute nos propres `helpers` [Handlebars](http://handlebarsjs.com/) ou nos propres composants avancés. C'est de toutes façons essentiel d'en comprendre le fonctionnement.
+
+Comme son nom ne l'indique pas, la *RunLoop* n'est pas une loop mais un ensemble de queues permettant à [Ember][ember] de différer et d'organiser un certain nombre d'opérations
+qui seront ensuite exécutées en dépilant ces queues dans un ordre de priorité donné. Les queues sont `sync`, `actions`, `routerTransitions `, `render`, `afterRender`, et `destroy`.
+Je vous laisse découvrir par vous-même dans la [doc officielle](http://emberjs.com/guides/understanding-ember/run-loop/) et dans cette 
+[présentation d'Eric Bryn](http://talks.erikbryn.com/backburner.js-and-the-ember-run-loop) le contenu de ces queues et la manière dont est faite l'exécution.
+
+Je voudrais juste insister sur un aspect particulier : c'est ce mécanisme qui permet, en quelque sorte, d'empiler les calculs de propriétés calculées lorsque les propriétés
+*observées* sont modifiées et surtout c'est grâce à ce mécanisme que le rendu n'est effectué qu'une seule fois lors de la modification d'un modèle.
+
+Pour reprendre l'exemple de la [doc officielle](http://emberjs.com/guides/understanding-ember/run-loop/), si l'on a l'objet suivant :
+
+{% raw %}
+
+```js
+var User = Ember.Object.extend({
+  firstName: null,
+  lastName: null,
+  fullName: function() {
+    return this.get('firstName') + ' ' + this.get('lastName');
+  }.property('firstName', 'lastName')
+});
+```
+
+Et le template :
+
+```html
+{{firstName}}
+{{fullName}}
+```
+
+{% endraw %}
+
+Sans la *RunLoop*, on exécuterait le rendu deux fois si l'on modifie successivement `firstname` puis `lastname`. La *RunLoop* met tout ça (et plein d'autres
+choses) en queue et n'effectue le rendu qu'une seule et unique fois, lorsque nécessaire.
+
 [ember]: http://emberjs.com
