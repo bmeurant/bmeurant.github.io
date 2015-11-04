@@ -161,7 +161,7 @@ d'un lien, etc.
 Depuis la [version 1.11](http://emberjs.com/deprecations/v1.x/#toc_bind-attr), la syntaxe pour le *binding* d'attributs est similaire à celle utilisée pour le *binding* d'éléméents :
  
 ```html
-<div title={{comic.title}} class="comic {{if comic.author 'with-author' 'no-author'}}"></div>
+<div title={{comic.title}} class="comic {{if comic.scriptwriter 'with-scriptwriter' 'no-scriptwriter'}}"></div>
 ```
 
 De la même manière que pour le *binding* d'éléments, le template est mis à jour automatiquement lors de la mise à jour du modèle. Cela peut s'avérer très utile pour conditionner les classes portées par
@@ -223,10 +223,10 @@ C'est le cas, par exemple du *helper* ``each`` :
 Ou encore du *helper* ``if`` :
 
 ```html
-{{#if comic.author}}
-  by {{comic.author}}
+{{#if comic.scriptwriter}}
+  by {{comic.scriptwriter}}
 {{else}}
-  by unknown author
+  by unknown scriptwriter
 {{/if}}
 ```
 
@@ -349,17 +349,17 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
 1. Modifier l'application pour afficher les auteurs des comics.
     * Dans la route, modifier la collection `comics` pour ajouter l'auteur au second comic
-    * Pour chaque comic afficher l'auteur si il existe à côté du titre sous la forme ``<titre> by <auteur>`` ou ``<titre> by unknown author`` si aucun auteur n'existe. 
+    * Pour chaque comic afficher l'auteur si il existe à côté du titre sous la forme ``<title> by <scriptwriter>`` ou ``<titre> by unknown scriptwriter`` si aucun auteur n'existe. 
       Ajouter à la liste un comic en renseignant son auteur pour constater les changements.
      
      
-       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 03 - Should display author if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L87) passant.*
+       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 03 - Should display scriptwriter if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L87) passant.*
 
      
        >  ```javascript
        >  // app/routes/application.js
        >  ...
-       >  window.comics = [{title: "BlackSad"}, {title: "Calvin and Hobbes", author:"Bill Watterson"}];
+       >  window.comics = [{title: "BlackSad"}, {title: "Calvin and Hobbes", scriptwriter:"Bill Watterson"}];
        >  ...
        >  ```
        >  ```html
@@ -367,7 +367,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
        >  ...
        >  <ul>
        >    {{#each model as |comic|}}
-       >      <li>{{comic.title}} by {{if comic.author comic.author "unknown author"}}</li>
+       >      <li>{{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}</li>
        >    {{/each}}
        >  </ul>
        >  ...
@@ -377,17 +377,17 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
      
 1. Via la console, modifier ensuite les objets de la liste.
-    * Le premier objet d'abord (sans auteur) en supprimant / ajoutant le champ `author`. 
-    * Puis le second (avec auteur) pour modifier la valeur de la propriété `author`.
+    * Le premier objet d'abord (sans auteur) en supprimant / ajoutant le champ `scriptwriter`. 
+    * Puis le second (avec auteur) pour modifier la valeur de la propriété `scriptwriter`.
     
        Que constate-t-on ?
       
        > ```javascript
-       >  > Ember.set(comics[0], 'author', "Juan Diaz Canales")
+       >  > Ember.set(comics[0], 'scriptwriter', "Juan Diaz Canales")
        >  "Juan Diaz Canales"
        >  .
-       >  > Ember.set(comics[1], 'author', "New author")
-       >  "New author"
+       >  > Ember.set(comics[1], 'scriptwriter', "New scriptwriter")
+       >  "New scriptwriter"
        > ```
        >  
        > * Dans le premier cas, lorsqu'on ajoute une nouvelle propriété à un objet existant, le changement n'est pas detecté puisque la propriété n'était pas observée par [Ember](http://emberjs.com). Le template
@@ -396,17 +396,17 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     
 1. Modifier l'affichage de chaque comic pour changer la classe de l'élément en fonction du fait que l'auteur soit renseigné ou non.
     
-    **style** : utiliser les classes `comic-with-author` et `comic-without-author`.
+    **style** : utiliser les classes `comic-with-scriptwriter` et `comic-without-scriptwriter`.
     
-    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 04 - Should change class if no author](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L115) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 04 - Should change class if no scriptwriter](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L115) passant.*
     
     > ```html
     > <!-- app/templates/application.hbs -->
     > ...
     > <ul>
     >   {{#each model as |comic|}}
-    >     <li class="{{if comic.author 'comic-with-author' 'comic-without-author'}}">
-    >       {{comic.title}} by {{if comic.author comic.author "unknown author"}}
+    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+    >       {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
     >     </li>
     >   {{/each}}
     > </ul>
@@ -425,8 +425,8 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     > ...
     > <ul>
     >   {{#each model as |comic|}} 
-    >     <li class="{{if comic.author 'comic-with-author' 'comic-without-author'}}">
-    >       {{comic.title}} by {{if comic.author comic.author "unknown author"}}
+    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+    >       {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
     >     </li>
     >   {{else}}
     >     Sorry, no comic found
