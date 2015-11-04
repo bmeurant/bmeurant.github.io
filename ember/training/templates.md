@@ -180,19 +180,26 @@ Jusqu'à [Ember][ember] 2.0, tous les *bindings* étaient par défaut voire obli
 *binding* unidirectionnel et pas toujours pertinent. Dans le cas majoritaire où l'on souhaite simplement afficher une information non éditable qui sera mise à jour au changement du modèle mais non modifiable
 par les utilisateurs, la mise en place d'un tel mécanisme est inutile. 
 
-Depuis [Ember][ember] 2.0, le *binding* est unidirectionnel par défaut, y compris pour ce qui concerne les éléments éditables lorsque l'on utilise la notation *chevron* (`<` ou *angle-bracket*) pour nos composants, 
-standards ou custom :
+Depuis [Ember][ember] 2.0, le *binding* est unidirectionnel par défaut lorsque l'on utilise la notation *chevron* (`<` ou *angle-bracket*) pour nos composants, standards ou custom :
 
 ```html
 {{!-- one-way binding --}}
 <input type="text" value={{comic.title}} />
 ```
 
-Le *binding* bidirectionnel peut être explicitement précisé en utilisant la notation *accolades* (`{{`) : 
+Le *binding* bidirectionnel est possible si l'on utilise l'ancienne notation *accolades* (`{{`) : 
 
 ```html
 {{!-- two-way binding --}}
 {{input type="text" value=comic.title}}
+```
+
+Cette dernière option est notamment obligatoire si l'on souhaite un *binding* bidirectionnel sur des composants standards (``input``, ``textarea``, etc.) pour lesquels le helper ``mut`` n'est pas supporté.
+Dans tous les autres cas de composants custom, l'utilisation de ce helper ``mut`` est à privilégier pour indiquer le caractère mutable de la propriété *bindée*.
+
+```html
+{{!-- two-way binding --}}
+<my-component value={{mut comic.title}} />
 ```
 
 Nous aurons l'occasion de constater et d'expérimenter ces comportements dans les sections suivantes et ne nous y attardons donc pas d'avantage ici.
@@ -263,8 +270,8 @@ Il peut s'agir, selon les cas, de nouveaux *helpers* ou d'enrichissements portan
 
 On retiendra les *helpers* [Ember][ember] principaux :
 
-* accès dynamique à une propriété : ``get``
-* listes et collections : ``each-in`` pour parcourir les propriétés d'un objet ainsi q'une extension du ``each`` [Handlebars][handlebars] conservant le scope.
+* accès aux propriétés : ``get`` pour un accés dynamique, ``mut`` pour signaler le caractère *mutable* et donc le binding bidirectionnel d'une propriété
+* listes et collections : ``each-in`` pour parcourir les propriétés d'un objet ainsi q'une extension du ``each`` [Handlebars][handlebars] conservant le scope
 * navigation : ``link-to`` en inline ou en block et ``query-param``, ``outlet``
 * évènements : ``action`` pour propager des évènements vers des composants depuis des interractions sur des éléments HTML
 * formulaires : ``input``, ``textarea`` 
