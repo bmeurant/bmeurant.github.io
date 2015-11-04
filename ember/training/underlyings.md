@@ -10,7 +10,7 @@ next: ember/training/ember-cli
 
 Avec [Ember][ember], la quasi totalité des objets utilisés est dérivée d'une classe de base, la classe ``Ember.Object`` : les contrôleurs, les vues, les modèles, l'application elle-même.
 
-C'est cette classe qui permet aux objets [Ember][ember] de partager des comportements communs. Chaque objet [Ember][ember] est ainsi capable d'observer les valeur de propriétés portées par d'autres objets, d'éventuellement lier leurs propres propriétés à celles des objets observer, de construire et d'exposer des propriétés calculées, etc.
+C'est cette classe qui permet aux objets [Ember][ember] de partager des comportements communs. Chaque objet [Ember][ember] est ainsi capable d'observer les valeur de propriétés portées par d'autres objets, d'éventuellement lier leurs propres propriétés à celles des objets observés, de construire et d'exposer des propriétés calculées, etc.
 
 Nous allons explorer pas à pas certains de ces comportements. Pour cela, il faut en premier lieu disposer de l'objet [Ember][ember] lui-même.
 
@@ -66,7 +66,7 @@ Pour définir et utiliser un nouvel objet [Ember][ember], il est nécessaire d'�
 <div class="work">
     {% capture m %}
 
-1. Dans la console, créer une classe `Book` qui étend `Ember.Object` et définit une méthode `logTitle` affichant en console une châine de caractères (le titre) passée en paramètre.
+1. Dans la console, créer une classe `Book` qui étend `Ember.Object` et définit une méthode `logTitle` affichant en console une chaîne de caractères (le titre) passée en paramètre.
 
     > ```javascript
     > > Book = Ember.Object.extend({
@@ -214,20 +214,20 @@ Les méthodes de la classe mère peuvent être accédées via l'appel de la mét
     > ```
 
     L'appel à la méthode mère doit donc être explicite. Lorsque vous héritez d'un objet Ember (``Controller``, ``View``, ``Route``, etc.) et que vous surchargez la méthode ``init`` dans votre implémentation, soyez sûr de bien appeler la méthode ``_super`` au
-    tout début de l'init. Dans le cas contraire, les traitements d'initialisation standard prévus par [Ember](http://emberjs.com) ne pourraient pas s'exécuter correctement entyraînant des comportements erratiques.
+    tout début de l'init. Dans le cas contraire, les traitements d'initialisation standard prévus par [Ember](http://emberjs.com) ne pourraient pas s'exécuter correctement entraînant des comportements erratiques.
 
   {% endcapture %}{{ m | markdownify }}
 </div>
 
 #### Accesseurs
 
-Jusqu'à présent, nous ne nous sommes pas posé beaucoup de questions sur la manière d'accéder aux propriétés des objects [Ember][ember]. 
+Jusqu'à présent, nous ne nous sommes pas posé beaucoup de questions sur la manière d'accéder aux propriétés des objets [Ember][ember]. 
 Pourtant, tout ``Ember.Object`` expose des accesseurs qu'il est nécessaire d'utiliser.
 
 <div class="work">
     {% capture m %}
 
-1. En se basant sur le code de la classe ``Book`` créée précédement et sur l'instance one, effectuer les opérations suivantes :
+1. En se basant sur le code de la classe ``Book`` créée précédemment et sur l'instance one, effectuer les opérations suivantes :
 
     ```javascript
     > one.title;
@@ -259,10 +259,10 @@ Pourtant, tout ``Ember.Object`` expose des accesseurs qu'il est nécessaire d'ut
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-Lorsqu'on essaie de faire une affectation directe sur une propriété dun ``Ember.Object``, une exception explicite est levée nous obligeant à appeler le setter ``Ember.set()``.
+Lorsqu'on essaie de faire une affectation directe sur une propriété d'un ``Ember.Object``, une exception explicite est levée nous obligeant à appeler le setter ``Ember.set()``.
 
 La raison est qu'[Ember][ember] met en place un certain nombre de mécanismes que nous explorerons par la suite. Parmi ces mécanismes, les ``computed properties``, les ``observers`` ainsi que
-l'ensemble des mécanismes de binding du template qui permettent au framework de réagir de manière native et transparent aux changements survenant sur différents objets.
+l'ensemble des mécanismes de binding du template qui permettent au framework de réagir de manière native et transparente aux changements survenant sur différents objets.
 
 Les mécanismes de binding sont, en particulier, au coeur du moteur de rendu d'[Ember][ember]. Ces mécanismes permettent aux templates html de se mettre automatiquement à jour lors d'un changement
 sur un objet et cela de manière performante et ciblée, sans avoir à parcourir l'ensemble des objets connus.
@@ -618,7 +618,7 @@ est de permettre la séquence suivante :
 
 #### Propriétés calculées sur les collections
 
-Ember prévoit également que ses propriétés calculées puissent s'appuyer sur des évènements portant sur les éléments d'une collections (ajout, suppression, modification). Cela est possible au
+Ember prévoit également que ses propriétés calculées puissent s'appuyer sur des évènements portant sur les éléments d'une collection (ajout, suppression, modification). Cela est possible au
 travers de la notation ``myCollection.@each.myProperty`` ou encore ``myCollection.[]``.
 
 <div class="work">
@@ -640,8 +640,8 @@ créer deux nouvelles séries :
     > three = Comic.create({title:'three'});
     ```
 
-1. Réouvrir ``Collection`` pour y  ajouter une propriété calculée permettant de compter le nombre de livres publiés au sein de la collection. Cette propriété doit être déclenché
-lors de la modification de l'un des status ``isPublished`` des éléments de la collection ``books``, lors d'un ajout ou d'une suppression (``books.@each.isPublished``). Cette propriété
+1. Réouvrir ``Collection`` pour y  ajouter une propriété calculée permettant de compter le nombre de livres publiés au sein de la collection. Cette propriété doit être déclenchée
+lors de la modification de l'un des statuts ``isPublished`` des éléments de la collection ``books``, lors d'un ajout ou d'une suppression (``books.@each.isPublished``). Cette propriété
 retourne le nombre de livres publiés dans la collection. Placer un log dans la fonction de manière à tracer son exécution.
 
     Créer ensuite une collection contenant les trois séries créées.
@@ -724,7 +724,7 @@ Des observeurs [Ember][ember] peuvent également être déclarés sur toute prop
 <div class="work">
     {% capture m %}
 
-1. Déclarer un observeur du changement de la propriété calculée ``authors``. Créer une nouvelle instance de ``Comic`` et noter le moment ou l'observeur est appelé.
+1. Déclarer un observeur du changement de la propriété calculée ``authors``. Créer une nouvelle instance de ``Comic`` et noter le moment où l'observeur est appelé.
 
     > ```javascript
     > > Comic.reopen({
@@ -751,9 +751,9 @@ Des observeurs [Ember][ember] peuvent également être déclarés sur toute prop
 La documentation est très complète sur le sujet et il n'est nul besoin de la paraphraser ici, je vous invite donc à vous y reporter [ici](http://guides.emberjs.com/v2.1.0/object-model/observers/).
 Cependant, pour résumer, il est bon de noter les points suivants : 
 
-* Les observeurs sont exécutés de manière **synchrône** comme on a pu le constater. le déclenchement a eu lieu immédiatement après la modification du de la propriété, avant même le calcul de la
+* Les observeurs sont exécutés de manière **synchrône** comme on a pu le constater. le déclenchement a eu lieu immédiatement après la modification de la propriété, avant même le calcul de la
   propriété calculée qui en dépend.
-* Cela signifie que plusieurs modifications déclencherons plusieurs fois les observeurs de manière non optimisée. Si l'on souhaite maîtriser d'avantage ces déclenchements, il est nécessaire de
+* Cela signifie que plusieurs modifications déclencheront plusieurs fois les observeurs de manière non optimisée. Si l'on souhaite maîtriser d'avantage ces déclenchements, il est nécessaire de
   faire appel à la méthode ``Ember.run.once`` comme expliqué dans la [documentation](http://guides.emberjs.com/v2.1.0/object-model/observers/)
   
 Les observeurs permettent donc de déclencher des traitements (et non de recalculer des propriétés) lors du changement d'une propriété. Ils sont en particulier très utiles lorsque l'on souhaite 
@@ -761,9 +761,9 @@ déclencher un traitement après que le *binding* ait été effectué.
 
 ### API Collections (``Enumerables``)
 
-Ember gère ses collections et énumérations (et nous propose de gérer les notres) au travers d'objets [Ember.Enumerable](http://emberjs.com/api/classes/Ember.Enumerable.html). Cette API
+Ember gère ses collections et énumérations (et nous propose de gérer les nôtres) au travers d'objets [Ember.Enumerable](http://emberjs.com/api/classes/Ember.Enumerable.html). Cette API
 s'appuie sur les opérations de l'API javascript standard (``array``). Cette API permet de gérer toutes les collections d'objets via une interface normalisée et commune et nous permet donc
-d'utiliser et de proposer des structures de données complètements nouvelles sans impact sur le reste de notre application.
+d'utiliser et de proposer des structures de données complètement nouvelles sans impact sur le reste de notre application.
 
 Cette API est décrite de manière succinte [ici](http://guides.emberjs.com/v2.0.0/object-model/enumerables/) et exhaustive [ici](http://emberjs.com/api/classes/Ember.Enumerable.html).
 

@@ -10,7 +10,7 @@ next: ember/training/underlyings
 
 [Ember][ember] se définit comme : "A framework for creating **ambitious** web applications". Deux mots sont à appuyer particulièrement :
 
-* **web** : l'une des caractéristiques majeures d'[Ember][ember] est son attachement au web et aux URLs en particulier. **Les URLs et donc le routeur sont au cœur d'Ember** là ou bien d'autres frameworks les considèrent au mieux comme un addon important.
+* **web** : l'une des caractéristiques majeures d'[Ember][ember] est son attachement au web et aux URLs en particulier. **Les URLs et donc le routeur sont au cœur d'Ember** là où bien d'autres frameworks les considèrent au mieux comme un add-on important.
 
 * **framework** : [Ember][ember] est réellement un framework. Pas une lib, pas une colonne vertébrale, pas une boîte à outils : un framework avec un véritable modèle de développement qu'il est nécessaire d'adopter.
 
@@ -25,7 +25,7 @@ Typiquement pour une URL `test`, [Ember][ember] s'attend à trouver une `TestRou
 
 ## Modèles
 
-Un modèle est un objet avec des propriétés contenant des données métier. Le modèle est ensuite passé au template pour être rendu par lui
+Un modèle est un objet avec des propriétés contenant des données métier. Le modèle est ensuite passé au template pour être rendu par celui-ci
 en HTML. Typiquement, les modèles peuvent être récupérés d'un back end via une API REST JSON via [Ember Data](https://github.com/emberjs/data) abordé plus loin mais pas uniquement. Dans le premier cas, il s'agit d'un objet de type ``DS.Model``, ``DS`` étant le namespace commun à tous les éléments d'[Ember Data](https://github.com/emberjs/data).
 
 ```js
@@ -91,7 +91,7 @@ Le contrôleur gère l'état de l'application. Il est situé entre la route dont
 ```js
 App.BooksController = Ember.ArrayController.extend({
   actions: {
-    // appelé lors du clic sur le bouton
+    // appelée lors du clic sur le bouton
     sort: function () {
         ...
     }
@@ -126,7 +126,7 @@ Dans [Ember][ember], les templates peuvent contenir un élément très important
 ```
 
 Tout élément de modèle injecté dans un template sera **automatiquement mis à jour** (binding) par [Ember][ember] lorsque le modèle associé au template sera modifié. 
-Évidemment, seul cet élément sera rafraîchit et non le template entier. Ce *binding*, qu'il soit unidirectionnel ou bidirectionnel est au coeur du fonctionnement d'[Ember][ember].
+Évidemment, seul cet élément sera rafraîchi et non le template entier. Ce *binding*, qu'il soit unidirectionnel ou bidirectionnel est au coeur du fonctionnement d'[Ember][ember].
 
 -> [doc officielle](http://guides.emberjs.com/v2.1.0/templates/handlebars-basics/).
 
@@ -135,7 +135,7 @@ Tout élément de modèle injecté dans un template sera **automatiquement mis �
 
 Un composant [Ember][ember] permet de définir une balise HTML personnalisée, permettant ainsi de partager de puissants éléments réutilisables au sein d'une application [Ember][ember]. Depuis toujours [Ember][ember]
 met fortement en avant son approche composants. Avec la version 2, celle-ci s'est encore renforcée avec la disparition des *vues*, avantageusement remplacées par des composants. Les composants Ember peuvent embarquer
-des controlleurs explicites ou non qui se comportent comme n'importe quel controlleur. Dans les toutes prochaine sversions à venir, l'apparition de composants directement routable devrait rendre l'utilisation de controlleurs
+des contrôleur explicites ou non qui se comportent comme n'importe quel contrôleur. Dans les toutes prochaines versions à venir, l'apparition de composants directement routables devrait rendre l'utilisation de contrôleurs
 seuls obsolète.
 
 -> [doc officielle](http://emberjs.com/guides/components/).
