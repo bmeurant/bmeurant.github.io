@@ -19,7 +19,7 @@ Il est donc tout à fait possible d'organiser son application [Ember][ember] com
 - on peut essayer d'organiser nous-même notre application, nos fichiers, gérer des modules, etc. Tout ça va passer par l'utilisation 
   d'un outil de build javascript de type [Grunt](http://gruntjs.com/), [Gulp](http://gulpjs.com/), [Broccoli][broccoli]. 
   Ces outils vont nous permettre de concaténer nos différents fichiers JavaScript en un seul, de sortir les gabarits dans des fichiers
-  `.hbs` et de les précompiler. On n'aura ensuite qu'à importer ces fichiers dans notre index.html :
+  `.hbs` et de les précompiler. On aura ensuite qu'à importer ces fichiers dans notre index.html :
 
 Cependant, la complexité et la richesse des applications [Ember][ember] augmentant, le besoin de disposer d'un outillage plus complet
 et plus adapté s'est rapidement fait sentir. C'est suite à ce besoin que le projet [Ember CLI][ember-cli] est né, porté par une partie de la core team [Ember][ember]. Depuis, [Ember CLI][ember-cli] est
@@ -148,7 +148,7 @@ Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de pro
 
 * Un **asset pipeline** complet : A la manière d'une succession de tâches ``Grunt`` ou ``Gulp``, [Ember CLI][ember-cli] propose des outils pour compiler les templates, exécuter les pré-processeurs CSS,
   servir et minifier JS et CSS, etc. cf [Asset compilation](http://www.ember-cli.com/user-guide/#asset-compilation)
-* Exécuter les tests. cf. [Tests](http://www.ember-cli.com/user-guide/#testing)
+* L'exécution des tests. cf. [Tests](http://www.ember-cli.com/user-guide/#testing)
 * La translation des conventions de nommage [Ember][ember] en structure de fichiers. cf. [Naming conventions](http://www.ember-cli.com/user-guide/#naming-conventions)
 * La gestion des dépendances et librairies via ``Bower`` et ``Broccoli``. cf [Managing dependencies](http://www.ember-cli.com/user-guide/#naming-conventions)
 * La gestion des environnements. cf. [Environnements](http://www.ember-cli.com/user-guide/#Environments). Un certain nombre de configuration sont mises en place et adaptées en fonction des environnements 
