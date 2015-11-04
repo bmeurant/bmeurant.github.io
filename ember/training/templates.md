@@ -49,7 +49,7 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
 
 1. Commençons simplement par modifier le titre de l'application par `"Comic books library"` et par faire quelques autres modifications destinées à intégrer le style [Bootstrap](http://getbootstrap.com/) :
 
-    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 01 - Should include Bootstrap header](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 01 - Should include Bootstrap header](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L38) passant.*
 
     ```html
     <!-- /app/templates/application.hbs -->
@@ -287,7 +287,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
     **Style** : encapsuler la liste dans une ``<div class="comics">``
     
-    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 02 - Should display comics](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 02 - Should display comics](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L55) passant.*
       
     >  ```javascript
     >  // app/routes/application.js
@@ -346,7 +346,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
       Ajouter à la liste un comic en renseignant son auteur pour constater les changements.
      
      
-       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 03 - Should display author if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) passant.*
+       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 03 - Should display author if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L87) passant.*
 
      
        >  ```javascript
@@ -391,7 +391,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     
     **style** : utiliser les classes `comic-with-author` et `comic-without-author`.
     
-    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 04 - Should change class if no author](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 04 - Should change class if no author](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L115) passant.*
     
     > ```html
     > <!-- app/templates/application.hbs -->
@@ -411,7 +411,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 1. Modifier le template pour afficher un simple message `"Sorry, no comic found"` si la liste est vide. 
     * Via la console, supprimer tous les objets de la liste et constater les changements. 
     
-       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 05 - Should display message if empty](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) passant.*
+       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 05 - Should display message if empty](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L133) passant.*
  
     > ```html
     > <!-- app/templates/application.hbs -->
