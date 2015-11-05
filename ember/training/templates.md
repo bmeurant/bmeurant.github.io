@@ -8,8 +8,9 @@ next: ember/training/routing
 
 {% raw %}
 
-**NB :** *Les exercices de cette section seront validés par le passage des [cas de tests associés](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js).
-Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet.*
+**NB :** *Les exercices de cette section seront validés par le passage des cas de tests associés. Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet* :
+
+* [01-templates-test.js](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) dans ``tests/acceptance``.
 
 ## Templating
 
@@ -30,7 +31,7 @@ La fonction la plus basique d'un template [Handlebars][handlebars] consiste donc
 tel qu'il a été généré par [Ember CLI][ember-cli] :
 
 ```html
-<!-- /app/templates/application.hbs -->
+{{!-- /app/templates/application.hbs --}}
 
 <h2 id="title">Welcome to Ember</h2>
 
@@ -52,7 +53,7 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
     **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 01 - Should include Bootstrap header](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L38) passant.*
 
     ```html
-    <!-- /app/templates/application.hbs -->
+    {{!-- /app/templates/application.hbs --}}
     <div class="container">
     
       <div class="page-header">
@@ -109,7 +110,7 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
     On peut ensuite utiliser cet objet dans notre template : 
     
     ```html
-    <!-- /app/templates/application.hbs -->
+    {{!-- /app/templates/application.hbs --}}
     
     <div class="container">
     
@@ -304,7 +305,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     >  ```
     >  
     >  ```html
-    >  <!-- app/templates/application.hbs -->
+    >  {{!-- app/templates/application.hbs --}}
     >  ...
     >  <div class="row">
     >    <div class="comics">
@@ -353,46 +354,46 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
       Ajouter à la liste un comic en renseignant son auteur pour constater les changements.
      
      
-       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 03 - Should display scriptwriter if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L87) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 03 - Should display scriptwriter if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L87) passant.*
 
-     
-       >  ```javascript
-       >  // app/routes/application.js
-       >  ...
-       >  window.comics = [{title: "BlackSad"}, {title: "Calvin and Hobbes", scriptwriter:"Bill Watterson"}];
-       >  ...
-       >  ```
-       >  ```html
-       >  <!-- app/templates/application.hbs -->
-       >  ...
-       >  <ul>
-       >    {{#each model as |comic|}}
-       >      <li>{{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}</li>
-       >    {{/each}}
-       >  </ul>
-       >  ...
-       >  ```    
-       >
-       > * Pour effectuer l'affichage conditionnel on a utilisé le *helper inline* if tertiaire : ``{{if <condition> <val_if_true> <val_if_false>}}``
+    
+    >  ```javascript
+    >  // app/routes/application.js
+    >  ...
+    >  window.comics = [{title: "BlackSad"}, {title: "Calvin and Hobbes", scriptwriter:"Bill Watterson"}];
+    >  ...
+    >  ```
+    >  ```html
+    >  {{!-- app/templates/application.hbs --}}
+    >  ...
+    >  <ul>
+    >    {{#each model as |comic|}}
+    >      <li>{{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}</li>
+    >    {{/each}}
+    >  </ul>
+    >  ...
+    >  ```    
+    >
+    > * Pour effectuer l'affichage conditionnel on a utilisé le *helper inline* if tertiaire : ``{{if <condition> <val_if_true> <val_if_false>}}``
 
      
 1. Via la console, modifier ensuite les objets de la liste.
     * Le premier objet d'abord (sans auteur) en supprimant / ajoutant le champ `scriptwriter`. 
     * Puis le second (avec auteur) pour modifier la valeur de la propriété `scriptwriter`.
     
-       Que constate-t-on ?
-      
-       > ```javascript
-       >  > Ember.set(comics[0], 'scriptwriter', "Juan Diaz Canales")
-       >  "Juan Diaz Canales"
-       >  .
-       >  > Ember.set(comics[1], 'scriptwriter', "New scriptwriter")
-       >  "New scriptwriter"
-       > ```
-       >  
-       > * Dans le premier cas, lorsqu'on ajoute une nouvelle propriété à un objet existant, le changement n'est pas detecté puisque la propriété n'était pas observée par [Ember](http://emberjs.com). Le template
-       >   n'est pas mis à jour.
-       > * Dans le second cas, lorsque l'on modifie une propriété existante, le binding fonctionne parfaitement et le template est mis à jour
+    Que constate-t-on ?
+    
+    > ```javascript
+    >  > Ember.set(comics[0], 'scriptwriter', "Juan Diaz Canales")
+    >  "Juan Diaz Canales"
+    >  .
+    >  > Ember.set(comics[1], 'scriptwriter', "New scriptwriter")
+    >  "New scriptwriter"
+    > ```
+    >  
+    > * Dans le premier cas, lorsqu'on ajoute une nouvelle propriété à un objet existant, le changement n'est pas detecté puisque la propriété n'était pas observée par [Ember](http://emberjs.com). Le template
+    >   n'est pas mis à jour.
+    > * Dans le second cas, lorsque l'on modifie une propriété existante, le binding fonctionne parfaitement et le template est mis à jour
     
 1. Modifier l'affichage de chaque comic pour changer la classe de l'élément en fonction du fait que l'auteur soit renseigné ou non.
     
@@ -401,7 +402,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 04 - Should change class if no scriptwriter](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L115) passant.*
     
     > ```html
-    > <!-- app/templates/application.hbs -->
+    > {{!-- app/templates/application.hbs --}}
     > ...
     > <ul>
     >   {{#each model as |comic|}}
@@ -421,7 +422,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
        **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 05 - Should display message if empty](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L133) passant.*
  
     > ```html
-    > <!-- app/templates/application.hbs -->
+    > {{!-- app/templates/application.hbs --}}
     > ...
     > <ul>
     >   {{#each model as |comic|}} 

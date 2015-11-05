@@ -67,7 +67,8 @@ App.Router.map(function() {
 
 ## Routes
 
-Les routes associent un modèle à un template et sont également impliquées dans les transitions entre les différentes URLs (et donc les différents états) de l'application. Elles gèrent notamment un certain nombre d'opérations sur un modèle lors de ces transitions.
+Les routes associent un modèle à un template et sont également impliquées dans les transitions entre les différentes URLs (et donc les différents états) de l'application. 
+Elles gèrent notamment un certain nombre d'opérations sur un modèle lors de ces transitions.
 
 ```js
 App.BooksRoute = Ember.Route.extend({
@@ -82,7 +83,9 @@ App.BooksRoute = Ember.Route.extend({
 
 ## Contrôleurs
 
-Le contrôleur gère l'état de l'application. Il est situé entre la route dont il récupère le modèle et le template dont il répond aux appels. Le template accède aux données du contrôleur et le contrôleur accède aux données du modèle. Le contrôleur est par exemple responsable du traitement des actions effectuées par l'utilisateur sur l'interface rendue par le template :
+Le contrôleur gère l'état de l'application. Il est situé entre la route dont il récupère le modèle et le template dont il répond aux appels. 
+Le template accède aux données du contrôleur et le contrôleur accède aux données du modèle. Le contrôleur est par exemple responsable du traitement des actions effectuées par 
+l'utilisateur sur l'interface rendue par le template :
 
 ```html
 <button {{action "sort"}}></button>
@@ -115,7 +118,8 @@ L'exemple suivant permet d'afficher le titre d'une app composé d'un prénom et 
 
 [Handlebars](http://handlebarsjs.com/) vient avec de nombreux outils (helpers) permettant de dynamiser nos templates : `{{#if isActive}} ... {{/if}}`, `{{#each users}} ... {{/each}}`, etc.
 
-Dans [Ember][ember], les templates peuvent contenir un élément très important : un `{{outlet}}`. Cet outlet définit un emplacement pour un autre gabarit permettant ainsi de multiples imbrications à mesure que les routes de l'application sont activées.
+Dans [Ember][ember], les templates peuvent contenir un élément très important : un `{{outlet}}`. Cet outlet définit un emplacement pour un autre template permettant ainsi de multiples 
+imbrications à mesure que les routes de l'application sont activées.
 
 ```html
 <h1>{{firstname}} {{lastname}} Library</h1>
@@ -133,10 +137,10 @@ Tout élément de modèle injecté dans un template sera **automatiquement mis �
 
 ## Composants
 
-Un composant [Ember][ember] permet de définir une balise HTML personnalisée, permettant ainsi de partager de puissants éléments réutilisables au sein d'une application [Ember][ember]. Depuis toujours [Ember][ember]
-met fortement en avant son approche composants. Avec la version 2, celle-ci s'est encore renforcée avec la disparition des *vues*, avantageusement remplacées par des composants. Les composants Ember peuvent embarquer
-des contrôleur explicites ou non qui se comportent comme n'importe quel contrôleur. Dans les toutes prochaines versions à venir, l'apparition de composants directement routables devrait rendre l'utilisation de contrôleurs
-seuls obsolète.
+Un composant [Ember][ember] permet de définir une balise HTML personnalisée, permettant ainsi de partager de puissants éléments réutilisables au sein d'une application [Ember][ember]. 
+Depuis toujours [Ember][ember] met fortement en avant son approche composants. Avec la version 2, celle-ci s'est encore renforcée avec la disparition des *vues*, avantageusement remplacées par des composants.
+Les composants Ember peuvent embarquer des contrôleur explicites ou non qui se comportent comme n'importe quel contrôleur. Dans les toutes prochaines versions à venir, l'apparition de composants 
+directement routables devrait rendre l'utilisation de contrôleurs seuls obsolète.
 
 -> [doc officielle](http://emberjs.com/guides/components/).
 
@@ -163,13 +167,14 @@ App.Router.map(function() {
 
 * **route** : `AboutRoute`
 * **contrôleur** : `AboutController`
-* **gabarit** : `about`
+* **template** : `about`
 
 Dans une application [Ember][ember], **il n'est donc nécessaire de définir que ce dont on a besoin !**
 
 -> [doc officielle](http://emberjs.com/guides/routing/generated-objects/).
 
-Un bon moyen de se rendre compte de ça consiste à installer le debugger Ember sur votre navigateur préféré. Vous aurez, entre autres, la liste de l'ensemble des objets impliqués dans le rendu d'une URL donnée. Cette liste distingue de manière claire les objets créés par vous et ceux générés par Ember.
+Un bon moyen de se rendre compte de ça consiste à installer le debugger Ember sur votre navigateur préféré. Vous aurez, entre autres, la liste de l'ensemble des objets impliqués dans le rendu d'une URL 
+donnée. Cette liste distingue de manière claire les objets créés par vous et ceux générés par Ember.
 
 Ce module s'appelle **Ember Inspector** et est disponible pour [Chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi?hl=en)
 et [Firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/). C'est absolument indispensable lorsqu'on développe en Ember.
@@ -179,9 +184,12 @@ et [Firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/). C
 
 [Ember][ember] est donc un framework très riche et extrêmement plaisant à pratiquer. C'est aussi et surtout **un vrai framework avec un vrai parti pris et des vrais choix structurants.**
 
-Il est résolument tourné vers le web et les URLs. Ses créateurs sont également ceux de son moteur de templates [Handlebars](http://handlebarsjs.com/) et sont très impliqués dans diverses initiatives autour de la standardisation et de l'évolution du web. Pour n'en citer que deux : [JSON API](http://jsonapi.org/) et [Web Components](https://gist.github.com/wycats/9144666b0c606d1838be), notamment au travers du compilateur de templates [HTMLBars](https://github.com/tildeio/htmlbars).
+Il est résolument tourné vers le web et les URLs. Ses créateurs sont également ceux de son moteur de templates [Handlebars](http://handlebarsjs.com/) et sont très impliqués dans diverses initiatives 
+autour de la standardisation et de l'évolution du web. Pour n'en citer que deux : [JSON API](http://jsonapi.org/) et [Web Components](https://gist.github.com/wycats/9144666b0c606d1838be), 
+notamment au travers du compilateur de templates [HTMLBars](https://github.com/tildeio/htmlbars).
 
-Ils embrassent très rapidement les nouveaux standards tels que [ES6 Harmony](https://people.mozilla.org/~jorendorff/es6-draft.html) à l'image des travaux effectués autour d'[ember-cli](http://www.ember-cli.com/).
+Ils embrassent très rapidement les nouveaux standards tels que [ES6 Harmony](https://people.mozilla.org/~jorendorff/es6-draft.html) à l'image des travaux effectués autour 
+d'[ember-cli](http://www.ember-cli.com/).
 
 Enfin, contrairement aux *a priori*, la courbe d'apprentissage d'[Ember][ember] est progressive et il est très simple à prendre en main une fois les concepts de base appréhendés.
 
