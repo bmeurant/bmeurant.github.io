@@ -63,37 +63,37 @@ On souhaite désormais créer une nouvelle route pour l'affichage et la manipula
     On remarque que plusieurs éléments ont été générés / modifiés :
     * le routeur (``app/router.js``), d'abord, qui déclare désormais notre nouvelle route :
        
-       ```javascript
-       Router.map(function() {
-         this.route('comics');
-       });
-       ```
+        ```javascript
+        Router.map(function() {
+          this.route('comics');
+        });
+        ```
     * une nouvelle route ``app/routes/comics.js`` vide.
     
-       ```javascript
-       export default Ember.Route.extend({
-       });
-       ```
+        ```javascript
+        export default Ember.Route.extend({
+        });
+        ```
     * un nouveau template ``app/templates/comics.hbs`` qui ne contient qu'un ``{{outlet}}``. Nous y reviendrons plus tard. (cf. [Routes imbriquées](#routes-imbriquees))
     
-       ```html
-       {{outlet}}
-       ```
+        ```html
+        {{outlet}}
+        ```
     * un nouveau test unitaire ``tests/unit/routes/comics-test.js``. Celui-ci ne contient qu'une simple assertion permettant de vérifier l'existence de la route.
     
-       ```javascript
-       moduleFor('route:comics', 'Unit | Route | comics', {
-         // Specify the other units that are required for this test.
-         // needs: ['controller:foo']
-       });
-       
-       test('it exists', function(assert) {
-         var route = this.subject();
-         assert.ok(route);
-       });
-       ```
-       
-       Mais nous reviendrons sur ce test et, plus généralement, sur les tests unitaires par la suite.
+        ```javascript
+        moduleFor('route:comics', 'Unit | Route | comics', {
+          // Specify the other units that are required for this test.
+          // needs: ['controller:foo']
+        });
+        
+        test('it exists', function(assert) {
+          var route = this.subject();
+          assert.ok(route);
+        });
+        ```
+    
+        Mais nous reviendrons sur ce test et, plus généralement, sur les tests unitaires par la suite.
   
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -111,7 +111,7 @@ La route est responsable :
 * de la gestion de l'ensemble des **actions** en lien avec le chargement, la mise à jour d'un modèle ou la **transition** vers une nouvelle route
 * du **rendu d'un template** (qu'il soit implicite ou explicite)
 
-C'est donc celle-ci qui sera notament chargée d'appeler le **backend** pour récupérer / envoyer des données et mettre ainsi les objets métier (modèle) à jour.
+C'est donc celle-ci qui sera notament chargée d'appeler le **backend** pour récupérer & envoyer des données et mettre ainsi les objets métier (modèle) à jour.
 
 Mais c'est aussi la route qui met en place les différents templates qu'il est nécessaire d'affichier lorsque l'on accède à une URL et l'organisation des routes au sein du routeur et leur
 imbrication préside donc à l'organisation des différents templates de notre application.
@@ -126,7 +126,7 @@ imbrication préside donc à l'organisation des différents templates de notre a
 
 1. Modifier le contenu du template ``app/templates/comics.hbs`` :
     * Déplacer l'affichage (template) et la gestion (route) de la liste de comics pour que cette liste soit gérée totalement au sein de la route ``/comics`` (en conservant
-      le titre de premier niveau dans le template ``app/templates/application.hbs``
+      le titre de premier niveau dans le template ``app/templates/application.hbs``)
     * Ajouter un sous-titre ``Comics list`` juste après l'ouverture de la ``<div class="comics">``
  
     **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
@@ -186,20 +186,105 @@ imbrication préside donc à l'organisation des différents templates de notre a
   {% endcapture %}{{ m | markdownify }}
 </div>
 
+La nouvelle route ``comics`` affiche désormais la liste de nos comics de la même manière qu'elle était affichée précédemment et est accessible
+via l'URL ``/comics``. On note à ce propos que l'URL n'a pas eu à être définie puisque, par convention, [Ember][ember] rend accessible une route
+à l'URL définie par son nom qualifié (nom de ses [ancètres](#routes-imbriquees) séparés par des `/` puis nom de la route). Si besoin, il est évidemment possible de
+personnaliser l'URL via l'option ``path`` fournie lors de la définition de la route :
+
+```javascript
+Router.map(function() {
+  this.route('comics', { path: '/livres' });
+});
+```
+
 ### Routes imbriquées
+
+{% raw %}
+
+On remarque également que le template définit dans le template de l'application (``application.hbs``) est toujours affiché (titre principal).
+Ceci est du au fait que la route ``comics`` est, comme toutes les routes d'une application [Ember][ember], imbriquée dans la route ``application``.
+
+En effet il s'agit de la route de base de toute l'application. A la manière d'un conteneur, cette route permet classiquement de mettre en place
+les éléments communs d'une application : *header*, *menu*, *footer*, ..., ainsi qu'un emplacement pour le contenu même de l'application : c'est
+la fonction du *helper* ``{{outlet}}``.
+
+Cette notion est au cœur d'[Ember][ember]. Lorsqu'une route est imbriquée dans une autre,
+[Ember][ember] va rechercher les templates de ces deux routes et remplacer la zone `{{outlet}}` de la route mère
+avec le rendu de la route fille. Ainsi de suite jusqu'à résolution complète de la route. Lors des transitions entre routes, les
+zones des `{{outlet}}` concernées par le changement, **et seulement elles**, sont mises à jour.
+
+Toute route fille (URL : ``mere/fille``) est déclarée dans le routeur en imbriquant sa définition dans celle de sa route mère (URL : ``mere``) 
+de la façon suivante : 
+
+```javascript
+// app/router.js
+...
+Router.map(function() {
+  this.route('mere', function() {
+    this.route('fille');
+  });
+});
+```
+
+La route fille viendra alors se rendre dans la zone définie par l'``{{outlet}}`` de sa route mère, à la manière de poupées russes.
+
+Par convention, les éléments constitutifs des routes filles (template, route, etc.) doivent être définies dans l'arborescence suivante :
+``.../<route_mere>/<route_fille>.[hbs|js]``
+
+{% endraw %}
 
 <div class="work">
   {% capture m %}
   {% raw %}
    
-1. Copier le test d'acceptance [02-routing-test.js](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js) dans ``tests/acceptance``.
-1. Renommer le test unitaire ``tests/unit/comics-test.js`` en ``tests/unit/02-routing-test.js``
+1. Créer une route ``index`` accessible à l'URL `/comics/` affichant uniquement le texte *"Please select on comic book for detailled information"*
+dans un paragraphe d'id ``no-selected-comic``.
+ 
+    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 02 - Should display text on comics/index](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+ 
+    **NB :** Dans notre cas, il n'est pas nécessaire de créer de fichier route (``app/routes/comics/index.js``) pour le moment puisque nous
+    n'avons aucune logique à y intégrer. Ceci met en évidence les capacités de **génération d'objets** d'[Ember](http://emberjs.com/) déjà 
+    évoquées dans le chapitre [Overview - Génération d'objets](../overview/#génération-d'objets). En effet, grâce aux conventions de nommage
+    d'[Ember](http://emberjs.com/), le framework génère pour nous dynamiquement les objets de base nécessaires à l'éxécution d'une route.
+    Seul le template est nécessaire. Il nous suffit ensuite de définir ces objet pour en fournir notre propre implémentation. En l'occurence,
+    l'objet route pour `comics.index` sera généré pour nous.
+    
+    > ```javascript
+    > // app/router.js
+    > ...
+    > Router.map(function() {
+    >   this.route('comics', function() {
+    >     this.route('index', {path: '/'});
+    >   });
+    > });
+    > ```
+    > 
+    > ```html
+    > {{!-- app/templates/comics.hbs --}}
+    > <div class="row">
+    >   <div class="comics">
+    >     ...
+    >   </div>
+    >   {{outlet}}
+    > </div>
+    > ```
+    > 
+    > ```html
+    > {{!-- app/templates/comics/index.hbs --}}
+    > Please select on comic book for detailled information.
+    > ```
+    > 
+    > On note la nécessité de l'``{{outlet}}`` dans la route mère ainsi que les arborescence et les noms utilisés. Enfin, on note également
+    > la personnalisation de l'URL via l'option `path`.
  
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
 </div>
 
 ### Routes implicites
+
+### Redirections et Transitions
+
  
 [handlebars]: http://handlebarsjs.com/
 [ember-cli]: http://www.ember-cli.com/

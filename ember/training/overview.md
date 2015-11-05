@@ -145,7 +145,7 @@ directement routables devrait rendre l'utilisation de contrôleurs seuls obsolè
 -> [doc officielle](http://emberjs.com/guides/components/).
 
 
-## Géneration d'objets
+## Génération d'objets
 
 Pour qu'un template soit rendu lorsqu'une URL est demandée, il faut donc que le routeur définisse cette URL, qu'elle soit implémentée par une route qui récupèrera un modèle qu'elle mettra à disposition du 
 contrôleur et du template. Le contrôleur écoutera les évènements en provenance du template et y apportera la réponse adaptée. 
