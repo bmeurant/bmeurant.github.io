@@ -6,9 +6,6 @@ prev: ember/training/templates
 next: ember/training/ember-data
 ---
 
-**NB :** *Les exercices de cette section seront validés par le passage des [cas de tests associés](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js).
-Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet.*
-
 ## Routeur
 
 Le routeur est un composant central d'[Ember][ember]. Loin de constituer une pièce rapportée venant compléter un framework existant il en est la pierre angulaire. 
@@ -42,13 +39,167 @@ d'un paramètre permettant de déterminer la manière dont seront construites ou
 Le fait que le routeur soit vide ne signifie pas pour autant qu'aucune route n'existe. Nous avons d'ailleurs pu constater que la route ``application`` (``/``) existait et était personnalisable.
 [Ember][ember] génère en effet pour nous des [Routes implicites](#routes-implicites) que nous aborderons plus loin.
 
+<div class="work no-answer">
+  {% capture m %}
+  {% raw %}
+  
+On souhaite désormais créer une nouvelle route pour l'affichage et la manipulation de notre liste de ``comics``
+  
+1. Utiliser le *scaffolding* d'[Ember CLI](http://www.ember-cli.com/) pour déclarer une nouvelle route dans le routeur de notre application.
+ 
+    ```console
+    $ ember generate route comics
+    
+    version: 1.13.8
+    installing route
+      identical app\routes\comics.js
+      identical app\templates\comics.hbs
+    updating router
+      add route comics
+    installing route-test
+      identical tests\unit\routes\comics-test.js
+    ```
+    
+    On remarque que plusieurs éléments ont été générés / modifiés :
+    * le routeur (``app/router.js``), d'abord, qui déclare désormais notre nouvelle route :
+       
+       ```javascript
+       Router.map(function() {
+         this.route('comics');
+       });
+       ```
+    * une nouvelle route ``app/routes/comics.js`` vide.
+    
+       ```javascript
+       export default Ember.Route.extend({
+       });
+       ```
+    * un nouveau template ``app/templates/comics.hbs`` qui ne contient qu'un ``{{outlet}}``. Nous y reviendrons plus tard. (cf. [Routes imbriquées](#routes-imbriquees))
+    
+       ```html
+       {{outlet}}
+       ```
+    * un nouveau test unitaire ``tests/unit/routes/comics-test.js``. Celui-ci ne contient qu'une simple assertion permettant de vérifier l'existence de la route.
+    
+       ```javascript
+       moduleFor('route:comics', 'Unit | Route | comics', {
+         // Specify the other units that are required for this test.
+         // needs: ['controller:foo']
+       });
+       
+       test('it exists', function(assert) {
+         var route = this.subject();
+         assert.ok(route);
+       });
+       ```
+       
+       Mais nous reviendrons sur ce test et, plus généralement, sur les tests unitaires par la suite.
+  
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
 ## Routes
 
+Le routeur se contente donc de déclarer l'existence d'une route - et donc d'une URL. La logique de cette route et son comportement se trouvent implémentés au sein d'une instance de
+``Ember.Route``. Par convention, celle-ci doit se trouver dans un fichier de même nom que celui définit dans le routeur (ici ``comics``) dans le répértoire ``app/routes``. A
+noter que dans le cas de [Routes imbriquées](#routes-imbriquees), l'arborescence de ce répertoire suit l'imbrication déclarée dans le routeur.
 
+La route est responsable : 
 
-## Routes imbriquées
+* de la **récupération et du chargement d'un modèle** (c'est à dire de la ou des données qui seront fournies à un template)
+* de la gestion de l'ensemble des **actions** en lien avec le chargement, la mise à jour d'un modèle ou la **transition** vers une nouvelle route
+* du **rendu d'un template** (qu'il soit implicite ou explicite)
 
-## Routes implicites
+C'est donc celle-ci qui sera notament chargée d'appeler le **backend** pour récupérer / envoyer des données et mettre ainsi les objets métier (modèle) à jour.
+
+Mais c'est aussi la route qui met en place les différents templates qu'il est nécessaire d'affichier lorsque l'on accède à une URL et l'organisation des routes au sein du routeur et leur
+imbrication préside donc à l'organisation des différents templates de notre application.
+
+<div class="work">
+  {% capture m %}
+  {% raw %}
+   
+1. Copier le test d'acceptance [02-routing-test.js](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js) dans ``tests/acceptance``.
+
+1. Renommer le test unitaire ``tests/unit/comics-test.js`` en ``tests/unit/02-routing-test.js``
+
+1. Modifier le contenu du template ``app/templates/comics.hbs`` :
+    * Déplacer l'affichage (template) et la gestion (route) de la liste de comics pour que cette liste soit gérée totalement au sein de la route ``/comics`` (en conservant
+      le titre de premier niveau dans le template ``app/templates/application.hbs``
+    * Ajouter un sous-titre ``Comics list`` juste après l'ouverture de la ``<div class="comics">``
+ 
+    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+
+    > ```html
+    > {{!-- app/templates/application.hbs --}}
+    > <div class="container">
+    > 
+    >   <div class="page-header">
+    >     <h1 id="title">Comic books library</h1>
+    >   </div>
+    > 
+    >   {{outlet}}
+    > 
+    > </div>
+    > ``` 
+    > 
+    > ```html
+    > {{!-- app/templates/comics.hbs --}}
+    > <div class="row">
+    >   <div class="comics">
+    >     <h2>Comics list</h2>
+    >     <ul>
+    >       {{#each model as |comic|}}
+    >         <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+    >           {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
+    >         </li>
+    >       {{else}}
+    >         Sorry, no comic found
+    >       {{/each}}
+    >     </ul>
+    >   </div>
+    > </div>
+    > ```
+    > 
+    > ```javascript
+    > // app/routes/application.js
+    > export default Ember.Route.extend({
+    > });
+    > ```
+    > 
+    > ```javascript
+    > // app/routes/comics.js
+    > export default Ember.Route.extend({
+    > 
+    >   model: function () {
+    >     // WARN : SOULD NOT BE DONE : We should not affect anything to windows but
+    >     // for the exercice, we want to access to comics from console today
+    >     window.comics = [{title: "BlackSad"}, {title: "Calvin and Hobbes", scriptwriter: "Bill Watterson"}];
+    > 
+    >     return window.comics;
+    >   }
+    > });
+    > ```
+ 
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
+### Routes imbriquées
+
+<div class="work">
+  {% capture m %}
+  {% raw %}
+   
+1. Copier le test d'acceptance [02-routing-test.js](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js) dans ``tests/acceptance``.
+1. Renommer le test unitaire ``tests/unit/comics-test.js`` en ``tests/unit/02-routing-test.js``
+ 
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
+### Routes implicites
  
 [handlebars]: http://handlebarsjs.com/
 [ember-cli]: http://www.ember-cli.com/
