@@ -389,7 +389,6 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
     
     let comics = [blackSad, calvinAndHobbes, akira]
     
-    
     export default Ember.Route.extend({
       model() {
         return comics;
@@ -415,11 +414,11 @@ et que seul le template était nécessaire. La route ``application`` est en effe
 
 Mais la route ``application`` n'est pas la seule route implicite gérée par [Ember][ember]. On peut le constater immédiatement par une simple manipulation :
 
-<div class="work">
+<div class="work no-answer">
   {% capture m %}
   {% raw %}
  
-1. Supprimer la déclaration de la route ``comics.index`` dans le routeur et constater l'absence de changement : la route existe toujours et sont fonctionnement
+1. Supprimer la déclaration de la route ``comics.index`` dans le routeur et constater l'absence de changement : la route existe toujours et son fonctionnement
 est strictement équivalent, le template ayant été conservé. 
  
   {% endraw %}
@@ -438,25 +437,31 @@ besoin de nous en occuper.
 
 On constate que plusieurs types de routes sont implicitement créées lors de la déclaration explicite d'une de nos routes applicatives :
 
-* index : 
-* loading :
-* error : 
+* ``index`` :
+    
+    Une route ``index`` est automatiquement disponible pour chaque niveau d'imbrication. Le template proposé pour cette route se rendra dans l'outlet de la route
+    mère. Si la route mère peut être considérée comme le conteneur de ses filles, la route ``index`` doit être vue comme la route par défaut. On a pu en effet constater ci-dessus
+    que ``comics.index`` permettait l'accès à l'URL ``/comics``
+    
+* ``loading`` / ``error`` : 
 
--> expliquer model, api backend
+    Lors des opérations ``beforeModel``, ``model`` et ``afterModel``, des évènements de type ``loading`` ou ``error`` peuvent être propagés pendant les 
+    opérations de récupération de modèle ou d'interrogation d'API ou si celles-ci tombent en erreur. Dans ces cas, [Ember][ember] appelle automatiquement les routes 
+    implicites ``loading`` / ``error`` créées pour chaque route
 
-A noter que le fonctionnement de ces routes et notamment la gestion de leur imbrication les unes par rapport aux autres fonctionnement rigoureusement de la même manière que toute
-route déclarée explicitement. En particulier au niveau du *bubbling* : les évènement *error* et *loading*, notamment, vont remonter la structure d'imbrication des routes les unes
-par rapport aux autres jusqu'à trouver une route en capacité de traiter cet évènement. Ce fonctionnement permet donc, au choix :
+    A noter que le fonctionnement de ces routes et notamment la gestion de leur imbrication les unes par rapport aux autres fonctionnement rigoureusement de la même manière que toute
+    route déclarée explicitement. En particulier au niveau du *bubbling* : les évènement *error* et *loading*, notamment, vont remonter la structure d'imbrication des routes les unes
+    par rapport aux autres jusqu'à trouver une route en capacité de traiter cet évènement. Ce fonctionnement permet donc, au choix :
 
-* de proposer une gestion des erreurs et du chargement commun à toute l'application au travers des routes ``application-loading`` et ``application-error``
-* de spécialiser la gestion de ces évènement au niveau local, par exemple pour un sous ensemble fonctionnel devant gérer les mêmes types d'erreurs, etc.
-
-En réalité, la bonne solution se trouve souvent dans un mix des deux avec la fourniture dun traitement général au niveau application spécialisé au besoin au niveau
-des routes mères.
+    * de proposer une gestion des erreurs et du chargement commun à toute l'application au travers des routes ``application-loading`` et ``application-error``
+    * de spécialiser la gestion de ces évènement au niveau local, par exemple pour un sous ensemble fonctionnel devant gérer les mêmes types d'erreurs, etc.
+    
+    En réalité, la bonne solution se trouve souvent dans un mix des deux avec la fourniture dun traitement général au niveau application spécialisé au besoin au niveau
+    des routes mères.
 
 On note enfin que, grâce capacités de **génération d'objets** d'[Ember](http://emberjs.com/) déjà évoquées dans le chapitre [Overview - Génération d'objets](../overview/#génération-d'objets), 
 les routes n'ont pas été les seuls objets à avoir été implicitement créés. En effet, on remarque que les contrôleurs et templates associés ont été également créés. Ils proposent une implémentation
-par défaut totalement vide, bien entendu.
+par défaut vide, bien entendu.
 
 ## Redirections et Transitions
 
