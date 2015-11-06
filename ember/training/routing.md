@@ -8,8 +8,8 @@ next: ember/training/actions-controllers
 
 ## Routeur
 
-Le routeur est un composant central d'[Ember][ember]. Loin de constituer une pièce rapportée venant compléter un framework existant il en est la pierre angulaire. 
-La compréhension et la manipulation du **routeur** et des **routes** est donc capitale dans l'appréhension du développement avec [Ember][ember].
+Le routeur est un composant central d'[Ember][ember]. Loin de constituer une pièce rapportée venant compléter un framework existant, il en est la pierre angulaire. 
+La compréhension et la manipulation du **routeur** et des **routes** sont donc capitales dans l'appréhension du développement avec [Ember][ember].
 
 Le routeur [Ember][ember] est unique au sein d'une application, c'est lui qui déclare les différentes **routes** qui seront proposées au sein de celle-ci et qui définit, le cas
 échéant, les chemins personnalisés, paramètres, routes imbriquées, etc.
@@ -111,10 +111,10 @@ La route est responsable :
 * de la **récupération et du chargement d'un modèle** (c'est à dire de la ou des données qui seront fournies à un template)
 * de la gestion de l'ensemble des **actions** en lien avec le chargement, la mise à jour d'un modèle ou la **transition** vers une nouvelle route
 
-C'est donc celle-ci qui sera notament chargée d'appeler le **backend** pour récupérer & envoyer des données et mettre ainsi les objets métier (modèle) à jour.
+C'est donc celle-ci qui sera notament chargée d'appeler le **backend** pour récupérer ey envoyer des données et mettre ainsi les objets métier (modèle) à jour.
 
-Mais c'est aussi la route qui met en place les différents templates qu'il est nécessaire d'affichier lorsque l'on accède à une URL et l'organisation des routes au sein du routeur et leur
-imbrication préside donc à l'organisation des différents templates de notre application.
+Mais c'est aussi la route qui met en place les différents templates qu'il est nécessaire d'afficher lorsque l'on accède à une URLL. L'organisation des routes au sein du routeur et leur
+imbrication président donc à l'organisation des différents templates de notre application.
 
 <div class="work">
   {% capture m %}
@@ -181,7 +181,7 @@ imbrication préside donc à l'organisation des différents templates de notre a
     > export default Ember.Route.extend({
     > 
     >   model: function () {
-    >     // WARN : SOULD NOT BE DONE : We should not affect anything to windows but
+    >     // WARN : SHOULD NOT BE DONE : We should not affect anything to windows but
     >     // for the exercice, we want to access to comics from console today
     >     window.comics = [{title: "BlackSad"}, {title: "Calvin and Hobbes", scriptwriter: "Bill Watterson"}];
     > 
@@ -196,7 +196,7 @@ imbrication préside donc à l'organisation des différents templates de notre a
 
 La nouvelle route ``comics`` affiche désormais la liste de nos comics de la même manière qu'elle était affichée précédemment et est accessible
 via l'URL ``/comics``. On note à ce propos que l'URL n'a pas eu à être définie puisque, par convention, [Ember][ember] rend accessible une route
-à l'URL définie par son nom qualifié (nom de ses [ancètres](#routes-imbriquees) séparés par des `/` puis nom de la route). Si besoin, il est évidemment possible de
+à l'URL définie par son nom qualifié (nom de ses [ancêtres](#routes-imbriquees) séparé par des `/` puis nom de la route). Si besoin, il est évidemment possible de
 personnaliser l'URL via l'option ``path`` fournie lors de la définition de la route. Par exemple :
 
 ```javascript
@@ -357,7 +357,7 @@ Router.map(function() {
 
 La route fille viendra alors se rendre dans la zone définie par l'``{{outlet}}`` de sa route mère, à la manière de poupées russes.
 
-Par convention, les éléments constitutifs des routes filles (template, route, etc.) doivent être définies dans l'arborescence suivante :
+Par convention, les éléments constitutifs des routes filles (template, route, etc.) doivent être définis dans l'arborescence suivante :
 ``.../<route_mere>/<route_fille>.[hbs|js]``
 
 {% endraw %}

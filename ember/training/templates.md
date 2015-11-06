@@ -449,7 +449,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
  
 ## Conclusion
 
-Cette section a permi d'explorer les aspects principaux du fonctionnement des templates et du binding dans [Ember][ember]. Au travers d'un exemple simple, nous avons pu nous familiariser également 
+Cette section a permis d'explorer les aspects principaux du fonctionnement des templates et du binding dans [Ember][ember]. Au travers d'un exemple simple, nous avons pu nous familiariser également 
 avec les *helpers* [Handlebars][handlebars]. Cependant nous n'avons couvert qu'une infime partie des caractéristiques et des outils proposés par [Ember][ember] dans ce domaine. Au fil des expérimentations
 à venir dans les sections suivantes, nous poursuivrons cette découverte au travers d'exemples concrêts et de mises en pratique. Des outils et *helpers* fondamentaux d'[Ember][ember] tels que ``link-to``, 
 ``action``, ``input`` ou encore ``textarea`` n'ont pas été abordés ici et seront largement détaillés par la suite.
