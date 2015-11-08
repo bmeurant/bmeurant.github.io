@@ -477,12 +477,11 @@ effectuant la correspondance avec la propriété ``prop`` du modèle ``name``.
 place du texte précédent. 
     * La nouvelle route doit répondre à l'URL ``/comics/<slug>`` ou ``slug`` correspond à la propriété ``slug`` du modèle ``comic``
     * Comme nous ne disposons pour l'instant pas de ``store`` nous permettant de disposer d'un référentiel partagé de nos modèles,
-      dupliquer intégralement la définition des modèles et de la liste de ``app/routes/comics.js`` dans 
-      ``app/routes/comics/comic.js``. 
+      utiliser la méthode ``modelFor`` pour récupérer le modèle de la route mère ``/comics``.
       
-      Modifier la route pour faire de la liste de comics une propriété de la route et non une variable globale.
+      [Ember][ember] fournit une méthode ``modelFor`` dans chaque route permettant de récupérer le modèle d'une route mère, 
+      directe ou non.
       
-      Cette solution n'est évidemment pas viable et nous aborderons plus tard la notion de ``store``
     * La route doit récupérer la valeur du paramètre ``slug`` et renvoyer le modèle correspondant. Utiliser la fonction Ember
       [filterBy](http://emberjs.com/api/classes/Ember.Array.html#method_filterBy)
     * Le template doit être modifié pour afficher le détail d'un comic :
@@ -536,42 +535,9 @@ place du texte précédent.
      > 
      > import Ember from 'ember';
      > 
-     > let Comic = Ember.Object.extend({
-     >   slug: '',
-     >   title: '',
-     >   scriptwriter: '',
-     >   illustrator: '',
-     >   publisher: ''
-     > });
-     > 
-     > let blackSad = Comic.create({
-     >   slug: 'blacksad',
-     >   title: 'BlackSad',
-     >   scriptwriter: 'Juan Diaz Canales',
-     >   illustrator: 'Juanjo Guarnido',
-     >   publisher: 'Dargaud'
-     > });
-     > 
-     > let calvinAndHobbes = Comic.create({
-     >   slug: 'calvin-and-hobbes',
-     >   title: 'Calvin and Hobbes',
-     >   scriptwriter: 'Bill Watterson',
-     >   illustrator: 'Bill Watterson',
-     >   publisher: 'Andrews McMeel Publishing'
-     > });
-     > 
-     > let akira = Comic.create({
-     >   slug: 'akira',
-     >   title: 'Akira',
-     >   scriptwriter: 'Katsuhiro Otomo',
-     >   illustrator: 'Katsuhiro Otomo',
-     >   publisher: 'Epic Comics'
-     > });
-     > 
      > export default Ember.Route.extend({
-     >   comics: [blackSad, calvinAndHobbes, akira]
      >   model (params) {
-     >     return this.get('comics').filterBy('slug', params.comic_slug).get(0);
+     >     return this.modelFor('comics').filterBy('slug', params.comic_slug).get(0);
      >   }
      > });
      > ```
@@ -786,7 +752,6 @@ complet au lieu du seul slug.
     > En observant la console, on constate que le *hook* ``model`` de la route ``app/routes/comics/comic.js``
     > n'a été exécuté que dans le second cas. Dans le premier, en effet, le modèle était déjà connu et a été passé
     > à la route en l'état. Il n'est donc pas nécessaire de le charger à nouveau.
-    
   
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -798,20 +763,8 @@ On a évoqué plus haut le fait qu'il n'était pas nécessaire de déclarer expl
 et que seul le template était nécessaire. La route ``application`` est en effet une route implicite ; créée, connue et gérée nativement par
 [Ember][ember]. C'est une route encore plus particulière car il s'agit de la route mère, du conteneur principal de toute application [Ember][ember].
 
-Mais la route ``application`` n'est pas la seule route implicite gérée par [Ember][ember]. On peut le constater immédiatement par une simple manipulation :
-
-<div class="work no-answer">
-  {% capture m %}
-  {% raw %}
- 
-1. Supprimer la déclaration de la route ``comics.index`` dans le routeur et constater l'absence de changement : la route existe toujours et son fonctionnement
-est strictement équivalent, le template ayant été conservé. 
- 
-  {% endraw %}
-  {% endcapture %}{{ m | markdownify }}
-</div>
- 
-D'autres routes encore sont créées comme le montre la capture ci-dessous pour notre application : 
+Mais la route ``application`` n'est pas la seule route implicite gérée par [Ember][ember]. D'autres routes implicites 
+encore sont créées comme le montre la capture ci-dessous pour notre application : 
 
 <p class="text-center">
     <img src="/images/implicit-routes.png" alt="Routes implicites"/>
@@ -849,13 +802,171 @@ On note enfin que, grâce capacités de **génération d'objets** d'[Ember](http
 les routes n'ont pas été les seuls objets à avoir été implicitement créés. En effet, on remarque que les contrôleurs et templates associés ont été également créés. Ils proposent une implémentation
 par défaut vide, bien entendu.
 
-## Redirections et Transitions
+<div class="work">
+  {% capture m %}
+  {% raw %}
+ 
+1. Ajouter le template pour la route ``comics.index`` et modifier le template de la route ``comics`` de manière à ce que le paragraphe
+``no-selected-comic`` ne s'affiche que lorsque aucun comic n'est selectionné. C'est à dire pour l'URL (``/comics``)
 
-rediriger / vers comics
+    On note que l'on n'a pas besoin de définir l'objet route ``app/routes/comics/index.js`` parce que celle-ci est implicitement
+    créée vide par [Ember][ember].
+    
+    > ```html
+    > {{!-- app/templates/comics.hbs --}}
+    > 
+    > <div class="row">
+    >   <div class="comics"...>
+    > 
+    >   {{outlet}}
+    > </div>
+    > ```
+    > 
+    > ```html
+    > {{!-- app/templates/comics/index.hbs --}}
+    > 
+    > <p id="no-selected-comic">
+    >   Please select on comic book for detailled information.
+    > </p>
+    > ```
+   
+1. On souhaite désormais gérer le cas où le comic demandé n'est pas trouvé.
+    * Modifier la route pour lever une erreur si le slug n'est pas trouvé (``throw Error("...")``)
+    * Ajouter un template ``error`` au niveau de l'application (``app/templates/error.error.hbs``). Ce template se 
+      contente d'afficher le model dans un paragraphe d'id ``error``
+      
+    > ```javascript
+    >   // app/routes/comics/comic.js
+    >   ...
+    >   model (params) {
+    >     let askedModel = this.modelFor('comics').filterBy('slug', params.comic_slug).get(0);
+    > 
+    >     if (askedModel == undefined) {
+    >       throw new Error("No comic found with slug: " + params.comic_slug);
+    >     }
+    > 
+    >     return askedModel;
+    >   }
+    > ```
+    > 
+    > ```html
+    > {{!-- app/templates/error.hbs --}}
+    > <p id="error">
+    >   {{model}}
+    > </p>
+    > ```
+   
+1. Dans notre cas il serait plus pertinent de gérer cette erreur au niveau de l'affichage d'un comic et non de 
+l'application.
+    * Copier le contenu du template ``app/templates/error.hbs`` dans un nouveau template ``app/templates/comics/error.hbs``
+    * Dans ``app/templates/error.hbs``, faire précéder le modèle du texte "Application error: "
+    * Dans ``app/templates/comics/error.hbs``, faire précéder le modèle du texte "Comic error: "
+    
+    > ```html
+    > {{!-- app/templates/error.hbs --}}
+    > <p id="error">
+    >   Application error: {{model}}
+    > </p>
+    > ```
+    >
+    > ```html
+    > {{!-- app/templates/error.hbs --}}
+    > <p id="error">
+    >   Comic error: {{model}}
+    > </p>
+    > ```
+    
+On constate que l'erreur levée au niveau ``comics/comic`` a été propagée au sein de l'application jusqu'à trouver un
+*handler*. Ce mécanisme permet de gérer les erreurs de la manière la plus contextuelle possible tout en proposant
+un gestionnaire par défaut pour toute l'application.
 
-beforeModel / after / redirect & routes imbriquées
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
 
-transitions et interceptions (plus tard)
+## Transitions & Redirections
+
+On a vu que l'on pouvait changer de route via l'utilisation de ``link-to``. Il est également possible d'effectuer la même
+opération depuis une route grâce à la méthode ``transitionTo`` ou depuis un contrôleur via ``transitionToRoute``.
+
+Dans une route, ces changements de route via ``transitionTo`` peuvent s'effectuer :
+* avant que l'on connaisse le modèle dans ``beforeModel`` dans le cas où la transition est systématique
+* après avoir récupéré le modèle dans ``afterModel`` si l'appel de la transition dépend de l'état ou de la valeur du modèle
+
+Dans les deux cas, l'appel à ``transitionTo`` stoppe et invalide toute transition en cours et en déclenche une nouvelle.
+
+L'appel à ``transitionTo`` au sein de routes imbriquées mérite donc une attention supplémentaire. En effet, les *hook* 
+``beforeModel``, ``model`` et ``afterModel`` sont exécutés en cascade, à la manière de poupées russes, depuis la route
+de plus haut niveau vers celle de plus bas niveau.
+
+Lorsque l'on effectue une transition depuis une route mère vers une route fille, la transition de la route mère est donc 
+invalidée et une nouvelle transition pour la route fille est démarrée. Or celle-ci implique l'invocation des *hooks* de
+sa route mère. Ce fonctionnement est loin d'être optimal puisque ceux-ci viennent à peine d'être exécutés.
+
+Dans ce cas il est préférable d'utiliser la méthode ``redirect`` qui agit exactement comme un ``transitionTo`` mais 
+conserve la transaction courante valide.
+
+<div class="work">
+  {% capture m %}
+  {% raw %}
+  
+1. Modifier la route application de manière à rediriger ``/`` vers ``/comics``
+    
+   **Test** : *Les modifications doivent permettre de rendre tout les tests du module [01 - Templates Acceptance Tests](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-template-test.js) passant de nouveau.*
+
+   > ```javascript
+   > //app/routes/application.js
+   >
+   > import Ember from 'ember';
+   > 
+   > export default Ember.Route.extend({
+   >   beforeModel() {
+   >     this.transitionTo('comics');
+   >   }
+   > });
+   > ```
+  
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
+## Namespaces
+
+Comme on a pu le constater, au sein d'une application [Ember][ember], les routes sont référencées par leur nom qualifié.
+Celui-ci se calcule en accolant les noms de l'ensemble des routes mères puis du nom de la route fille. Le tout séparés 
+par des ``.``.
+
+Ainsi la route définie de cette manière ...
+
+```javascript
+// app/router.js
+...
+Router.map(function() {
+  this.route('mere', function() {
+    this.route('fille');
+  });
+});
+```
+
+... sera référençable par le qualifieur ``mere.fille``. Par exemple :
+ 
+* dans un ``link-to`` : ``{{link-to "Titre route fille" "mere.fille"}}`` 
+* lors de l'appel d'un ``transitionTo`` : ``this.transitionTo('mere.fille');``
+
+Chaque niveau de route imbriquée est donc ajouté devant le nom de la route elle-même. Cela permet d'éviter les 
+collisions de nommage. Cependant, il peut s'avérer nécessaire ou préférable de conserver un nom court. Cela est
+possible en précisant que l'on souhaite réinitialiser le ``namespace`` via l'option ``resetNamespace`` dans le 
+routeur : 
+
+```javascript
+// app/router.js
+...
+Router.map(function() {
+  this.route('mere', function() {
+    this.route('fille', {resetNamespace: true});
+  });
+});
+```
 
 ...
  
