@@ -130,7 +130,7 @@ imbrication préside donc à l'organisation des différents templates de notre a
     * Ajouter un sous-titre ``Comics list`` juste après l'ouverture de la ``<div class="comics">``
     * Ajouter un paragraph de classe ``no-selected-comic`` juste après la fermeture de la ``<div class="comics">`` contenant le texte "Please select on comic book for detailled information."
  
-    **Test** : *Les modifications doivent permettre de rendre les tests suivants passants :
+    **Tests** : *Les modifications doivent permettre de rendre les tests suivants passants :
     * [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)*
     * [02 - Routing - 02 - Should display text on comics/](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)*
 
@@ -433,7 +433,149 @@ Par convention, les éléments constitutifs des routes filles (template, route, 
 
 ## Segments dynamiques
 
--> route comic/id
+Les routes que nous avons manipulés jusqu'à présent chargent un modèle statique (``comics``) ou pas de modèle du tout (``comics.comic``).
+Les routes [Ember][ember] permettent la gestion de segments de routes dynamiques, c'est à dire capables de récupérer un paramètre dynamique
+de l'URL pour aller rechercher et charger un modèle dont la valeur dépend de ce paramètre.
+
+Cela se fait en personalisant le ``path`` de la route via l'utilisation du caractère ``:`` :
+
+```javascript
+// app/router.js
+
+Router.map(function() {
+  this.route('book', { path: '/book/:book_id' });
+  this.route('user', { path: '/user/:user_name' });
+});
+```
+
+On récupère ensuite la valeur de ce paramètre dans le *hook* ``model()`` évoué plus haut de manière à récupérer le modèle correspondant
+au critère depuis un ``store``, une API ...
+
+```javascript
+// app/routes/book.js
+
+export default Ember.Route.extend({
+  model(params) {
+    return findModelById('book', params.book_id);
+  }
+});
+```
+
+Nous verrons plus loin que lorsque l'on s'appuie sur une libairie de gestion de la persistence telle que [Ember Data](../ember-data), le *hook*
+``model`` propose une implémentation par défaut qui effectuer seule ces opérations en s'appuyant sur les conventions d'[Ember][ember]. Nous y
+reviendrons plus loin.
+
+La notation ``<name>_<prop>`` constitue également une convention permettant à l'implémentation par défaut de ``model`` évoquée plus 
+haut de récupérer la valeur de ce paramètre et d'effectuer une recherche dans le ``store`` (cf. [chapitre Ember Data](../ember-data)) en
+effectuant la correspondance avec la propriété ``prop`` du modèle ``name``.
+
+<div class="work">
+  {% capture m %}
+  {% raw %}
+  
+1. Pour le moment, transformons la route ``comics.comic`` avec un segment dynamique nous permettant d'afficher le détail d'un comic à la 
+place du texte précédent. 
+    * La nouvelle route doit répondre à l'URL ``/comics/<slug>`` ou ``slug`` correspond à la propriété ``slug`` du modèle ``comic``
+    * Comme nous ne disposons pour l'instant pas de ``store`` nous permettant de disposer d'un référentiel partagé de nos modèles,
+      dupliquer intégralement la définition des modèles et de la liste de ``app/routes/comics.js`` dans 
+      ``app/routes/comics/comic.js``
+    * La route doit récupérer la valeur du paramètre ``slug`` et renvoyer le modèle correspondant. Utiliser la fonction Ember
+      [filterBy](http://emberjs.com/api/classes/Ember.Array.html#method_filterBy)
+    * Le template doit être modifié pour afficher le détail d'un comic :
+    
+    ```html
+    {{!-- app/templates/comics/comic.hbs --}}
+    
+    <div class="selected-comic">
+      <h3>{{model.title}}</h3>
+      <dl>
+        <dt>scriptwriter</dt>
+        <dd>{{model.scriptwriter}} </dd>
+        <dt>illustrator</dt>
+        <dd>{{model.illustrator}}</dd>
+        <dt>publisher</dt>
+        <dd>{{model.publisher}}</dd>
+      </dl>
+    </div>
+    ```
+    
+    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 04 - Should display the comic detail](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+
+     > ```javascript
+     > // app/router.js
+     > 
+     > Router.map(function () {
+     >   this.route('comics', function() {
+     >     this.route('comic', {path: '/:comic_slug'});
+     >   });
+     > });
+     > ```
+     > 
+     > ```html
+     > {{!-- app/templates/comics/comic.hbs --}}
+     > 
+     > <div class="selected-comic">
+     >   <h3>{{model.title}}</h3>
+     >   <dl>
+     >     <dt>scriptwriter</dt>
+     >     <dd>{{model.scriptwriter}} </dd>
+     >     <dt>illustrator</dt>
+     >     <dd>{{model.illustrator}}</dd>
+     >     <dt>publisher</dt>
+     >     <dd>{{model.publisher}}</dd>
+     >   </dl>
+     > </div>
+     > ```
+     > 
+     > ```javascript
+     > // app/routes/comics/comic.js
+     > 
+     > import Ember from 'ember';
+     > 
+     > let Comic = Ember.Object.extend({
+     >   slug: '',
+     >   title: '',
+     >   scriptwriter: '',
+     >   illustrator: '',
+     >   publisher: ''
+     > });
+     > 
+     > let blackSad = Comic.create({
+     >   slug: 'blacksad',
+     >   title: 'BlackSad',
+     >   scriptwriter: 'Juan Diaz Canales',
+     >   illustrator: 'Juanjo Guarnido',
+     >   publisher: 'Dargaud'
+     > });
+     > 
+     > let calvinAndHobbes = Comic.create({
+     >   slug: 'calvin-and-hobbes',
+     >   title: 'Calvin and Hobbes',
+     >   scriptwriter: 'Bill Watterson',
+     >   illustrator: 'Bill Watterson',
+     >   publisher: 'Andrews McMeel Publishing'
+     > });
+     > 
+     > let akira = Comic.create({
+     >   slug: 'akira',
+     >   title: 'Akira',
+     >   scriptwriter: 'Katsuhiro Ã”tomo',
+     >   illustrator: 'Katsuhiro Ã”tomo',
+     >   publisher: 'Epic Comics'
+     > });
+     > 
+     > let comics = [blackSad, calvinAndHobbes, akira];
+     > 
+     > export default Ember.Route.extend({
+     >   model (params) {
+     >     return comics.filterBy('slug', params.comic_slug).get(0);
+     >   }
+     > });
+     > ```
+    
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
 
 ## Liens entre routes
 
