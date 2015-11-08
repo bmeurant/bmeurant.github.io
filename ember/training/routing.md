@@ -125,11 +125,15 @@ imbrication préside donc à l'organisation des différents templates de notre a
 1. Renommer le test unitaire ``tests/unit/comics-test.js`` en ``tests/unit/02-routing-test.js``
 
 1. Modifier le contenu du template ``app/templates/comics.hbs`` :
-    * Déplacer l'affichage (template) et la gestion (route) de la liste de comics pour que cette liste soit gérée totalement au sein de la route ``/comics`` (en conservant
-      le titre de premier niveau dans le template ``app/templates/application.hbs``)
+    * Déplacer le contenu de la route ``application.js`` dans la route ``comics.js``
+    * Déplacer le contenu de la ``<div class="row">`` du template ``application.hbs`` dans le tempate ``comics.hbs``
     * Ajouter un sous-titre ``Comics list`` juste après l'ouverture de la ``<div class="comics">``
+    * Ajouter un paragraph de classe ``no-selected-comic`` juste après la fermeture de la ``<div class="comics">`` contenant le texte "Please select on comic book for detailled information."
  
-    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+    **Test** : *Les modifications doivent permettre de rendre les tests suivants passants :
+    * [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)*
+    * [02 - Routing - 02 - Should display text on comics/](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)*
+
 
     > ```html
     > {{!-- app/templates/application.hbs --}}
@@ -159,6 +163,10 @@ imbrication préside donc à l'organisation des différents templates de notre a
     >       {{/each}}
     >     </ul>
     >   </div>
+    >
+    >   <p id="no-selected-comic">
+    >     Please select on comic book for detailled information.
+    >   </p>
     > </div>
     > ```
     > 
@@ -189,102 +197,17 @@ imbrication préside donc à l'organisation des différents templates de notre a
 La nouvelle route ``comics`` affiche désormais la liste de nos comics de la même manière qu'elle était affichée précédemment et est accessible
 via l'URL ``/comics``. On note à ce propos que l'URL n'a pas eu à être définie puisque, par convention, [Ember][ember] rend accessible une route
 à l'URL définie par son nom qualifié (nom de ses [ancètres](#routes-imbriquees) séparés par des `/` puis nom de la route). Si besoin, il est évidemment possible de
-personnaliser l'URL via l'option ``path`` fournie lors de la définition de la route :
+personnaliser l'URL via l'option ``path`` fournie lors de la définition de la route. Par exemple :
 
 ```javascript
 Router.map(function() {
-  this.route('comics', { path: '/livres' });
+  this.route('books', { path: '/livres' });
 });
 ```
-
-## Routes imbriquées
-
-{% raw %}
-
-On a pu remarquer que le template définit au niveau de l'application (``application.hbs``) était toujours affiché (titre principal),
-en même temps que le template de la route ``comics``. Ceci est du au fait que la route ``comics`` est, comme toutes les routes d'une application 
-[Ember][ember], imbriquée dans la route ``application``.
-
-En effet il s'agit de la route de base de toute l'application. A la manière d'un conteneur, cette route permet classiquement de mettre en place
-les éléments communs d'une application : *header*, *menu*, *footer*, ..., ainsi qu'un emplacement pour le contenu même de l'application : c'est
-la fonction du *helper* ``{{outlet}}``.
-
-Cette notion est au cœur d'[Ember][ember]. Lorsqu'une route est imbriquée dans une autre,
-[Ember][ember] va rechercher les templates de ces deux routes et remplacer la zone `{{outlet}}` de la route mère
-avec le rendu de la route fille. Ainsi de suite jusqu'à résolution complète de la route. Lors des transitions entre routes, les
-zones des `{{outlet}}` concernées par le changement, **et seulement elles**, sont mises à jour.
-
-Toute route fille (URL : ``mere/fille``) est déclarée dans le routeur en imbriquant sa définition dans celle de sa route mère (URL : ``mere``) 
-de la façon suivante : 
-
-```javascript
-// app/router.js
-...
-Router.map(function() {
-  this.route('mere', function() {
-    this.route('fille');
-  });
-});
-```
-
-La route fille viendra alors se rendre dans la zone définie par l'``{{outlet}}`` de sa route mère, à la manière de poupées russes.
-
-Par convention, les éléments constitutifs des routes filles (template, route, etc.) doivent être définies dans l'arborescence suivante :
-``.../<route_mere>/<route_fille>.[hbs|js]``
-
-{% endraw %}
-
-<div class="work">
-  {% capture m %}
-  {% raw %}
-   
-1. Créer une route ``index`` accessible à l'URL `/comics/` affichant uniquement le texte *"Please select on comic book for detailled information"*
-dans un paragraphe d'id ``no-selected-comic``.
- 
-    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 02 - Should display text on comics/index](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
- 
-    **NB :** Dans notre cas, il n'est pas nécessaire de créer de fichier route (``app/routes/comics/index.js``) pour le moment puisque nous
-    n'avons aucune logique à y intégrer. Ceci met en évidence les capacités de **génération d'objets** d'[Ember](http://emberjs.com/) déjà 
-    évoquées dans le chapitre [Overview - Génération d'objets](../overview/#génération-d'objets). En effet, grâce aux conventions de nommage
-    d'[Ember](http://emberjs.com/), le framework génère pour nous dynamiquement les objets de base nécessaires à l'éxécution d'une route.
-    Il nous suffit ensuite de définir ces objet pour en fournir notre propre implémentation. En l'occurence,
-    l'objet route pour `comics.index` sera généré pour nous.
-    
-    > ```javascript
-    > // app/router.js
-    > ...
-    > Router.map(function() {
-    >   this.route('comics', function() {
-    >     this.route('index', {path: '/'});
-    >   });
-    > });
-    > ```
-    > 
-    > ```html
-    > {{!-- app/templates/comics.hbs --}}
-    > <div class="row">
-    >   <div class="comics">
-    >     ...
-    >   </div>
-    >   {{outlet}}
-    > </div>
-    > ```
-    > 
-    > ```html
-    > {{!-- app/templates/comics/index.hbs --}}
-    > Please select on comic book for detailled information.
-    > ```
-    > 
-    > On note la nécessité de l'``{{outlet}}`` dans la route mère ainsi que les arborescences et les noms utilisés. Enfin, on note également
-    > la personalisation de l'URL via l'option `path`.
- 
-  {% endraw %}
-  {% endcapture %}{{ m | markdownify }}
-</div>
 
 ## Modèle
 
-Comme évoqué plus haut, l'une des responsabilité principales d'une route consiste à assurer la récupération et la gestion d'un modèle (*model*). 
+L'une des responsabilité principales d'une route consiste donc à assurer la récupération et la gestion d'un modèle (*model*). 
 Au sens général un modèle est un objet métier contenant des propriétés. En [Ember][ember], il peut s'agir d'objets javascript natifs ou d'instances de
 classes héritant de `Ember.Object`. Cependant, comme on a pu le constater [auparavant](../templates/#bindings), dans le cas où l'on fournit un objet javascript natif à 
 [Ember][ember], celui-ci le transforme automatiquement en sous-classe d'`Ember.Object` de manière à être capable d'écouter les changements survenus sur
@@ -296,13 +219,12 @@ leurs propriétés ainsi que leurs relations de manière très poussée. Un peu 
 Les modèles peuvent être récupérés en mémoire mais son classiquement chargés depuis un *backend* via une **API REST**. Qu'ils soient ou non gérés au travers 
 d'[Ember Data](https://github.com/emberjs/data).
 
-Le rôle de la route consiste donc à récupérer un modèle en méomoire ou à distance. Ce modèle peut être un objet seul ou une collection d'objets et, une fois récupéré par
-la route, il est transmis au template associé ce qui permet toutes les opérations de *binding*.
+Le modèle peut être un objet seul ou une collection d'objets et, une fois récupéré par la route, il est transmis au template associé ce qui permet toutes les opérations de *binding*.
  
-De nombreuses opérations et méthodes proposées par les routes [Ember][ember] sont donc relatives à la gestion du modèle :
+Les routes [Ember][ember] étendent la classe `Ember.Route` et mettent à disposition un certain nombre de *hooks* relatifs à la gestion du modèle.
+Ces *hooks* sont des méthodes de la classe mère, vides ou non, qui sont automatiquement appelées par [Ember][ember] lors de la résolution de la route :
 
-* ``model()`` : Une des méthodes principale. 
-     Cette fonction doit retourner un objet ou une collection d'objet. Elle est automatiquement appelée lorsque la route est activée.
+* ``model()`` : Cette fonction doit retourner un objet ou une collection d'objet. Elle est automatiquement appelée lorsque la route est activée.
   
      Le modèle ainsi récupéré (en synchrone ou en asynchrone) est ainsi transmis au template associé ainsi qu'aux éventuelles routes filles. La gestion de l'asynchronisme
      est effectuée pour nous par le framework en utilisant des promesses (*promises*). Manipuler un objet ou une collection mémoire ou le retour d'une requête à une API est donc
@@ -313,6 +235,9 @@ De nombreuses opérations et méthodes proposées par les routes [Ember][ember] 
        return [{title: "BlackSad"}, {title: "Calvin and Hobbes", scriptwriter: "Bill Watterson"}];
      }
      ```
+     
+     A noter que cette méthode n'est pas appelée si un modèle est fourni à la route lors de son activation, par exemple via le *helper* ``link-to`` ou
+     un appel à ``transitionTo``. Nous reviendrons sur ces deux cas par la suite.
 
 * ``beforeModel()`` : Cette méthode est appelée au tout début de la résolution de la route et, comme son nom l'indique, avant la récupération du modèle vie la méthode
    ``model()``. 
@@ -356,7 +281,7 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
     import Ember from 'ember';
     
     let Comic = Ember.Object.extend({
-      id: 0,
+      slug: '',
       title: '',
       scriptwriter: '',
       illustrator: '',
@@ -364,7 +289,7 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
     });
     
     let blackSad = Comic.create({
-      id: 1,
+      slug: 'blacksad',
       title: 'BlackSad',
       scriptwriter: 'Juan Diaz Canales',
       illustrator: 'Juanjo Guarnido',
@@ -372,7 +297,7 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
     });
     
     let calvinAndHobbes = Comic.create({
-      id: 2,
+      slug: 'calvin-and-hobbes',
       title: 'Calvin and Hobbes',
       scriptwriter: 'Bill Watterson',
       illustrator: 'Bill Watterson',
@@ -380,7 +305,7 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
     });
     
     let akira = Comic.create({
-      id: 3,
+      slug: 'akira',
       title: 'Akira',
       scriptwriter: 'Katsuhiro Ôtomo',
       illustrator: 'Katsuhiro Ôtomo',
@@ -399,8 +324,114 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
 </div>
- 
-## Routes dynamiques
+
+## Routes imbriquées
+
+{% raw %}
+
+On a pu remarquer que le template définit au niveau de l'application (``application.hbs``) était toujours affiché (titre principal),
+en même temps que le template de la route ``comics``. Ceci est du au fait que la route ``comics`` est, comme toutes les routes d'une application 
+[Ember][ember], imbriquée dans la route ``application``.
+
+En effet il s'agit de la route de base de toute l'application. A la manière d'un conteneur, cette route permet classiquement de mettre en place
+les éléments communs d'une application : *header*, *menu*, *footer*, ..., ainsi qu'un emplacement pour le contenu même de l'application : c'est
+la fonction du *helper* ``{{outlet}}``.
+
+Cette notion est au cœur d'[Ember][ember]. Lorsqu'une route est imbriquée dans une autre,
+[Ember][ember] va rechercher les templates de ces deux routes et remplacer la zone `{{outlet}}` de la route mère
+avec le rendu de la route fille. Ainsi de suite jusqu'à résolution complète de la route. Lors des transitions entre routes, les
+zones des `{{outlet}}` concernées par le changement, **et seulement elles**, sont mises à jour.
+
+Toute route fille (URL : ``mere/fille``) est déclarée dans le routeur en imbriquant sa définition dans celle de sa route mère (URL : ``mere``) 
+de la façon suivante : 
+
+```javascript
+// app/router.js
+...
+Router.map(function() {
+  this.route('mere', function() {
+    this.route('fille');
+  });
+});
+```
+
+La route fille viendra alors se rendre dans la zone définie par l'``{{outlet}}`` de sa route mère, à la manière de poupées russes.
+
+Par convention, les éléments constitutifs des routes filles (template, route, etc.) doivent être définies dans l'arborescence suivante :
+``.../<route_mere>/<route_fille>.[hbs|js]``
+
+{% endraw %}
+
+<div class="work">
+  {% capture m %}
+  {% raw %}
+   
+1. Créer une route ``comic``, fille de la route ``comics``.
+    * Utiliser la ligne de commande [Ember CLI](http://ember-cli.com) ``generate route comics/comic`` pour générer la route
+    * La nouvelle route doit afficher un texte *"Comic selected !"* dans une div de classe ``selected-comic`` à droite de la liste de comics
+    * Ne pas oublier l' ``{{outlet}}`` dans la route mère
+
+    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 03 - Should display single comic zone](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+
+    > ```console
+    > $ ember generate route comics/comic
+    >
+    > version: 1.13.8
+    > installing route
+    >   create app\routes\comics\comic.js
+    >   create app\templates\comics\comic.hbs
+    > updating router
+    >   add route comics/comic
+    > installing route-test
+    >   create tests\unit\routes\comics\comic-test.js
+    > ```
+    >
+    > ```javascript
+    > // app/router.js
+    > 
+    > Router.map(function () {
+    >   this.route('comics', function() {
+    >     this.route('comic');
+    >   });
+    > });
+    > ```
+    > 
+    > ```html
+    > {{!-- app/templates/comics.hbs--}}
+    > 
+    > <div class="row">
+    >   <div class="comics" ...>
+    > 
+    >   <p id="no-selected-comic">
+    >     Please select on comic book for detailled information.
+    >   </p>
+    > 
+    >   {{outlet}}
+    > </div>
+    > ```
+    > 
+    > ```html
+    >  {{!-- app/templates/comics/comic.hbs--}}
+    >  
+    >  <div class="selected-comic">
+    >    Comic selected !
+    >  </div>
+    > ```
+    
+    On note la création du test unitaire ``tests/unit/routes/comics/comic-test.js`` et notamment l'arborescence dans laquelle il a été créé.
+    
+    On note également que l'objet route ``app/routes/comics/comic.js`` est totalement vide puisque nous n'avons aucune logique particulière à y 
+    implémenter. En effet, grâce aux conventions de nommage d'[Ember](http://emberjs.com/) et aux capacités
+    de **génération d'objets** d'[Ember](http://emberjs.com/) déjà évoquées dans le chapitre 
+    [Overview - Génération d'objets](../overview/#génération-d'objets), le framework génère pour nous dynamiquement les objets de base 
+    nécessaires à l'éxécution d'une route. Il nous suffit ensuite de surcharger / compléter ces objet pour en fournir notre propre implémentation. 
+    En l'occurence, la logique de l'objet route pour `comics.comic` a été héritée.
+   
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
+## Segments dynamiques
 
 -> route comic/id
 
