@@ -478,7 +478,11 @@ place du texte précédent.
     * La nouvelle route doit répondre à l'URL ``/comics/<slug>`` ou ``slug`` correspond à la propriété ``slug`` du modèle ``comic``
     * Comme nous ne disposons pour l'instant pas de ``store`` nous permettant de disposer d'un référentiel partagé de nos modèles,
       dupliquer intégralement la définition des modèles et de la liste de ``app/routes/comics.js`` dans 
-      ``app/routes/comics/comic.js``
+      ``app/routes/comics/comic.js``. 
+      
+      Modifier la route pour faire de la liste de comics une propriété de la route et non une variable globale.
+      
+      Cette solution n'est évidemment pas viable et nous aborderons plus tard la notion de ``store``
     * La route doit récupérer la valeur du paramètre ``slug`` et renvoyer le modèle correspondant. Utiliser la fonction Ember
       [filterBy](http://emberjs.com/api/classes/Ember.Array.html#method_filterBy)
     * Le template doit être modifié pour afficher le détail d'un comic :
@@ -559,16 +563,15 @@ place du texte précédent.
      > let akira = Comic.create({
      >   slug: 'akira',
      >   title: 'Akira',
-     >   scriptwriter: 'Katsuhiro Ã”tomo',
-     >   illustrator: 'Katsuhiro Ã”tomo',
+     >   scriptwriter: 'Katsuhiro Otomo',
+     >   illustrator: 'Katsuhiro Otomo',
      >   publisher: 'Epic Comics'
      > });
      > 
-     > let comics = [blackSad, calvinAndHobbes, akira];
-     > 
      > export default Ember.Route.extend({
+     >   comics: [blackSad, calvinAndHobbes, akira]
      >   model (params) {
-     >     return comics.filterBy('slug', params.comic_slug).get(0);
+     >     return this.get('comics').filterBy('slug', params.comic_slug).get(0);
      >   }
      > });
      > ```
@@ -577,7 +580,217 @@ place du texte précédent.
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-## Liens entre routes
+## Lien vers une route
+
+{% raw %}
+
+[Ember][ember] propose un *hekper* [link-to](http://emberjs.com/api/classes/Ember.Templates.helpers.html#method_link-to) qui permet de générer
+un lien vers une route de notre application. L'utilisation de ce *helper* permet la génération et la gestion de liens internes à l'application.
+
+Un certain nombre de comportements sont apportés par l'utilisation de ce *helper* :
+
+* La génération d'un lien ``href`` :
+
+    ```html
+    {{#link-to 'comics'}}
+      Back to comics List
+    {{/link-to}}
+    ```
+    
+    ```html
+    <a href="/comics">Back to comics List</a>
+    ```
+    
+    Le lien s'effectue vers la route spécifiée par son nom qualifié, c'est à dire augmenté du nom de ses routes mères. 
+    Par exemple ``comics.comic``
+    
+* La gestion de la route courante :
+
+    En effet, lorsqu'on utilise ce *helper*  et que la route courante se trouve être la route pointée
+    par celui-ci, [Ember][ember] positionne automatiquement pour nous la classe ``active`` sur cet élement. Cela permet, notamment dans 
+    une liste, de visualiser l'élément courant.
+    
+    A noter qu'il est également possible de spécifier si l'on souhaite que l'élément soit actif pour d'autres routes grâce à l'option
+    ``current-when`` :
+    
+    ```html
+    {{#link-to 'comics' current-when='books'}}
+      Back to comics List
+    {{/link-to}}
+    ```
+    
+    ```html
+    <a href="/comics" class="active">Back to comics List</a>
+    ```
+    
+* Le passage d'un paramètre dynamique : 
+
+    Le *helper* permet de préciser un paramètre dynamique en second argument 
+
+    ```html
+    {{#link-to 'book' book.id}}
+      Show book
+    {{/link-to}}
+    ```
+    
+    ```html
+    <a href="/book/1">Show book</a>
+    ```
+
+* Le passage d'un modèle : 
+
+    ```html
+    {{#link-to 'book' book}}
+      Show book
+    {{/link-to}}
+    ```
+    
+    ```html
+    <a href="/book/1">Show book</a>
+    ```
+
+    La différence entre les deux derniers exemples n'est pas visible dans l'URL générée mais fait une grosse différence 
+    dans le cycle de vie de la route. En effet, dans le second cas, [Ember][ember] considère que le modèle est déjà
+    connu et n'exécute pas la méthode ``model`` de la route fille, ce qui serait inutile. Dans le premier cas, en revanche,
+    [Ember][ember] n'a connaissance que de la valeur du paramètre et doit réexécuter ``model`` pour récupérer le modèle à
+    partir du paramètre.
+
+* Personnalisation de la sérialisation du model.
+
+    Par défaut, lorsque l'on passe un modèle à un ``link-to``, [Ember][ember] cherche la propriété ``id`` de ce modèle pour
+    l'ajouter à l'URL (``book/1``). Si l'on souhaite se baser sur une autre propriété que sur l'id, il est nécessaire de 
+    fournir une fonction ``serialize`` personnalisée à la route cible :
+    
+    ```javascript
+    // app/router.js
+    
+    Router.map(function() {
+      this.route('book', { path: '/book/:book_title' });
+    });
+    ```
+    
+    ```javascript
+    // app/routes/book.js
+    
+    serialize: function(model) {
+      return {
+        book_title: model.get('title')
+      };
+    }
+    ```
+    
+    ```html
+    {{#link-to 'book' book}}
+      Show book
+    {{/link-to}}
+    ```
+    
+    ```html
+      <a href="/book/germinal">Show book</a>
+    ```
+
+{% endraw %}
+
+<div class="work">
+  {% capture m %}
+  {% raw %}
+  
+1. Modifier le template ``app/templates/comics.hbs`` à l'aide du *helper* ``link-to`` de manière à ce que titre du 
+comic deviennent un lien cliquable vers la route du comic ``/comic/<comic_slug>`` correspondant.
+    * Utiliser un ``link-to`` avec le paramètre dynamique ``comic.slug`` (ne pas passer le modèle entier)
+    * Modifier la route ``app/routes/comics/comic.js`` pour ajouter un ``console.log`` avant le ``return`` de la
+      méthode ``model``
+    
+    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 05 - Should display links](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+
+    Ouvrir la console puis accéder au détail du comic en cliquant sur le lien puis accéeder eu détail d'un autre comic en entrant 
+    directement l'URL dans le navigateur.
+    
+    Que constate-t-on ?
+    
+    > ```html
+    > {{!-- app/templates/comics.hbs --}}
+    > ...
+    > <ul>
+    >   {{#each model as |comic|}}
+    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+    >       {{#link-to "comics.comic" comic.slug}}
+    >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
+    >       {{/link-to}}
+    >     </li>
+    >   {{else}}
+    >     Sorry, no comic found
+    >   {{/each}}
+    > </ul>
+    > ...
+    > ```
+    > 
+    > ```javascript
+    > // app/routes/comics/comic.js
+    > 
+    > export default Ember.Route.extend({
+    >   comics: [blackSad, calvinAndHobbes, akira],
+    >   model (params) {
+    >     console.log('passed in comic model');
+    >     return comics.filterBy('slug', params.comic_slug).get(0);
+    >   }
+    > });
+    > ```
+    >
+    > En observant la console, on constate que dans les deux cas, le *hook* ``model`` de la route ``app/routes/comics/comic.js``
+    > a été éxécuté, entrainant à chaque fois un chargement du modèle.
+    
+1. Modifier le template ``app/templates/comics.hbs`` et changer le *helper* ``link-to`` de manière à passer un modèle 
+complet au lieu du seul slug.
+    * Ajouter la méthode ``serialize`` nécessaire à la route.
+    
+    Ouvrir la console puis accéder au détail du comic en cliquant sur le lien puis accéeder eu détail d'un autre comic en entrant 
+    directement l'URL dans le navigateur.
+    
+    Que constate-t-on ?
+    
+    > ```html
+    > {{!-- app/templates/comics.hbs --}}
+    > ...
+    > <ul>
+    >   {{#each model as |comic|}}
+    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+    >       {{#link-to "comics.comic" comic}}
+    >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
+    >       {{/link-to}}
+    >     </li>
+    >   {{else}}
+    >     Sorry, no comic found
+    >   {{/each}}
+    > </ul>
+    > ...
+    > ```
+    >
+    > ```javascript
+    > // app/routes/comics/comic.js
+    > 
+    > export default Ember.Route.extend({
+    >   comics: [blackSad, calvinAndHobbes, akira],
+    >   model (params) {
+    >     console.log('passed in comic model');
+    >     return this.get('comics').filterBy('slug', params.comic_slug).get(0);
+    >   },
+    >   serialize: function(model) {
+    >     return {
+    >       comic_slug: model.get('slug')
+    >     };
+    >   }
+    > });
+    > ```
+    >
+    > En observant la console, on constate que le *hook* ``model`` de la route ``app/routes/comics/comic.js``
+    > n'a été exécuté que dans le second cas. Dans le premier, en effet, le modèle était déjà connu et a été passé
+    > à la route en l'état. Il n'est donc pas nécessaire de le charger à nouveau.
+    
+  
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
 
 ## Routes implicites
 
