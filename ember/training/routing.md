@@ -928,43 +928,6 @@ conserve la transaction courante valide.
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-## Namespaces
-
-Comme on a pu le constater, au sein d'une application [Ember][ember], les routes sont référencées par leur nom qualifié.
-Celui-ci se calcule en accolant les noms de l'ensemble des routes mères puis du nom de la route fille. Le tout séparés 
-par des ``.``.
-
-Ainsi la route définie de cette manière ...
-
-```javascript
-// app/router.js
-...
-Router.map(function() {
-  this.route('mere', function() {
-    this.route('fille');
-  });
-});
-```
-
-... sera référençable par le qualifieur ``mere.fille``. Par exemple :
- 
-* dans un ``link-to`` : ``{{link-to "Titre route fille" "mere.fille"}}`` 
-* lors de l'appel d'un ``transitionTo`` : ``this.transitionTo('mere.fille');``
-
-Chaque niveau de route imbriquée est donc ajouté devant le nom de la route elle-même. Cela permet d'éviter les 
-collisions de nommage. Cependant, il peut s'avérer nécessaire ou préférable de conserver un nom court. Cela est
-possible en précisant que l'on souhaite réinitialiser le ``namespace`` via l'option ``resetNamespace`` dans le 
-routeur : 
-
-```javascript
-// app/router.js
-...
-Router.map(function() {
-  this.route('mere', function() {
-    this.route('fille', {resetNamespace: true});
-  });
-});
-```
 
 ...
  
