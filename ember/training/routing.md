@@ -481,7 +481,7 @@ place du texte précédent.
         [Ember](http://emberjs.com) fournit une méthode [modelFor](http://emberjs.com/api/classes/Ember.Route.html#method_modelFor) dans chaque route permettant de récupérer le modèle d'une route mère, 
         directe ou non.    
     * La route doit récupérer la valeur du paramètre ``slug`` et renvoyer le modèle correspondant. Utiliser la fonction Ember
-      [filterBy](http://emberjs.com/api/classes/Ember.Array.html#method_filterBy)
+      [findBy](http://emberjs.com/api/classes/Ember.Array.html#method_findBy)
     * Le template doit être modifié pour afficher le détail d'un comic :
     
         ```html
@@ -537,7 +537,7 @@ place du texte précédent.
      > 
      > export default Ember.Route.extend({
      >   model (params) {
-     >     return this.modelFor('comics').filterBy('slug', params.comic_slug).get(0);
+     >     return this.modelFor('comics').findBy('slug', params.comic_slug);
      >   }
      > });
      > ```
@@ -697,7 +697,7 @@ comic deviennent un lien cliquable vers la route du comic ``/comic/<comic_slug>`
     > export default Ember.Route.extend({
     >   model (params) {
     >     console.log('passed in comic model');
-    >     return this.modelFor('comics').filterBy('slug', params.comic_slug).get(0);
+    >     return this.modelFor('comics').findBy('slug', params.comic_slug);
     >   }
     > });
     > ```
@@ -737,7 +737,7 @@ complet au lieu du seul slug.
     > export default Ember.Route.extend({
     >   model (params) {
     >     console.log('passed in comic model');
-    >     return this.modelFor('comics').filterBy('slug', params.comic_slug).get(0);
+    >     return this.modelFor('comics').findBy('slug', params.comic_slug);
     >   },
     >   serialize: function(model) {
     >     return {
@@ -840,7 +840,7 @@ par défaut vide, bien entendu.
     >   // app/routes/comics/comic.js
     >   ...
     >   model (params) {
-    >     let askedModel = this.modelFor('comics').filterBy('slug', params.comic_slug).get(0);
+    >     let askedModel = this.modelFor('comics').findBy('slug', params.comic_slug);
     > 
     >     if (askedModel === undefined) {
     >       throw new Error("No comic found with slug: " + params.comic_slug);
