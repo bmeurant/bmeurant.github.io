@@ -500,7 +500,9 @@ place du texte précédent.
         </div>
         ```
     
-    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 04 - Should display the comic detail](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+    **Test** : *Les modifications doivent permettre de rendre passants les tests* : 
+       * *Unitaire : [model() should retrieve existing slug](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/comic-test.js#L87)*
+       * *Acceptance : [02 - Routing - 04 - Should display the comic detail](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)*
 
      > ```javascript
      > // app/router.js
@@ -693,10 +695,9 @@ comic deviennent un lien cliquable vers la route du comic ``/comic/<comic_slug>`
     > // app/routes/comics/comic.js
     > 
     > export default Ember.Route.extend({
-    >   comics: [blackSad, calvinAndHobbes, akira],
     >   model (params) {
     >     console.log('passed in comic model');
-    >     return comics.filterBy('slug', params.comic_slug).get(0);
+    >     return this.modelFor('comics').filterBy('slug', params.comic_slug).get(0);
     >   }
     > });
     > ```
@@ -734,10 +735,9 @@ complet au lieu du seul slug.
     > // app/routes/comics/comic.js
     > 
     > export default Ember.Route.extend({
-    >   comics: [blackSad, calvinAndHobbes, akira],
     >   model (params) {
     >     console.log('passed in comic model');
-    >     return this.get('comics').filterBy('slug', params.comic_slug).get(0);
+    >     return this.modelFor('comics').filterBy('slug', params.comic_slug).get(0);
     >   },
     >   serialize: function(model) {
     >     return {
@@ -832,6 +832,9 @@ par défaut vide, bien entendu.
     * Modifier la route pour lever une erreur si le slug n'est pas trouvé (``throw Error("...")``)
     * Ajouter un template ``error`` au niveau de l'application (``app/templates/error.error.hbs``). Ce template se 
       contente d'afficher le model dans un paragraphe d'id ``error``
+      
+      
+    **Test** : *Les modifications doivent permettre de rendre le test unitaire [model() should throw error if slug not found](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/comic-test.js#L87) passant.*
       
     > ```javascript
     >   // app/routes/comics/comic.js
