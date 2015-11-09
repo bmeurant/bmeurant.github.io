@@ -478,29 +478,27 @@ place du texte précédent.
     * La nouvelle route doit répondre à l'URL ``/comics/<slug>`` ou ``slug`` correspond à la propriété ``slug`` du modèle ``comic``
     * Comme nous ne disposons pour l'instant pas de ``store`` nous permettant de disposer d'un référentiel partagé de nos modèles,
       utiliser la méthode ``modelFor`` pour récupérer le modèle de la route mère ``/comics``.
-      
-      [Ember][ember] fournit une méthode ``modelFor`` dans chaque route permettant de récupérer le modèle d'une route mère, 
-      directe ou non.
-      
+        [Ember](http://emberjs.com) fournit une méthode [modelFor](http://emberjs.com/api/classes/Ember.Route.html#method_modelFor) dans chaque route permettant de récupérer le modèle d'une route mère, 
+        directe ou non.    
     * La route doit récupérer la valeur du paramètre ``slug`` et renvoyer le modèle correspondant. Utiliser la fonction Ember
       [filterBy](http://emberjs.com/api/classes/Ember.Array.html#method_filterBy)
     * Le template doit être modifié pour afficher le détail d'un comic :
     
-    ```html
-    {{!-- app/templates/comics/comic.hbs --}}
-    
-    <div class="selected-comic">
-      <h3>{{model.title}}</h3>
-      <dl>
-        <dt>scriptwriter</dt>
-        <dd>{{model.scriptwriter}} </dd>
-        <dt>illustrator</dt>
-        <dd>{{model.illustrator}}</dd>
-        <dt>publisher</dt>
-        <dd>{{model.publisher}}</dd>
-      </dl>
-    </div>
-    ```
+        ```html
+        {{!-- app/templates/comics/comic.hbs --}}
+        
+        <div class="selected-comic">
+          <h3>{{model.title}}</h3>
+          <dl>
+            <dt>scriptwriter</dt>
+            <dd>{{model.scriptwriter}} </dd>
+            <dt>illustrator</dt>
+            <dd>{{model.illustrator}}</dd>
+            <dt>publisher</dt>
+            <dd>{{model.publisher}}</dd>
+          </dl>
+        </div>
+        ```
     
     **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 04 - Should display the comic detail](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
 
