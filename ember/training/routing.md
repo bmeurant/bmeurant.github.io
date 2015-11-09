@@ -841,7 +841,7 @@ par défaut vide, bien entendu.
     >   model (params) {
     >     let askedModel = this.modelFor('comics').filterBy('slug', params.comic_slug).get(0);
     > 
-    >     if (askedModel == undefined) {
+    >     if (askedModel === undefined) {
     >       throw new Error("No comic found with slug: " + params.comic_slug);
     >     }
     > 
@@ -910,10 +910,8 @@ conserve la transaction courante valide.
   {% capture m %}
   {% raw %}
   
-1. Modifier la route application de manière à rediriger ``/`` vers ``/comics``
+1. Modifier l'application de manière à rediriger ``/`` vers ``/comics``
     
-   **Test** : *Les modifications doivent permettre de rendre tout les tests du module [01 - Templates Acceptance Tests](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-template-test.js) passant de nouveau.*
-
    > ```javascript
    > //app/routes/application.js
    >
