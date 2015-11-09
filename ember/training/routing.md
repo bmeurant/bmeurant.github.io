@@ -929,7 +929,16 @@ conserve la transaction courante valide.
 </div>
 
 
-...
+## Conclusion
+
+Le routeur et les routes d'[Ember][ember] proposent donc des mécanismes avancés et constituent des éléments centraux 
+dans le fonctionnement du framework.
+
+On a pu également constater à quel point les conventions tenaient une place importante dans la structure de notre
+application et dans le fonctionnement des différents éléments. Il est important également de se rappeler que la très 
+grande majorité de ces conventions peuvent être adaptées et personalisées à l'aide de configuration et de points
+d'extension. 
+
  
 [handlebars]: http://handlebarsjs.com/
 [ember-cli]: http://www.ember-cli.com/
