@@ -102,20 +102,26 @@ manière suivante :
 Les éléments html standards peuvent manipuler tout type d'évènement natif. Les évènements gérés par le *helper*``{{input}}``
 sont listés dans la [documentation](http://emberjs.com/api/classes/Ember.Templates.helpers.html#toc_actions).
 
-On remarque au passage, concernant l'utilisation du *helper* ``{{input}}``, l'utilisation d'ous **sous-expression** 
+On remarque au passage, concernant l'utilisation du *helper* ``{{input}}``, l'utilisation d'une **sous-expression** 
 [Handlebars][handlebars] via la notation ``{{input ... (action ...)}}``. Cette notation permet l'imbrication
-d'expressions au sein des *helpers*.
+d'expressions au sein des *helpers*. 
+
+**NB:** Préciser le type d'évènement ou utiliser des sous-expressions a, de manière étrange, un impact majeur sur le comportement
+de l'application puisque, dans ce cas, l'action au niveau du contrôleur est indispensable et l'action n'est pas propagée.
 
 {% endraw %}
 
 <div class="work no-answer">
   {% capture m %}
   {% raw %}
+
   
-  linkto li -> action
-  route comic.edit
-  simple : bouton edit
-  boutons valider
+  
+  
+* linkto li -> action
+* route comic.edit
+* simple : bouton edit
+* boutons valider
   
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
