@@ -76,10 +76,13 @@ Edition -> perso route pour renderTemplate create
 
 Filtering et sorting list
 tranformation btn creer par input titre + bouton -> descativation btn si vide et sinon on bascule sur creér avec titre
+actions avancées créer liste
+actions target form mandatory
 
 ### Components
 
-Validation formulaire
+Validation formulaire ?
+like component
 
 ### Persistence / Ember Data
 
@@ -90,13 +93,13 @@ Ember-data, store, relations, etc.
 
 acceptance et unitaire
 
-### Backend
-
-Serveur API -> REST Adapter
-
 ### Adv. Tpl
 
 partials sur albums, render, etc.
+
+### Backend
+
+Serveur API -> REST Adapter
 
 ### Adv. Routing
 
