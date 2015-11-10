@@ -219,6 +219,18 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
     @import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
     ```
     
+1. Ouvrir le fichier ``ember-cli-build.js`` et modifier le fichier pour importer la police d'icônes de Bootstrap :
+
+   ```javascript
+     var app = new EmberApp(defaults, {
+       // Add options here
+     });
+     
+     app.import('bower_components/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff', {
+       destDir: 'fonts/bootstrap'
+     });
+   ```
+    
 1. Relancer l'application et constater qu'aucune erreur ne se produit. En particulier, le fichier ``ember-training.css`` doit avoir été chargé sans erreur et ne pas être vide :
 
     ```console
