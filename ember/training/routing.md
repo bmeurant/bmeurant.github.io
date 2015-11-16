@@ -422,7 +422,7 @@ Par convention, les éléments constitutifs des routes filles (template, route, 
     
     On note également que l'objet route ``app/routes/comics/comic.js`` est totalement vide puisque nous n'avons aucune logique particulière à y 
     implémenter. En effet, grâce aux conventions de nommage d'[Ember](http://emberjs.com/) et aux capacités
-    de **génération d'objets** d'[Ember](http://emberjs.com/) déjà évoquées dans le chapitre 
+    de **génération d'objets** d'[Ember](http://emberjs.com/) évoquées dans le chapitre 
     [Overview - Génération d'objets](../overview/#génération-d'objets), le framework génère pour nous dynamiquement les objets de base 
     nécessaires à l'éxécution d'une route. Il nous suffit ensuite de surcharger / compléter ces objet pour en fournir notre propre implémentation. 
     En l'occurence, la logique de l'objet route pour `comics.comic` a été héritée.
@@ -808,7 +808,7 @@ par défaut vide, bien entendu.
 ``no-selected-comic`` ne s'affiche que lorsque aucun comic n'est selectionné. C'est à dire pour l'URL (``/comics``)
 
     On note que l'on n'a pas besoin de définir l'objet route ``app/routes/comics/index.js`` parce que celle-ci est implicitement
-    créée vide par [Ember][ember].
+    créée vide par [Ember](http://emberjs.com).
     
     > ```html
     > {{!-- app/templates/comics.hbs --}}
@@ -830,7 +830,7 @@ par défaut vide, bien entendu.
    
 1. On souhaite désormais gérer le cas où le comic demandé n'est pas trouvé.
     * Modifier la route pour lever une erreur si le slug n'est pas trouvé (``throw Error("...")``)
-    * Ajouter un template ``error`` au niveau de l'application (``app/templates/error.error.hbs``). Ce template se 
+    * Ajouter un template ``error`` au niveau de l'application (``app/templates/error.hbs``). Ce template se 
       contente d'afficher le model dans un paragraphe d'id ``error``
       
       
@@ -877,7 +877,7 @@ l'application.
     > </p>
     > ```
     
-On constate que l'erreur levée au niveau ``comics/comic`` a été propagée au sein de l'application jusqu'à trouver un
+On constate que l'erreur levée au niveau ``comics.comic`` a été propagée au sein de l'application jusqu'à trouver un
 *handler*. Ce mécanisme permet de gérer les erreurs de la manière la plus contextuelle possible tout en proposant
 un gestionnaire par défaut pour toute l'application.
 
@@ -885,14 +885,184 @@ un gestionnaire par défaut pour toute l'application.
   {% endcapture %}{{ m | markdownify }}
 </div>
 
+## Namespaces
+
+{% raw %}
+
+Comme on a pu le constater, au sein d'une application [Ember][ember], les routes sont référencées par leur nom qualifié.
+Celui-ci se calcule en accolant les noms de l'ensemble des routes mères puis du nom de la route fille. Le tout séparés 
+par des ``.``.
+
+Ainsi la route définie de cette manière ...
+
+```javascript
+// app/router.js
+...
+Router.map(function() {
+  this.route('mere', function() {
+    this.route('fille');
+  });
+});
+```
+
+... sera référençable par le qualifieur ``mere.fille``. Par exemple :
+ 
+* dans un ``link-to`` : ``{{link-to "Titre route fille" "mere.fille"}}`` 
+* lors de l'appel d'un ``transitionTo`` : ``this.transitionTo('mere.fille');``
+
+Chaque niveau de route imbriquée est donc ajouté devant le nom de la route elle-même. Cela permet d'éviter les 
+collisions de nommage. Cependant, il peut s'avérer nécessaire et/ou préférable de conserver un nom court. Cela est
+possible en précisant que l'on souhaite réinitialiser le ``namespace`` via l'option ``resetNamespace`` dans le 
+routeur : 
+
+```javascript
+// app/router.js
+...
+Router.map(function() {
+  this.route('mere', function() {
+    this.route('fille', {resetNamespace: true});
+  });
+});
+```
+
+La route sera alors accessible directement via le qualifieur ``fille``. Dans ce cas, en effet, les conventions sont 
+adaptées et [Ember][ember] va rechercher les objets (routes, templates, etc.) par
+leur nom court et sans l'augmentation de préfixe lié à leurs ancêtres. L'arborescence des fichiers et répertoires
+sera également modifié.
+
+Ainsi :
+
+```console
+ |- \routes
+ |   |- \mere
+ |   |   |- fille.js
+ |   |- mere.js
+ |  
+ |- \templates
+ |   |- \mere
+ |   |  |- fille.hbs
+ |   |- mere.hbs
+```
+
+deviendra :
+
+```console
+ |- \routes
+ |   |- fille.js
+ |   |- mere.js
+ |   
+ |- \templates
+ |   |- fille.hbs
+ |   |- mere.hbs
+```
+
+Ceci tout en conservant les URLs existantes ainsi que l'imbrication des routes entre elles et donc les enchaînements des ``{{outlet}}``.
+
+{% endraw %}
+
+<div class="work">
+  {% capture m %}
+  {% raw %}
+  
+1. Modifier la route ``comics.comic`` pour la nommer ``comic``
+   * Modifier le routeur
+   * Mettre à jour tous les endroits de l'application ou cette route est référencée
+   * Déplacer si nécessaire les templates et routes existantes pour s'adapter au nouveau nommage
+   * Modifier les tests si nécessaire
+   * Constater que le fonctionnement de l'app est inchangé ainsi que les tests
+    
+   > ```javascript
+   > // app/router.js
+   >
+   > ...
+   >
+   > this.route('comics', function() {
+   >   this.route('comic', {path: '/:comic_slug', resetNamespace: true});
+   > });
+   >
+   > ...
+   > ```
+   
+   > ```html
+   > {{!-- app/comics.hbs --}}
+   > 
+   > ...
+   > 
+   > <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+   >   {{#link-to "comic" comic}}
+   >     {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
+   >   {{/link-to}}
+   > </li>
+   > 
+   > ...
+   > ```
+   
+   > ```javascript
+   > // tests/unit/comic-test.js
+   >
+   > ...
+   >
+   > moduleFor('route:comic', 'Unit | Route | comic', {
+   >   beforeEach() {
+   >     this.subject().modelFor = function () {
+   >       return COMICS;
+   >     };
+   >   }
+   > });
+   >
+   > ...
+   > ```
+   
+   > ```console
+   > \app
+   >  |
+   >  |- \routes
+   >  |   |- application.js
+   >  |   |- comic.js
+   >  |   |- comics.js
+   >  |
+   >  |- \templates
+   >  |   |- \comics
+   >  |   |   |- error.hbs
+   >  |   |   |- index.hbs
+   >  |   |
+   >  |   |- application.hbs
+   >  |   |- comic.hbs
+   >  |   |- comics.hbs
+   >  |   |- error.hbs
+   >  ...
+   > \tests
+   >  |- \unit
+   >  |   |- comic-test.js
+   >  |   |- comics-test.js
+   > ```
+  
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
+{% raw %}
+
+**Attention !** : Cette pratique aboutit donc à "désynchroniser" le nommage et donc l'arborescence des routes, templates, etc. par rapport
+à la déclaration des routes au sein du routeur alors même que les enchaînements d'``{{outlet}}`` sont conservés. Ceci peut conduire à des 
+confusions et doit être envisagé avec précaution. Néanmoins, dans le cas d'arborescences profondes et/ou complexes, cela peut s'avérer utile
+voire indispensable.
+
+{% endraw %}
+
+## Routes imbriquées & Routes implicites
+
+## Rendering explicite de template
+
 ## Transitions & Redirections
 
 On a vu que l'on pouvait changer de route via l'utilisation de ``link-to``. Il est également possible d'effectuer la même
 opération depuis une route grâce à la méthode ``transitionTo`` ou depuis un contrôleur via ``transitionToRoute``.
 
 Dans une route, ces changements de route via ``transitionTo`` peuvent s'effectuer :
-* avant que l'on connaisse le modèle dans ``beforeModel`` dans le cas où la transition est systématique
-* après avoir récupéré le modèle dans ``afterModel`` si l'appel de la transition dépend de l'état ou de la valeur du modèle
+
+ * avant que l'on connaisse le modèle dans ``beforeModel`` dans le cas où la transition est systématique
+ * après avoir récupéré le modèle dans ``afterModel`` si l'appel de la transition dépend de l'état ou de la valeur du modèle
 
 Dans les deux cas, l'appel à ``transitionTo`` stoppe et invalide toute transition en cours et en déclenche une nouvelle.
 
