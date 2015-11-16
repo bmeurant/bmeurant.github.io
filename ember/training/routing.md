@@ -111,9 +111,9 @@ La route est responsable :
 * de la **récupération et du chargement d'un modèle** (c'est à dire de la ou des données qui seront fournies à un template)
 * de la gestion de l'ensemble des **actions** en lien avec le chargement, la mise à jour d'un modèle ou la **transition** vers une nouvelle route
 
-C'est donc celle-ci qui sera notament chargée d'appeler le **backend** pour récupérer ey envoyer des données et mettre ainsi les objets métier (modèle) à jour.
+C'est donc celle-ci qui sera notament chargée d'appeler le **backend** pour récupérer et envoyer des données et mettre ainsi les objets métier (modèle) à jour.
 
-Mais c'est aussi la route qui met en place les différents templates qu'il est nécessaire d'afficher lorsque l'on accède à une URLL. L'organisation des routes au sein du routeur et leur
+Mais c'est aussi la route qui met en place les différents templates qu'il est nécessaire d'afficher lorsque l'on accède à une URL. L'organisation des routes au sein du routeur et leur
 imbrication président donc à l'organisation des différents templates de notre application.
 
 <div class="work">
@@ -196,7 +196,7 @@ imbrication président donc à l'organisation des différents templates de notre
 
 La nouvelle route ``comics`` affiche désormais la liste de nos comics de la même manière qu'elle était affichée précédemment et est accessible
 via l'URL ``/comics``. On note à ce propos que l'URL n'a pas eu à être définie puisque, par convention, [Ember][ember] rend accessible une route
-à l'URL définie par son nom qualifié (nom de ses [ancêtres](#routes-imbriquees) séparé par des `/` puis nom de la route). Si besoin, il est évidemment possible de
+à l'URL définie par son nom qualifié (nom de ses [ancêtres](#routes-imbriquees) séparés par des `.` puis nom de la route). Si besoin, il est évidemment possible de
 personnaliser l'URL via l'option ``path`` fournie lors de la définition de la route. Par exemple :
 
 ```javascript
