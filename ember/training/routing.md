@@ -1338,6 +1338,69 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
 
 ## Rendering explicite de template
 
+On a vu que l'une des responsabilités principales d'une route était d'effectuer le rendu d'un template qu'elle associe 
+au préalable avec un contexte, c'est à dire un ensemble d'objets et de propriétés définies par la route et accessibles 
+dans le template. C'est notamment le cas avec le modèle grâce aux *hooks* vus plus haut.
+
+Par convention, la route sait exactement quel template elle doit rendre en fonction de son emplacement (dossier) et de 
+son nom. Ainsi, dans la grande majorité des cas, l'opération d'association de la route avec le template est parfaitement 
+transparente pour le développeur qui n'a besoin de rien spécifier. Dans certains cas, il peut être cependant 
+utile / nécessaire de spécifier explicitement le template que la route doit rendre et auquel elle doit associer le contexte courant. 
+
+Cela s'effectue grâce à la méthode [renderTemplate](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate)
+de la route. Ce *hook* est automatiquement appelé lors du cycle de vie de la route et peut donc être surchargé facilement
+de manière à personnaliser les opérations de rendu. Comme l'explique la documentation, cette méthode est appelée avec 
+les objets contrôleur et modèle connus par la route. Par défaut, cette méthode effectue un simple appel à la méthode 
+[render](http://emberjs.com/api/classes/Ember.Route.html#method_render).
+
+<div class="work">
+  {% capture m %}
+  {% raw %}
+  
+1. Modifier la route ``app/routes/comics/create`` et surcharger le *hook* ``renderTemplate`` de manière à ce que la route 
+``comics.create`` s'appuie sur le template ``app/templates/comic/edit.hbs``. Supprimer ensuite le template dubliqué
+``app/templates/comics/create.hbs`` et constater que l'application fonctionne toujours.
+
+
+    > ```javascript
+    > // app/routes/comics/create.js
+    > 
+    > export default Ember.Route.extend({
+    >   model () {...},
+    > 
+    >   renderTemplate: function () {
+    >     this.render('comic.edit');
+    >   }
+    > });
+    > ```
+
+    > ```console
+    > \app
+    >  |
+    >  |- \routes
+    >  |   |- \comics
+    >  |   |   |- create.js
+    >  |   |
+    >  |   |- application.js
+    >  |   |- comic.js
+    >  |   |- comics.js
+    >  |
+    >  |- \templates
+    >  |   |- \comics
+    >  |   |   |- error.hbs
+    >  |   |   |- index.hbs
+    >  |   |- \comic
+    >  |   |
+    >  |   |- application.hbs
+    >  |   |- comic.hbs
+    >  |   |- comics.hbs
+    >  |   |- error.hbs
+    > ```
+  
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
 ## Transitions & Redirections
 
 On a vu que l'on pouvait changer de route via l'utilisation de ``link-to``. Il est également possible d'effectuer la même
