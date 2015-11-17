@@ -130,9 +130,8 @@ imbrication président donc à l'organisation des différents templates de notre
     * Ajouter un sous-titre ``Comics list`` juste après l'ouverture de la ``<div class="comics">``
     * Ajouter un paragraph de classe ``no-selected-comic`` juste après la fermeture de la ``<div class="comics">`` contenant le texte "Please select on comic book for detailled information."
  
-    **Tests** : *Les modifications doivent permettre de rendre les tests suivants passants :
-    * [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)*
-    * [02 - Routing - 02 - Should display text on comics/](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)*
+    **Tests** : Les modifications doivent permettre de rendre les tests suivants passants : [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
+    et [02 - Routing - 02 - Should display text on comics/](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
 
 
     > ```html
@@ -267,7 +266,7 @@ Ces *hooks* sont des méthodes de la classe mère, vides ou non, qui sont automa
 Noter que dans ces deux dernières méthodes, un objet ``transition`` est fourni automatiquement. Cet objet permet d'agir sur la transaction en cours et notamment d'annuler
 la transition courante (``transition.abort()``) ou de reprendre une transition précédemment annulée (``transition.retry()``).
 
-<div class="work no-answer">
+<div class="work">
   {% capture m %}
   {% raw %}
   
@@ -276,50 +275,50 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
    * Définir les propriétés ``id``, ``title``, ``scriptwriter``, ``illustrator``, ``publisher``
    * Retourner une liste d'au moins deux instances de cette classe 
   
-    ```javascript
-    // app/routes/comics
-    import Ember from 'ember';
-    
-    let Comic = Ember.Object.extend({
-      slug: '',
-      title: '',
-      scriptwriter: '',
-      illustrator: '',
-      publisher: ''
-    });
-    
-    let blackSad = Comic.create({
-      slug: 'blacksad',
-      title: 'BlackSad',
-      scriptwriter: 'Juan Diaz Canales',
-      illustrator: 'Juanjo Guarnido',
-      publisher: 'Dargaud'
-    });
-    
-    let calvinAndHobbes = Comic.create({
-      slug: 'calvin-and-hobbes',
-      title: 'Calvin and Hobbes',
-      scriptwriter: 'Bill Watterson',
-      illustrator: 'Bill Watterson',
-      publisher: 'Andrews McMeel Publishing'
-    });
-    
-    let akira = Comic.create({
-      slug: 'akira',
-      title: 'Akira',
-      scriptwriter: 'Katsuhiro Ôtomo',
-      illustrator: 'Katsuhiro Ôtomo',
-      publisher: 'Epic Comics'
-    });
-    
-    let comics = [blackSad, calvinAndHobbes, akira]
-    
-    export default Ember.Route.extend({
-      model() {
-        return comics;
-      }
-    });
-    ```
+     > ```javascript
+     > // app/routes/comics
+     > import Ember from 'ember';
+     > 
+     > let Comic = Ember.Object.extend({
+     >   slug: '',
+     >   title: '',
+     >   scriptwriter: '',
+     >   illustrator: '',
+     >   publisher: ''
+     > });
+     > 
+     > let blackSad = Comic.create({
+     >   slug: 'blacksad',
+     >   title: 'BlackSad',
+     >   scriptwriter: 'Juan Diaz Canales',
+     >   illustrator: 'Juanjo Guarnido',
+     >   publisher: 'Dargaud'
+     > });
+     > 
+     > let calvinAndHobbes = Comic.create({
+     >   slug: 'calvin-and-hobbes',
+     >   title: 'Calvin and Hobbes',
+     >   scriptwriter: 'Bill Watterson',
+     >   illustrator: 'Bill Watterson',
+     >   publisher: 'Andrews McMeel Publishing'
+     > });
+     > 
+     > let akira = Comic.create({
+     >   slug: 'akira',
+     >   title: 'Akira',
+     >   scriptwriter: 'Katsuhiro Ôtomo',
+     >   illustrator: 'Katsuhiro Ôtomo',
+     >   publisher: 'Epic Comics'
+     > });
+     > 
+     > let comics = [blackSad, calvinAndHobbes, akira]
+     > 
+     > export default Ember.Route.extend({
+     >   model() {
+     >     return comics;
+     >   }
+     > });
+     > ```
  
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -500,47 +499,46 @@ place du texte précédent.
         </div>
         ```
     
-    **Test** : *Les modifications doivent permettre de rendre passants les tests* : 
-       * *Unitaire : [model() should retrieve existing slug](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/comic-test.js#L87)*
-       * *Acceptance : [02 - Routing - 04 - Should display the comic detail](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)*
+    **Test** : Les modifications doivent permettre de rendre passants les tests unitaires : [model() should retrieve existing slug](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/comic-test.js#L87)
+    et d'acceptance : [02 - Routing - 04 - Should display the comic detail](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
 
-     > ```javascript
-     > // app/router.js
-     > 
-     > Router.map(function () {
-     >   this.route('comics', function() {
-     >     this.route('comic', {path: '/:comic_slug'});
-     >   });
-     > });
-     > ```
-     > 
-     > ```html
-     > {{!-- app/templates/comics/comic.hbs --}}
-     > 
-     > <div class="selected-comic">
-     >   <h3>{{model.title}}</h3>
-     >   <dl>
-     >     <dt>scriptwriter</dt>
-     >     <dd>{{model.scriptwriter}} </dd>
-     >     <dt>illustrator</dt>
-     >     <dd>{{model.illustrator}}</dd>
-     >     <dt>publisher</dt>
-     >     <dd>{{model.publisher}}</dd>
-     >   </dl>
-     > </div>
-     > ```
-     > 
-     > ```javascript
-     > // app/routes/comics/comic.js
-     > 
-     > import Ember from 'ember';
-     > 
-     > export default Ember.Route.extend({
-     >   model (params) {
-     >     return this.modelFor('comics').findBy('slug', params.comic_slug);
-     >   }
-     > });
-     > ```
+      > ```javascript
+      > // app/router.js
+      > 
+      > Router.map(function () {
+      >   this.route('comics', function() {
+      >     this.route('comic', {path: '/:comic_slug'});
+      >   });
+      > });
+      > ```
+      > 
+      > ```html
+      > {{!-- app/templates/comics/comic.hbs --}}
+      > 
+      > <div class="selected-comic">
+      >   <h3>{{model.title}}</h3>
+      >   <dl>
+      >     <dt>scriptwriter</dt>
+      >     <dd>{{model.scriptwriter}} </dd>
+      >     <dt>illustrator</dt>
+      >     <dd>{{model.illustrator}}</dd>
+      >     <dt>publisher</dt>
+      >     <dd>{{model.publisher}}</dd>
+      >   </dl>
+      > </div>
+      > ```
+      > 
+      > ```javascript
+      > // app/routes/comics/comic.js
+      > 
+      > import Ember from 'ember';
+      > 
+      > export default Ember.Route.extend({
+      >   model (params) {
+      >     return this.modelFor('comics').findBy('slug', params.comic_slug);
+      >   }
+      > });
+      > ```
     
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -776,9 +774,11 @@ On constate que plusieurs types de routes sont implicitement créées lors de la
 
 * ``index`` :
     
-    Une route ``index`` est automatiquement disponible pour chaque niveau d'imbrication. Le template proposé pour cette route se rendra dans l'outlet de la route
+    Une route ``index`` est automatiquement disponible pour chaque niveau d'imbrication pour une route mère. Le template proposé pour cette route se rendra dans l'outlet de la route
     mère. Si la route mère peut être considérée comme le conteneur de ses filles, la route ``index`` doit être vue comme la route par défaut. On a pu en effet constater ci-dessus
-    que ``comics.index`` permettait l'accès à l'URL ``/comics``
+    que ``comics.index`` permettait l'accès à l'URL ``/comics``.
+    
+    Noter que la route ``index`` n'est disponible que pour une route disposant de routes filles. Une route fille seule ne manipule pas de route ``index``. 
     
 * ``loading`` / ``error`` : 
 
@@ -832,7 +832,6 @@ par défaut vide, bien entendu.
     * Modifier la route pour lever une erreur si le slug n'est pas trouvé (``throw Error("...")``)
     * Ajouter un template ``error`` au niveau de l'application (``app/templates/error.hbs``). Ce template se 
       contente d'afficher le model dans un paragraphe d'id ``error``
-      
       
     **Test** : *Les modifications doivent permettre de rendre le test unitaire [model() should throw error if slug not found](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/comic-test.js#L87) passant.*
       
@@ -889,9 +888,8 @@ un gestionnaire par défaut pour toute l'application.
 
 {% raw %}
 
-Comme on a pu le constater, au sein d'une application [Ember][ember], les routes sont référencées par leur nom qualifié.
-Celui-ci se calcule en accolant les noms de l'ensemble des routes mères puis du nom de la route fille. Le tout séparés 
-par des ``.``.
+Comme on a pu le constater, au sein d'une application [Ember][ember], les routes sont référencées par leur nom qualifié
+calculé en accolant les noms de l'ensemble des routes mères puis du nom de la route fille. Le tout séparés par des ``.``.
 
 Ainsi la route définie de cette manière ...
 
@@ -928,7 +926,7 @@ Router.map(function() {
 La route sera alors accessible directement via le qualifieur ``fille``. Dans ce cas, en effet, les conventions sont 
 adaptées et [Ember][ember] va rechercher les objets (routes, templates, etc.) par
 leur nom court et sans l'augmentation de préfixe lié à leurs ancêtres. L'arborescence des fichiers et répertoires
-sera également modifié.
+sera également modifiée.
 
 Ainsi :
 
@@ -965,7 +963,7 @@ Ceci tout en conservant les URLs existantes ainsi que l'imbrication des routes e
   {% raw %}
   
 1. Modifier la route ``comics.comic`` pour la nommer ``comic``
-   * Modifier le routeur
+   * Modifier le routeur pour réinitialiser le namespace sans changer l'imbrication des routes
    * Mettre à jour tous les endroits de l'application ou cette route est référencée
    * Déplacer si nécessaire les templates et routes existantes pour s'adapter au nouveau nommage
    * Modifier les tests si nécessaire
@@ -1030,7 +1028,9 @@ Ceci tout en conservant les URLs existantes ainsi que l'imbrication des routes e
    >  |   |- comic.hbs
    >  |   |- comics.hbs
    >  |   |- error.hbs
-   >  ...
+   >  
+   >    ...
+   >  
    > \tests
    >  |- \unit
    >  |   |- comic-test.js
@@ -1050,7 +1050,291 @@ voire indispensable.
 
 {% endraw %}
 
-## Routes imbriquées & Routes implicites
+## Résolution de routes, outlets, index, ...
+
+C'est donc en définissant dans le routeur des routes éventuellement imbriquées les unes dans les autres et en manipulant
+les notions d'``outlet`` et d'``index`` que l'on définit le contenu et l'organisation d'une application [Ember][ember] :
+
+* l'imbrication des routes dans le routeur définit leur hiérarchie, leur URL, etc.
+* le template de la route mère met en place, en quelque sorte, le *layout* de cette hiérarchie en réservant, grâce à un
+  ``outlet``, une zone dynamique pour acceuillir le contenu du template de la route fille
+* la route ``index`` définit à chaque niveau, le contenu affiché lorsque l'on accède directement à la route mère. C'est
+  en quelque sorte la route par défaut
+* lorsque l'on accède à une autre route fille, le contenu de l'``outlet`` est remplacé par celui de la nouvelle route
+* le contexte d'une route et notament le modèle qui y est associé est retrouvé dans la route elle-même puis successivement
+  en remontant dans ses routes mères
+
+Cette opération se poursuit jusqu'à résolution complète de la route et donc jusqu'à un template ne contenant plus d'``outlet``
+
+<div class="work">
+  {% capture m %}
+  {% raw %}
+  
+1. Créer la route ``comic.edit`` fille de la route ``comic`` accessible à l'URL ``comics/<slug>/edit``
+   * Ajouter la route dans le routeur
+   * Si nécessaire, créer les dossiers nécessaires et ajouter les routes permettant de récupérer le modèle concerné
+   * Si nécessaire, créer les dossiers nécessaires et ajouter et/ou modifier les templates pour afficher le contenu suivant :
+     
+     ```html
+     <div class="selected-comic">
+       <form>
+         <div class="buttons">
+           <button type="submit" class="btn-submit"></button>
+           <button type="reset" class="btn-cancel"></button>
+         </div>
+         <div class="title">
+           <input id="title" type="text" value={{model.title}} />
+         </div>
+       
+         <div class="description">
+           <div class="scriptwriter">
+             <label for="scriptwriter">Scriptwriter</label>
+             <span class="control"><input id="scriptwriter" type="text" value={{model.scriptwriter}} required="required"/></span>
+           </div>
+           <div class="illustrator">
+             <label for="illustrator">Illustrator</label>
+             <span class="control"><input id="illustrator" type="text" value={{model.illustrator}} /></span>
+           </div>
+           <div class="publisher">
+             <label for="publisher">Publisher</label>
+             <span class="control"><input id="publisher" type="text" value={{model.publisher}} /></span>
+           </div>
+         </div>
+       </form>
+     </div>
+     ```
+     
+     **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 06 - Should display edit route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+      
+       > ```console
+       > \app
+       >  |
+       >  |- \routes
+       >  |   |- application.js
+       >  |   |- comic.js
+       >  |   |- comics.js
+       >  |
+       >  |- \templates
+       >  |   |- \comics
+       >  |   |- \comic
+       >  |   |   |- edit.hbs
+       >  |   |   |- index.hbs
+       >  |   |
+       >  |   |- application.hbs
+       >  |   |- comic.hbs
+       >  |   |- comics.hbs
+       >  |   |- error.hbs
+       > ```
+       
+       > ```html
+       > {{!-- app/templates/comic.hbs --}}
+       > 
+       > <div class="selected-comic">
+       >   {{outlet}}
+       > </div>
+       > ```
+       
+       > ```html
+       > {{!-- app/templates/comic/edit.hbs --}}
+       > 
+       > <div class="selected-comic">
+       >   <form>
+       >     <!-- cf. ci-dessus. -->
+       >   </div>
+       > </div>
+       > ```
+          
+       > ```html
+       > {{!-- app/templates/comic/index.hbs --}}
+       > 
+       > <div class="selected-comic">
+       >   <h3>{{model.title}}</h3>
+       >   <dl>
+       >     <dt>scriptwriter</dt>
+       >     <dd>{{model.scriptwriter}} </dd>
+       >     <dt>illustrator</dt>
+       >     <dd>{{model.illustrator}}</dd>
+       >     <dt>publisher</dt>
+       >     <dd>{{model.publisher}}</dd>
+       >   </dl>
+       > </div>
+       > ```
+       
+       > On a donc remplacé le contenu du template ``comic.hbs`` par un ``outlet`` pour accueillir les routes filles. Le 
+       > nouveau template ``comic/edit.hbs`` contient le contenu du formulaire d'édition tandis que le template ``comic/index.hbs``
+       > a été définit et contient le template de la route ``comic`` (défaut) anciennement dans le template ``comic.hbs``.
+       >
+       > On note aussi que nous n'avons pas eu à définir de route ``app/routes/comic/edit.js`` tout en pouvant accéder au modèle
+       > dans le template ``app/templates/comic/edit.hbs``. Le contexte pour la route ``comic.edit`` a été hérité de la route 
+       > mère ``comic``.
+       
+     On remarque que le *binding* est unidirectionnel : les modifications effectuées lors de l'édition des ``input`` ne 
+     modifient pas la liste de comics à gauche
+     
+1. Modifier le template de la route ``comic.edit`` pour passer à un *binding* bidirectionnel
+
+    > ```html
+    > {{!-- app/templates/comic/edit.hbs --}}
+    > 
+    > <div class="selected-comic">
+    >   <form>
+    >     <div class="buttons">
+    >       <button type="submit" class="btn-submit"></button>
+    >       <button type="reset" class="btn-cancel"></button>
+    >     </div>
+    >     <div class="title">
+    >       {{input id="title" type="text" value=model.title}}
+    >     </div>
+    >   
+    >     <div class="description">
+    >       <div class="scriptwriter">
+    >         <label for="scriptwriter">Scriptwriter</label>
+    >         <span class="control">{{input id="scriptwriter" type="text" value=model.scriptwriter required="required"}}</span>
+    >       </div>
+    >       <div class="illustrator">
+    >         <label for="illustrator">Illustrator</label>
+    >         <span class="control">{{input id="illustrator" type="text" value=model.illustrator}}</span>
+    >       </div>
+    >       <div class="publisher">
+    >         <label for="publisher">Publisher</label>
+    >         <span class="control">{{input id="publisher" type="text" value=model.publisher}}</span>
+    >       </div>
+    >     </div>
+    >   </form>
+    > </div>
+    > ```
+    
+    Désormais, le *binding* est bidirectionnel : toute modification effectuée au niveau des ``input`` du formulaire
+    est répercutée dans la liste de comics à gauche
+    
+1. Modifier l'affichage du comic pour ajouter un lien vers la page d'édition à droite du titre
+    * Utiliser la forme *inline* du *helper* ``link-to``
+    * Le lien est vide et doit porter la classe ``btn-edit``
+    * Encapsuler le lien dans une div de classe ``buttons`` en haut du template :
+    
+       ```html
+       <div class="buttons">
+         {{!-- compléter ici --}}
+       </div>
+       ```
+       
+       > ```html
+       > {{!-- app/templates/comic/index.hbs --}}
+       > 
+       > <div class="selected-comic">
+       >   <div class="buttons">
+       >     {{link-to "" 'comic.edit' model class="btn-edit"}}
+       >   </div>
+       >   <h3>{{model.title}}</h3>
+       > 
+       >   ...
+       >
+       > </div>
+       > ```
+
+1. Créer la route ``comic.create`` fille de la route ``comic`` accessible à l'URL ``comics/create``
+    * Copier dans le template de cette route exactement le même template que la route ``comic.edit``
+    * Modifier / implémenter la route ``app/routes/comics/create.js`` pour créer une nouvelle instance du modèle ``Comic`` et l'ajouter à la liste
+    
+    **Test** : Les modifications doivent permettre de rendre passants les tests unitaire : [should create new model](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/create-test.js#L87)
+    et d'acceptance : [02 - Routing - 07 - Should display create route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
+
+   
+      > ```console
+      > \app
+      >  |
+      >  |- \routes
+      >  |   |- \comics
+      >  |   |   |- create.js
+      >  |   |
+      >  |   |- application.js
+      >  |   |- comic.js
+      >  |   |- comics.js
+      >  |
+      >  |- \templates
+      >  |   |- \comics
+      >  |   |   |- create.hbs
+      >  |   |   |- error.hbs
+      >  |   |   |- index.hbs
+      >  |   |- \comic
+      >  |   |
+      >  |   |- application.hbs
+      >  |   |- comic.hbs
+      >  |   |- comics.hbs
+      >  |   |- error.hbs
+      > ```
+      
+      > ```html
+      > {{!-- app/templates/comics/create.hbs --}}
+      > 
+      > <div class="selected-comic">
+      >   <form>
+      >     <div class="buttons">
+      >       <button type="submit" class="btn-submit"></button>
+      >       <button type="reset" class="btn-cancel"></button>
+      >     </div>
+      >     <div class="title">
+      >       {{input id="title" type="text" value=model.title}}
+      >     </div>
+      >   
+      >     <div class="description">
+      >       <div class="scriptwriter">
+      >         <label for="scriptwriter">Scriptwriter</label>
+      >         <span class="control">{{input id="scriptwriter" type="text" value=model.scriptwriter required="required"}}</span>
+      >       </div>
+      >       <div class="illustrator">
+      >         <label for="illustrator">Illustrator</label>
+      >         <span class="control">{{input id="illustrator" type="text" value=model.illustrator}}</span>
+      >       </div>
+      >       <div class="publisher">
+      >         <label for="publisher">Publisher</label>
+      >         <span class="control">{{input id="publisher" type="text" value=model.publisher}}</span>
+      >       </div>
+      >     </div>
+      >   </form>
+      > </div>
+      > ```
+      
+      > ```javascript
+      > // app/routes/comics/create.js
+      > 
+      > import Ember from 'ember';
+      > import Comic from '../../models/comic';
+      > 
+      > export default Ember.Route.extend({
+      >   model () {
+      >     let newComic = Comic.create();
+      >     this.modelFor('comics').push(newComic);
+      >     return newComic;
+      >   }
+      > });
+      > ```
+      
+    On remarque ici aussi le *binding* ainsi que le fait qu'une fois ajouté à la liste, le nouveau comic apparait bien dans la liste 
+    à gauche
+
+1. Modifier l'affichage de la liste de comics pour ajouter après la liste un lien vers la route de création ``comics.create``
+    * Utiliser la forme *inline* du *helper* ``link-to``
+    * Le lien est vide et doit porter la classe ``add-comic``
+    
+    > ```html
+    > {{!-- app/templates/comics.hbs --}}
+    > 
+    > <div class="row">
+    >   <div class="comics">
+    >     <h2>Comics list</h2>
+    >     <ul...>
+    >     {{link-to '' 'comics.create' class="add-comic"}}
+    >   </div>
+    > 
+    >   {{outlet}}
+    > </div>
+    > ```
+    
+   
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
 
 ## Rendering explicite de template
 
