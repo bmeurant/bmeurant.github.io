@@ -94,9 +94,9 @@ l'utilisateur sur l'interface rendue par le template :
 ```
 
 ```js
-App.BooksController = Ember.ArrayController.extend({
+App.BooksController = Ember.Controller.extend({
   actions: {
-    // appelée lors du clic sur le bouton
+    // appelé lors du clic sur le bouton
     sort: function () {
         ...
     }
