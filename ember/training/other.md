@@ -3,7 +3,7 @@
 
 ### Actions / Routes
 
-création -> Route & actions + perso url
+création -> Route & actions
     save, cancel, willtransition
 Edition -> perso route pour renderTemplate create
 

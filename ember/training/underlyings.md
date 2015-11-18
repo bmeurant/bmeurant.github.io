@@ -6,6 +6,8 @@ prev: ember/training/overview
 next: ember/training/ember-cli
 ---
 
+<div id="toc"></div>
+
 ## Modèle object
 
 Avec [Ember][ember], la quasi totalité des objets utilisés est dérivée d'une classe de base, la classe ``Ember.Object`` : les contrôleurs, les vues, les modèles, l'application elle-même.

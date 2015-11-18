@@ -1795,8 +1795,9 @@ pre {
   display: none; }
 
 .work {
-  border: solid;
-  border-color: #0388a6;
+  border: solid #0388a6;
+  border-radius: 6px;
+  background-color: #FDFDFC;
   padding-left: 10px;
   padding-right: 15px;
   padding-bottom: 5px;
@@ -1850,6 +1851,18 @@ pre {
   .page-content ol li ul,
   .page-content ol li ul {
     margin-bottom: 15px !important; }
+
+div#toc {
+  font-weight: 700;
+  background-color: #FDFDFC;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 25px;
+  border: 2px solid #0388a6; }
+  div#toc ol {
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-size: 15px; }
 
 .page-header {
   margin: 0 auto;

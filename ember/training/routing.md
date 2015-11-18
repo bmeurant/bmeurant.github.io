@@ -6,6 +6,8 @@ prev: ember/training/templates
 next: ember/training/actions-controllers
 ---
 
+<div id="toc"></div>
+
 ## Routeur
 
 Le routeur est un composant central d'[Ember][ember]. Loin de constituer une pièce rapportée venant compléter un framework existant, il en est la pierre angulaire. 

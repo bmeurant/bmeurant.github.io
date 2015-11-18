@@ -6,6 +6,8 @@ prev: ember/training/underlyings
 next: ember/training/templates
 ---
 
+<div id="toc"></div>
+
 ## Structure d'une application Ember
 
 On a déjà évoqué le fait qu'[Ember][ember] était un framework avec des partis pris forts et un modèle de développement structurant. 

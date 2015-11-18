@@ -6,6 +6,8 @@ prev: ember/training/ember-cli
 next: ember/training/routing
 ---
 
+<div id="toc"></div>
+
 {% raw %}
 
 **NB :** *Les exercices de cette section seront validés par le passage des cas de tests associés. Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet* :

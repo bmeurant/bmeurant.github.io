@@ -35,7 +35,7 @@ En fonction du type de composants, le déclenchement de l'action s'effectue lors
 si l'on utilise le helper ``{{input}}``, celui-ci ne s'effectue qu'à la "validation" du champs. C'est à dire lorsque l'on appuie sur
 ``Entrée``. Pour les éléments HTML standard, il s'effectue au clic, ce qui explique que les comportements de ``{{input}}`` et de ``<input/>`` diffèrent.
 
-#### traitement d'une action
+#### Traitement d'une action
 
 Une action déclenchée dans le template doit donc être traitée, dans le composant, le contrôleur correspondant, ou dans une des routes actives,
 en partant de la plus précise. Quelque soit l'endroit de la déclaration du gestionnaire, celle-ci s'effectue de la manière suivante, 
@@ -63,7 +63,7 @@ actions: {
 }
 ```
 
-#### paramètre
+#### Paramètre
 
 Il est possible de déclarer et donc passer un paramètre à l'action qui sera déclenchée, de manière à pouvoir lire et utiliser ce paramètre
 dans le gestionnaire. Ce paramètre peut être un litéral ou un objet.
@@ -87,7 +87,7 @@ actions: {
 A noter que, concernant l'utilisation de ``{{input}}``, il n'est pas possible de passer un paramètre sans préciser l'évènement
 comme exposé ci-dessous.
 
-#### type d'évènement
+#### Type d'évènement
 
 Il est enfin également possible de préciser explicitement le type d'évènement que l'on souhaite lier à l'action de la 
 manière suivante : 
