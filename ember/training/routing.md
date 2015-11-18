@@ -1214,6 +1214,8 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
     * Le lien est vide et doit porter la classe ``btn-edit``
     * Encapsuler le lien dans une div de classe ``buttons`` en haut du template :
     
+    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 07 - Should link to edit route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+    
        ```html
        <div class="buttons">
          {{!-- compléter ici --}}
@@ -1239,7 +1241,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
     * Modifier / implémenter la route ``app/routes/comics/create.js`` pour créer une nouvelle instance du modèle ``Comic`` et l'ajouter à la liste
     
     **Test** : Les modifications doivent permettre de rendre passants les tests unitaire : [should create new model](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/create-test.js#L87)
-    et d'acceptance : [02 - Routing - 07 - Should display create route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
+    et d'acceptance : [02 - Routing - 08 - Should display create route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
 
    
       > ```console
@@ -1306,7 +1308,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
       > export default Ember.Route.extend({
       >   model () {
       >     let newComic = Comic.create();
-      >     this.modelFor('comics').push(newComic);
+      >     this.modelFor('comics').pushObject(newComic);
       >     return newComic;
       >   }
       > });
@@ -1318,6 +1320,8 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
 1. Modifier l'affichage de la liste de comics pour ajouter après la liste un lien vers la route de création ``comics.create``
     * Utiliser la forme *inline* du *helper* ``link-to``
     * Le lien est vide et doit porter la classe ``add-comic``
+    
+    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 09 - Should link to create route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
     
     > ```html
     > {{!-- app/templates/comics.hbs --}}

@@ -154,7 +154,7 @@ doivent être intercéptées obligatoirement dans un contrôleur ou un composant
      ne se propagent pas via *bubling* et doivent impérativement être interceptées dans un contrôleur ou un composant.
 
 **NB:** Cette situation est problématique mais temporaire et les ``closure actions`` sont amenées à devenir le seul système de gestion des actions dans
-un avenir proche. Pour d'avatnage de détails, se reporter à cette [issue](https://github.com/emberjs/ember.js/issues/12581). Il est donc conseillé 
+un avenir proche. Pour d'avantage de détails, se reporter à cette [issue](https://github.com/emberjs/ember.js/issues/12581). Il est donc conseillé 
 de privilégier la gestion des actions au sein d'un contrôleur ou d'un composant et, si nécessaire, de propager explicitement l'action vers
 les routes impliquées.
 
