@@ -20,9 +20,47 @@ La fonction des contrôleurs est donc très limitée et se réduit de plus en pl
 disparaître les contrôleurs au profit de composants dès lors que ceux-ci seront routables ce qui n'est pas encore le cas (cf.
 [issue](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md)).
 
+## Routes, Contrôleurs & Modèles
+
+La route définit donc, comme vu au chapitre précédent, une méthode ``model`` permettant de retrouver le modèle, le contrôleur stocke 
+dans une propriété ``model`` le résultat de cette méthode pour l'exposer au template.
+
+L'initialisation de la propriété ``model`` du contrôleur à partir du résultat de la méthode ``model`` de la route, après résolution 
+des éventuelles promesses par [Ember][ember], s'effectue de manière totalement automatique via la méthode 
+[setupController](http://emberjs.com/api/classes/Ember.Route.html#method_setupController) de la route. Contrairement à la méthode
+[activate](http://emberjs.com/api/classes/Ember.Route.html#method_activate), appelée lors de l'instantiation de la route par le routeur,
+``setupController`` est appelée à chaque changement de route (y compris de segments dynamiques). Elle peut donc être surchargée de 
+manière à provisionner, dans le contrôleur associé à la route, des éléments de contexte supplémentaires dépendant de la route activée : 
+
+```javascript
+setupController: function (controller, model) {
+  this._super(controller, model);
+  // custom behaviour
+}
+```
+
+L'accès au(x) contrôleur(s) au sein d'une route peut s'effectuer de différentes manières :
+
+* via l'accès direct à la propriété [controller](http://emberjs.com/api/classes/Ember.Route.html#property_controller) 
+définie et provisionnée par [Ember][ember] au sein de la route :
+
+   ```javascript
+   this.controller;
+   this.get('controller');
+   ```
+  
+* via l'utilisation de la méthode [controllerFor()](http://emberjs.com/api/classes/Ember.Route.html#method_controllerFor) qui,
+comme la méthode [modelFor](http://emberjs.com/api/classes/Ember.Route.html#method_modelFor) pour le modèle, permet d'accéder
+au contrôleur associé à une route donnée :
+
+   ```javascript
+   this.controllerFor('mere.fille');
+   this.controllerFor(this.routeName);
+   ```
+
 {% raw %}
 
-## Actions & Evènements
+## Actions
 
 Maintenant que nos routes sont installées et effectuent le rendu des templates associés, il va être nécessaire que notre application
 puisse réagir aux comportements des utilisateurs. Pour celà, nous allons devoir générer et propsager des **évènements** au sein de 
@@ -91,9 +129,9 @@ actions: {
 A noter que, concernant l'utilisation de ``{{input}}``, il n'est pas possible de passer un paramètre sans préciser l'évènement
 comme exposé ci-dessous.
 
-### Type d'évènement
+### Type d'évènement DOM
 
-Il est enfin également possible de préciser explicitement le type d'évènement que l'on souhaite lier à l'action de la 
+Il est enfin également possible de préciser explicitement le type d'évènement DOM que l'on souhaite lier à l'action de la 
 manière suivante : 
 
 ```html
@@ -166,9 +204,11 @@ les routes impliquées.
   {% raw %}
 
   
-  
-  
-* boutons valider & cancel
+* bouton valider -> binding RAF transitionTo sans model (pas besoin)
+* bouton cancel -> stockage model initial, restaure model dans controller puis log title avec notation`.`enchaînée, transitionTo avec model
+* liste non MAJ parce que pas remplacé l'objet modifié par le clone dans le tableau. Comme on n'utilise pas de store (on verra avec Ember DATA), obligé de le faire à la main
+   * comics model -> arrayProxy vite fait
+   * replaceBy et liste OK -> ember data mieux
   
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
