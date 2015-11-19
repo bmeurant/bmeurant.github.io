@@ -1,17 +1,12 @@
 
 ## Plan
 
-### underlyings
+### Controllers
 
-notation `.`enchainée
+edition -> willtransition
+création -> comme édition plus redirection et modif cancel pour removeAt
 
-### Actions / Routes
-
-création -> Route & actions
-    save, cancel, willtransition
-Edition -> perso route pour renderTemplate create
-
-### Actions / Controllers
+autres actions -> création controllers
 
 Filtering et sorting list
 tranformation btn creer par input titre + bouton -> descativation btn si vide et sinon on bascule sur creér avec titre
