@@ -1,6 +1,10 @@
 
 ## Plan
 
+### underlyings
+
+notation `.`enchainée
+
 ### Actions / Routes
 
 création -> Route & actions
