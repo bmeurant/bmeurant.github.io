@@ -1457,7 +1457,8 @@ les objets contrôleur et modèle connus par la route. Par défaut, cette métho
 ## Transitions & Redirections
 
 On a vu que l'on pouvait changer de route via l'utilisation de ``link-to``. Il est également possible d'effectuer la même
-opération depuis une route grâce à la méthode ``transitionTo`` ou depuis un contrôleur via ``transitionToRoute``.
+opération depuis une route grâce à la méthode [transitionTo](http://emberjs.com/api/classes/Ember.Route.html#method_transitionTo) 
+ou depuis un contrôleur via [transitionToRoute](http://emberjs.com/api/classes/Ember.Controller.html#method_transitionToRoute).
 
 Dans une route, ces changements de route via ``transitionTo`` peuvent s'effectuer :
 
@@ -1476,6 +1477,12 @@ sa route mère. Ce fonctionnement est loin d'être optimal puisque ceux-ci vienn
 
 Dans ce cas il est préférable d'utiliser la méthode ``redirect`` qui agit exactement comme un ``transitionTo`` mais 
 conserve la transaction courante valide.
+
+La méthode ``transitionTo`` est courament utilisée avec comme seul paramètre le nom de la route vers laquelle on souhaite
+rediriger mais il est également possible de lui passer :
+
+* un modèle : ``this.transitionTo('route', model)``. Dans ce cas le model sera récupéré et désérialisé tel quel dans la route cible.
+* un litéral : ``this.transitionTo('route', 1)``. Dans ce cas, le *hook* ``model`` sera réexécuté avec ce paramètre.
 
 <div class="work">
   {% capture m %}
