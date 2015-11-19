@@ -22,15 +22,15 @@ disparaître les contrôleurs au profit de composants dès lors que ceux-ci sero
 
 ## Routes, Contrôleurs & Modèles
 
-La route définit donc, comme vu au chapitre précédent, une méthode ``model`` permettant de retrouver le modèle, le contrôleur stocke 
-dans une propriété ``model`` le résultat de cette méthode pour l'exposer au template.
+La route définit donc, comme vu au chapitre précédent, une méthode ``model`` permettant de retrouver le modèle. Le contrôleur stocke, 
+quant à lui, dans une propriété ``model`` le résultat de cette méthode pour l'exposer au template.
 
 L'initialisation de la propriété ``model`` du contrôleur à partir du résultat de la méthode ``model`` de la route, après résolution 
 des éventuelles promesses par [Ember][ember], s'effectue de manière totalement automatique via la méthode 
 [setupController](http://emberjs.com/api/classes/Ember.Route.html#method_setupController) de la route. Contrairement à la méthode
 [activate](http://emberjs.com/api/classes/Ember.Route.html#method_activate), appelée lors de l'instantiation de la route par le routeur,
 ``setupController`` est appelée à chaque changement de route (y compris de segments dynamiques). Elle peut donc être surchargée de 
-manière à provisionner, dans le contrôleur associé à la route, des éléments de contexte supplémentaires dépendant de la route activée : 
+manière à provisionner, dans le contrôleur associé à la route, des éléments de contexte supplémentaires dépendant de la route courante : 
 
 ```javascript
 setupController: function (controller, model) {
@@ -45,7 +45,6 @@ L'accès au(x) contrôleur(s) au sein d'une route peut s'effectuer de différent
 définie et provisionnée par [Ember][ember] au sein de la route :
 
    ```javascript
-   this.controller;
    this.get('controller');
    ```
   
@@ -57,6 +56,27 @@ au contrôleur associé à une route donnée :
    this.controllerFor('mere.fille');
    this.controllerFor(this.routeName);
    ```
+
+L'objet modèle peut donc être récupéré, manipulé et modifié, depuis le contrôleur, via l'accés à la propriété ``model`` et depuis la route,
+en passant par le contrôleur :
+
+```javascript
+// controller
+this.get('model');
+this.set('model', newModel);
+```
+
+```javascript
+// route
+this.get('controller').get('model');
+this.get('controller.model');
+this.get('controller').set('model', newModel);
+this.set('controller.model', newModel);
+```
+
+On remarque dans les exemples précédents, qu'[Ember][ember] permet de faciliter l'accès à des objets et propriétés imbriqués
+via l'utilisation de la notation ``.`` en lieu et place de getters / setters chaînés. Cette syntaxe plus concise est à privilégier. 
+Elle est utilisable pour tous les objets [Ember][ember].
 
 {% raw %}
 
@@ -199,17 +219,182 @@ les routes impliquées.
 
 {% endraw %}
 
-<div class="work no-answer">
+<div class="work answer">
   {% capture m %}
   {% raw %}
 
-  
-* bouton valider -> binding RAF transitionTo sans model (pas besoin)
-* bouton cancel -> stockage model initial, restaure model dans controller puis log title avec notation`.`enchaînée, transitionTo avec model
-* liste non MAJ parce que pas remplacé l'objet modifié par le clone dans le tableau. Comme on n'utilise pas de store (on verra avec Ember DATA), obligé de le faire à la main
-   * comics model -> arrayProxy vite fait
-   * replaceBy et liste OK -> ember data mieux
-  
+1. Déclencher et intercepter l'action ``save`` au clic sur le bouton ``.btn-submit`` de manière à effectuer une simple transition
+vers la route ``comic``
+    * Définir dans le template ``comic.edit`` l'action 'save' comme déclenchée au clic sur le bouton ``.btn-submit`` en utilisant
+    une ``element space action``
+    * Définir dans la route ``comic.edit`` la méthode d'interception de l'action 'save'
+    
+    **Test** : *Les modifications doivent permettre de rendre le test [03 - Controller - 01 - Should save on submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) passant.*
+    
+    **NB** : Il n'est pas nécessaire d'effectuer d'autre opération car les modifications effectuées onté déjà été répercutées automatiquement
+    grâce au binding bidirectionnel.
+    
+       > ```html
+       > {{!-- app/templates/comic/edit.hbs --}}
+       > <form>
+       >     <div class="buttons">
+       >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
+       >       <button type="reset" class="btn-cancel"></button>
+       >     </div>
+       >     ...
+       > </form>
+       > ```
+       > 
+       > ```javascript
+       > // app/routes/comic/edit.js
+       >
+       > import Ember from 'ember';
+       > 
+       > export default Ember.Route.extend({
+       >   actions: {
+       >     save () {
+       >       this.transitionTo('comic');
+       >     }
+       >   }
+       > });
+       > ```
+
+1. Déclencher et intercepter l'action ``cancel`` au clic sur le bouton ``.btn-cancel`` de manière à annuler les modifications
+   effectuées sur le model courant puis effectuer une transition vers la route ``comic``
+    * Comme on ne dispose pas d'un ``store`` avancé comme cela sera le cas avec [Ember Data](../ember-data), il est nécessaire 
+    d'effectuer en premier lieu une copie du modèle initial de manière à pouvoir le réinitialiser par la suite. Dans quelle
+    méthode ?
+    * Que constate-t-on suite à la transition ?
+    * Pour le moment, ne pas se préoccuper d'annuler les modifications dans la liste de comics
+    
+    **Test** : *Les modifications doivent permettre de rendre le test [03 - Controller - 02 - Should cancel on reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) passant.*
+    
+    > ```html
+    > {{!-- app/templates/comic/edit.hbs --}}
+    > <form>
+    >     <div class="buttons">
+    >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
+    >       <button type="reset" class="btn-cancel"></button>
+    >     </div>
+    >     ...
+    > </form>
+    > ```
+    
+    > ```javascript
+    > // app/routes/comic/edit.js
+    > 
+    > import Ember from 'ember';
+    > import Comic from '../../models/comic';
+    > 
+    > export default Ember.Route.extend({
+    >   afterModel (model) {
+    >     this.set('initialModel', Comic.create(model));
+    >   },
+    >   actions: {
+    >     save () {
+    >       this.transitionTo('comic');
+    >     },
+    >     cancel () {
+    >       this.set('controller.model', this.get('initialModel'));
+    > 
+    >       this.transitionTo('comic', this.get('controller.model'));
+    >     }
+    >   }
+    > });
+    > ```
+    > 
+    > La copie initiale du modèle se fait évidement dans le *hook* ``afterModel`` puisque c'est dans celui-là seulement
+    > que l'on dispose du modèle initialisé. Cet objet est conservé dans une propriété ``initialModel``.
+    >
+    > La réinitialisation du modèle lui-même s'effectue en remplaçant le model du controller par le modèle conservé.
+    > On note l'utilisation de la notation chaînée `.`
+    >
+    > La transition doit impérativement renvoyer le modèle réinitialisé. Dans le cas contraire, les bindings ne sont pas
+    > mis à jour car la route mère `comic` n'est pas prévenue des changements.
+    
+1. Avant la transition, mettre à jour le tableau ``comics`` de la route ``comics`` afin de remplacer explicitement le modèle
+   toujours référencé par celui réinitialisé.
+    * Cette fois encore, un outil complet tel qu'[Ember Data](../ember-data) nous offrira, comme on le verra plus tard,
+    de gérer l'ensemble de ces problématiques pour nous bien plus facilement.
+    * Pour faciliter un peu l'opération, effectuer préalablement les opérations suivantes :
+       * copier le code suivant dans un nouveau model ``app/models/comics.js`` :
+       
+          ```javascript
+          import Ember from 'ember';
+          
+          export default Ember.ArrayProxy.extend({
+          
+            /**
+             Replace an array item (object) with a new one.
+             The item to replace is found from a specific value of a given property
+             @method replaceBy
+             @param {String} property to test
+             @param [value] property value to test against
+             @param {Object} new item
+             */
+            replaceBy (key, value, newObj) {
+              let indexToReplace = this.indexOf(this.findBy(key, value));
+          
+              if (indexToReplace > -1) {
+                this.replace(indexToReplace, 1, newObj);
+              }
+            }
+          });
+          ```
+       * modifier la route ``app/routes/comics.js`` :
+       
+          ```javascript
+          import Comics from '../models/comics';
+          
+          ...
+          
+          let comics = Comics.create({content: [blackSad, calvinAndHobbes, akira)});
+          ```
+          Ces modifications ont pour objectif de transformer le simple tableau ``comics`` initial pour utiliser une classe
+          étendant ``Ember.ArrayProxy`` qui proxyfie, comme son nom l'indique, un tableau. Cette classe définit
+          une nouvelle méthode ``replaceBy`` permettant de remplacer simplement un élément du tableau par un autre élément
+          en recherchant cet élément par la valeur d'une de ses propriétés. On initialise ensuite ``comics`` avec un tableau.
+    * utiliser la méthode ``replaceBy`` pour réinitialiser l'objet dans la liste de comics
+    
+    **Test** : *Les modifications doivent permettre de rendre le test [03 - Controller - 03 - Should reinit list on reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) passant.*
+
+    > ```html
+    > {{!-- app/templates/comic/edit.hbs --}}
+    > <form>
+    >     <div class="buttons">
+    >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
+    >       <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
+    >     </div>
+    >     ...
+    > </form>
+    > ```
+    
+    > ```javascript
+    > // app/routes/comic/edit.js
+    > 
+    > actions: {
+    >   save () {
+    >     this.transitionTo('comic');
+    >   },
+    >   cancel () {
+    >     this.set('controller.model', this.get('initialModel'));
+    >     this.modelFor('comics').replaceBy('slug', this.get('initialModel.slug'), this.get('initialModel'));
+    > 
+    >     this.transitionTo('comic', this.get('controller.model'));
+    >   }
+    > }
+    > ```
+    
+    > ```javascript
+    > // app/routes/comics.js
+    >
+    > import Comics from '../models/comics';
+    > 
+    > ...
+    > 
+    > let comics = Comics.create({content: Ember.Array([blackSad, calvinAndHobbes, akira])});
+    > ```
+      
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
 </div>
