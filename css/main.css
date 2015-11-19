@@ -1892,7 +1892,7 @@ div#toc {
   margin: 5px 0 0 0;
   padding: 5px 10px;
   font-weight: 700;
-  box-shadow: inset 0px 0px 5px #007095, 0px 4px 0px 1px #007095, 0px 6px 5px #999; }
+  box-shadow: 0 1px 3px #007095, inset 0 0 0 #999; }
   .toggle-answers.active {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5); }
   .toggle-answers:hover {
