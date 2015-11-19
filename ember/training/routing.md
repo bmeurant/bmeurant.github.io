@@ -206,7 +206,7 @@ Router.map(function() {
 });
 ```
 
-## Modèle
+## Définition du modèle
 
 L'une des responsabilité principales d'une route consiste donc à assurer la récupération et la gestion d'un modèle (*model*). 
 Au sens général un modèle est un objet métier contenant des propriétés. En [Ember][ember], il peut s'agir d'objets javascript natifs ou d'instances de
@@ -470,6 +470,34 @@ La notation ``<name>_<prop>`` constitue également une convention permettant à 
 haut de récupérer la valeur de ce paramètre et d'effectuer une recherche dans le ``store`` (cf. [chapitre Ember Data](../ember-data)) en
 effectuant la correspondance avec la propriété ``prop`` du modèle ``name``.
 
+## Accès au modèle
+
+En plus des *hooks* appelés durant le cycle de vie de la route et permettant de définir le modèle attaché à cette route, il existe une méthode permettant de récupérer
+l'objet modèle créé. C'est la méthode [modelFor](http://emberjs.com/api/classes/Ember.Route.html#method_modelFor).
+
+Chaque route peut donc, via cette méthode, récupérer le modèle associé à la route dont le nom est passé en paramètre de cette méthode (et pas seulement au modèle de la route
+courante, donc).
+
+```javascript
+// app/routes/mere/fille.js
+
+  ...
+  this.modelFor('mere.fille');
+```
+
+Le modèle de la route courante peut donc être récupéré en utilisant cette méthode avec le nom de la route courante ou en utilisant la propriété 
+[this.routeName](http://emberjs.com/api/classes/Ember.Route.html#property_routeName) qui contient le nom de la route courante. Cette dernière,
+notation, plus évolutive, est à privilégier lorsque l'on souhaite accéder au modèle de la route courante.
+
+```javascript
+// app/routes/mere/fille.js
+
+  ...
+  this.modelFor(this.routeName);
+```
+
+**NB** : On ne peut accéder aux modèle que pour les routes actuellement actives.
+
 <div class="work">
   {% capture m %}
   {% raw %}
@@ -478,9 +506,7 @@ effectuant la correspondance avec la propriété ``prop`` du modèle ``name``.
 place du texte précédent. 
     * La nouvelle route doit répondre à l'URL ``/comics/<slug>`` ou ``slug`` correspond à la propriété ``slug`` du modèle ``comic``
     * Comme nous ne disposons pour l'instant pas de ``store`` nous permettant de disposer d'un référentiel partagé de nos modèles,
-      utiliser la méthode ``modelFor`` pour récupérer le modèle de la route mère ``/comics``.
-        [Ember](http://emberjs.com) fournit une méthode [modelFor](http://emberjs.com/api/classes/Ember.Route.html#method_modelFor) dans chaque route permettant de récupérer le modèle d'une route mère, 
-        directe ou non.    
+      utiliser la méthode ``modelFor`` pour récupérer le modèle de la route mère ``/comics``.   
     * La route doit récupérer la valeur du paramètre ``slug`` et renvoyer le modèle correspondant. Utiliser la fonction Ember
       [findBy](http://emberjs.com/api/classes/Ember.Array.html#method_findBy)
     * Le template doit être modifié pour afficher le détail d'un comic :
@@ -541,6 +567,27 @@ place du texte précédent.
       >   }
       > });
       > ```
+      
+1. Mettre un point d'arrêt dans la méthode ``model`` de ``comics`` et constater les choses suivantes :
+    * l'utilisation de ``this.get('model')`` ne renvoie pas le modèle mais la fonction ``model()``
+    * l'utilisation de ``this.modelFor('comics')`` ou de ``this.modelFor(this.routeName)`` renvoie l'objet model. Les deux
+      sont équivalents dans ce cas.
+      
+      ```console
+      $ this.get('model')
+        (params, transition) {
+            var match, name, sawParams, value;
+            var queryParams = _emberMetalProperty_get.get(this, '_qp.map');
+      
+            for (var prop in params) {
+              if (prop === 'q…
+      
+      $ this.modelFor('comics')
+        Class {_content: Array[3], _didInitArrayProxy: true, _prevContent: Array[3], _prevArrangedContent: Array[3], __ember1447938213166: null…}
+        
+      $ this.modelFor(this.routeName)
+        Class {_content: Array[3], _didInitArrayProxy: true, _prevContent: Array[3], _prevArrangedContent: Array[3], __ember1447938213166: null…}
+      ```
     
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -737,7 +784,7 @@ complet au lieu du seul slug.
     > export default Ember.Route.extend({
     >   model (params) {
     >     console.log('passed in comic model');
-    >     return this.modelFor('comics').findBy('slug', params.comic_slug);
+    >     return this.modelFor('comic').findBy('slug', params.comic_slug);
     >   },
     >   serialize: function(model) {
     >     return {
