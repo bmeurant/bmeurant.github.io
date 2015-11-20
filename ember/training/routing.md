@@ -184,7 +184,7 @@ imbrication président donc à l'organisation des différents templates de notre
     >   model: function () {
     >     // WARN : SHOULD NOT BE DONE : We should not affect anything to windows but
     >     // for the exercice, we want to access to comics from console today
-    >     window.comics = [{title: "BlackSad"}, {title: "Calvin and Hobbes", scriptwriter: "Bill Watterson"}];
+    >     window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes", scriptwriter: "Bill Watterson"}];
     > 
     >     return window.comics;
     >   }
@@ -233,7 +233,7 @@ Ces *hooks* sont des méthodes de la classe mère, vides ou non, qui sont automa
 
      ```javascript
      model: function () {
-       return [{title: "BlackSad"}, {title: "Calvin and Hobbes", scriptwriter: "Bill Watterson"}];
+       return [{title: "Blacksad"}, {title: "Calvin and Hobbes", scriptwriter: "Bill Watterson"}];
      }
      ```
      
@@ -291,7 +291,7 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
      > 
      > let blackSad = Comic.create({
      >   slug: 'blacksad',
-     >   title: 'BlackSad',
+     >   title: 'Blacksad',
      >   scriptwriter: 'Juan Diaz Canales',
      >   illustrator: 'Juanjo Guarnido',
      >   publisher: 'Dargaud'

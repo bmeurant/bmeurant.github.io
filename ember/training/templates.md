@@ -102,7 +102,7 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
       model: function() {
         // WARN : SOULD NOT BE DONE : We should not affect anything to windows but 
         // for the exercice, we want to access to comic from console today
-        window.comic = {title: "BlackSad"};
+        window.comic = {title: "Blacksad"};
     
         return comic;
       }
@@ -302,7 +302,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     >  ```javascript
     >  // app/routes/application.js
     >  ...
-    >  window.comics = [{title: "BlackSad"}, {title: "Calvin and Hobbes"}];
+    >  window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes"}];
     >  ...
     >  ```
     >  
@@ -362,7 +362,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     >  ```javascript
     >  // app/routes/application.js
     >  ...
-    >  window.comics = [{title: "BlackSad"}, {title: "Calvin and Hobbes", scriptwriter:"Bill Watterson"}];
+    >  window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes", scriptwriter:"Bill Watterson"}];
     >  ...
     >  ```
     >  ```html
