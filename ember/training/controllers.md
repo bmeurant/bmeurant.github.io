@@ -338,9 +338,9 @@ vers la route ``comic``
       > import Comic from '../../models/comic';
       > 
       > export default Ember.Route.extend({
+      >   templateName: 'comic/edit',
+      >
       >   model () {...},
-      > 
-      >   renderTemplate () {...},
       > 
       >   actions: {
       >     save () {

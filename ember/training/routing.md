@@ -1400,17 +1400,20 @@ son nom. Ainsi, dans la grande majorité des cas, l'opération d'association de 
 transparente pour le développeur qui n'a besoin de rien spécifier. Dans certains cas, il peut être cependant 
 utile / nécessaire de spécifier explicitement le template que la route doit rendre et auquel elle doit associer le contexte courant. 
 
-Cela s'effectue grâce à la méthode [renderTemplate](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate)
-de la route. Ce *hook* est automatiquement appelé lors du cycle de vie de la route et peut donc être surchargé facilement
-de manière à personnaliser les opérations de rendu. Comme l'explique la documentation, cette méthode est appelée avec 
+Cela s'effectue grâce à la propriété [templateName](http://emberjs.com/api/classes/Ember.Route.html#property_templateName) qui
+permet de spécifier explicitement un nom de template (noter l'utilisation du ``/`` pour qualifier le template).
+
+Il existe également une méthode [renderTemplate](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate)
+automatiquement qui être surchargée de manière à personnaliser les opérations de rendu. Cette méthode est appelée avec 
 les objets contrôleur et modèle connus par la route. Par défaut, cette méthode effectue un simple appel à la méthode 
-[render](http://emberjs.com/api/classes/Ember.Route.html#method_render).
+[render](http://emberjs.com/api/classes/Ember.Route.html#method_render). Cette méthode ne doit pas être utilisée de 
+manière courante mais peut être utile dans le cas d'``outlets`` multiples ou de modèles multiples, par exemple.
 
 <div class="work">
   {% capture m %}
   {% raw %}
   
-1. Modifier la route ``app/routes/comics/create`` et surcharger le *hook* ``renderTemplate`` de manière à ce que la route 
+1. Modifier la route ``app/routes/comics/create`` et utiliser la propriété ``templateName`` de manière à ce que la route 
 ``comics.create`` s'appuie sur le template ``app/templates/comic/edit.hbs``. Supprimer ensuite le template dubliqué
 ``app/templates/comics/create.hbs`` et constater que l'application fonctionne toujours.
 
@@ -1419,11 +1422,8 @@ les objets contrôleur et modèle connus par la route. Par défaut, cette métho
     > // app/routes/comics/create.js
     > 
     > export default Ember.Route.extend({
-    >   model () {...},
-    > 
-    >   renderTemplate: function () {
-    >     this.render('comic.edit');
-    >   }
+    >   templateName: 'comic/edit',
+    >   model () {...}
     > });
     > ```
 
