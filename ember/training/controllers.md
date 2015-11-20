@@ -133,8 +133,7 @@ type d'actions. Pour plus de précisions se reporter au paragraphe [Propagation 
 
 1. Déclencher et intercepter l'action ``save`` au clic sur le bouton ``.btn-submit`` de manière à effectuer une simple transition
 vers la route ``comic``
-    * Définir dans le template ``comic.edit`` l'action 'save' comme déclenchée au clic sur le bouton ``.btn-submit`` en utilisant
-    une ``element space action``
+    * Définir dans le template ``comic.edit`` l'action 'save' comme déclenchée au clic sur le bouton ``.btn-submit``
     * Définir dans la route ``comic.edit`` la méthode d'interception de l'action 'save'
     
     **Test** : *Les modifications doivent permettre de rendre le test [03 - Controller - 01 - Should save on edit submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) passant.*
@@ -311,9 +310,9 @@ vers la route ``comic``
       la valeur du titre transformée grâce à la fonction [dasherize()](http://emberjs.com/api/classes/Ember.String.html#method_dasherize) 
       et qu'il soit mis à jour à chaque modification du titre.
       
-      **Test** : *Les modifications doivent permettre de rendre les tests suivants passants* :
-        * [03 - Controller - 04 - Should save on create submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
-        * [03 - Controller - 05 - Should reinit list on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+    **Test** : Les modifications doivent permettre de rendre passants les tests 
+    [03 - Controller - 04 - Should save on create submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+    et [03 - Controller - 05 - Should reinit list on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
       
       > ```javascript
       > // app/models/comic.js
