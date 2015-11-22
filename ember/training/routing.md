@@ -3,7 +3,7 @@ layout: ember-training
 title: Formation Ember - Routing
 permalink:  routing/
 prev: ember/training/templates
-next: ember/training/controllers
+next: ember/training/actions-controllers
 ---
 
 <div id="toc"></div>

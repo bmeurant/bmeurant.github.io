@@ -1,7 +1,7 @@
 ---
 layout: ember-training
-title: Formation Ember - Contrôleurs
-permalink:  controllers/
+title: Formation Ember - Actions & Contrôleurs
+permalink:  actions-controllers/
 prev: ember/training/routing
 next: ember/training/controllers
 ---
@@ -362,7 +362,9 @@ vers la route ``comic``
 
 {% raw %}
 
-### Paramètre
+### Evènements
+
+### Paramètre d'actions
 
 Il est possible de déclarer et donc passer un paramètre à l'action qui sera déclenchée, de manière à pouvoir lire et utiliser ce paramètre
 dans le gestionnaire. Ce paramètre peut être un litéral ou un objet.
@@ -386,7 +388,7 @@ actions: {
 A noter que, concernant l'utilisation de ``{{input}}``, il n'est pas possible de passer un paramètre sans préciser l'évènement
 comme exposé ci-dessous.
 
-### Type d'évènement DOM
+### Type d'évènements DOM
 
 Il est enfin également possible de préciser explicitement le type d'évènement DOM que l'on souhaite lier à l'action de la 
 manière suivante : 
