@@ -18,7 +18,7 @@ Les contrôleurs [Ember][ember] se limitent à deux responsabilités :
 
 La fonction des contrôleurs est donc très limitée et se réduit de plus en plus. Les futurs versions d'[Ember][ember] verront
 disparaître les contrôleurs au profit de composants dès lors que ceux-ci seront routables ce qui n'est pas encore le cas (cf.
-[issue](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md)).
+[RFC](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md)).
 
 ## Routes, Contrôleurs & Modèles
 
@@ -27,10 +27,10 @@ quant à lui, dans une propriété ``model`` le résultat de cette méthode pour
 
 L'initialisation de la propriété ``model`` du contrôleur à partir du résultat de la méthode ``model`` de la route, après résolution 
 des éventuelles promesses par [Ember][ember], s'effectue de manière totalement automatique via la méthode 
-[setupController](http://emberjs.com/api/classes/Ember.Route.html#method_setupController) de la route. Contrairement à la méthode
-[activate](http://emberjs.com/api/classes/Ember.Route.html#method_activate), appelée lors de l'instantiation de la route par le routeur,
-``setupController`` est appelée à chaque changement de route (y compris de segments dynamiques). Elle peut donc être surchargée de 
-manière à provisionner, dans le contrôleur associé à la route, des éléments de contexte supplémentaires dépendant de la route courante : 
+[setupController](http://emberjs.com/api/classes/Ember.Route.html#method_setupController) de la route. 
+``setupController`` est appelée lorsque la route ou le modèle change, après le *hook* ``afterModel``. 
+et peut donc être surchargée de manière à provisionner, dans le contrôleur associé à la route, des 
+éléments de contexte supplémentaires dépendant de la route courante et de ses éventuels segments dynamiques : 
 
 ```javascript
 setupController: function (controller, model) {
@@ -82,13 +82,9 @@ Elle est utilisable pour tous les objets [Ember][ember].
 
 ## Actions
 
-Maintenant que nos routes sont installées et effectuent le rendu des templates associés, il va être nécessaire que notre application
-puisse réagir aux comportements des utilisateurs. Pour celà, nous allons devoir générer et propsager des **évènements** au sein de 
-l'application suite à une action utilisateur.
-
 En [Ember][ember], le déclenchement d'évènements s'effectue grâce aux **actions**. Celles-ci sont déclarées au sein des templates
-et une fois l'évènement correspondant déclenché, celui-ci est propagé au sein de l'application. L'action est donc traité au niveau le bas
-où elle est intercéptée : dans le composant, puis dans  le contrôleur et, si elle n'y est pas traitée, au sein de la hiérarchie de route, 
+et une fois l'évènement correspondant déclenché, celui-ci est propagé au sein de l'application. L'action est donc traitée au niveau le bas
+où elle est intercéptée : dans le composant, puis dans  le contrôleur et, enfin, au sein de la hiérarchie de routes, 
 de bas en haut. Une erreur est logguée dans le cas ou aucun gestionnaire n'est trouvé.
 
 ### {{action}} *helper*
@@ -362,7 +358,7 @@ vers la route ``comic``
 
 {% raw %}
 
-### Evènements
+### Evènements Ember
 
 ### Paramètre d'actions
 

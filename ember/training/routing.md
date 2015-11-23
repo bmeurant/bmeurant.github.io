@@ -206,6 +206,19 @@ Router.map(function() {
 });
 ```
 
+## Cycle de vie d'une route & Hooks
+
+Les routes [Ember][ember] étendent la classe `Ember.Route` et mettent à disposition un certain nombre de *hooks* relatifs au cycle de vie de la route.
+Ces *hooks* sont des méthodes de la classe mère, vides ou non, qui sont automatiquement appelées par [Ember][ember]. Cet appel se fait dans un ordre bien spécifique :
+
+1. [beforeModel(transition)](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel) : opérations préalables à la récuparation du modèle (redirections éventuelles, etc.).
+1. [model(params, transition)](http://emberjs.com/api/classes/Ember.Route.html#method_model) : récupèration du modèle.
+1. [afterModel(resolvedModel, transition)](http://emberjs.com/api/classes/Ember.Route.html#method_afterModel) : opérations nécessitant la récupération préalable du modèle (redirections éventuelles, etc.).
+1. [activate()](http://emberjs.com/api/classes/Ember.Route.html#method_activate) : opérations d'activations (collectes statistiques, etc.). Exécuté lorsque'on entre dans la route mais pas lorsque seul le modèle change.
+1. [setupController(controller, model)](http://emberjs.com/api/classes/Ember.Route.html#method_setupController) : configuration du controller (contexte, etc.). Exécuté au changement de route ou de modèle.
+1. [renderTemplate(controller, model)](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate) : opérations de rendu du template associé à la route courante. Exécuté au changement de route ou de modèle.
+1. [deactivate()](http://emberjs.com/api/classes/Ember.Route.html#method_deactivate) : opérations de désactivation (collectes statistiques, etc.). Exécuté lorsqu'on quitte la route mais pas lorsque seul le modèle change.
+
 ## Définition du modèle
 
 L'une des responsabilité principales d'une route consiste donc à assurer la récupération et la gestion d'un modèle (*model*). 
@@ -221,10 +234,9 @@ Les modèles peuvent être récupérés en mémoire mais son classiquement charg
 d'[Ember Data](https://github.com/emberjs/data).
 
 Le modèle peut être un objet seul ou une collection d'objets et, une fois récupéré par la route, il est transmis au template associé ce qui permet toutes les opérations de *binding*.
- 
-Les routes [Ember][ember] étendent la classe `Ember.Route` et mettent à disposition un certain nombre de *hooks* relatifs à la gestion du modèle.
-Ces *hooks* sont des méthodes de la classe mère, vides ou non, qui sont automatiquement appelées par [Ember][ember] lors de la résolution de la route :
 
+Comme évoqué juste au-dessus, trois *hooks* [Ember][ember] s'intéressent donc particulièrement au modèle :
+ 
 * ``model()`` : Cette fonction doit retourner un objet ou une collection d'objet. Elle est automatiquement appelée lorsque la route est activée.
   
      Le modèle ainsi récupéré (en synchrone ou en asynchrone) est ainsi transmis au template associé ainsi qu'aux éventuelles routes filles. La gestion de l'asynchronisme
@@ -473,9 +485,9 @@ effectuant la correspondance avec la propriété ``prop`` du modèle ``name``.
 ## Accès au modèle
 
 En plus des *hooks* appelés durant le cycle de vie de la route et permettant de définir le modèle attaché à cette route, il existe une méthode permettant de récupérer
-l'objet modèle créé. C'est la méthode [modelFor](http://emberjs.com/api/classes/Ember.Route.html#method_modelFor).
+l'objet modèle créé depuis une route parente. C'est la méthode [modelFor](http://emberjs.com/api/classes/Ember.Route.html#method_modelFor).
 
-Chaque route peut donc, via cette méthode, récupérer le modèle associé à la route dont le nom est passé en paramètre de cette méthode (et pas seulement au modèle de la route
+Chaque route peut donc, via cette méthode, récupérer le modèle associé à la route parente dont le nom est passé en paramètre de cette méthode (et pas seulement au modèle de la route
 courante, donc).
 
 ```javascript
@@ -496,7 +508,7 @@ notation, plus évolutive, est à privilégier lorsque l'on souhaite accéder au
   this.modelFor(this.routeName);
 ```
 
-**NB** : On ne peut accéder aux modèle que pour les routes actuellement actives.
+**NB** : On ne peut accéder aux modèle que pour les routes actuellement actives (donc les routes parentes).
 
 <div class="work">
   {% capture m %}
@@ -672,7 +684,7 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
 
     Par défaut, lorsque l'on passe un modèle à un ``link-to``, [Ember][ember] cherche la propriété ``id`` de ce modèle pour
     l'ajouter à l'URL (``book/1``). Si l'on souhaite se baser sur une autre propriété que sur l'id, il est nécessaire de 
-    fournir une fonction ``serialize`` personnalisée à la route cible :
+        fournir une fonction ``serialize`` personnalisée à la route cible :
     
     ```javascript
     // app/router.js
