@@ -83,13 +83,13 @@ Elle est utilisable pour tous les objets [Ember][ember].
 ## Actions
 
 En [Ember][ember], le déclenchement d'évènements s'effectue grâce aux **actions**. Celles-ci sont déclarées au sein des templates
-et une fois l'évènement correspondant déclenché, celui-ci est propagé au sein de l'application. L'action est donc traitée au niveau le bas
-où elle est intercéptée : dans le composant, puis dans  le contrôleur et, enfin, au sein de la hiérarchie de routes, 
-de bas en haut. Une erreur est logguée dans le cas ou aucun gestionnaire n'est trouvé.
+et propagée au sein de l'application. L'action est donc traitée au niveau le plus bas où elle est interceptée : dans le composant, 
+puis dans  le contrôleur et, enfin, au sein de la hiérarchie de routes, de bas en haut. Une erreur est logguée dans le cas ou 
+aucun gestionnaire n'est trouvé.
 
 ### {{action}} *helper*
 
-La déclaration d'une action s'effectue donc, au sein du template, par l'utilisation du *helper* ``{{action}}`` au sein d'un élément HTML,
+La déclaration d'une action s'effectue, au sein du template, par l'utilisation du *helper* ``{{action}}`` au sein d'un élément HTML,
 d'un composant standard ou d'un composant personnalisé.
 
 ```html
@@ -99,15 +99,16 @@ d'un composant standard ou d'un composant personnalisé.
 <input type="text" value="confirm" {{action "save"}} />
 ```
 
-En fonction du type de composants, le déclenchement de l'action s'effectue lors de certains évènements uniquement. Par exemple, 
+En fonction du type de composant, le déclenchement de l'action s'effectue lors de certains évènements uniquement. Par exemple, 
 si l'on utilise le helper ``{{input}}``, celui-ci ne s'effectue qu'à la "validation" du champs. C'est à dire lorsque l'on appuie sur
-``Entrée``. Pour les éléments HTML standard, il s'effectue au clic, ce qui explique que les comportements de ``{{input}}`` et de ``<input/>`` diffèrent.
+``Entrée``. Pour les éléments HTML standard, il s'effectue au clic, ce qui explique que les comportements de ``{{input}}`` et 
+de ``<input/>`` diffèrent.
 
 ### Traitement d'une action
 
 Une action déclenchée dans le template doit donc être traitée, dans le composant, le contrôleur correspondant, ou encore 
 dans une des routes actives. Quelque soit l'endroit de la déclaration du gestionnaire, celle-ci s'effectue de la manière suivante, 
-nécessairement au sein du *hook* ``actions`` : 
+nécessairement au sein du *hash* ``actions`` : 
 
 ```javascript
 // route, controller, component
@@ -118,8 +119,47 @@ actions: {
 }
 ```
 
-La propagation des actions au sein de la hiérarchie de composants, contrôleurs et routes peut être différente en fonction du
-type d'actions. Pour plus de précisions se reporter au paragraphe [Propagation & bubbling](##propagation-%26-bubbling).
+Les gestionnaires d'actions définis dans le *hash* ``actions`` sont hérités depuis les routes parentes et complétés / surchargés
+au sein de la route courante.
+
+### Bubbling
+
+Une fois créée et lancée, une action est automatiquement propagée de bas en haut au sein de la hiérarchie de routes jusqu'à 
+trouver un gestionnaire qui traitera l'action et stoppera sa propagation.
+     
+Il est néanmoins possible de forcer cette propagation, suite à un premier traitement en renvoyant `true` dans le 
+gestionnaire :
+     
+```javascript
+// route, controller, component
+actions: {
+  save() {
+    // perform some operations
+    return true;
+  }
+}
+```
+
+### Paramètre
+
+Il est possible de passer un paramètre à l'action qui sera déclenchée, de manière à pouvoir lire et utiliser ce paramètre
+dans le gestionnaire. Ce paramètre peut être un litéral ou un objet.
+
+```html
+<div {{action "save" "value"}}>confirm</div>
+<button {{action "save" model.id}}>confirm</button>
+<input type="text" value="confirm" {{action "save" model}} />
+```
+
+On peut alors récupérer la valeur du paramètre dans l'action du crontrôleur ou de la route : 
+
+```javascript
+actions: {
+  save (param) {
+    // perform some operations
+  }
+}
+```
 
 {% endraw %}
 
@@ -358,100 +398,80 @@ vers la route ``comic``
 
 {% raw %}
 
-### Evènements Ember
+### Evènements DOM
 
-### Paramètre d'actions
-
-Il est possible de déclarer et donc passer un paramètre à l'action qui sera déclenchée, de manière à pouvoir lire et utiliser ce paramètre
-dans le gestionnaire. Ce paramètre peut être un litéral ou un objet.
-
-```html
-<div {{action "save" "value"}}>confirm</div>
-<button {{action "save" model.id}}>confirm</button>
-<input type="text" value="confirm" {{action "save" model}} />
-```
-
-On peut alors récupérer la valeur du paramètre dans l'action du crontrôleur ou de la route : 
-
-```javascript
-actions: {
-  save (param) {
-    // perform some operations
-  }
-}
-```
-
-A noter que, concernant l'utilisation de ``{{input}}``, il n'est pas possible de passer un paramètre sans préciser l'évènement
-comme exposé ci-dessous.
-
-### Type d'évènements DOM
-
-Il est enfin également possible de préciser explicitement le type d'évènement DOM que l'on souhaite lier à l'action de la 
+Lorsque l'on déclare une action, il est également possible de préciser explicitement le type d'évènement DOM que l'on souhaite lier à l'action de la 
 manière suivante : 
 
 ```html
-<div onclick={{action "save" "value"}}>confirm</div>
-<button onclick={{action "save" model.id}}>confirm</button>
-{{input enter=(action "save" model.id) value="confirm"}}
-<input type="text" value="confirm" onclick={{action "save" model}} />
+<div {{action 'save' "value" on 'doubleClick'}}>confirm</div>
+<button {{action 'save' model.id on 'mouseUp'}}>confirm</button>
+{{input enter=(action 'save' model.id) value="confirm"}}
+<input type="text" value="confirm" onclick={{action 'save' model}} />
 ```
 
-Les éléments html standards peuvent manipuler tout type d'évènement natif. Les évènements gérés par le *helper*``{{input}}``
-sont listés dans la [documentation](http://emberjs.com/api/classes/Ember.Templates.helpers.html#toc_actions).
+* Les éléments html standards peuvent manipuler tout type d'évènement natif.
+* Les {{action ... on ... }} peuvent gérer les évènements [décrits ici](http://emberjs.com/api/classes/Ember.View.html#toc_event-names).
+* Les évènements gérés par le *helper*``{{input}}`` sont listés dans la [documentation](http://emberjs.com/api/classes/Ember.Templates.helpers.html#toc_actions).
 
 On remarque au passage, concernant l'utilisation du *helper* ``{{input}}``, l'utilisation d'une **sous-expression** 
 [Handlebars][handlebars] via la notation ``{{input ... (action ...)}}``. Cette notation permet l'imbrication
 d'expressions au sein des *helpers*. 
 
-### Propagation & bubbling 
+### Types d'actions
 
-Il existe en réalité aujourd'hui, pour des raisons historiques, deux types d'actions différentes. Il s'agit des 
-``element space actions`` d'un côté dont le fonctionnement s'appuie sur le *bubbling* et des ``closure actions`` qui 
-doivent être intercéptées obligatoirement dans un contrôleur ou un composant et qui ne font pas intervenir de *bubbling*.
+Il existe en réalité aujourd'hui, pour des raisons historiques, deux types d'actions différentes pouvant être définies depuis
+un template. Il s'agit des ``element space actions`` d'un côté dont le fonctionnement s'appuie intégralement sur le *bubbling* 
+et des ``closure actions`` de l'autre qui doivent être intercéptées obligatoirement dans un contrôleur ou un composant 
+et qui ne font pas intervenir de *bubbling* à ce niveau.
 
-* les ``element space actions`` sont les actions historiques d'[Ember][ember]. 
+* les **element space actions** sont les actions historiques d'[Ember][ember]. 
      Elles interviennent lors de l'utilisation des syntaxes standard telles que :
      
      ```html
-     <div {{action "save" model}}>confirm</div>
-     {{input enter="save" value="confirm"}}
+     <div {{action 'save' model}}>confirm</div>
+     <div {{action 'save' model on 'mouseUp'}}>confirm</div>
+     {{input enter='save' value="confirm"}}
      ```
      
-     Ces actions peuvent être indifféremment intercéptées dans un contrôleur, un composant ou une route. Leur fonctionnement
-     et, en particulier, leur mode de propagation repose sur le *bubbling*. L'action est en effet automatiqument propagée de
-     bas en haut, du composant à la route ``application`` jusqu'à trouver un gestionnaire. L'action n'est alors plus propagée.
-     
-     Il est néanmoins possible de forcer cette propagation, suite à un premier traitement en renvoyant `true` dans le 
-     gestionnaire :
-     
-     ```javascript
-     // route, controller, component
-     actions: {
-       save() {
-         // perform some operations
-         return true;
-       }
-     }
-     ```
+     Ces actions peuvent être indifféremment intercéptées dans un contrôleur, un composant ou une route. 
 
-* les ``closure actions`` constituent un nouveau types d'actions. 
-     Elles interviennent lors de l'utilisation des syntaxes standard telles que :
+* les **closure actions** constituent un nouveau types d'actions. 
+     Elles interviennent lors de l'utilisation des syntaxes imbriquées ou précisant les évènements DOM telles que :
      
      ```html
-     <div onclick={{action "save" model}}>confirm</div>
-     {{input enter=(action "save" model.id) value="confirm"}}
+     {{input enter=(action 'save' model.id) value="confirm"}}
+     <input type="text" value="confirm" onclick={{action 'save' model}} />
      ```
   
-     Ce sont de simples fonctions dont la valeur de retour est récupérée par l'élément qui les invoque. Ce fonctionnement 
-     les rend incompatible avec les mécanismes de *bubbling* décrits ci-dessus basés sur une valeur de retour. Ces actions 
-     ne se propagent pas via *bubling* et doivent impérativement être interceptées dans un contrôleur ou un composant.
+     Entre le template et le contrôleur / composant, ces actions ne se propagent pas pas via *bubling* et doivent 
+     impérativement être interceptées **dans un contrôleur ou un composant** et, éventuellement, propagées explicitement.
 
-**NB:** Cette situation est problématique mais temporaire et les ``closure actions`` sont amenées à devenir le seul système de gestion des actions dans
-un avenir proche. Pour d'avantage de détails, se reporter à cette [issue](https://github.com/emberjs/ember.js/issues/12581). Il est donc conseillé 
-de privilégier la gestion des actions au sein d'un contrôleur ou d'un composant et, si nécessaire, de propager explicitement l'action vers
-les routes impliquées.
+**NB:** Cette situation est problématique mais temporaire et les **closure actions** sont amenées à devenir le seul système de gestion des actions 
+entre le template et le contrôleur / composant dans un avenir proche. Pour d'avantage de détails, se reporter à cette 
+[RFC](https://github.com/mixonic/rfcs/blob/kebab/text/0000-kebab-actions.md).
 
 {% endraw %}
+
+### Propagation explicite des actions
+
+Les composants, contrôleurs et routes permettent donc de définir et de propager explicitement des actions via la méthode 
+[send(actionName, context)](http://emberjs.com/api/classes/Ember.Controller.html#method_send) dont ils héritent tous via le
+[mixin Ember.ActionHandler](http://emberjs.com/api/classes/Ember.ActionHandler.html).
+
+Cette méthode permet de propager une action de nom ``actionName`` associée éventuellement à un ``context`` (objet, litéral, fonction, etc.)
+selon les mécanismes standards de *bubbling* décrits [plus haut](#bubbling). La recherche commence au sein 
+même de l'objet courant et se propage en l'absence de gestionnaire local.
+
+```javascript
+this.send('save', model);
+```
+
+Dans le cas des **closure actions**, c'est cette méthode qu'il est nécessaire d'utiliser pour permettre, si nécessaire, 
+la propagation de l'action et de son contexte depuis le contrôleur ou le composant vers la route. L'action ainsi créée 
+suit alors les règles de propagation et de bubbling standard définies plus haut.
+
+
 
  
 [handlebars]: http://handlebarsjs.com/
