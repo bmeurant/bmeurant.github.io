@@ -217,6 +217,7 @@ Ces *hooks* sont des méthodes de la classe mère, vides ou non, qui sont automa
 1. [activate()](http://emberjs.com/api/classes/Ember.Route.html#method_activate) : opérations d'activations (collectes statistiques, etc.). Exécuté lorsque'on entre dans la route mais pas lorsque seul le modèle change.
 1. [setupController(controller, model)](http://emberjs.com/api/classes/Ember.Route.html#method_setupController) : configuration du controller (contexte, etc.). Exécuté au changement de route ou de modèle.
 1. [renderTemplate(controller, model)](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate) : opérations de rendu du template associé à la route courante. Exécuté au changement de route ou de modèle.
+1. [resetController()](http://emberjs.com/api/classes/Ember.Route.html#method_resetController) : réinitialisation du controller. Exécuté au changement de route ou de modèle.
 1. [deactivate()](http://emberjs.com/api/classes/Ember.Route.html#method_deactivate) : opérations de désactivation (collectes statistiques, etc.). Exécuté lorsqu'on quitte la route mais pas lorsque seul le modèle change.
 
 ## Définition du modèle

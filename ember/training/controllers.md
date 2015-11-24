@@ -206,18 +206,31 @@ vers la route ``comic``
    effectuées sur le model courant puis effectuer une transition vers la route ``comic``
     * Comme on ne dispose pas d'un ``store`` avancé comme cela sera le cas avec [Ember Data](../ember-data), il est nécessaire 
     d'effectuer en premier lieu une copie du modèle initial de manière à pouvoir le réinitialiser par la suite. Dans quelle
-    méthode ?
-    * Que constate-t-on suite à la transition ?
-    * Pour le moment, ne pas se préoccuper d'annuler les modifications dans la liste de comics
+    méthode doit-on effectuer cette copie préalable ?
+    * De manière à réinitialiser proprement le modèle sans outil tel qu'[Ember Data](../ember-data), implémenter la méthode
+    ``reset`` suivante dans ``app/model/comic.js`` :
     
-    **Test** : *Les modifications doivent permettre de rendre le test [03 - Controller - 02 - Should cancel on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) passant.*
+       ```javascript
+       ...
+       
+       reset(comic) {
+         this.set('title', comic.get('title'));
+         this.set('scriptwriter', comic.get('scriptwriter'));
+         this.set('illustrator', comic.get('illustrator'));
+         this.set('publisher', comic.get('publisher'));
+       }
+       ```
+    
+    * Réinitialiser le modèle en cas de ``cancel``
+    
+    **Test** : Les modifications doivent permettre de rendre passant le test [03 - Controller - 02 - Should cancel on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
     
     > ```html
     > {{!-- app/templates/comic/edit.hbs --}}
     > <form>
     >     <div class="buttons">
     >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
-    >       <button type="reset" class="btn-cancel"></button>
+    >       <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
     >     </div>
     >     ...
     > </form>
@@ -238,9 +251,8 @@ vers la route ``comic``
     >       this.transitionTo('comic');
     >     },
     >     cancel () {
-    >       this.set('controller.model', this.get('initialModel'));
-    > 
-    >       this.transitionTo('comic', this.get('controller.model'));
+    >       this.get('controller.model').reset(this.get('initialModel'));
+    >       this.transitionTo('comic');
     >     }
     >   }
     > });
@@ -249,95 +261,9 @@ vers la route ``comic``
     > La copie initiale du modèle se fait évidement dans le *hook* ``afterModel`` puisque c'est dans celui-là seulement
     > que l'on dispose du modèle initialisé. Cet objet est conservé dans une propriété ``initialModel``.
     >
-    > La réinitialisation du modèle lui-même s'effectue en remplaçant le model du controller par le modèle conservé.
+    > La réinitialisation du modèle lui-même s'effectue en appelant la méthode ``reset`` avec le modèle conservé.
     > On note l'utilisation de la notation chaînée `.`
-    >
-    > La transition doit impérativement renvoyer le modèle réinitialisé. Dans le cas contraire, les bindings ne sont pas
-    > mis à jour car la route mère `comic` n'est pas prévenue des changements.
     
-1. Avant la transition, mettre à jour le tableau ``comics`` de la route ``comics`` afin de remplacer explicitement le modèle
-   toujours référencé par celui réinitialisé.
-    * Cette fois encore, un outil complet tel qu'[Ember Data](../ember-data) nous offrira, comme on le verra plus tard,
-    de gérer l'ensemble de ces problématiques pour nous bien plus facilement.
-    * Pour faciliter un peu l'opération, effectuer préalablement les opérations suivantes :
-       * copier le code suivant dans un nouveau model ``app/models/comics.js`` :
-       
-          ```javascript
-          import Ember from 'ember';
-          
-          export default Ember.ArrayProxy.extend({
-          
-            /**
-             Replace an array item (object) with a new one.
-             The item to replace is found from a specific value of a given property
-             @method replaceBy
-             @param {String} property to test
-             @param [value] property value to test against
-             @param {Object} new item
-             */
-            replaceBy (key, value, newObj) {
-              let indexToReplace = this.indexOf(this.findBy(key, value));
-          
-              if (indexToReplace > -1) {
-                this.replace(indexToReplace, 1, newObj);
-              }
-            }
-          });
-          ```
-       * modifier la route ``app/routes/comics.js`` :
-       
-          ```javascript
-          import Comics from '../models/comics';
-          
-          ...
-          
-          let comics = Comics.create({content: [blackSad, calvinAndHobbes, akira)});
-          ```
-          Ces modifications ont pour objectif de transformer le simple tableau ``comics`` initial pour utiliser une classe
-          étendant ``Ember.ArrayProxy`` qui proxyfie, comme son nom l'indique, un tableau. Cette classe définit
-          une nouvelle méthode ``replaceBy`` permettant de remplacer simplement un élément du tableau par un autre élément
-          en recherchant cet élément par la valeur d'une de ses propriétés. On initialise ensuite ``comics`` avec un tableau.
-    * utiliser la méthode ``replaceBy`` pour réinitialiser l'objet dans la liste de comics
-    
-    **Test** : *Les modifications doivent permettre de rendre le test [03 - Controller - 03 - Should reinit list on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) passant.*
-
-    > ```html
-    > {{!-- app/templates/comic/edit.hbs --}}
-    > <form>
-    >     <div class="buttons">
-    >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
-    >       <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
-    >     </div>
-    >     ...
-    > </form>
-    > ```
-    
-    > ```javascript
-    > // app/routes/comic/edit.js
-    > 
-    > actions: {
-    >   save () {
-    >     this.transitionTo('comic');
-    >   },
-    >   cancel () {
-    >     this.set('controller.model', this.get('initialModel'));
-    >     this.modelFor('comics').replaceBy('slug', this.get('initialModel.slug'), this.get('initialModel'));
-    > 
-    >     this.transitionTo('comic', this.get('controller.model'));
-    >   }
-    > }
-    > ```
-    
-    > ```javascript
-    > // app/routes/comics.js
-    >
-    > import Comics from '../models/comics';
-    > 
-    > ...
-    > 
-    > let comics = Comics.create({content: Ember.Array([blackSad, calvinAndHobbes, akira])});
-    > ```
-      
 1. Intercepter et traiter les actions 'save' et 'cancel' pour la route `comics.create`
     * Rediriger vers la route ``comic.edit`` du nouveau comic suite à validation.
     * Nettoyer la liste de comics et rediriger vers la route ``comics`` suite à annulation. Utiliser pour cela la fonction
@@ -347,8 +273,8 @@ vers la route ``comic``
       et qu'il soit mis à jour à chaque modification du titre.
       
     **Test** : Les modifications doivent permettre de rendre passants les tests 
-    [03 - Controller - 04 - Should save on create submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
-    et [03 - Controller - 05 - Should reinit list on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+    [03 - Controller - 03 - Should save on create submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+    et [03 - Controller - 04 - Should reinit list on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
       
       > ```javascript
       > // app/models/comic.js
@@ -362,7 +288,9 @@ vers la route ``comic``
       >   title: '',
       >   scriptwriter: '',
       >   illustrator: '',
-      >   publisher: ''
+      >   publisher: '',
+      >
+      >   reset (comic) { ... }
       > });
       > ```
       > 
@@ -383,14 +311,14 @@ vers la route ``comic``
       >     },
       >     cancel () {
       >       this.modelFor('comics').removeObject(this.get('controller.model'));
-      > 
       >       this.transitionTo('comics');
       >     }
       >   }
       > });
       > ```
       > 
-      > On note le passage du model à la route ``comic`` lors de la transition suite au ``save``.
+      > On note le passage du model à la route ``comic`` lors de la transition suite au ``save`` puisque celui-ci vient 
+      > d'être créé et était inconnu.
       
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
