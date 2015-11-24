@@ -471,8 +471,61 @@ Dans le cas des **closure actions**, c'est cette méthode qu'il est nécessaire 
 la propagation de l'action et de son contexte depuis le contrôleur ou le composant vers la route. L'action ainsi créée 
 suit alors les règles de propagation et de bubbling standard définies plus haut.
 
+### Actions standards Ember
 
+[Ember][ember] fournit un certain nombre d'actions natives propagées automatiquement et interceptables au sein des routes.
+Le traitement de ecs actions se fait de la même manière que les actions vues précédement définies dans les templates, au
+sein du *hash* ``actions`` :
 
+* [error](http://emberjs.com/api/classes/Ember.Route.html#event_error) : Une action ``error`` est levée lorsqu'une
+promesse est rejetée au sein de l'un des *hooks* de la route (échec dans la récupération du modèle, etc.). La levée
+ainsi que la propagation de cette action via le *bubbling* permet la gestion de l'erreur à n'importe quel niveau de
+la hiérarchie de route.
+   
+   ```javascript
+   actions: {
+     /*
+      * @error: thrown error
+      * @transition: failed transition
+      */
+     error: function(error, transition) { ... }
+   }
+   ```
+
+* [loading](http://emberjs.com/api/classes/Ember.Route.html#event_loading) : Une action ``loading`` est levée lorsque 
+l'un des *hooks* de la route retourne une promesse non encore résolue.
+
+   ```javascript
+   actions: {
+     /*
+      * @transition: current transition
+      * @route: route that triggered the event
+      */
+     loading: function(transition, route) { ... }
+   }
+   ```
+
+* [didTransition](http://emberjs.com/api/classes/Ember.Route.html#event_didTransition) : Une action ``didTransition``
+est levée lorsque la transition s'est effectuée complètement, c'est à dire après l'exécution des *hooks* d'entrée. Cette
+action est courament utilisée pour réinitialiser l'état du crontrôleur.
+ 
+   ```javascript
+   actions: {
+     didTransition: function() { ... }
+   }
+   ``` 
+
+* [willTransition](http://emberjs.com/api/classes/Ember.Route.html#event_willTransition) : Une action ``willTransition``
+est levée lorsqu'une tentative de transition est effectuée depuis cette route.
+
+   ```javascript
+   actions: {
+     /*
+      * @transition: attempted transition
+      */
+     willTransition: function(transition) { ... }
+   }
+   ``` 
  
 [handlebars]: http://handlebarsjs.com/
 [ember-cli]: http://www.ember-cli.com/
