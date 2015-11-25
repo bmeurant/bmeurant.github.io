@@ -433,8 +433,9 @@ l'un des *hooks* de la route retourne une promesse non encore résolue.
    ```
 
 * [didTransition](http://emberjs.com/api/classes/Ember.Route.html#event_didTransition) : Une action ``didTransition``
-est levée lorsque la transition s'est effectuée complètement, c'est à dire après l'exécution des *hooks* d'entrée. Cette
-action est courament utilisée pour réinitialiser l'état du crontrôleur.
+est levée lorsque la transition s'est effectuée complètement, c'est à dire après l'exécution des *hooks* d'entrée
+(``beforeModel``, ``model``, ``afterModel``, ``setupController``). Cette
+action est courament utilisée pour des opération de *tracking* (visites, etc.).
  
    ```javascript
    actions: {
@@ -464,7 +465,7 @@ annulées.
     * L'annulation des modifications correspond aux mêmes opérations que celles effectuées lors d'un ``cancel``
     * Conserver la propagation de l'action ``willTransition`` aux routes parentes.
     
-    **Test** : ??
+    **Test** : Les modifications doivent permettre de rendre passant le test [03 - Controller - 05 - Should cancel on transition](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
     
     > ```javascript
     > // app/routes/comic/edit.js
@@ -490,7 +491,8 @@ annulées.
     > }
     > ```
     
-    On remarque que le save ne fonctionne plus et que les chnagements semblent être annulées systématiquement.
+    On remarque que le save ne fonctionne plus (le test [03 - Controller - 01 - Should save on edit submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+    ne passe plus) et que les changements semblent être annulées systématiquement.
     L'action ``willTransition`` est en effet exécutée après les autres actions et notament le ``save`` qui déclenche une transition
     via ``transitionTo``. De ce fait, quelques soient les opérations effectuées dans le ``save``, les annulations
     effectuées par ``willTransition`` sont appliquées.
@@ -573,20 +575,20 @@ prêt pour une utilisation ultérieure.
 1. Implémenter, dans la route ``comic.edit``, le *hook* ``resetController`` de manière à réinitialiser la propriété
 ``hasUserSavedOrCancel`` à ``false``
 
-  **Test** : ??
-  
-  > ```javascript
-  > // app/routes/comic/edit.js
-  > 
-  >   afterModel (model) { ... },
-  > 
-  >   resetController (controller, isExiting, transition) {
-  >     controller.set('hasUserClicked', false);
-  >   },
-  > 
-  >   resetComic () { ... },
-  >   
-  > ```
+    **Test** : Les modifications doivent permettre de rendre passant le test [03 - Controller - 06 - Should call willTransition despite an old save](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+    
+    > ```javascript
+    > // app/routes/comic/edit.js
+    > 
+    >   afterModel (model) { ... },
+    > 
+    >   resetController (controller) {
+    >     controller.set('hasUserSavedOrCancel', false);
+    >   },
+    > 
+    >   resetComic () { ... },
+    >   
+    > ```
   
 1. On souhaite enfin proposer une confirmation à l'utilisateur lors du ``willTransition`` avant d'annuler les changements.
     * Afficher une alerte javascript de confirmation lors du ``willTransition`` demandant confirmation que l'utilisateur souhaite
@@ -594,7 +596,8 @@ prêt pour une utilisation ultérieure.
     * En cas de réponse positive, poursuivre les opérations du ``willTransition``
     * En cas de réponse négative, annuler la transaction pour rester sur la route courante
     
-    **Test** : ??
+    **Tests** : Les modifications doivent permettre de rendre passants les tests [03 - Controller - 07 - Should cancel after confirm true](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+    et [03 - Controller - 08 - Should abort after confirm false](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
     
     > ```javascript
     > // app/routes/comic/edit.js
@@ -603,7 +606,7 @@ prêt pour une utilisation ultérieure.
     >     save () { ... },
     >     cancel () { ... },
     >     willTransition (transition) {
-    >       if (!this.controller.get('hasUserSavedOrCancel')) {
+    >       if (this.controller.get('hasUserSavedOrCancel')) {
     >         return true;
     >       } else if (confirm('Are you sure you want to abandon progress?')) {
     >         this.resetComic();
