@@ -621,8 +621,79 @@ prêt pour une utilisation ultérieure.
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
 </div>
+
+## Contrôleurs
+
+### Association explicite de contrôleur
+
+On a utilisé jusqu'à présent les controllers implicites d'[Ember][ember] ou implémenté le contrôleur standard en respectant
+les conventions de nommage.
+
+Dans certains cas, cependant, il peut être utile de spécifier explicitement le contrôleur que l'on souhaite associer à la 
+route de manière à réutiliser un contrôleur existant.
+
+Cela s'effectue grâce à la propriété [controllerName](http://emberjs.com/api/classes/Ember.Route.html#property_controllerName)
+de la route :
+
+```javascript
+export default Ember.Route.extend({
+  controllerName: 'another/controller',
+});
+```
+
+**NB** : On peut également utiliser la méthode [this.controllerFor('another/route')](http://emberjs.com/api/classes/Ember.Route.html#method_controllerFor)
+de manière à récupérer le controller d'une autre route et l'affecter explicitement à la route courante dans le *hook* 
+[setupController](http://emberjs.com/api/classes/Ember.Route.html#method_setupController). Cependant cette méthode est moins élégante
+et peut générer des effets de bord. Elle n'est pas à privilégier. Noter également que le contrôleur en question doit impérativement
+avoir été créé (notamment parce que la route correspondante est active).
+
  
-* create & controllerName
+<div class="work answer">
+  {% capture m %}
+  {% raw %}
+  
+1. Modifier la route ``comics.create`` pour implémenter le gestionnaire d'action ``willTransition`` selon les mêmes
+principes que pour ``comic.edit``
+    * Réutiliser le contrôleur de ``comic.edit``
+    * Ne pas oublier de réinitialiser le contrôleur
+  
+    **Tests** : ??
+    
+    > ```javascript
+    >   export default Ember.Route.extend({
+    >     templateName: 'comic/edit',
+    >     controllerName: 'comic/edit',
+    >   
+    >     model () { ... },
+    >   
+    >     resetController (controller) {
+    >       controller.set('hasUserSavedOrCancel', false);
+    >     },
+    >   
+    >     resetComic () {
+    >       this.modelFor('comics').removeObject(this.get('controller.model'));
+    >     },
+    >   
+    >     actions: {
+    >       save () { ... },
+    >       cancel () { ... },
+    >       willTransition (transition) {
+    >         if (this.controller.get('hasUserSavedOrCancel')) {
+    >           return true;
+    >         } else if (confirm('Are you sure you want to abandon progress?')) {
+    >           this.resetComic();
+    >           return true;
+    >         } else {
+    >           transition.abort();
+    >         }
+    >       }
+    >     }
+    >   });
+    > ```
+  
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
  
 [handlebars]: http://handlebarsjs.com/
 [ember-cli]: http://www.ember-cli.com/
