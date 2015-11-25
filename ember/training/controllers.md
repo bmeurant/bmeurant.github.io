@@ -220,49 +220,48 @@ vers la route ``comic``
          this.set('publisher', comic.get('publisher'));
        }
        ```
-    
     * Réinitialiser le modèle en cas de ``cancel``
     
     **Test** : Les modifications doivent permettre de rendre passant le test [03 - Controller - 02 - Should cancel on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
     
-    > ```html
-    > {{!-- app/templates/comic/edit.hbs --}}
-    > <form>
-    >     <div class="buttons">
-    >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
-    >       <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
-    >     </div>
-    >     ...
-    > </form>
-    > ```
-    
-    > ```javascript
-    > // app/routes/comic/edit.js
-    > 
-    > import Ember from 'ember';
-    > import Comic from '../../models/comic';
-    > 
-    > export default Ember.Route.extend({
-    >   afterModel (model) {
-    >     this.set('initialModel', Comic.create(model));
-    >   },
-    >   actions: {
-    >     save () {
-    >       this.transitionTo('comic');
-    >     },
-    >     cancel () {
-    >       this.get('controller.model').reset(this.get('initialModel'));
-    >       this.transitionTo('comic');
-    >     }
-    >   }
-    > });
-    > ```
-    > 
-    > La copie initiale du modèle se fait évidement dans le *hook* ``afterModel`` puisque c'est dans celui-là seulement
-    > que l'on dispose du modèle initialisé. Cet objet est conservé dans une propriété ``initialModel``.
-    >
-    > La réinitialisation du modèle lui-même s'effectue en appelant la méthode ``reset`` avec le modèle conservé.
-    > On note l'utilisation de la notation chaînée `.`
+      > ```html
+      > {{!-- app/templates/comic/edit.hbs --}}
+      > <form>
+      >     <div class="buttons">
+      >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
+      >       <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
+      >     </div>
+      >     ...
+      > </form>
+      > ```
+      
+      > ```javascript
+      > // app/routes/comic/edit.js
+      > 
+      > import Ember from 'ember';
+      > import Comic from '../../models/comic';
+      > 
+      > export default Ember.Route.extend({
+      >   afterModel (model) {
+      >     this.set('initialModel', Comic.create(model));
+      >   },
+      >   actions: {
+      >     save () {
+      >       this.transitionTo('comic');
+      >     },
+      >     cancel () {
+      >       this.get('controller.model').reset(this.get('initialModel'));
+      >       this.transitionTo('comic');
+      >     }
+      >   }
+      > });
+      > ```
+      > 
+      > La copie initiale du modèle se fait évidement dans le *hook* ``afterModel`` puisque c'est dans celui-là seulement
+      > que l'on dispose du modèle initialisé. Cet objet est conservé dans une propriété ``initialModel``.
+      >
+      > La réinitialisation du modèle lui-même s'effectue en appelant la méthode ``reset`` avec le modèle conservé.
+      > On note l'utilisation de la notation chaînée `.`
     
 1. Intercepter et traiter les actions 'save' et 'cancel' pour la route `comics.create`
     * Rediriger vers la route ``comic.edit`` du nouveau comic suite à validation.
@@ -276,49 +275,49 @@ vers la route ``comic``
     [03 - Controller - 03 - Should save on create submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
     et [03 - Controller - 04 - Should reinit list on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
       
-      > ```javascript
-      > // app/models/comic.js
-      > 
-      > import Ember from 'ember';
-      > 
-      > export default Ember.Object.extend({
-      >   slug: function() {
-      >     return this.get('title').dasherize();
-      >   }.property('title'),
-      >   title: '',
-      >   scriptwriter: '',
-      >   illustrator: '',
-      >   publisher: '',
-      >
-      >   reset (comic) { ... }
-      > });
-      > ```
-      > 
-      > ```javascript
-      > // app/routes/comics/create.js
-      > 
-      > import Ember from 'ember';
-      > import Comic from '../../models/comic';
-      > 
-      > export default Ember.Route.extend({
-      >   templateName: 'comic/edit',
-      >
-      >   model () {...},
-      > 
-      >   actions: {
-      >     save () {
-      >       this.transitionTo('comic', this.get('controller.model'));
-      >     },
-      >     cancel () {
-      >       this.modelFor('comics').removeObject(this.get('controller.model'));
-      >       this.transitionTo('comics');
-      >     }
-      >   }
-      > });
-      > ```
-      > 
-      > On note le passage du model à la route ``comic`` lors de la transition suite au ``save`` puisque celui-ci vient 
-      > d'être créé et était inconnu.
+    > ```javascript
+    > // app/models/comic.js
+    > 
+    > import Ember from 'ember';
+    > 
+    > export default Ember.Object.extend({
+    >   slug: function() {
+    >     return this.get('title').dasherize();
+    >   }.property('title'),
+    >   title: '',
+    >   scriptwriter: '',
+    >   illustrator: '',
+    >   publisher: '',
+    >
+    >   reset (comic) { ... }
+    > });
+    > ```
+    > 
+    > ```javascript
+    > // app/routes/comics/create.js
+    > 
+    > import Ember from 'ember';
+    > import Comic from '../../models/comic';
+    > 
+    > export default Ember.Route.extend({
+    >   templateName: 'comic/edit',
+    >
+    >   model () {...},
+    > 
+    >   actions: {
+    >     save () {
+    >       this.transitionTo('comic', this.get('controller.model'));
+    >     },
+    >     cancel () {
+    >       this.modelFor('comics').removeObject(this.get('controller.model'));
+    >       this.transitionTo('comics');
+    >     }
+    >   }
+    > });
+    > ```
+    > 
+    > On note le passage du model à la route ``comic`` lors de la transition suite au ``save`` puisque celui-ci vient 
+    > d'être créé et était inconnu.
       
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -454,6 +453,173 @@ est levée lorsqu'une tentative de transition est effectuée depuis cette route.
      willTransition: function(transition) { ... }
    }
    ``` 
+   
+<div class="work answer">
+  {% capture m %}
+  {% raw %}
+  
+1. Modifier la route ``comic.edit`` pour gérer l'action ``willTransition`` de manière à ce que si l'utilisateur change
+de route (en cliquant sur un autre comic par exemple) sans avoir sauvegardé, l'ensemble des modifications soient 
+annulées.
+    * L'annulation des modifications correspond aux mêmes opérations que celles effectuées lors d'un ``cancel``
+    * Conserver la propagation de l'action ``willTransition`` aux routes parentes.
+    
+    **Test** : ??
+    
+    > ```javascript
+    > // app/routes/comic/edit.js
+    > 
+    > afterModel (model) { ... },
+    > 
+    > resetComic () {
+    >   this.get('controller.model').reset(this.get('initialModel'));
+    > },
+    > 
+    > actions: {
+    >   save () {
+    >     this.transitionTo('comic');
+    >   },
+    >   cancel () {
+    >     this.resetComic();
+    >     this.transitionTo('comic');
+    >   },
+    >   willTransition () {
+    >     this.resetComic();
+    >     return true;
+    >   }
+    > }
+    > ```
+    
+    On remarque que le save ne fonctionne plus et que les chnagements semblent être annulées systématiquement.
+    L'action ``willTransition`` est en effet exécutée après les autres actions et notament le ``save`` qui déclenche une transition
+    via ``transitionTo``. De ce fait, quelques soient les opérations effectuées dans le ``save``, les annulations
+    effectuées par ``willTransition`` sont appliquées.
+    
+1. Créer le contrôleur ``app/controllers/comic/edit.js`` et y intercepter les actions ``save`` et ``cancel``
+    * Ces actions se contentent de positionner une propriété ``hasUserSavedOrCancel`` à ``true`` dans le contrôleur de manière
+    à signaler que l'utilisateur a délibérément effectué une opération.
+    * Faire que ces actions continuent de se propager à la route.
+    * Modifier le gestionnaire de l'action ``willTransition`` de manière à n'effectuer les opérations d'annulation que si 
+    l'utilisateur n'a effectué aucune des deux actions ``save`` ou ``cancel``
+    * Comme on le verra plus tard, l'utilisation d'un outil tel qu'[Ember Data](../ember-data) permet, via les fonctions
+    avancées de gestion de l'état des modèles et du ``store``, d'éviter d'avoir à effectuer nous mêmes ces contrôles.
+    
+    **Test** : Les modifications doivent permettre de rendre de nouveau passant le test [03 - Controller - 01 - Should save on edit submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+
+     > ```javascript
+     > // app/controllers/comic/edit.js
+     > 
+     > import Ember from 'ember';
+     > 
+     > export default Ember.Controller.extend({
+     > 
+     >   actions: {
+     >     save() {
+     >       this.set('hasUserSavedOrCancel', true);
+     >       return true;
+     >     },
+     > 
+     >     cancel() {
+     >       this.set('hasUserSavedOrCancel', true);
+     >       return true;
+     >     }
+     >   }
+     > });
+     > ```
+     > 
+     > ```javascript
+     > // app/routes/comic/edit.js
+     > 
+     > actions: {
+     >   save () { ... },
+     >   cancel () { ... },
+     >   willTransition () {
+     >     if (!this.controller.get('hasUserSavedOrCancel')) {
+     >       this.resetComic();
+     >     }
+     >     
+     >     return true;
+     >   }
+     > }
+     > ```
+     
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+    
+On remarque ici un autre effet de bord. En effet, si les modifications semblent bien avoir permis de rentre le ``save``
+de nouveau opérationnel, ``willTransition`` ne semble plus exécutée après un ``save``. Pour le constater :
+  
+* Editer un premier comic et l'annuler via ``willTransition`` en cliquant sur un autre. Les modifications sont bien annulées.
+* Editer à nouveau un comic et sauvegarder les modifications. Celles-ci sont bien sauvegardées.
+* Editer encore un comic et l'annuler via ``willTransition``. Cette fois les modifications ne sont pas annulées.
+
+Ceci est dû au fait que **les contrôleurs [Ember][ember] sont des singletons**. Ainsi, pour une même route, le même 
+contôleur est toujours réutilisé. Il est donc nécessaire de s'assurer, à chaque accès à la route, que l'état géré
+par ce contrôleur et éventuellement modifié lors du dernier accès est bien réinitialisé.
+
+Dans notre cas, la propriété ``hasUserSavedOrCancel`` a été conservée à ``true`` laissant penser à ``willTransition``
+qu'une action utilisateur avait été effectuée.
+
+Comme on l'a évoqué dans le chapitre précédent, les routes [Ember][ember] disposent d'une méthode [resetController](http://emberjs.com/api/classes/Ember.Route.html#method_resetController)
+appelée systématiquement lorsque la route ou le modèle change qui permet de laisser, en partant, le contrôleur dans un état stable,
+prêt pour une utilisation ultérieure.
+    
+
+<div class="work answer">
+  {% capture m %}
+  {% raw %}
+  
+1. Implémenter, dans la route ``comic.edit``, le *hook* ``resetController`` de manière à réinitialiser la propriété
+``hasUserSavedOrCancel`` à ``false``
+
+  **Test** : ??
+  
+  > ```javascript
+  > // app/routes/comic/edit.js
+  > 
+  >   afterModel (model) { ... },
+  > 
+  >   resetController (controller, isExiting, transition) {
+  >     controller.set('hasUserClicked', false);
+  >   },
+  > 
+  >   resetComic () { ... },
+  >   
+  > ```
+  
+1. On souhaite enfin proposer une confirmation à l'utilisateur lors du ``willTransition`` avant d'annuler les changements.
+    * Afficher une alerte javascript de confirmation lors du ``willTransition`` demandant confirmation que l'utilisateur souhaite
+    abandonner ses changements
+    * En cas de réponse positive, poursuivre les opérations du ``willTransition``
+    * En cas de réponse négative, annuler la transaction pour rester sur la route courante
+    
+    **Test** : ??
+    
+    > ```javascript
+    > // app/routes/comic/edit.js
+    > 
+    >   actions: {
+    >     save () { ... },
+    >     cancel () { ... },
+    >     willTransition (transition) {
+    >       if (!this.controller.get('hasUserSavedOrCancel')) {
+    >         return true;
+    >       } else if (confirm('Are you sure you want to abandon progress?')) {
+    >         this.resetComic();
+    >         return true;
+    >       } else {
+    >         transition.abort();
+    >       }
+    >     }
+    >   }
+    > ```
+  
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+ 
+* create & controllerName
  
 [handlebars]: http://handlebarsjs.com/
 [ember-cli]: http://www.ember-cli.com/
