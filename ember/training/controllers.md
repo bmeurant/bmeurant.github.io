@@ -465,7 +465,7 @@ annulées.
     * L'annulation des modifications correspond aux mêmes opérations que celles effectuées lors d'un ``cancel``
     * Conserver la propagation de l'action ``willTransition`` aux routes parentes.
     
-    **Test** : Les modifications doivent permettre de rendre passant le test [03 - Controller - 05 - Should cancel on transition](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+    **Test** : Les modifications doivent permettre de rendre passant le test [03 - Controller - 05 - Should cancel edit on transition](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
     
     > ```javascript
     > // app/routes/comic/edit.js
@@ -575,7 +575,7 @@ prêt pour une utilisation ultérieure.
 1. Implémenter, dans la route ``comic.edit``, le *hook* ``resetController`` de manière à réinitialiser la propriété
 ``hasUserSavedOrCancel`` à ``false``
 
-    **Test** : Les modifications doivent permettre de rendre passant le test [03 - Controller - 06 - Should call willTransition despite an old save](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+    **Test** : Les modifications doivent permettre de rendre passant le test [03 - Controller - 06 - Should call willTransition on edit despite an old save](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
     
     > ```javascript
     > // app/routes/comic/edit.js
@@ -596,8 +596,8 @@ prêt pour une utilisation ultérieure.
     * En cas de réponse positive, poursuivre les opérations du ``willTransition``
     * En cas de réponse négative, annuler la transaction pour rester sur la route courante
     
-    **Tests** : Les modifications doivent permettre de rendre passants les tests [03 - Controller - 07 - Should cancel after confirm true](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
-    et [03 - Controller - 08 - Should abort after confirm false](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+    **Tests** : Les modifications doivent permettre de rendre passants les tests [03 - Controller - 07 - Should cancel edit after confirm true](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+    et [03 - Controller - 08 - Should abort edit after confirm false](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
     
     > ```javascript
     > // app/routes/comic/edit.js
@@ -657,7 +657,11 @@ principes que pour ``comic.edit``
     * Réutiliser le contrôleur de ``comic.edit``
     * Ne pas oublier de réinitialiser le contrôleur
   
-    **Tests** : ??
+    **Tests** : Les modifications doivent permettre de rendre passants les tests 
+    [03 - Controller - 09 - Should cancel create on transition](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87),
+    [03 - Controller - 10 - Should call willTransition on create despite an old save](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87),
+    [03 - Controller - 11 - Should cancel create after confirm true](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) et
+    [03 - Controller - 12 - Should abort create after confirm false](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
     
     > ```javascript
     >   export default Ember.Route.extend({
