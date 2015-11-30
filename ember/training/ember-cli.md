@@ -156,7 +156,7 @@ Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de pro
 * La gestion des environnements. cf. [Environnements](http://www.ember-cli.com/user-guide/#Environments). Un certain nombre de configuration sont mises en place et adaptées en fonction des environnements 
   (cache busting, etc.)
 * La gestion du packaging et du déploiement. cf. [Déploiements](http://www.ember-cli.com/user-guide/#deployments)
-* La transpilation de la syntaxe Ecmascript 6 et la gestion des modules dans une syntaxte Ecmascript 5 compatible avec tous les navigateurs. [Ember CLI][ember-cli] propose en effet d'utiliser en grande partie la
+* La transpilation de la syntaxe Ecmascript 6 et la gestion des modules dans une syntaxe Ecmascript 5 compatible avec tous les navigateurs. [Ember CLI][ember-cli] propose en effet d'utiliser en grande partie la
   syntaxe Ecmascript 6 et notament la gestion des modules propre à cette version du language. Cette gestion de module permet de gérer les dépendances internes au projet (classes, modules, etc.) sans faire appel
   à des librairies externes telles que ``requireJS``. cf. [Using Modules & the Resolver](http://www.ember-cli.com/user-guide/#using-modules)
 
