@@ -1,12 +1,11 @@
 ---
 layout: simple
 ---
-<div class="page {% if page.answers == true %}hide-answers{% endif %}">
+<div>
 
     <header class="page-header">
         {% if page.home != null %}<h1 class="page-title"><a href="{{ site.url }}/{{ page.home }}">{{ page.title }}</a></h1>{% endif %}
         {% if page.home == null %}<h1 class="page-title">{{ page.title }}</h1>{% endif %}
-        {% if page.answers == true %}<span class="page-actions"><button class="toggle-answers">Solutions</button></span>{% endif %}
     </header>
 
     <article class="page-content">
@@ -24,9 +23,34 @@ layout: simple
 
 </div>
 
+<div id="toTop" class="button"><i class="fa fa-chevron-up"></i></div>
+
 <script type="text/javascript">
-    $( ".page-actions .toggle-answers" ).bind( "click", function() {
-        $('.page').toggleClass('hide-answers');
+    $(".work").each(function() {
+        $(this).addClass('hide-answers');
+
+        var workHeader = "<div class='title'>Exercice(s)";
+        if (!$(this).hasClass('no-answer')) workHeader += "<button class='toggle-answers'>Solutions</button>";
+        workHeader += "</div>";
+
+        $(this).prepend(workHeader);
+    });
+
+    $( ".page-actions .toggle-answers" ).bind( "click", function(e) {
         $('.page-actions .toggle-answers').toggleClass('active');
+        if ($('.page-actions .toggle-answers').hasClass('active')) {
+            $('.work').removeClass('hide-answers');
+            $('.work .toggle-answers').addClass('active');
+        }
+        else {
+            $('.work').addClass('hide-answers');
+            $('.work .toggle-answers').removeClass('active')
+        }
+    });
+
+    $( ".work .toggle-answers" ).bind( "click", function(e) {
+        var $work = $(this).closest('.work');
+        $work.toggleClass('hide-answers');
+        $work.find('.toggle-answers').toggleClass('active');
     });
 </script>
