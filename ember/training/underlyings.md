@@ -334,7 +334,7 @@ les classes avec de nouvelles propriétés ou méthodes.
 <div class="work">
     {% capture m %}
 
-1. Dans la cosole, réouvrir la classe ``Book`` et lui ajouter une propriété ``pages``.
+1. Dans la console, réouvrir la classe ``Book`` et lui ajouter une propriété ``pages``.
 
     > ```javascript
     >   > Book.reopen({
