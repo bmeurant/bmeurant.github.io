@@ -680,7 +680,10 @@ principes que pour ``comic.edit``
     >   
     >     actions: {
     >       save () { ... },
-    >       cancel () { ... },
+    >       cancel () {
+    >         this.resetComic();
+    >         this.transitionTo('comics');
+    >       },
     >       willTransition (transition) {
     >         if (this.controller.get('hasUserSavedOrCancel')) {
     >           return true;

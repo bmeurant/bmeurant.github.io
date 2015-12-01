@@ -54,7 +54,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
     v4.2.1
     ```
 
-1. Puis [Ember CLI][ember-cli] : 
+1. Puis [Ember CLI](http://www.ember-cli.com/) : 
 
     ```console
     $ npm install -g ember-cli

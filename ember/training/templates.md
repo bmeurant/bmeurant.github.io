@@ -14,6 +14,12 @@ next: ember/training/routing
 
 * [01-templates-test.js](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) dans ``tests/acceptance``.
 
+Les tests peuvent être lancés via la commande suivante (pour l'instant ils sont non passants) :
+
+```console
+ember test --server
+```
+
 ## Templating
 
 Les ``templates`` ou ``gabarits`` sont des fragments de code HTML qui peuvent être enrichis par des expressions (encadrées par la notation ``{{}}``) via le moteur de template [Handlebars][handlebars]. Ces expressions
@@ -51,8 +57,6 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
     {% raw %}
 
 1. Commençons simplement par modifier le titre de l'application par `"Comic books library"` et par faire quelques autres modifications destinées à intégrer le style [Bootstrap](http://getbootstrap.com/) :
-
-    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 01 - Should include Bootstrap header](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L38) passant.*
 
     ```html
     {{!-- /app/templates/application.hbs --}}
@@ -297,7 +301,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
     **Style** : encapsuler la liste dans une ``<div class="comics">``
     
-    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 02 - Should display comics](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L55) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 01 - Should display comics](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L55) passant.*
       
     >  ```javascript
     >  // app/routes/application.js
@@ -356,7 +360,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
       Ajouter à la liste un comic en renseignant son auteur pour constater les changements.
      
      
-    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 03 - Should display scriptwriter if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L87) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 02 - Should display scriptwriter if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L87) passant.*
 
     
     >  ```javascript
@@ -401,7 +405,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     
     **style** : utiliser les classes `comic-with-scriptwriter` et `comic-without-scriptwriter`.
     
-    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 04 - Should change class if no scriptwriter](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L115) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 03 - Should change class if no scriptwriter](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L115) passant.*
     
     > ```html
     > {{!-- app/templates/application.hbs --}}
@@ -421,7 +425,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 1. Modifier le template pour afficher un simple message `"Sorry, no comic found"` si la liste est vide. 
     * Via la console, supprimer tous les objets de la liste et constater les changements. 
     
-       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 05 - Should display message if empty](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L133) passant.*
+       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 04 - Should display message if empty](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L133) passant.*
  
     > ```html
     > {{!-- app/templates/application.hbs --}}
