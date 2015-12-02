@@ -334,7 +334,7 @@ les classes avec de nouvelles propriétés ou méthodes.
 <div class="work">
     {% capture m %}
 
-1. Réouvrir la classe ``Book`` et lui ajouter une propriété ``pages``.
+1. Dans la console, réouvrir la classe ``Book`` et lui ajouter une propriété ``pages``.
 
     > ```javascript
     >   > Book.reopen({
@@ -364,7 +364,7 @@ les classes avec de nouvelles propriétés ou méthodes.
     >   10
     > ```
     >
-    > On constate que la propriété a bien été définie et initialisée dans nos deux instance. Y compris l'instance ``one`` qui existait déjà.
+    > On constate que la propriété a bien été définie et initialisée dans nos deux instances. Y compris l'instance ``one`` qui existait déjà.
     > Les propriétés et méthodes ajoutées par ``reopen`` ne sont donc ajoutées effectivement au prototype de la classe que lors de la prochaine
     > création d'une instance de cette classe, en mode *lazy*. cf. [cette discussion](https://github.com/emberjs/ember.js/issues/3783)
 
@@ -497,7 +497,7 @@ précédentes séparées par ``' and '``. La propriété calculée ``authors`` d
     >  "new writer and 5 drawer"
     > ```
     > 
-    > Les deux syntaxes sont strictement équivalentes. C'est cenpendant la seconde qui est la plus fréquement utilisée et à privilégier. La première est utile et utilisée dans le cas où 
+    > Les deux syntaxes sont strictement équivalentes. C'est cependant la seconde qui est la plus fréquement utilisée et à privilégier. La première est utile et utilisée dans le cas où 
     > l'on souhaite utiliser Ember en désactivant les extensions de prototype qu'il ajoute (cf. [documentation](http://emberjs.com/guides/configuring-ember/disabling-prototype-extensions/)) 
 
 1. Modifier la déclaration de la propriété calculée ``authors`` en supprimant la dépendance aux deux propriétés ``writer`` et ``drawer``. Réexécuter ensuite la série d'opérations précédente.
@@ -531,7 +531,7 @@ Que constate-t-on ?
     >  "5 writer and 5 drawer"
     > ```
     > 
-    > On s'apperçoit ici que la propriété n'est pas recalculée lorsque l'on change l'une des propriétés puisqu'elle ne dépend plus de ces propriétés. Ember utilisera donc 
+    > On s'aperçoit ici que la propriété n'est pas recalculée lorsque l'on change l'une des propriétés puisqu'elle ne dépend plus de ces propriétés. Ember utilisera donc 
     > toujours la valeur calculée cachée de cette propriété puisque, pour lui, celle-ci ne peut pas changer.
       
   {% endcapture %}{{ m | markdownify }}
@@ -582,7 +582,7 @@ javascript contenant à la fois une méthode get et une méthode set au lieu de 
 <div class="work">
     {% capture m %}
  
-1. Réouvrir la classe ``Séries`` de manière à modifier la propriété ``authors`` pour lui fournir un setter afin de mettre à jour ``writer`` et ``drawer`` lorsque l'on modifie ``authors``. L'objectif
+1. Réouvrir la classe ``Comic`` de manière à modifier la propriété ``authors`` pour lui fournir un setter afin de mettre à jour ``writer`` et ``drawer`` lorsque l'on modifie ``authors``. L'objectif
 est de permettre la séquence suivante : 
 
     ```javascript
@@ -626,7 +626,7 @@ travers de la notation ``myCollection.@each.myProperty`` ou encore ``myCollectio
 <div class="work">
     {% capture m %}
 
-1. Réouvrir ``Book`` pour y ajouter une propriété ``isPublished`` par défaut à false. Créer ensuite une nouvelle classe ``Collections`` contenant un ensemble de ``comic``. Enfin, 
+1. Réouvrir ``Book`` pour y ajouter une propriété ``isPublished`` par défaut à false. Créer ensuite une nouvelle classe ``Collection`` contenant un ensemble de ``comic``. Enfin, 
 créer deux nouvelles séries :
 
     ```javascript
@@ -753,7 +753,7 @@ Des observeurs [Ember][ember] peuvent également être déclarés sur toute prop
 La documentation est très complète sur le sujet et il n'est nul besoin de la paraphraser ici, je vous invite donc à vous y reporter [ici](http://guides.emberjs.com/v2.1.0/object-model/observers/).
 Cependant, pour résumer, il est bon de noter les points suivants : 
 
-* Les observeurs sont exécutés de manière **synchrône** comme on a pu le constater. le déclenchement a eu lieu immédiatement après la modification de la propriété, avant même le calcul de la
+* Les observeurs sont exécutés de manière **synchrône** comme on a pu le constater. Le déclenchement a eu lieu immédiatement après la modification de la propriété, avant même le calcul de la
   propriété calculée qui en dépend.
 * Cela signifie que plusieurs modifications déclencheront plusieurs fois les observeurs de manière non optimisée. Si l'on souhaite maîtriser d'avantage ces déclenchements, il est nécessaire de
   faire appel à la méthode ``Ember.run.once`` comme expliqué dans la [documentation](http://guides.emberjs.com/v2.1.0/object-model/observers/)
@@ -774,7 +774,7 @@ Cette API est décrite de manière succinte [ici](http://guides.emberjs.com/v2.0
 
 Un autre mécanisme extrêmement important est impliqué tant dans l'optimisation du moteur de rendu que dans le calcul et la synchronisation des propriétés entre elles : la *RunLoop*. Ce mécanisme est
 absolument central dans le fonctionnement d'[Ember][ember] et s'appuie sur la micro librairie [Backburner](https://github.com/ebryn/backburner.js/). Dans la plupart des cas, on n'a pas à
-s'en en préoccuper et on peut parfaitement mettre en place une application [Ember][ember] complète sans interagir directement avec la *RunLoop*. Il est cependant parfois nécessaire, lorsqu'on
+s'en préoccuper et on peut parfaitement mettre en place une application [Ember][ember] complète sans interagir directement avec la *RunLoop*. Il est cependant parfois nécessaire, lorsqu'on
 ajoute nos propres `helpers` [Handlebars](http://handlebarsjs.com/) ou nos propres composants avancés. C'est de toutes façons essentiel d'en comprendre le fonctionnement.
 
 Comme son nom ne l'indique pas, la *RunLoop* n'est pas une loop mais un ensemble de queues permettant à [Ember][ember] de différer et d'organiser un certain nombre d'opérations
