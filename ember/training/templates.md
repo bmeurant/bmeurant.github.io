@@ -396,10 +396,6 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     >  > Ember.set(comics[1], 'scriptwriter', "New scriptwriter")
     >  "New scriptwriter"
     > ```
-    >  
-    > * Dans le premier cas, lorsqu'on ajoute une nouvelle propriété à un objet existant, le changement n'est pas detecté puisque la propriété n'était pas observée par [Ember](http://emberjs.com). Le template
-    >   n'est pas mis à jour.
-    > * Dans le second cas, lorsque l'on modifie une propriété existante, le binding fonctionne parfaitement et le template est mis à jour
     
 1. Modifier l'affichage de chaque comic pour changer la classe de l'élément en fonction du fait que l'auteur soit renseigné ou non.
     
