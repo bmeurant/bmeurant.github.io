@@ -679,7 +679,7 @@ retourne le nombre de livres publiés dans la collection. Placer un log dans la 
     > 1
     > ```
 
-3. Réouvrir ``Collection`` pour changer les conditions de dépendance de la propriété calculée en supprimant le filtre supplémentaire sur la
+1. Réouvrir ``Collection`` pour changer les conditions de dépendance de la propriété calculée en supprimant le filtre supplémentaire sur la
 propriété ``isPublished`` (``books.[]``).
 
     Créer ensuite une collection contenant les trois séries créées.
@@ -714,6 +714,18 @@ propriété ``isPublished`` (``books.[]``).
     >     > newCollection.get('numberOfPublished');
     >     compute numberOfPublished
     >     1
+    > ```
+    
+1. Modifier enfin une dernière fois ``Collection`` et la propriété ``numberOfPublished`` pour faire en sorte que la propriété
+soit recalculée à la fois lors de la modification d'un titre existant et lors de l'ajout ou la suppression d'un livre.
+    
+    > ```javascript
+    >     > Collection.reopen({
+    >       numberOfPublished: function() {
+    >         console.log("compute numberOfPublished");
+    >     	return this.get('books').filterBy('isPublished', true).length;
+    >       }.property('books.[]', 'books.@each.isPublished')
+    >     });
     > ```
     
   {% endcapture %}{{ m | markdownify }}
