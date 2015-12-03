@@ -701,6 +701,151 @@ principes que pour ``comic.edit``
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
 </div>
+
+### Gestion de l'état et propriétés
+
+Comme on l'a dit, la responsabilité principale des contrôleurs est de maintenir l'état de l'application à un instant donné.
+cela s'effectue au travers de la définition et de la manipulation de propriétés au sein du contrôleur. La valeur de ces
+propriétés est exposée au template qui peut ensuite provoquer des changements de valeur au travers des actions. L'utilisation
+de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-calcul%C3%A9es-%28computed-properties%29) au sein même du
+contrôleur permet ensuite de propager automatiquement ce changement partout où cela est nécessaire. 
+
+<div class="work answer">
+  {% capture m %}
+  {% raw %}
+  
+1. Nous allons maintenant ajouter un champ permettant de filtrer la liste les comics ainsi q'un bouton de tri permettant 
+de trier les comics dans un ordre croissant ou décroissant.
+    * Créer le contrôleur ``app/controllers/comics.js`` en se basant sur le modèle proposé plus bas.
+    * Implémenter le corps de l'action ``sort`` de manière à inverser la valeur de la propriété ``sortAsc``. 
+    Indice : utiliser pour cela une méthode de [Ember.Controller](http://emberjs.com/api/classes/Ember.Controller.html)
+    qui permet d'inverser la valeur d'une propriété booléenne.
+    * Compléter la propriété ``filteredComics`` afin que celle-ci se base sur la collection récupérée initialement.
+    * Compléter la liste des propriétés observées par la propriété calculée ``filteredComics`` de manière à ce que celle-ci
+    soit recalculée à chaque fois que la propriété ``filter`` change, chaque fois que l'on ajoute ou supprime un comic
+    dans la liste et enfin lorsque l'on modifie le titre de n'importe quel comic.
+    * Compléter la propriété observée par ``sortDefinition`` de manière à ce que celle-ci soit recalculée chaque fois que 
+    la direction du tri est modifiée.
+    * Compléter la propriété ``sortedComics`` afin que celle-ci se base sur la collection filtrée (``filteredComics``).
+    * On remarque l'utilisation de la méthode [Ember.computed.filter](http://emberjs.com/api/classes/Ember.computed.html#method_filter)
+    qui permet de filtrer facilement une collection et de la méthode [Ember.computed.sort](http://emberjs.com/api/classes/Ember.computed.html#method_sort)
+    qui permet, elle, de faciliter le tri. Cette dernière s'appuie également sur une propriété calculée définissant les 
+    caractéristiques du tri (propriété, ordre). Ici ``['title:asc']`` ou ``['title:desc']``.
+    * Modifier le template ``app/templates/comics.hbs`` en se basant sur le modèle proposé plus bas.
+    * Ajouter avant la liste de comics un ``input`` permettant de modifier la valeur de ``filter`` ainsi qu'un bouton 
+    permettant de déclencher l'action ``sort``. Ce bouton doit     porter les classes css ``sort sort-asc`` ou 
+    ``sort sort-desc`` en fonction de la valeur de ``sortAsc``.
+    * Modifier la collection parcourue par le ``{{#each}}`` de façon à utiliser la liste triée.
+    * Enfin, modifier le span de classe ``comics-number`` afin d'afficher, en temps réel, le nombre de comics triés 
+    (ne pas modifier le contrôleur).
+    
+    ```javascript
+    import Ember from 'ember';
+    
+    export default Ember.Controller.extend({
+      filter: "",
+      sortAsc: true,
+    
+      filteredComics: Ember.computed.filter(..., function (model) {
+        let title = model.get('title');
+        return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
+      }).property(???, ???, ???),
+    
+      sortDefinition: function () {
+        return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')];
+      }.property(???),
+    
+      sortedComics: Ember.computed.sort(???, 'sortDefinition'),
+    
+      actions: {
+        sort () {
+          // @TODO ???
+        }
+      }
+    });
+    ```
+    
+    ```html
+    <div class="row">
+      <div class="comics">
+        <h2>Comics list</h2>
+    
+        {{input type=text value=... class="filter"}}
+        <button ??? class="???"></button>
+    
+        <ul>
+          {{#each ??? as |comic|...}}
+        </ul>
+        {{link-to '' 'comics.create' class="add-comic"}}
+    
+        <span class="comics-number">Number of comics: ???</span>
+      </div>
+    
+      {{outlet}}
+    </div>
+    ```
+    
+    **Tests** : Les modifications doivent permettre de rendre passants les tests 
+    @TODO
+    
+      > ```javascript
+      > // app/controllers/comics.js
+      > import Ember from 'ember';
+      > 
+      > export default Ember.Controller.extend({
+      >   filter: "",
+      >   sortAsc: true,
+      > 
+      >   filteredComics: Ember.computed.filter('model', function (model) {
+      >     let title = model.get('title');
+      >     return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
+      >   }).property('filter', 'model.[]', 'model.@each.title'),
+      > 
+      >   sortDefinition: function () {
+      >     return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')];
+      >   }.property('sortAsc'),
+      > 
+      >   sortedComics: Ember.computed.sort('filteredComics', 'sortDefinition'),
+      > 
+      >   actions: {
+      >     sort () {
+      >       this.toggleProperty('sortAsc');
+      >     }
+      >   }
+      > });
+      > ```
+    
+      > ```html
+      > <div class="row">
+      >   <div class="comics">
+      >     <h2>Comics list</h2>
+      > 
+      >     {{input type=text value=filter class="filter"}}
+      >     <button {{action "sort"}} class="sort {{if sortAsc 'sort-asc' 'sort-desc'}}"></button>
+      > 
+      >     <ul>
+      >       {{#each sortedComics as |comic|}}
+      >         <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+      >           {{#link-to "comic" comic}}
+      >             {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
+      >           {{/link-to}}
+      >         </li>
+      >       {{else}}
+      >         Sorry, no comic found
+      >       {{/each}}
+      >     </ul>
+      >     {{link-to '' 'comics.create' class="add-comic"}}
+      > 
+      >     <span class="comics-number">Number of comics: {{sortedComics.length}}</span>
+      >   </div>
+      > 
+      >   {{outlet}}
+      > </div>
+      > ```
+  
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
  
 [handlebars]: http://handlebarsjs.com/
 [ember-cli]: http://www.ember-cli.com/
