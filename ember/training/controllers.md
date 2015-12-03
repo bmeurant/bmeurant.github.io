@@ -786,10 +786,14 @@ de trier les comics dans un ordre croissant ou décroissant.
     ```
     
     **Tests** : Les modifications doivent permettre de rendre passants les tests 
-    @TODO
+    [03 - Controller - 13 - Should filter](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87),
+    [03 - Controller - 14 - Should sort](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) ainsi
+    que l'ensemble des [tests unitaires du controller comics](https://github.com/bmeurant/ember-training/blob/master/tests/unit/controllers/comics-test.js)
+
     
       > ```javascript
       > // app/controllers/comics.js
+      >
       > import Ember from 'ember';
       > 
       > export default Ember.Controller.extend({
@@ -816,6 +820,8 @@ de trier les comics dans un ordre croissant ou décroissant.
       > ```
     
       > ```html
+      > {{!-- app/templates/comics.hbs --}}
+      >
       > <div class="row">
       >   <div class="comics">
       >     <h2>Comics list</h2>
