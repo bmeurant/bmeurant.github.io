@@ -58,8 +58,8 @@ L'exemple suivant permet le rendu des URLs :
 
 ```js
 App.Router.map(function() {
-  this.resource('books', function() {
-      this.resource('book', { path: '/:book_id' }, function () {
+  this.route('books', function() {
+      this.route('book', { path: '/:book_id' }, function () {
           this.route('edit');
       });
       this.route('create');
@@ -75,7 +75,7 @@ Elles gèrent notamment un certain nombre d'opérations sur un modèle lors de c
 ```js
 App.BooksRoute = Ember.Route.extend({
     model: function () {
-        return this.store.find('book');
+        return this.store.findAll('book');
     }
 });
 ```
