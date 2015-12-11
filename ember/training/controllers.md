@@ -239,7 +239,7 @@ vers la route ``comic``
       > // app/routes/comic/edit.js
       > 
       > import Ember from 'ember';
-      > import Comic from '../../models/comic';
+      > import Comic from 'ember-training/models/comic';
       > 
       > export default Ember.Route.extend({
       >   afterModel (model) {
@@ -297,7 +297,7 @@ vers la route ``comic``
     > // app/routes/comics/create.js
     > 
     > import Ember from 'ember';
-    > import Comic from '../../models/comic';
+    > import Comic from 'ember-training/models/comic';
     > 
     > export default Ember.Route.extend({
     >   templateName: 'comic/edit',

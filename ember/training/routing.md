@@ -24,7 +24,7 @@ Si l'on examine le routeur de notre application, tel que créé par [Ember CLI][
 import Ember from 'ember';
 import config from './config/environment';
 
-var Router = Ember.Router.extend({
+const Router = Ember.Router.extend({
   location: config.locationType
 });
 
@@ -52,7 +52,7 @@ On souhaite désormais créer une nouvelle route pour l'affichage et la manipula
     ```console
     $ ember generate route comics
     
-    version: 1.13.8
+    version: 1.13.13
     installing route
       identical app\routes\comics.js
       identical app\templates\comics.hbs
@@ -285,13 +285,11 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
   {% capture m %}
   {% raw %}
   
-1. Modifier la route ``comics`` pour passer sur un modèle plus complet : 
-   * Créer une classe ``Comic`` étendant ``Ember.Object``
+1. Créer dans ``app/models/comic.js`` une classe ``Comic`` étendant ``Ember.Object``
    * Définir les propriétés ``id``, ``title``, ``scriptwriter``, ``illustrator``, ``publisher``
-   * Retourner une liste d'au moins deux instances de cette classe 
-  
+
      > ```javascript
-     > // app/routes/comics
+     > // app/models/comics
      > import Ember from 'ember';
      > 
      > let Comic = Ember.Object.extend({
@@ -302,6 +300,17 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
      >   publisher: ''
      > });
      > 
+
+1. Modifier la route ``comics`` pour passer sur un modèle plus complet : 
+   * Importer le modèle ``Comic``
+   * Créer trois instances de ce modèle de la façon définie ci-dessous
+   * Retourner ces trois instances en tant que modèle de la route
+  
+     > ```javascript
+     > // app/routes/comics
+     > import Ember from 'ember';
+     >  import Comic from 'ember-training/models/comic';
+     >
      > let blackSad = Comic.create({
      >   slug: 'blacksad',
      >   title: 'Blacksad',
@@ -326,7 +335,7 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
      >   publisher: 'Epic Comics'
      > });
      > 
-     > let comics = [blackSad, calvinAndHobbes, akira]
+     > let comics = [blackSad, calvinAndHobbes, akira];
      > 
      > export default Ember.Route.extend({
      >   model() {
@@ -390,7 +399,7 @@ Par convention, les éléments constitutifs des routes filles (template, route, 
     > ```console
     > $ ember generate route comics/comic
     >
-    > version: 1.13.8
+    > version: 1.13.13
     > installing route
     >   create app\routes\comics\comic.js
     >   create app\templates\comics\comic.hbs
@@ -1363,7 +1372,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
       > // app/routes/comics/create.js
       > 
       > import Ember from 'ember';
-      > import Comic from '../../models/comic';
+      > import Comic from 'ember-training/models/comic';
       > 
       > export default Ember.Route.extend({
       >   model () {

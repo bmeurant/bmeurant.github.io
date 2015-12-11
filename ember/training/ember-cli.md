@@ -51,17 +51,24 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
  
     ```console
     $ node -v
-    v4.2.1
+    v4.2.3
     ```
+    
+1. INstaller Bower : 
+
+   ```console
+   $ npm install -g bower
+   bower@1.7.0
+   ```
 
 1. Puis [Ember CLI](http://www.ember-cli.com/) : 
 
     ```console
     $ npm install -g ember-cli
     $ ember -v
-    version: 1.13.8
-    node: 4.2.1
-    npm: 2.13.4
+    version: 1.13.13
+    node: 4.2.3
+    npm: 2.13.13
     ```
 
 1. Créer une nouvelle application ``ember-training`` via [Ember CLI](http://www.ember-cli.com/) et la ligne de commande `ember` :
@@ -80,7 +87,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
     ```
 
 1. Ouvrir le dossier de l'application et le fichier ``bower.json``. Dans les dépendances, changer les versions 
-d' [Ember][ember] et d' ``ember-data`` pour ``^2.0.0`` si ce n'est pas déjà le cas : 
+d' [Ember][ember] à ``2.2.0`` et d' [Ember Data][ember-data] pour ``^2.2.1`` si ce n'est pas déjà le cas : 
 
     ```javascript
     // bower.json
@@ -88,9 +95,9 @@ d' [Ember][ember] et d' ``ember-data`` pour ``^2.0.0`` si ce n'est pas déjà le
     {
       "name": "ember-training",
       "dependencies": {
-        "ember": "^2.1.0",
+        "ember": "^2.2.0",
         ...
-        "ember-data": "^2.1.0",
+        "ember-data": "^2.2.1",
         ...
     }
     ```
@@ -109,21 +116,28 @@ d' [Ember][ember] et d' ``ember-data`` pour ``^2.0.0`` si ce n'est pas déjà le
       
       "devDependencies": {
         ...
-        "ember-data": "2.1.0",
+        "ember-data": "2.2.1",
         ...
       }
     }
     ``` 
 
-1. Mettre à jour les dépendances via ``npm install``
+1. Mettre à jour les dépendances via ``npm install`` puis ``bower install``
+
+1. Ouvrir le fichier ``.ember-cli`` et changer le port de livereloading en ajoutant la ligne ``"live-reload-port": 49155`` :
+
+   ```text
+     "disableAnalytics": true,
+     "live-reload-port": 49155
+   ```
 
 1. Lancer enfin cette nouvelle application via la ligne de commande : 
 
     ```console
     $ cd ember-training
     $ ember serve
-    version: 1.13.8
-    Livereload server on http://localhost:49156
+    version: 1.13.13
+    Livereload server on http://localhost:49155
     Serving on http://localhost:4200/
     ```
 
@@ -131,8 +145,8 @@ d' [Ember][ember] et d' ``ember-data`` pour ``^2.0.0`` si ce n'est pas déjà le
 
     ```console
     DEBUG: -------------------------------
-    DEBUG: Ember      : 2.1.0
-    DEBUG: Ember Data : 2.1.0
+    DEBUG: Ember      : 2.2.0
+    DEBUG: Ember Data : 2.2.1
     DEBUG: jQuery     : 1.11.3
     DEBUG: -------------------------------
     ```
@@ -169,13 +183,13 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
 <div class="work no-answer">
     {% capture m %}
     
-1. Installer broccoli-sass via npm. Ce plugin permet d'intégrer la précompilation sass dans [Ember CLI](http://www.ember-cli.com/) : 
+1. Installer ember-cli-sass via npm. Ce plugin permet d'intégrer la précompilation sass dans [Ember CLI](http://www.ember-cli.com/) : 
 
     ```console
-    npm install --save-dev broccoli-sass
+    npm install --save-dev ember-cli-sass
     ```
     
-    En ouvrant le fichier ``package.json``, on constate que la dépendance broccoli-sass a été ajoutée : 
+    En ouvrant le fichier ``package.json``, on constate que la dépendance ember-cli-sass a été ajoutée : 
         
     ```javascript
     // package.json
@@ -184,7 +198,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
     
       "devDependencies": {
         ...
-        "broccoli-sass": "^0.6.8",
+        "ember-cli-sass": "^5.2.0",
         ...
       }
     ...
@@ -194,8 +208,9 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
 
     ```console
     $ bower install --save bootstrap-sass
-    bower cached        https://github.com/twbs/bootstrap-sass.git#3.3.5
-    bower validate      3.3.5 against https://github.com/twbs/bootstrap-sass.git#*
+    ...
+    bower resolved      git://github.com/twbs/bootstrap-sass.git#3.3.6
+    bower install       bootstrap-sass#3.3.6
     ```
     
     En ouvrant le fichier ``bower.json``, on constate que la dépendance bootstrap-sass a été ajoutée : 
@@ -208,7 +223,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
       "dependencies": {
         "ember": "^2.1.0",
         ...
-        "bootstrap-sass": "~3.3.5"
+        "bootstrap-sass": "~3.3.6"
       }
     ...
     ```
@@ -240,7 +255,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
     ```
     
 1. De manière à bénéficier de styles adaptés aux futurs exercices, copier le contenu de [ce fichier](https://raw.githubusercontent.com/bmeurant/ember-training/master/app/styles/app.scss) 
-   dans le fichier ``app/styles.app.scss``.
+   dans le fichier ``app/styles/app.scss``.
     
   {% endcapture %}{{ m | markdownify }}
 </div>
