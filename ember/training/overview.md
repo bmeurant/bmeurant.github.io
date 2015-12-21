@@ -24,25 +24,11 @@ Typiquement pour une URL `test`, [Ember][ember] s'attend à trouver une `TestRou
 
 -> [doc officielle](http://emberjs.com/guides/concepts/naming-conventions/).
 
+## Application
 
-## Modèles
+La figure suivante, extraite de la [Documentation officielle](https://guides.emberjs.com/v2.2.0/getting-started/core-concepts/), montre une vue générale du fonctionnement d'une application [Ember][ember] et des différents objets impliqués :
 
-Un modèle est un objet avec des propriétés contenant des données métier. Le modèle est ensuite passé au template pour être rendu par celui-ci
-en HTML. Typiquement, les modèles peuvent être récupérés d'un back end via une API REST JSON via [Ember Data](https://github.com/emberjs/data) abordé plus loin mais pas uniquement. Dans le premier cas, il s'agit d'un objet de type ``DS.Model``, ``DS`` étant le namespace commun à tous les éléments d'[Ember Data](https://github.com/emberjs/data).
-
-```js
-var Book = DS.Model.extend({
-    title               : DS.attr('string'),
-    publicationDate     : DS.attr('date'),
-    author              : DS.attr('string'),
-    publisher           : DS.attr('string'),
-    summary             : DS.attr('string')
-});
-```
-
-Cependant, l'ensemble des mécanismes décrits plus bas (les *bindings* notamment) peuvent parfaitement fonctionner en s'appuyant directement sur le modèle objet d'ember et la classe ``Ember.Object`` [en détail](http://eviltrout.com/2013/03/23/ember-without-data.html).
-
--> [doc officielle](http://guides.emberjs.com/v2.1.0/models/).
+![Application Ember](https://guides.emberjs.com/v2.2.0/images/ember-core-concepts/ember-core-concepts.png)
 
 ## Routeur
 
@@ -69,8 +55,8 @@ App.Router.map(function() {
 
 ## Routes
 
-Les routes associent un modèle à un template et sont également impliquées dans les transitions entre les différentes URLs (et donc les différents états) de l'application. 
-Elles gèrent notamment un certain nombre d'opérations sur un modèle lors de ces transitions.
+Les routes sont en charge de la récupération d'un modèle associé à la reqête de l'utilisateur puis puis de l'association avec contrôleur (et de son initialisation) et un template (et de son rendu).
+La récupération du modèle ainsi que l'association entre un (ou plusieurs) modèle(s) et un (ou plusieurs) template(s) implique également la gestion des transitions entre les différentes URLs de l'application. 
 
 ```js
 App.BooksRoute = Ember.Route.extend({
@@ -80,31 +66,7 @@ App.BooksRoute = Ember.Route.extend({
 });
 ```
 
--> [doc officielle](http://guides.emberjs.com/v2.1.0/routing/).
-
-
-## Contrôleurs
-
-Le contrôleur gère l'état de l'application. Il est situé entre la route dont il récupère le modèle et le template dont il répond aux appels. 
-Le template accède aux données du contrôleur et le contrôleur accède aux données du modèle. Le contrôleur est par exemple responsable du traitement des actions effectuées par 
-l'utilisateur sur l'interface rendue par le template :
-
-```html
-<button {{action "sort"}}></button>
-```
-
-```js
-App.BooksController = Ember.Controller.extend({
-  actions: {
-    // appelé lors du clic sur le bouton
-    sort: function () {
-        ...
-    }
-  }
-});
-```
-
--> [doc officielle](http://guides.emberjs.com/v2.1.0/controllers/).
+-> [doc officielle](http://guides.emberjs.com/v2.2.0/routing/).
 
 
 ## Templates
@@ -134,7 +96,55 @@ imbrications à mesure que les routes de l'application sont activées.
 Tout élément de modèle injecté dans un template sera **automatiquement mis à jour** (binding) par [Ember][ember] lorsque le modèle associé au template sera modifié. 
 Évidemment, seul cet élément sera rafraîchi et non le template entier. Ce *binding*, qu'il soit unidirectionnel ou bidirectionnel est au coeur du fonctionnement d'[Ember][ember].
 
--> [doc officielle](http://guides.emberjs.com/v2.1.0/templates/handlebars-basics/).
+-> [doc officielle](http://guides.emberjs.com/v2.2.0/templates/handlebars-basics/).
+
+
+## Modèles
+
+Un modèle est un objet avec des propriétés contenant des données métier. Le modèle est ensuite passé au template pour être rendu par celui-ci
+en HTML. Typiquement, les modèles peuvent être récupérés d'un back end via une API REST JSON via [Ember Data](https://github.com/emberjs/data) abordé plus loin, mais pas uniquement. 
+Dans le premier cas, il s'agit d'un objet de type ``DS.Model``, ``DS`` étant le namespace commun à tous les éléments d'[Ember Data](https://github.com/emberjs/data).
+
+```js
+var Book = DS.Model.extend({
+    title               : DS.attr('string'),
+    publicationDate     : DS.attr('date'),
+    author              : DS.attr('string'),
+    publisher           : DS.attr('string'),
+    summary             : DS.attr('string')
+});
+```
+
+Cependant, l'ensemble des mécanismes décrits plus bas (les *bindings* notamment) peuvent parfaitement fonctionner en s'appuyant directement sur le modèle objet d'ember et la 
+classe ``Ember.Object`` [en détail](http://eviltrout.com/2013/03/23/ember-without-data.html).
+
+-> [doc officielle](http://guides.emberjs.com/v2.2.0/models/).
+
+## Contrôleurs
+
+Le contrôleur, qui n'apparaît pas sur la figure ci-dessus, gère l'état de l'application. Il est situé entre la route dont il récupère le modèle et le template dont il répond aux appels. 
+Le template accède aux données du contrôleur et le contrôleur accède aux données du modèle. Le contrôleur est par exemple responsable du traitement des actions effectuées par 
+l'utilisateur sur l'interface rendue par le template :
+
+```html
+<button {{action "sort"}}></button>
+```
+
+```js
+App.BooksController = Ember.Controller.extend({
+  actions: {
+    // appelé lors du clic sur le bouton
+    sort: function () {
+        ...
+    }
+  }
+});
+```
+
+-> [doc officielle](http://guides.emberjs.com/v2.2.0/controllers/).
+
+**Note**: Les contrôleurs [Ember][ember] sont appelés à disparaître progressivement au profit de l'utilisation de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md). 
+Ce qui explique l'absence des contrôleurs sur la figure ci-dessus.
 
 
 ## Composants
