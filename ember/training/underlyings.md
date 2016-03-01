@@ -21,40 +21,40 @@ Nous allons explorer pas à pas certains de ces comportements. Pour cela, il fau
 
 1. Créer un fichier html mettant en place un contexte Ember simple :
 
-    ```html
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="utf-8">
-          <title>Ember Object model</title>
-          <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-          <script src="http://builds.emberjs.com/tags/v2.0.0/ember.debug.js"></script>
-          <script src="http://builds.emberjs.com/tags/v2.0.0/ember-template-compiler.js"></script>
-        </head>
-        <body>
+   ```html
+   <!DOCTYPE html>
+   <html>
+     <head>
+       <meta charset="utf-8">
+       <title>Ember Object model</title>
+       <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+       <script src="http://builds.emberjs.com/tags/v2.0.0/ember.debug.js"></script>
+       <script src="http://builds.emberjs.com/tags/v2.0.0/ember-template-compiler.js"></script>
+     </head>
+     <body>
 
-        </body>
-      </html>
-    ```
+     </body>
+   </html>
+   ```
 
 2. Ouvrir ce fichier dans un navigateur, console Javascript ouverte.
 
-    La console doit être exempte d'erreur et afficher l'information suivante :
+   La console doit être exempte d'erreur et afficher l'information suivante :
 
-    ```javascript
-      DEBUG: For more advanced debugging, install the Ember Inspector from https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi
-    ```
+   ```javascript
+   DEBUG: For more advanced debugging, install the Ember Inspector from https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi
+   ```
 
 3. Entrer `Ember` dans la console
 
-    La réponse doit être : 
-    
-    ```console
-    Object {__loader: Object, imports: Window, lookup: Window, exports: Window, isNamespace: true…}
-    ```
+   La réponse doit être : 
+   
+   ```console
+   Object {__loader: Object, imports: Window, lookup: Window, exports: Window, isNamespace: true…}
+   ```
 
-    On constate, en développant cet objet, qu'il contient l'ensemble des objets et fonctions du framework. 
-    En particulier la classe ``Ember.Object`` que nous allons manipuler.
+   On constate, en développant cet objet, qu'il contient l'ensemble des objets et fonctions du framework. 
+   En particulier la classe ``Ember.Object`` que nous allons manipuler.
 
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -70,20 +70,20 @@ Pour définir et utiliser un nouvel objet [Ember][ember], il est nécessaire d'�
 
 1. Dans la console, créer une classe `Book` qui étend `Ember.Object` et définit une méthode `logTitle` affichant en console une chaîne de caractères (le titre) passée en paramètre.
 
-    > ```javascript
-    > > Book = Ember.Object.extend({
-    >     logTitle: function(title) {
-    >       console.log(title);
-    >     }
-    >   });
-    > ```
+   > ```javascript
+   > > Book = Ember.Object.extend({
+   >     logTitle: function(title) {
+   >       console.log(title);
+   >     }
+   >   });
+   > ```
 
 1. Instancier cette classe et afficher un titre dans la console
 
-    > ```javascript
-    > > one = new Book();
-    > > one.logTitle("titre");
-    > ```
+   > ```javascript
+   > > one = new Book();
+   > > one.logTitle("titre");
+   > ```
 
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -98,18 +98,18 @@ On souhaite désormais initialiser l'objet à sa création avec un titre et affi
 1. Modifier la classe `Book` en conséquence et créer l'objet via la méthode [create()](http://emberjs.com/api/classes/Ember.Object.html#method_create) 
    d'[Ember](http://emberjs.com) en initialisant un champs `title`.
 
-    > ```javascript
-    > > Book = Ember.Object.extend({
-    >     logTitle: function() {
-    >       console.log(this.title);
-    >     }
-    >   });
-    >
-    > > one = Book.create({title: "My Title"});
-    > > one.logTitle();
-    > ```
-    
-    L'utilisation de la méthode [create()](http://emberjs.com/api/classes/Ember.Object.html#method_create) en lieu et place d'un simple `new` permet l'initialisation de propriétés via un objet passé en paramètre. La méthode `create` permet également d'effectuer des opérations d'initialisations complémentaires via l'appel de la méthode [init()](http://emberjs.com/api/classes/Ember.Object.html#method_init).
+   > ```javascript
+   > > Book = Ember.Object.extend({
+   >     logTitle: function() {
+   >       console.log(this.title);
+   >     }
+   >   });
+   >
+   > > one = Book.create({title: "My Title"});
+   > > one.logTitle();
+   > ```
+   
+   L'utilisation de la méthode [create()](http://emberjs.com/api/classes/Ember.Object.html#method_create) en lieu et place d'un simple `new` permet l'initialisation de propriétés via un objet passé en paramètre. La méthode `create` permet également d'effectuer des opérations d'initialisations complémentaires via l'appel de la méthode [init()](http://emberjs.com/api/classes/Ember.Object.html#method_init).
 
 1. Ajouter une méthode d'initialisation qui réalise un simple log console du titre passé au create. Le résultat doit être le suivant :
 
@@ -154,69 +154,69 @@ Les méthodes de la classe mère peuvent être accédées via l'appel de la mét
 
 1. Modifier la classe ``Book`` pour lui ajouter une méthode ``logType`` qui affiche "Book". Le résultat doit être le suivant :
 
-    ```javascript
-    > one = Book.create({title: "My Title"});
-    My Title
-    
-    > one.logType();
-    Book
-    ```
+   ```javascript
+   > one = Book.create({title: "My Title"});
+   My Title
+   
+   > one.logType();
+   Book
+   ```
 
-    > ```javascript
-    > > Book = Ember.Object.extend({
-    >     ...
-    >     logType: function() {
-    >       console.log("Book");
-    >     }
-    >   });
-    > ```
+   > ```javascript
+   > > Book = Ember.Object.extend({
+   >     ...
+   >     logType: function() {
+   >       console.log("Book");
+   >     }
+   >   });
+   > ```
 
 1. Définir une classe ``Comic`` qui étend ``Book`` et surcharge la méthode ``logType`` en affichant ``Comic``.
 
-    On doit pouvoir effectuer les opérations suivantes :
+   On doit pouvoir effectuer les opérations suivantes :
 
-    ```javascript
-    > one = Comic.create({title: "My Title"});
-    My Title
-    
-    > one.logType();
-    Comic
-    ```
+   ```javascript
+   > one = Comic.create({title: "My Title"});
+   My Title
+   
+   > one.logType();
+   Comic
+   ```
 
-    > ```javascript
-    > >  Comic = Book.extend({
-    >      ...
-    >      logType: function() {
-    >        console.log("Comic");
-    >      }
-    >    });
-    > ```
+   > ```javascript
+   > >  Comic = Book.extend({
+   >      ...
+   >      logType: function() {
+   >        console.log("Comic");
+   >      }
+   >    });
+   > ```
 
 3. Modifier ``Comic`` de sorte que ``logType`` affiche également le type de la classe mère.
 
-    On doit pouvoir effectuer les opérations suivantes :
+   On doit pouvoir effectuer les opérations suivantes :
 
-    ```javascript
-    > one = Comic.create({title: "My Title"});
-    My Title
-    
-    > one.logType();
-    Book
-    Comic
-    ```
+   ```javascript
+   > one = Comic.create({title: "My Title"});
+   My Title
+   
+   > one.logType();
+   Book
+   Comic
+   ```
 
-    > ```javascript
-    > > Commic = Book.extend({
-    >     ...
-    >     logType: function() {
-    >       this._super();
-    >       console.log("Comic");
-    >     }
-    >   });
-    > ```
+   > ```javascript
+   > > Commic = Book.extend({
+   >     ...
+   >     logType: function() {
+   >       this._super();
+   >       console.log("Comic");
+   >     }
+   >   });
+   > ```
 
-    L'appel à la méthode mère doit donc être explicite. Lorsque vous héritez d'un objet Ember (``Controller``, ``View``, ``Route``, etc.) et que vous surchargez la méthode ``init`` dans votre implémentation, soyez sûr de bien appeler la méthode ``_super`` au
-    tout début de l'init. Dans le cas contraire, les traitements d'initialisation standard prévus par [Ember](http://emberjs.com) ne pourraient pas s'exécuter correctement entraînant des comportements erratiques.
+   L'appel à la méthode mère doit donc être explicite. Lorsque vous héritez d'un objet Ember (``Controller``, ``View``, ``Route``, etc.) et que vous surchargez la méthode ``init`` dans votre implémentation, soyez sûr de bien appeler la méthode ``_super`` au
+   tout début de l'init. Dans le cas contraire, les traitements d'initialisation standard prévus par [Ember](http://emberjs.com) ne pourraient pas s'exécuter correctement entraînant des comportements erratiques.
 
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -231,32 +231,32 @@ Pourtant, tout ``Ember.Object`` expose des accesseurs qu'il est nécessaire d'ut
 
 1. En se basant sur le code de la classe ``Book`` créée précédemment et sur l'instance one, effectuer les opérations suivantes :
 
-    ```javascript
-    > one.title;
-    > one.get("title");
-    > one.title = "new title";
-    > one.set("title", "new title");
-    > one.get("title");
-    ```
+   ```javascript
+   > one.title;
+   > one.get("title");
+   > one.title = "new title";
+   > one.set("title", "new title");
+   > one.get("title");
+   ```
 
-    > Les résultats sont les suivants :
-    >
-    > ```javascript
-    > > one.title;
-    > "My Title"
-    >
-    > > one.get("title");
-    > "My Title"
-    >
-    > > one.title = "new title";
-    > Uncaught EmberError { ..., message: "Assertion Failed: You must use Ember.set()" ... }
-    >
-    > > one.set("title", "new title");
-    > Class { ... }
-    >
-    > > one.get("title");
-    > "new title"
-    > ```
+   > Les résultats sont les suivants :
+   >
+   > ```javascript
+   > > one.title;
+   > "My Title"
+   >
+   > > one.get("title");
+   > "My Title"
+   >
+   > > one.title = "new title";
+   > Uncaught EmberError { ..., message: "Assertion Failed: You must use Ember.set()" ... }
+   >
+   > > one.set("title", "new title");
+   > Class { ... }
+   >
+   > > one.get("title");
+   > "new title"
+   > ```
     
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -277,42 +277,42 @@ L'exemple suivant permet de se faire une idée de ce mécanisme.
 
 1. Copier le contenu suivant dans le fichier html créé, juste avant la balise ``</head>``:
 
-    ```html
-    <script>
-      Book = Ember.Object.extend({
-        init: function() {
-          this.displayTitle();
-        },
-        displayTitle: function() {
-          console.log(this.title);
-        },
-        logType: function() {
-          console.log("Book");
-        }
-      });
-    
-      Comic = Book.extend({
-        logType: function() {
-          this._super();
-          console.log("Comic");
-        }
-      });
-    
-      one = Comic.create({title: "My Title"});
-    
-      App = Ember.Application.create();
-    
-      App.ApplicationController = Ember.Controller.extend({
-        comic: one
-      });
-    </script>
-    
-    <script type="text/x-handlebars">
-      <p>
-        {{comic.title}}
-      </p>
-    </script>
-    ```
+   ```html
+   <script>
+     Book = Ember.Object.extend({
+       init: function() {
+         this.displayTitle();
+       },
+       displayTitle: function() {
+         console.log(this.title);
+       },
+       logType: function() {
+         console.log("Book");
+       }
+     });
+   
+     Comic = Book.extend({
+       logType: function() {
+         this._super();
+         console.log("Comic");
+       }
+     });
+   
+     one = Comic.create({title: "My Title"});
+   
+     App = Ember.Application.create();
+   
+     App.ApplicationController = Ember.Controller.extend({
+       comic: one
+     });
+   </script>
+   
+   <script type="text/x-handlebars">
+     <p>
+       {{comic.title}}
+     </p>
+   </script>
+   ```
     
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -336,52 +336,52 @@ les classes avec de nouvelles propriétés ou méthodes.
 
 1. Dans la console, réouvrir la classe ``Book`` et lui ajouter une propriété ``pages``.
 
-    > ```javascript
-    >   > Book.reopen({
-    >        pages: 10
-    >     });
-    > ```
+   > ```javascript
+   >   > Book.reopen({
+   >        pages: 10
+   >     });
+   > ```
 
 2. Afficher la valeur de ``pages`` sur l'instance existante ``one`` en utilisant l'accesseur. Que constate-t-on ?
 
-    > ```javascript
-    >   > one.get('pages');
-    >   undefined
-    > ```
-    >
-    > On constate que la propriété n'est pas définie.
+   > ```javascript
+   >   > one.get('pages');
+   >   undefined
+   > ```
+   >
+   > On constate que la propriété n'est pas définie.
 
 3. Créer une nouvelle instance ``two`` de ``Book`` puis afficher la valeur de ``pages`` sur cette instance. Afficher de nouveau la valeur de ``pages`` sur l'instance ``one``.
 
-    > ```javascript
-    >   > two = Book.create({title: 'two'})
-    >   two
-    >
-    >   > two.get('pages');
-    >   10
-    >
-    >   > one.get('pages');
-    >   10
-    > ```
-    >
-    > On constate que la propriété a bien été définie et initialisée dans nos deux instances. Y compris l'instance ``one`` qui existait déjà.
-    > Les propriétés et méthodes ajoutées par ``reopen`` ne sont donc ajoutées effectivement au prototype de la classe que lors de la prochaine
-    > création d'une instance de cette classe, en mode *lazy*. cf. [cette discussion](https://github.com/emberjs/ember.js/issues/3783)
+   > ```javascript
+   >   > two = Book.create({title: 'two'})
+   >   two
+   >
+   >   > two.get('pages');
+   >   10
+   >
+   >   > one.get('pages');
+   >   10
+   > ```
+   >
+   > On constate que la propriété a bien été définie et initialisée dans nos deux instances. Y compris l'instance ``one`` qui existait déjà.
+   > Les propriétés et méthodes ajoutées par ``reopen`` ne sont donc ajoutées effectivement au prototype de la classe que lors de la prochaine
+   > création d'une instance de cette classe, en mode *lazy*. cf. [cette discussion](https://github.com/emberjs/ember.js/issues/3783)
 
 4. Lors de l'utilisation de ``reopen``, il est possible, tout comme dans le cas d'un héritage, de redéfinir une méthode existante mais également d'utiliser la méthode ``_super(...)``
    pour appeler la méhode définie avant. Utiliser ``reopen`` pour redéfinir ``displayTitle`` et afficher une ligne ``Title:`` avant d'afficher le titre.
 
-    > ```javascript
-    >   > Book.reopen({
-    >       displayTitle: function() {
-    >         console.log('Title:');
-    >         this._super();
-    >      });
-    >
-    >  > three = Book.create({title: 'three'});
-    >  Title:
-    >  three
-    > ```
+   > ```javascript
+   >   > Book.reopen({
+   >       displayTitle: function() {
+   >         console.log('Title:');
+   >         this._super();
+   >      });
+   >
+   >  > three = Book.create({title: 'three'});
+   >  Title:
+   >  three
+   > ```
     
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -397,18 +397,18 @@ générale, il est conseillé d'éviter d'appeler ``reopen`` sur une classe apr�
 
 1. Utiliser ``reopenClass`` pour ajouter une propriété ``canBeRead`` à la classe ``Book``. Afficher la valeur de cette propriété statique dans la console.
 
-    > ```javascript
-    >   > Book.reopenClass({
-    >       canBeRead: true
-    >     })
-    >
-    >  > Book.canBeRead
-    >  true
-    >
-    >  > four = Book.create({title: 'four'})
-    >  > four.canBeRead
-    >  undefined
-    > ```
+   > ```javascript
+   >   > Book.reopenClass({
+   >       canBeRead: true
+   >     })
+   >
+   >  > Book.canBeRead
+   >  true
+   >
+   >  > four = Book.create({title: 'four'})
+   >  > four.canBeRead
+   >  undefined
+   > ```
        
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -425,114 +425,114 @@ ou plusieurs autres propriétés, permettant ainsi à Ember d'effectuer le calcu
 1. Réouvrir la classe ``Comic`` pour y ajouter deux propriétés ``writer`` et ``drawer`` ainsi qu'une propriété calculée ``authors`` dont la valeur correspond à la concaténation des deux propriétés 
 précédentes séparées par ``' and '``. La propriété calculée ``authors`` doit afficher un log d'exécution quelconque et son exécution doit dépendre des deux propriétés ``writer`` et ``drawer``.
  
-    Créer ensuite une instance de ``Comic`` puis accéder plusieurs fois de suite à la propriété ``authors``. Changer ensuite l'une des deux propriétés ``writer`` et ``drawer`` (via un ``set``) 
-    et accéder de nouveau à ``authors``. Que constate-t-on lors de ces différentes opérations ? En quoi une propriété calculée est différente d'une simple méthode ?
+   Créer ensuite une instance de ``Comic`` puis accéder plusieurs fois de suite à la propriété ``authors``. Changer ensuite l'une des deux propriétés ``writer`` et ``drawer`` (via un ``set``) 
+   et accéder de nouveau à ``authors``. Que constate-t-on lors de ces différentes opérations ? En quoi une propriété calculée est différente d'une simple méthode ?
 
-    > ```javascript
-    >   > Comic.reopen({
-    >       writer: null, 
-    >       drawer: null,
-    >       authors: Ember.computed('writer', 'drawer', function() {
-    >         console.log('computed property calculated');
-    >         return this.get('writer') + ' and ' + this.get('drawer');
-    >       })
-    >     });
-    >
-    >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
-    >  five
-    >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
-    >
-    >  > five.get('authors');
-    >  computed property calculated
-    >  "5 writer and 5 drawer"
-    >
-    >  > five.get('authors');
-    >  "5 writer and 5 drawer"
-    >
-    >  > five.set('writer', 'new writer');
-    >  "new writer"
-    >
-    >  > five.get('authors');
-    >  computed property calculated
-    >  "new writer and 5 drawer"
-    >
-    >  > five.get('authors');
-    >  "new writer and 5 drawer"
-    > ```
-    >
-    > On constate qu'une propriété calculée est bien différente d'une fonction en ce sens qu'Ember calcule sa valeur en fonction du contexte dont elle dépend. Cette valeur n'est ensuite
-    > recalculée que si ce contexte est modifié. Dans le cas contraire, Ember se contente de renvoyer la précédente valeur mise en cache, d'où l'absence de log dans ce cas.
+   > ```javascript
+   >   > Comic.reopen({
+   >       writer: null, 
+   >       drawer: null,
+   >       authors: Ember.computed('writer', 'drawer', function() {
+   >         console.log('computed property calculated');
+   >         return this.get('writer') + ' and ' + this.get('drawer');
+   >       })
+   >     });
+   >
+   >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
+   >  five
+   >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
+   >
+   >  > five.get('authors');
+   >  computed property calculated
+   >  "5 writer and 5 drawer"
+   >
+   >  > five.get('authors');
+   >  "5 writer and 5 drawer"
+   >
+   >  > five.set('writer', 'new writer');
+   >  "new writer"
+   >
+   >  > five.get('authors');
+   >  computed property calculated
+   >  "new writer and 5 drawer"
+   >
+   >  > five.get('authors');
+   >  "new writer and 5 drawer"
+   > ```
+   >
+   > On constate qu'une propriété calculée est bien différente d'une fonction en ce sens qu'Ember calcule sa valeur en fonction du contexte dont elle dépend. Cette valeur n'est ensuite
+   > recalculée que si ce contexte est modifié. Dans le cas contraire, Ember se contente de renvoyer la précédente valeur mise en cache, d'où l'absence de log dans ce cas.
         
 1. Utiliser une autre syntaxe pour la déclaration de cette propriété calculée et vérifier que les deux notations sont strictement équivalentes.
 
-    > ```javascript
-    >  >  Comic.reopen({
-    >       writer: null, 
-    >       drawer: null,
-    >       authors: function() {
-    >         console.log('computed property calculated');
-    >         return this.get('writer') + ' and ' + this.get('drawer');
-    >       }.property('writer', 'drawer')
-    >     });
-    >
-    >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
-    >  five
-    >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
-    >
-    >  > five.get('authors');
-    >  computed property calculated
-    >  "5 writer and 5 drawer"
-    >
-    >  > five.get('authors');
-    >  "5 writer and 5 drawer"
-    >
-    >  > five.set('writer', 'new writer');
-    >  "new writer"
-    >
-    >  > five.get('authors');
-    >  computed property calculated
-    >  "new writer and 5 drawer"
-    >
-    >  > five.get('authors');
-    >  "new writer and 5 drawer"
-    > ```
-    > 
-    > Les deux syntaxes sont strictement équivalentes. C'est cependant la seconde qui est la plus fréquement utilisée et à privilégier. La première est utile et utilisée dans le cas où 
-    > l'on souhaite utiliser Ember en désactivant les extensions de prototype qu'il ajoute (cf. [documentation](http://emberjs.com/guides/configuring-ember/disabling-prototype-extensions/)) 
+   > ```javascript
+   >  >  Comic.reopen({
+   >       writer: null, 
+   >       drawer: null,
+   >       authors: function() {
+   >         console.log('computed property calculated');
+   >         return this.get('writer') + ' and ' + this.get('drawer');
+   >       }.property('writer', 'drawer')
+   >     });
+   >
+   >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
+   >  five
+   >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
+   >
+   >  > five.get('authors');
+   >  computed property calculated
+   >  "5 writer and 5 drawer"
+   >
+   >  > five.get('authors');
+   >  "5 writer and 5 drawer"
+   >
+   >  > five.set('writer', 'new writer');
+   >  "new writer"
+   >
+   >  > five.get('authors');
+   >  computed property calculated
+   >  "new writer and 5 drawer"
+   >
+   >  > five.get('authors');
+   >  "new writer and 5 drawer"
+   > ```
+   > 
+   > Les deux syntaxes sont strictement équivalentes. C'est cependant la seconde qui est la plus fréquement utilisée et à privilégier. La première est utile et utilisée dans le cas où 
+   > l'on souhaite utiliser Ember en désactivant les extensions de prototype qu'il ajoute (cf. [documentation](http://emberjs.com/guides/configuring-ember/disabling-prototype-extensions/)) 
 
 1. Modifier la déclaration de la propriété calculée ``authors`` en supprimant la dépendance aux deux propriétés ``writer`` et ``drawer``. Réexécuter ensuite la série d'opérations précédente.
 Que constate-t-on ?
 
-    > ```javascript
-    >  > Comic.reopen({
-    >       writer: null, 
-    >       drawer: null,
-    >       authors: function() {
-    >         console.log('computed property calculated');
-    >         return this.get('writer') + ' and ' + this.get('drawer');
-    >       }.property('writer', 'drawer')
-    >     });
-    >
-    >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
-    >  five
-    >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
-    >
-    >  > five.get('authors');
-    >  computed property calculated
-    >  "5 writer and 5 drawer"
-    >
-    >  > five.get('authors');
-    >  "5 writer and 5 drawer"
-    >
-    >  > five.set('writer', 'new writer');
-    >  "new writer"
-    >
-    >  > five.get('authors');
-    >  "5 writer and 5 drawer"
-    > ```
-    > 
-    > On s'aperçoit ici que la propriété n'est pas recalculée lorsque l'on change l'une des propriétés puisqu'elle ne dépend plus de ces propriétés. Ember utilisera donc 
-    > toujours la valeur calculée cachée de cette propriété puisque, pour lui, celle-ci ne peut pas changer.
+   > ```javascript
+   >  > Comic.reopen({
+   >       writer: null, 
+   >       drawer: null,
+   >       authors: function() {
+   >         console.log('computed property calculated');
+   >         return this.get('writer') + ' and ' + this.get('drawer');
+   >       }.property('writer', 'drawer')
+   >     });
+   >
+   >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
+   >  five
+   >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
+   >
+   >  > five.get('authors');
+   >  computed property calculated
+   >  "5 writer and 5 drawer"
+   >
+   >  > five.get('authors');
+   >  "5 writer and 5 drawer"
+   >
+   >  > five.set('writer', 'new writer');
+   >  "new writer"
+   >
+   >  > five.get('authors');
+   >  "5 writer and 5 drawer"
+   > ```
+   > 
+   > On s'aperçoit ici que la propriété n'est pas recalculée lorsque l'on change l'une des propriétés puisqu'elle ne dépend plus de ces propriétés. Ember utilisera donc 
+   > toujours la valeur calculée cachée de cette propriété puisque, pour lui, celle-ci ne peut pas changer.
       
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -549,27 +549,27 @@ d'entre elles.
    ``authors`` change. Modifier ensuite la valeur de la propriété ``writer`` et constater que ``authors`` et ``summary`` ont été correctement mises à jour. (Ne pas oublier de redéclarer ``writer`` et 
    ``drawer`` comme propriétés dont ``authors`` dépend).
 
-    > ```javascript
-    >  > Comic.reopen({
-    >      summary: function() {
-    >    	return this.get('title') + ' by ' + this.get('authors');
-    >      }.property('title', 'authors')
-    >    });
-    >
-    >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
-    >  five
-    >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
-    >
-    >  > five.get('summary');
-    >  computed property calculated
-    >  "five by 5 writer and 5 drawer"
-    >
-    >  > five.set('writer', 'new writer');
-    >  "new writer"
-    >
-    >  > five.get('authors');
-    >  "five by new writer and 5 drawer"
-    > ```
+   > ```javascript
+   >  > Comic.reopen({
+   >      summary: function() {
+   >    	return this.get('title') + ' by ' + this.get('authors');
+   >      }.property('title', 'authors')
+   >    });
+   >
+   >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
+   >  five
+   >  Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
+   >
+   >  > five.get('summary');
+   >  computed property calculated
+   >  "five by 5 writer and 5 drawer"
+   >
+   >  > five.set('writer', 'new writer');
+   >  "new writer"
+   >
+   >  > five.get('authors');
+   >  "five by new writer and 5 drawer"
+   > ```
     
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -585,35 +585,35 @@ javascript contenant à la fois une méthode get et une méthode set au lieu de 
 1. Réouvrir la classe ``Comic`` de manière à modifier la propriété ``authors`` pour lui fournir un setter afin de mettre à jour ``writer`` et ``drawer`` lorsque l'on modifie ``authors``. L'objectif
 est de permettre la séquence suivante : 
 
-    ```javascript
-    > five.set('authors', 'Véronique and Davina');
-    "Véronique and Davina"
-    
-    > five.get('writer');
-    "Véronique"
-    
-    > five.get('drawer');
-    "Davina"
-    ```
+   ```javascript
+   > five.set('authors', 'Véronique and Davina');
+   "Véronique and Davina"
+   
+   > five.get('writer');
+   "Véronique"
+   
+   > five.get('drawer');
+   "Davina"
+   ```
 
-    > ```javascript
-    > Comic.reopen({
-    >   authors: Ember.computed('writer', 'drawer', {
-    > 	  get: function(key) {
-    >       console.log('computed property calculated');
-    > 	    return this.get('writer') + ' and ' + this.get('drawer');
-    >     },
-    >     set: function(key, value) {
-    >       console.log('computed property modified');
-    > 	    var  authors = value.split(/ and /);
-    > 	    this.set('writer', authors[0]);
-    > 	    this.set('drawer', authors[1]);
-    >     }
-    >   })
-    > });
-    > ```
+   > ```javascript
+   > Comic.reopen({
+   >   authors: Ember.computed('writer', 'drawer', {
+   > 	  get: function(key) {
+   >       console.log('computed property calculated');
+   > 	    return this.get('writer') + ' and ' + this.get('drawer');
+   >     },
+   >     set: function(key, value) {
+   >       console.log('computed property modified');
+   > 	    var  authors = value.split(/ and /);
+   > 	    this.set('writer', authors[0]);
+   > 	    this.set('drawer', authors[1]);
+   >     }
+   >   })
+   > });
+   > ```
 
-    NB : Il est nécessaire d'utiliser ``Ember.computed`` à cause de certaines incompatibilités de syntaxe sur les navigateurs actuels 
+   NB : Il est nécessaire d'utiliser ``Ember.computed`` à cause de certaines incompatibilités de syntaxe sur les navigateurs actuels 
 
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -629,104 +629,104 @@ travers de la notation ``myCollection.@each.myProperty`` ou encore ``myCollectio
 1. Réouvrir ``Book`` pour y ajouter une propriété ``isPublished`` par défaut à false. Créer ensuite une nouvelle classe ``Collection`` contenant un ensemble de ``comic``. Enfin, 
 créer deux nouvelles séries :
 
-    ```javascript
-    > Book.reopen({
-        isPublished: false
-      });
-    
-    > Collection = Ember.Object.extend({ 
-        books: [] 
-      });
-    
-    > two = Comic.create({title:'two', isPublished: true});
-    > three = Comic.create({title:'three'});
-    ```
+   ```javascript
+   > Book.reopen({
+       isPublished: false
+     });
+   
+   > Collection = Ember.Object.extend({ 
+       books: [] 
+     });
+   
+   > two = Comic.create({title:'two', isPublished: true});
+   > three = Comic.create({title:'three'});
+   ```
 
 1. Réouvrir ``Collection`` pour y  ajouter une propriété calculée permettant de compter le nombre de livres publiés au sein de la collection. Cette propriété doit être déclenchée
 lors de la modification de l'un des statuts ``isPublished`` des éléments de la collection ``books``, lors d'un ajout ou d'une suppression (``books.@each.isPublished``). Cette propriété
 retourne le nombre de livres publiés dans la collection. Placer un log dans la fonction de manière à tracer son exécution.
 
-    Créer ensuite une collection contenant les trois séries créées.
-    
-    Constater que cette propriété est bien mise à jour (calculée) lorsque l'on change la valeur de la propriété ``isPublished``
-    de l'une des trois série ou lorsque l'on en supprime une. En revanche, elle n'est pas exécutée lorsque n'importe quelle autre propriété
-    d'une série est modifiée.
+   Créer ensuite une collection contenant les trois séries créées.
+   
+   Constater que cette propriété est bien mise à jour (calculée) lorsque l'on change la valeur de la propriété ``isPublished``
+   de l'une des trois série ou lorsque l'on en supprime une. En revanche, elle n'est pas exécutée lorsque n'importe quelle autre propriété
+   d'une série est modifiée.
 
-    > ```javascript
-    > > Collection.reopen({
-    >     numberOfPublished: function() {
-    >       console.log("compute numberOfPublished");
-    >   	return this.get('books').filterBy('isPublished', true).length;
-    >     }.property('books.@each.isPublished')
-    >   });
-    >   
-    > > newCollection.get('numberOfPublished');
-    > compute numberOfPublished
-    > 1
-    > > one.set('isPublished', true);
-    > true
-    > > newCollection.get('numberOfPublished');
-    > compute numberOfPublished
-    > 2
-    > > newCollection.get('books').removeAt(0);
-    > [Class, Class]
-    > > newCollection.get('numberOfPublished');
-    > compute numberOfPublished
-    > 1
-    > > two.set('writer', 'new writer');
-    > "new writer"
-    > > newCollection.get('numberOfPublished');
-    > 1
-    > ```
+   > ```javascript
+   > > Collection.reopen({
+   >     numberOfPublished: function() {
+   >       console.log("compute numberOfPublished");
+   >   	return this.get('books').filterBy('isPublished', true).length;
+   >     }.property('books.@each.isPublished')
+   >   });
+   >   
+   > > newCollection.get('numberOfPublished');
+   > compute numberOfPublished
+   > 1
+   > > one.set('isPublished', true);
+   > true
+   > > newCollection.get('numberOfPublished');
+   > compute numberOfPublished
+   > 2
+   > > newCollection.get('books').removeAt(0);
+   > [Class, Class]
+   > > newCollection.get('numberOfPublished');
+   > compute numberOfPublished
+   > 1
+   > > two.set('writer', 'new writer');
+   > "new writer"
+   > > newCollection.get('numberOfPublished');
+   > 1
+   > ```
 
 1. Réouvrir ``Collection`` pour changer les conditions de dépendance de la propriété calculée en supprimant le filtre supplémentaire sur la
 propriété ``isPublished`` (``books.[]``).
 
-    Créer ensuite une collection contenant les trois séries créées.
-    
-    Constater que cette propriété n'est mise à jour (calculée) que lors d'un ajout ou d'une suppression dans la liste des séries. La modification
-    d'une propriété d'un élément de la liste (quelque soit cette propriété) ne déclenche pas l'éxécution de la fonction.
-    
-    > ```javascript
-    >     > Collection.reopen({
-    >       numberOfPublished: function() {
-    >         console.log("compute numberOfPublished");
-    >     	return this.get('books').filterBy('isPublished', true).length;
-    >       }.property('books.[]')
-    >     });
-    >     
-    >     > newCollection = Collection.create({books: [one, two, three]});
-    >     
-    >     > newCollection.get('numberOfPublished');
-    >     compute numberOfPublished
-    >     2
-    >     > three.set('isPublished', true);
-    >     true
-    >     > newCollection.get('numberOfPublished');
-    >     2
-    >     > newCollection.get('books').removeAt(0);
-    >     [Class, Class]
-    >     > newCollection.get('numberOfPublished');
-    >     compute numberOfPublished
-    >     2
-    >     > newCollection.get('books').removeAt(0);
-    >     [Class]
-    >     > newCollection.get('numberOfPublished');
-    >     compute numberOfPublished
-    >     1
-    > ```
+   Créer ensuite une collection contenant les trois séries créées.
+   
+   Constater que cette propriété n'est mise à jour (calculée) que lors d'un ajout ou d'une suppression dans la liste des séries. La modification
+   d'une propriété d'un élément de la liste (quelque soit cette propriété) ne déclenche pas l'éxécution de la fonction.
+   
+   > ```javascript
+   >     > Collection.reopen({
+   >       numberOfPublished: function() {
+   >         console.log("compute numberOfPublished");
+   >     	return this.get('books').filterBy('isPublished', true).length;
+   >       }.property('books.[]')
+   >     });
+   >     
+   >     > newCollection = Collection.create({books: [one, two, three]});
+   >     
+   >     > newCollection.get('numberOfPublished');
+   >     compute numberOfPublished
+   >     2
+   >     > three.set('isPublished', true);
+   >     true
+   >     > newCollection.get('numberOfPublished');
+   >     2
+   >     > newCollection.get('books').removeAt(0);
+   >     [Class, Class]
+   >     > newCollection.get('numberOfPublished');
+   >     compute numberOfPublished
+   >     2
+   >     > newCollection.get('books').removeAt(0);
+   >     [Class]
+   >     > newCollection.get('numberOfPublished');
+   >     compute numberOfPublished
+   >     1
+   > ```
     
 1. Modifier enfin une dernière fois ``Collection`` et la propriété ``numberOfPublished`` pour faire en sorte que la propriété
 soit recalculée à la fois lors de la modification d'un titre existant et lors de l'ajout ou la suppression d'un livre.
     
-    > ```javascript
-    >     > Collection.reopen({
-    >       numberOfPublished: function() {
-    >         console.log("compute numberOfPublished");
-    >     	return this.get('books').filterBy('isPublished', true).length;
-    >       }.property('books.[]', 'books.@each.isPublished')
-    >     });
-    > ```
+   > ```javascript
+   >     > Collection.reopen({
+   >       numberOfPublished: function() {
+   >         console.log("compute numberOfPublished");
+   >     	return this.get('books').filterBy('isPublished', true).length;
+   >       }.property('books.[]', 'books.@each.isPublished')
+   >     });
+   > ```
     
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -740,24 +740,24 @@ Des observeurs [Ember][ember] peuvent également être déclarés sur toute prop
 
 1. Déclarer un observeur du changement de la propriété calculée ``authors``. Créer une nouvelle instance de ``Comic`` et noter le moment où l'observeur est appelé.
 
-    > ```javascript
-    > > Comic.reopen({
-    >     authorsChanged: Ember.observer('authors', function() {
-    >       console.log('authors observer called');
-    >     })
-    >   });
-    >  
-    > > six = Comic.create({title:'six', writer: '6 writer', drawer: '6 drawer'});
-    > Class {title: "six", writer: "6 writer", drawer: "6 drawer", __ember1444061327029: null, __nextSuper: undefined…}
-    >  
-    > > six.get('authors');
-    > computed property calculated
-    > "6 writer and 6 drawer"
-    >  
-    > > six.set('writer', 'new writer');
-    > authors observer called
-    > "new writer"
-    > ```
+   > ```javascript
+   > > Comic.reopen({
+   >     authorsChanged: Ember.observer('authors', function() {
+   >       console.log('authors observer called');
+   >     })
+   >   });
+   >  
+   > > six = Comic.create({title:'six', writer: '6 writer', drawer: '6 drawer'});
+   > Class {title: "six", writer: "6 writer", drawer: "6 drawer", __ember1444061327029: null, __nextSuper: undefined…}
+   >  
+   > > six.get('authors');
+   > computed property calculated
+   > "6 writer and 6 drawer"
+   >  
+   > > six.set('writer', 'new writer');
+   > authors observer called
+   > "new writer"
+   > ```
     
   {% endcapture %}{{ m | markdownify }}
 </div>

@@ -49,12 +49,12 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
 1. Installer Node : [ici](https://nodejs.org/en/)
  
-    ```console
-    $ node -v
-    v4.2.3
-    ```
+   ```console
+   $ node -v
+   v4.2.3
+   ```
     
-1. INstaller Bower : 
+1. Installer Bower : 
 
    ```console
    $ npm install -g bower
@@ -63,64 +63,64 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
 1. Puis [Ember CLI](http://www.ember-cli.com/) : 
 
-    ```console
-    $ npm install -g ember-cli
-    $ ember -v
-    version: 1.13.13
-    node: 4.2.3
-    npm: 2.13.13
-    ```
+   ```console
+   $ npm install -g ember-cli
+   $ ember -v
+   version: 1.13.13
+   node: 4.2.3
+   npm: 2.13.13
+   ```
 
 1. Créer une nouvelle application ``ember-training`` via [Ember CLI](http://www.ember-cli.com/) et la ligne de commande `ember` :
 
-    ```console
-    $ ember new ember-training
-    $ cd ember-training
-    version: 1.13.8
-    installing app
-      create .bowerrc
-      ...
-      create vendor\.gitkeep
-    Installed packages for tooling via npm.
-    Installed browser packages via Bower.
-    Successfully initialized git.
-    ```
+   ```console
+   $ ember new ember-training
+   $ cd ember-training
+   version: 1.13.8
+   installing app
+     create .bowerrc
+     ...
+     create vendor\.gitkeep
+   Installed packages for tooling via npm.
+   Installed browser packages via Bower.
+   Successfully initialized git.
+   ```
 
 1. Ouvrir le dossier de l'application et le fichier ``bower.json``. Dans les dépendances, changer les versions 
-d' [Ember][ember] à ``2.2.0`` et d' [Ember Data][ember-data] pour ``^2.2.1`` si ce n'est pas déjà le cas : 
+d' [Ember][ember] à ``2.2.0`` et d' [Ember Data](https://github.com/emberjs/data) pour ``^2.2.1`` si ce n'est pas déjà le cas : 
 
-    ```javascript
-    // bower.json
-    
-    {
-      "name": "ember-training",
-      "dependencies": {
-        "ember": "^2.2.0",
-        ...
-        "ember-data": "^2.2.1",
-        ...
-    }
-    ```
+   ```javascript
+   // bower.json
+   
+   {
+     "name": "ember-training",
+     "dependencies": {
+       "ember": "^2.2.0",
+       ...
+       "ember-data": "^2.2.1",
+       ...
+   }
+   ```
 
 1. Mettre à jour les dépendances via ``bower install``
 
-    Changer également la version d' ``ember-data`` dans le fichier ``package.json`` : 
+   Changer également la version d' ``ember-data`` dans le fichier ``package.json`` : 
 
-    ```javascript
-    // package.json
-    
-    {
-      "name": "ember-training",
-      
-      ...
-      
-      "devDependencies": {
-        ...
-        "ember-data": "2.2.1",
-        ...
-      }
-    }
-    ``` 
+   ```javascript
+   // package.json
+   
+   {
+     "name": "ember-training",
+     
+     ...
+     
+     "devDependencies": {
+       ...
+       "ember-data": "2.2.1",
+       ...
+     }
+   }
+   ``` 
 
 1. Mettre à jour les dépendances via ``npm install`` puis ``bower install``
 
@@ -133,23 +133,23 @@ d' [Ember][ember] à ``2.2.0`` et d' [Ember Data][ember-data] pour ``^2.2.1`` si
 
 1. Lancer enfin cette nouvelle application via la ligne de commande : 
 
-    ```console
-    $ cd ember-training
-    $ ember serve
-    version: 1.13.13
-    Livereload server on http://localhost:49155
-    Serving on http://localhost:4200/
-    ```
+   ```console
+   $ cd ember-training
+   $ ember serve
+   version: 1.13.13
+   Livereload server on http://localhost:49155
+   Serving on http://localhost:4200/
+   ```
 
 1. Ouvrir le navigateur à [cette adresse](http://localhost:4200/) et constater que l'application est lancée en ouvrant la console :
 
-    ```console
-    DEBUG: -------------------------------
-    DEBUG: Ember      : 2.2.0
-    DEBUG: Ember Data : 2.2.1
-    DEBUG: jQuery     : 1.11.3
-    DEBUG: -------------------------------
-    ```
+   ```console
+   DEBUG: -------------------------------
+   DEBUG: Ember      : 2.2.0
+   DEBUG: Ember Data : 2.2.1
+   DEBUG: jQuery     : 1.11.3
+   DEBUG: -------------------------------
+   ```
 
 1. On en profite enfin pour installer le plugin de développement pour [Chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
 ou [Firefox](https://addons.mozilla.org/fr/firefox/addon/ember-inspector/)
@@ -185,56 +185,56 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
     
 1. Installer ember-cli-sass via npm. Ce plugin permet d'intégrer la précompilation sass dans [Ember CLI](http://www.ember-cli.com/) : 
 
-    ```console
-    npm install --save-dev ember-cli-sass
-    ```
-    
-    En ouvrant le fichier ``package.json``, on constate que la dépendance ember-cli-sass a été ajoutée : 
-        
-    ```javascript
-    // package.json
-    
-    ...
-    
-      "devDependencies": {
-        ...
-        "ember-cli-sass": "^5.2.0",
-        ...
-      }
-    ...
-    ```
+   ```console
+   npm install --save-dev ember-cli-sass
+   ```
+   
+   En ouvrant le fichier ``package.json``, on constate que la dépendance ember-cli-sass a été ajoutée : 
+       
+   ```javascript
+   // package.json
+   
+   ...
+   
+     "devDependencies": {
+       ...
+       "ember-cli-sass": "^5.2.0",
+       ...
+     }
+   ...
+   ```
 
 1. Installer bootstrap-sass via bower. Celui-ci permet de disposer d'une distribution sass du framework bootstrap : 
 
-    ```console
-    $ bower install --save bootstrap-sass
-    ...
-    bower resolved      git://github.com/twbs/bootstrap-sass.git#3.3.6
-    bower install       bootstrap-sass#3.3.6
-    ```
-    
-    En ouvrant le fichier ``bower.json``, on constate que la dépendance bootstrap-sass a été ajoutée : 
-    
-    ```javascript
-    // bower.json
-    
-    ...
-    
-      "dependencies": {
-        "ember": "^2.1.0",
-        ...
-        "bootstrap-sass": "~3.3.6"
-      }
-    ...
-    ```
+   ```console
+   $ bower install --save bootstrap-sass
+   ...
+   bower resolved      git://github.com/twbs/bootstrap-sass.git#3.3.6
+   bower install       bootstrap-sass#3.3.6
+   ```
+   
+   En ouvrant le fichier ``bower.json``, on constate que la dépendance bootstrap-sass a été ajoutée : 
+   
+   ```javascript
+   // bower.json
+   
+   ...
+   
+     "dependencies": {
+       "ember": "^2.1.0",
+       ...
+       "bootstrap-sass": "~3.3.6"
+     }
+   ...
+   ```
 
 1. Renommer ensuite le fichier ``app/styles/app.css`` en ``app/styles/app.scss`` et importer le framework depuis les dépendances `bower` :
 
-    ```console
-    // app/styles/app.scss
-    
-    @import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
-    ```
+   ```console
+   // app/styles/app.scss
+   
+   @import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+   ```
     
 1. Ouvrir le fichier ``ember-cli-build.js`` et modifier le fichier pour importer la police d'icônes de Bootstrap :
 
@@ -250,9 +250,9 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
     
 1. Relancer l'application et constater qu'aucune erreur ne se produit. En particulier, le fichier ``ember-training.css`` doit avoir été chargé sans erreur et ne pas être vide :
 
-    ```console
-    ember server
-    ```
+   ```console
+   ember server
+   ```
     
 1. De manière à bénéficier de styles adaptés aux futurs exercices, copier le contenu de [ce fichier](https://raw.githubusercontent.com/bmeurant/ember-training/master/app/styles/app.scss) 
    dans le fichier ``app/styles/app.scss``.

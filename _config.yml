@@ -8,9 +8,6 @@ twitter_username: bmeurant
 github_username:  bmeurant
 
 # Build settings
-markdown: redcarpet
-redcarpet:
-    extensions: [with_toc_data]
-highlighter: pygments
+markdown: kramdown
 exclude: [package.json, bower.json, node_modules, bower_components, Gemfile, Gemfile.lock, less, Gruntfile.js]
 permalink: /blog/:year/:month/:day/:title/

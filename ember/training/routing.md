@@ -49,53 +49,54 @@ On souhaite désormais créer une nouvelle route pour l'affichage et la manipula
   
 1. Utiliser le *scaffolding* d'[Ember CLI](http://www.ember-cli.com/) pour déclarer une nouvelle route dans le routeur de notre application.
  
-    ```console
-    $ ember generate route comics
-    
-    version: 1.13.13
-    installing route
-      identical app\routes\comics.js
-      identical app\templates\comics.hbs
-    updating router
-      add route comics
-    installing route-test
-      identical tests\unit\routes\comics-test.js
-    ```
-    
-    On remarque que plusieurs éléments ont été générés / modifiés :
-    * le routeur (``app/router.js``), d'abord, qui déclare désormais notre nouvelle route :
-       
-        ```javascript
-        Router.map(function() {
-          this.route('comics');
-        });
-        ```
-    * une nouvelle route ``app/routes/comics.js`` vide.
-    
-        ```javascript
-        export default Ember.Route.extend({
-        });
-        ```
-    * un nouveau template ``app/templates/comics.hbs`` qui ne contient qu'un ``{{outlet}}``. Nous y reviendrons plus tard. (cf. [Routes imbriquées](#routes-imbriquees))
-    
-        ```html
-        {{outlet}}
-        ```
-    * un nouveau test unitaire ``tests/unit/routes/comics-test.js``. Celui-ci ne contient qu'une simple assertion permettant de vérifier l'existence de la route.
-    
-        ```javascript
-        moduleFor('route:comics', 'Unit | Route | comics', {
-          // Specify the other units that are required for this test.
-          // needs: ['controller:foo']
-        });
-        
-        test('it exists', function(assert) {
-          var route = this.subject();
-          assert.ok(route);
-        });
-        ```
-    
-        Mais nous reviendrons sur ce test et, plus généralement, sur les tests unitaires par la suite.
+   ```console
+   $ ember generate route comics
+   
+   version: 1.13.13
+   installing route
+     identical app\routes\comics.js
+     identical app\templates\comics.hbs
+   updating router
+     add route comics
+   installing route-test
+     identical tests\unit\routes\comics-test.js
+   ```
+   
+   On remarque que plusieurs éléments ont été générés / modifiés :
+   
+   * le routeur (``app/router.js``), d'abord, qui déclare désormais notre nouvelle route :
+      
+     ```javascript
+     Router.map(function() {
+       this.route('comics');
+     });
+     ```
+   * une nouvelle route ``app/routes/comics.js`` vide.
+   
+     ```javascript
+     export default Ember.Route.extend({
+     });
+     ```
+   * un nouveau template ``app/templates/comics.hbs`` qui ne contient qu'un ``{{outlet}}``. Nous y reviendrons plus tard. (cf. [Routes imbriquées](#routes-imbriquees))
+   
+     ```html
+     {{outlet}}
+     ```
+   * un nouveau test unitaire ``tests/unit/routes/comics-test.js``. Celui-ci ne contient qu'une simple assertion permettant de vérifier l'existence de la route.
+   
+     ```javascript
+     moduleFor('route:comics', 'Unit | Route | comics', {
+       // Specify the other units that are required for this test.
+       // needs: ['controller:foo']
+     });
+     
+     test('it exists', function(assert) {
+       var route = this.subject();
+       assert.ok(route);
+     });
+     ```
+   
+     Mais nous reviendrons sur ce test et, plus généralement, sur les tests unitaires par la suite.
   
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -134,7 +135,6 @@ imbrication président donc à l'organisation des différents templates de notre
  
     **Tests** : Les modifications doivent permettre de rendre les tests suivants passants : [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
     et [02 - Routing - 02 - Should display text on comics/](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
-
 
     > ```html
     > {{!-- app/templates/application.hbs --}}
@@ -299,7 +299,7 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
      >   illustrator: '',
      >   publisher: ''
      > });
-     > 
+     > ```
 
 1. Modifier la route ``comics`` pour passer sur un modèle plus complet : 
    * Importer le modèle ``Comic``
@@ -533,62 +533,62 @@ place du texte précédent.
       [findBy](http://emberjs.com/api/classes/Ember.Array.html#method_findBy)
     * Le template doit être modifié pour afficher le détail d'un comic :
     
-        ```html
-        {{!-- app/templates/comics/comic.hbs --}}
-        
-        <div class="selected-comic">
-          <h3>{{model.title}}</h3>
-          <dl>
-            <dt>scriptwriter</dt>
-            <dd>{{model.scriptwriter}} </dd>
-            <dt>illustrator</dt>
-            <dd>{{model.illustrator}}</dd>
-            <dt>publisher</dt>
-            <dd>{{model.publisher}}</dd>
-          </dl>
-        </div>
-        ```
+      ```html
+      {{!-- app/templates/comics/comic.hbs --}}
+      
+      <div class="selected-comic">
+        <h3>{{model.title}}</h3>
+        <dl>
+          <dt>scriptwriter</dt>
+          <dd>{{model.scriptwriter}} </dd>
+          <dt>illustrator</dt>
+          <dd>{{model.illustrator}}</dd>
+          <dt>publisher</dt>
+          <dd>{{model.publisher}}</dd>
+        </dl>
+      </div>
+      ```
     
     **Test** : Les modifications doivent permettre de rendre passants les tests unitaires : [model() should retrieve existing slug](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/comic-test.js#L87)
     et d'acceptance : [02 - Routing - 04 - Should display the comic detail](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
 
-      > ```javascript
-      > // app/router.js
-      > 
-      > Router.map(function () {
-      >   this.route('comics', function() {
-      >     this.route('comic', {path: '/:comic_slug'});
-      >   });
-      > });
-      > ```
-      > 
-      > ```html
-      > {{!-- app/templates/comics/comic.hbs --}}
-      > 
-      > <div class="selected-comic">
-      >   <h3>{{model.title}}</h3>
-      >   <dl>
-      >     <dt>scriptwriter</dt>
-      >     <dd>{{model.scriptwriter}} </dd>
-      >     <dt>illustrator</dt>
-      >     <dd>{{model.illustrator}}</dd>
-      >     <dt>publisher</dt>
-      >     <dd>{{model.publisher}}</dd>
-      >   </dl>
-      > </div>
-      > ```
-      > 
-      > ```javascript
-      > // app/routes/comics/comic.js
-      > 
-      > import Ember from 'ember';
-      > 
-      > export default Ember.Route.extend({
-      >   model (params) {
-      >     return this.modelFor('comics').findBy('slug', params.comic_slug);
-      >   }
-      > });
-      > ```
+    > ```javascript
+    > // app/router.js
+    > 
+    > Router.map(function () {
+    >   this.route('comics', function() {
+    >     this.route('comic', {path: '/:comic_slug'});
+    >   });
+    > });
+    > ```
+    > 
+    > ```html
+    > {{!-- app/templates/comics/comic.hbs --}}
+    > 
+    > <div class="selected-comic">
+    >   <h3>{{model.title}}</h3>
+    >   <dl>
+    >     <dt>scriptwriter</dt>
+    >     <dd>{{model.scriptwriter}} </dd>
+    >     <dt>illustrator</dt>
+    >     <dd>{{model.illustrator}}</dd>
+    >     <dt>publisher</dt>
+    >     <dd>{{model.publisher}}</dd>
+    >   </dl>
+    > </div>
+    > ```
+    > 
+    > ```javascript
+    > // app/routes/comics/comic.js
+    > 
+    > import Ember from 'ember';
+    > 
+    > export default Ember.Route.extend({
+    >   model (params) {
+    >     return this.modelFor('comics').findBy('slug', params.comic_slug);
+    >   }
+    > });
+    > ```
       
 1. Mettre un point d'arrêt dans la méthode ``model`` de ``comics`` et constater les choses suivantes :
     * l'utilisation de ``this.get('model')`` ne renvoie pas le modèle mais la fonction ``model()``
@@ -626,103 +626,103 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
 
 * La génération d'un lien ``href`` :
 
-    ```html
-    {{#link-to 'comics'}}
-      Back to comics List
-    {{/link-to}}
-    ```
-    
-    ```html
-    <a href="/comics">Back to comics List</a>
-    ```
-    
-    Le lien s'effectue vers la route spécifiée par son nom qualifié, c'est à dire augmenté du nom de ses routes mères. 
-    Par exemple ``comics.comic``
+  ```html
+  {{#link-to 'comics'}}
+    Back to comics List
+  {{/link-to}}
+  ```
+  
+  ```html
+  <a href="/comics">Back to comics List</a>
+  ```
+  
+  Le lien s'effectue vers la route spécifiée par son nom qualifié, c'est à dire augmenté du nom de ses routes mères. 
+  Par exemple ``comics.comic``
     
 * La gestion de la route courante :
 
-    En effet, lorsqu'on utilise ce *helper*  et que la route courante se trouve être la route pointée
-    par celui-ci, [Ember][ember] positionne automatiquement pour nous la classe ``active`` sur cet élement. Cela permet, notamment dans 
-    une liste, de visualiser l'élément courant.
-    
-    A noter qu'il est également possible de spécifier si l'on souhaite que l'élément soit actif pour d'autres routes grâce à l'option
-    ``current-when`` :
-    
-    ```html
-    {{#link-to 'comics' current-when='books'}}
-      Back to comics List
-    {{/link-to}}
-    ```
-    
-    ```html
-    <a href="/comics" class="active">Back to comics List</a>
-    ```
+  En effet, lorsqu'on utilise ce *helper*  et que la route courante se trouve être la route pointée
+  par celui-ci, [Ember][ember] positionne automatiquement pour nous la classe ``active`` sur cet élement. Cela permet, notamment dans 
+  une liste, de visualiser l'élément courant.
+  
+  A noter qu'il est également possible de spécifier si l'on souhaite que l'élément soit actif pour d'autres routes grâce à l'option
+  ``current-when`` :
+  
+  ```html
+  {{#link-to 'comics' current-when='books'}}
+    Back to comics List
+  {{/link-to}}
+  ```
+  
+  ```html
+  <a href="/comics" class="active">Back to comics List</a>
+  ```
     
 * Le passage d'un paramètre dynamique : 
 
-    Le *helper* permet de préciser un paramètre dynamique en second argument 
+  Le *helper* permet de préciser un paramètre dynamique en second argument 
 
-    ```html
-    {{#link-to 'book' book.id}}
-      Show book
-    {{/link-to}}
-    ```
-    
-    ```html
-    <a href="/book/1">Show book</a>
-    ```
+  ```html
+  {{#link-to 'book' book.id}}
+    Show book
+  {{/link-to}}
+  ```
+  
+  ```html
+  <a href="/book/1">Show book</a>
+  ```
 
 * Le passage d'un modèle : 
 
-    ```html
-    {{#link-to 'book' book}}
-      Show book
-    {{/link-to}}
-    ```
-    
-    ```html
-    <a href="/book/1">Show book</a>
-    ```
+  ```html
+  {{#link-to 'book' book}}
+    Show book
+  {{/link-to}}
+  ```
+  
+  ```html
+  <a href="/book/1">Show book</a>
+  ```
 
-    La différence entre les deux derniers exemples n'est pas visible dans l'URL générée mais fait une grosse différence 
-    dans le cycle de vie de la route. En effet, dans le second cas, [Ember][ember] considère que le modèle est déjà
-    connu et n'exécute pas la méthode ``model`` de la route fille, ce qui serait inutile. Dans le premier cas, en revanche,
-    [Ember][ember] n'a connaissance que de la valeur du paramètre et doit réexécuter ``model`` pour récupérer le modèle à
-    partir du paramètre.
+  La différence entre les deux derniers exemples n'est pas visible dans l'URL générée mais fait une grosse différence 
+  dans le cycle de vie de la route. En effet, dans le second cas, [Ember][ember] considère que le modèle est déjà
+  connu et n'exécute pas la méthode ``model`` de la route fille, ce qui serait inutile. Dans le premier cas, en revanche,
+  [Ember][ember] n'a connaissance que de la valeur du paramètre et doit réexécuter ``model`` pour récupérer le modèle à
+  partir du paramètre.
 
 * Personnalisation de la sérialisation du model.
 
-    Par défaut, lorsque l'on passe un modèle à un ``link-to``, [Ember][ember] cherche la propriété ``id`` de ce modèle pour
-    l'ajouter à l'URL (``book/1``). Si l'on souhaite se baser sur une autre propriété que sur l'id, il est nécessaire de 
-        fournir une fonction ``serialize`` personnalisée à la route cible :
-    
-    ```javascript
-    // app/router.js
-    
-    Router.map(function() {
-      this.route('book', { path: '/book/:book_title' });
-    });
-    ```
-    
-    ```javascript
-    // app/routes/book.js
-    
-    serialize: function(model) {
-      return {
-        book_title: model.get('title')
-      };
-    }
-    ```
-    
-    ```html
-    {{#link-to 'book' book}}
-      Show book
-    {{/link-to}}
-    ```
-    
-    ```html
-      <a href="/book/germinal">Show book</a>
-    ```
+  Par défaut, lorsque l'on passe un modèle à un ``link-to``, [Ember][ember] cherche la propriété ``id`` de ce modèle pour
+  l'ajouter à l'URL (``book/1``). Si l'on souhaite se baser sur une autre propriété que sur l'id, il est nécessaire de 
+      fournir une fonction ``serialize`` personnalisée à la route cible :
+  
+  ```javascript
+  // app/router.js
+  
+  Router.map(function() {
+    this.route('book', { path: '/book/:book_title' });
+  });
+  ```
+  
+  ```javascript
+  // app/routes/book.js
+  
+  serialize: function(model) {
+    return {
+      book_title: model.get('title')
+    };
+  }
+  ```
+  
+  ```html
+  {{#link-to 'book' book}}
+    Show book
+  {{/link-to}}
+  ```
+  
+  ```html
+    <a href="/book/germinal">Show book</a>
+  ```
 
 {% endraw %}
 
@@ -732,93 +732,93 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
   
 1. Modifier le template ``app/templates/comics.hbs`` à l'aide du *helper* ``link-to`` de manière à ce que titre du 
 comic deviennent un lien cliquable vers la route du comic ``/comic/<comic_slug>`` correspondant.
-    * Utiliser un ``link-to`` avec le paramètre dynamique ``comic.slug`` (ne pas passer le modèle entier)
-    * Modifier la route ``app/routes/comics/comic.js`` pour ajouter un ``console.log`` avant le ``return`` de la
-      méthode ``model``
-    
-    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 05 - Should display links](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+   * Utiliser un ``link-to`` avec le paramètre dynamique ``comic.slug`` (ne pas passer le modèle entier)
+   * Modifier la route ``app/routes/comics/comic.js`` pour ajouter un ``console.log`` avant le ``return`` de la
+     méthode ``model``
+   
+   **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 05 - Should display links](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
 
-    Ouvrir la console puis accéder au détail du comic en cliquant sur le lien puis accéeder eu détail d'un autre comic en entrant 
-    directement l'URL dans le navigateur.
-    
-    Que constate-t-on ?
-    
-    > ```html
-    > {{!-- app/templates/comics.hbs --}}
-    > ...
-    > <ul>
-    >   {{#each model as |comic|}}
-    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
-    >       {{#link-to "comics.comic" comic.slug}}
-    >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
-    >       {{/link-to}}
-    >     </li>
-    >   {{else}}
-    >     Sorry, no comic found
-    >   {{/each}}
-    > </ul>
-    > ...
-    > ```
-    > 
-    > ```javascript
-    > // app/routes/comics/comic.js
-    > 
-    > export default Ember.Route.extend({
-    >   model (params) {
-    >     console.log('passed in comic model');
-    >     return this.modelFor('comics').findBy('slug', params.comic_slug);
-    >   }
-    > });
-    > ```
-    >
-    > En observant la console, on constate que dans les deux cas, le *hook* ``model`` de la route ``app/routes/comics/comic.js``
-    > a été éxécuté, entrainant à chaque fois un chargement du modèle.
+   Ouvrir la console puis accéder au détail du comic en cliquant sur le lien puis accéeder eu détail d'un autre comic en entrant 
+   directement l'URL dans le navigateur.
+   
+   Que constate-t-on ?
+   
+   > ```html
+   > {{!-- app/templates/comics.hbs --}}
+   > ...
+   > <ul>
+   >   {{#each model as |comic|}}
+   >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+   >       {{#link-to "comics.comic" comic.slug}}
+   >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
+   >       {{/link-to}}
+   >     </li>
+   >   {{else}}
+   >     Sorry, no comic found
+   >   {{/each}}
+   > </ul>
+   > ...
+   > ```
+   > 
+   > ```javascript
+   > // app/routes/comics/comic.js
+   > 
+   > export default Ember.Route.extend({
+   >   model (params) {
+   >     console.log('passed in comic model');
+   >     return this.modelFor('comics').findBy('slug', params.comic_slug);
+   >   }
+   > });
+   > ```
+   >
+   > En observant la console, on constate que dans les deux cas, le *hook* ``model`` de la route ``app/routes/comics/comic.js``
+   > a été éxécuté, entrainant à chaque fois un chargement du modèle.
     
 1. Modifier le template ``app/templates/comics.hbs`` et changer le *helper* ``link-to`` de manière à passer un modèle 
 complet au lieu du seul slug.
-    * Ajouter la méthode ``serialize`` nécessaire à la route.
-    
-    Ouvrir la console puis accéder au détail du comic en cliquant sur le lien puis accéeder eu détail d'un autre comic en entrant 
-    directement l'URL dans le navigateur.
-    
-    Que constate-t-on ?
-    
-    > ```html
-    > {{!-- app/templates/comics.hbs --}}
-    > ...
-    > <ul>
-    >   {{#each model as |comic|}}
-    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
-    >       {{#link-to "comics.comic" comic}}
-    >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
-    >       {{/link-to}}
-    >     </li>
-    >   {{else}}
-    >     Sorry, no comic found
-    >   {{/each}}
-    > </ul>
-    > ...
-    > ```
-    >
-    > ```javascript
-    > // app/routes/comics/comic.js
-    > 
-    > export default Ember.Route.extend({
-    >   model (params) {
-    >     console.log('passed in comic model');
-    >     return this.modelFor('comic').findBy('slug', params.comic_slug);
-    >   },
-    >   serialize: function(model) {
-    >     return {
-    >       comic_slug: model.get('slug')
-    >     };
-    >   }
-    > });
-    > ```
-    >
-    > En observant la console, on constate que le *hook* ``model`` de la route ``app/routes/comics/comic.js``
-    > n'a été exécuté que dans le second cas. Dans le premier, en effet, le modèle était déjà connu et a été passé
-    > à la route en l'état. Il n'est donc pas nécessaire de le charger à nouveau.
+   * Ajouter la méthode ``serialize`` nécessaire à la route.
+   
+   Ouvrir la console puis accéder au détail du comic en cliquant sur le lien puis accéeder eu détail d'un autre comic en entrant 
+   directement l'URL dans le navigateur.
+   
+   Que constate-t-on ?
+   
+   > ```html
+   > {{!-- app/templates/comics.hbs --}}
+   > ...
+   > <ul>
+   >   {{#each model as |comic|}}
+   >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+   >       {{#link-to "comics.comic" comic}}
+   >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
+   >       {{/link-to}}
+   >     </li>
+   >   {{else}}
+   >     Sorry, no comic found
+   >   {{/each}}
+   > </ul>
+   > ...
+   > ```
+   >
+   > ```javascript
+   > // app/routes/comics/comic.js
+   > 
+   > export default Ember.Route.extend({
+   >   model (params) {
+   >     console.log('passed in comic model');
+   >     return this.modelFor('comic').findBy('slug', params.comic_slug);
+   >   },
+   >   serialize: function(model) {
+   >     return {
+   >       comic_slug: model.get('slug')
+   >     };
+   >   }
+   > });
+   > ```
+   >
+   > En observant la console, on constate que le *hook* ``model`` de la route ``app/routes/comics/comic.js``
+   > n'a été exécuté que dans le second cas. Dans le premier, en effet, le modèle était déjà connu et a été passé
+   > à la route en l'état. Il n'est donc pas nécessaire de le charger à nouveau.
   
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -1177,234 +1177,234 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
      
      **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 06 - Should display edit route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
       
-       > ```console
-       > \app
-       >  |
-       >  |- \routes
-       >  |   |- application.js
-       >  |   |- comic.js
-       >  |   |- comics.js
-       >  |
-       >  |- \templates
-       >  |   |- \comics
-       >  |   |- \comic
-       >  |   |   |- edit.hbs
-       >  |   |   |- index.hbs
-       >  |   |
-       >  |   |- application.hbs
-       >  |   |- comic.hbs
-       >  |   |- comics.hbs
-       >  |   |- error.hbs
-       > ```
-       
-       > ```html
-       > {{!-- app/templates/comic.hbs --}}
-       > 
-       > <div class="selected-comic">
-       >   {{outlet}}
-       > </div>
-       > ```
-       
-       > ```html
-       > {{!-- app/templates/comic/edit.hbs --}}
-       > 
-       > <div class="selected-comic">
-       >   <form>
-       >     <!-- cf. ci-dessus. -->
-       >   </div>
-       > </div>
-       > ```
-          
-       > ```html
-       > {{!-- app/templates/comic/index.hbs --}}
-       > 
-       > <div class="selected-comic">
-       >   <h3>{{model.title}}</h3>
-       >   <dl>
-       >     <dt>scriptwriter</dt>
-       >     <dd>{{model.scriptwriter}} </dd>
-       >     <dt>illustrator</dt>
-       >     <dd>{{model.illustrator}}</dd>
-       >     <dt>publisher</dt>
-       >     <dd>{{model.publisher}}</dd>
-       >   </dl>
-       > </div>
-       > ```
-       
-       > On a donc remplacé le contenu du template ``comic.hbs`` par un ``outlet`` pour accueillir les routes filles. Le 
-       > nouveau template ``comic/edit.hbs`` contient le contenu du formulaire d'édition tandis que le template ``comic/index.hbs``
-       > a été définit et contient le template de la route ``comic`` (défaut) anciennement dans le template ``comic.hbs``.
-       >
-       > On note aussi que nous n'avons pas eu à définir de route ``app/routes/comic/edit.js`` tout en pouvant accéder au modèle
-       > dans le template ``app/templates/comic/edit.hbs``. Le contexte pour la route ``comic.edit`` a été hérité de la route 
-       > mère ``comic``.
+     > ```console
+     > \app
+     >  |
+     >  |- \routes
+     >  |   |- application.js
+     >  |   |- comic.js
+     >  |   |- comics.js
+     >  |
+     >  |- \templates
+     >  |   |- \comics
+     >  |   |- \comic
+     >  |   |   |- edit.hbs
+     >  |   |   |- index.hbs
+     >  |   |
+     >  |   |- application.hbs
+     >  |   |- comic.hbs
+     >  |   |- comics.hbs
+     >  |   |- error.hbs
+     > ```
+     
+     > ```html
+     > {{!-- app/templates/comic.hbs --}}
+     > 
+     > <div class="selected-comic">
+     >   {{outlet}}
+     > </div>
+     > ```
+     
+     > ```html
+     > {{!-- app/templates/comic/edit.hbs --}}
+     > 
+     > <div class="selected-comic">
+     >   <form>
+     >     <!-- cf. ci-dessus. -->
+     >   </div>
+     > </div>
+     > ```
+        
+     > ```html
+     > {{!-- app/templates/comic/index.hbs --}}
+     > 
+     > <div class="selected-comic">
+     >   <h3>{{model.title}}</h3>
+     >   <dl>
+     >     <dt>scriptwriter</dt>
+     >     <dd>{{model.scriptwriter}} </dd>
+     >     <dt>illustrator</dt>
+     >     <dd>{{model.illustrator}}</dd>
+     >     <dt>publisher</dt>
+     >     <dd>{{model.publisher}}</dd>
+     >   </dl>
+     > </div>
+     > ```
+     
+     > On a donc remplacé le contenu du template ``comic.hbs`` par un ``outlet`` pour accueillir les routes filles. Le 
+     > nouveau template ``comic/edit.hbs`` contient le contenu du formulaire d'édition tandis que le template ``comic/index.hbs``
+     > a été définit et contient le template de la route ``comic`` (défaut) anciennement dans le template ``comic.hbs``.
+     >
+     > On note aussi que nous n'avons pas eu à définir de route ``app/routes/comic/edit.js`` tout en pouvant accéder au modèle
+     > dans le template ``app/templates/comic/edit.hbs``. Le contexte pour la route ``comic.edit`` a été hérité de la route 
+     > mère ``comic``.
        
      On remarque que le *binding* est unidirectionnel : les modifications effectuées lors de l'édition des ``input`` ne 
      modifient pas la liste de comics à gauche
      
 1. Modifier le template de la route ``comic.edit`` pour passer à un *binding* bidirectionnel
 
-    > ```html
-    > {{!-- app/templates/comic/edit.hbs --}}
-    > 
-    > <div class="selected-comic">
-    >   <form>
-    >     <div class="buttons">
-    >       <button type="submit" class="btn-submit"></button>
-    >       <button type="reset" class="btn-cancel"></button>
-    >     </div>
-    >     <div class="title">
-    >       {{input id="title" type="text" value=model.title}}
-    >     </div>
-    >   
-    >     <div class="description">
-    >       <div class="scriptwriter">
-    >         <label for="scriptwriter">Scriptwriter</label>
-    >         <span class="control">{{input id="scriptwriter" type="text" value=model.scriptwriter required="required"}}</span>
-    >       </div>
-    >       <div class="illustrator">
-    >         <label for="illustrator">Illustrator</label>
-    >         <span class="control">{{input id="illustrator" type="text" value=model.illustrator}}</span>
-    >       </div>
-    >       <div class="publisher">
-    >         <label for="publisher">Publisher</label>
-    >         <span class="control">{{input id="publisher" type="text" value=model.publisher}}</span>
-    >       </div>
-    >     </div>
-    >   </form>
-    > </div>
-    > ```
-    
-    Désormais, le *binding* est bidirectionnel : toute modification effectuée au niveau des ``input`` du formulaire
-    est répercutée dans la liste de comics à gauche
+   > ```html
+   > {{!-- app/templates/comic/edit.hbs --}}
+   > 
+   > <div class="selected-comic">
+   >   <form>
+   >     <div class="buttons">
+   >       <button type="submit" class="btn-submit"></button>
+   >       <button type="reset" class="btn-cancel"></button>
+   >     </div>
+   >     <div class="title">
+   >       {{input id="title" type="text" value=model.title}}
+   >     </div>
+   >   
+   >     <div class="description">
+   >       <div class="scriptwriter">
+   >         <label for="scriptwriter">Scriptwriter</label>
+   >         <span class="control">{{input id="scriptwriter" type="text" value=model.scriptwriter required="required"}}</span>
+   >       </div>
+   >       <div class="illustrator">
+   >         <label for="illustrator">Illustrator</label>
+   >         <span class="control">{{input id="illustrator" type="text" value=model.illustrator}}</span>
+   >       </div>
+   >       <div class="publisher">
+   >         <label for="publisher">Publisher</label>
+   >         <span class="control">{{input id="publisher" type="text" value=model.publisher}}</span>
+   >       </div>
+   >     </div>
+   >   </form>
+   > </div>
+   > ```
+   
+   Désormais, le *binding* est bidirectionnel : toute modification effectuée au niveau des ``input`` du formulaire
+   est répercutée dans la liste de comics à gauche
     
 1. Modifier l'affichage du comic pour ajouter un lien vers la page d'édition à droite du titre
-    * Utiliser la forme *inline* du *helper* ``link-to``
-    * Le lien est vide et doit porter la classe ``btn-edit``
-    * Encapsuler le lien dans une div de classe ``buttons`` en haut du template :
-    
-    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 07 - Should link to edit route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
-    
-       ```html
-       <div class="buttons">
-         {{!-- compléter ici --}}
-       </div>
-       ```
-       
-       > ```html
-       > {{!-- app/templates/comic/index.hbs --}}
-       > 
-       > <div class="selected-comic">
-       >   <div class="buttons">
-       >     {{link-to "" 'comic.edit' model class="btn-edit"}}
-       >   </div>
-       >   <h3>{{model.title}}</h3>
-       > 
-       >   ...
-       >
-       > </div>
-       > ```
+   * Utiliser la forme *inline* du *helper* ``link-to``
+   * Le lien est vide et doit porter la classe ``btn-edit``
+   * Encapsuler le lien dans une div de classe ``buttons`` en haut du template :
+   
+   **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 07 - Should link to edit route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+   
+   ```html
+   <div class="buttons">
+     {{!-- compléter ici --}}
+   </div>
+   ```
+   
+   > ```html
+   > {{!-- app/templates/comic/index.hbs --}}
+   > 
+   > <div class="selected-comic">
+   >   <div class="buttons">
+   >     {{link-to "" 'comic.edit' model class="btn-edit"}}
+   >   </div>
+   >   <h3>{{model.title}}</h3>
+   > 
+   >   ...
+   >
+   > </div>
+   > ```
 
 1. Créer la route ``comic.create`` fille de la route ``comic`` accessible à l'URL ``comics/create``
-    * Copier dans le template de cette route exactement le même template que la route ``comic.edit``
-    * Modifier / implémenter la route ``app/routes/comics/create.js`` pour créer une nouvelle instance du modèle ``Comic`` et l'ajouter à la liste
-    
-    **Test** : Les modifications doivent permettre de rendre passants les tests unitaire : [should create new model](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/create-test.js#L87)
-    et d'acceptance : [02 - Routing - 08 - Should display create route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
+   * Copier dans le template de cette route exactement le même template que la route ``comic.edit``
+   * Modifier / implémenter la route ``app/routes/comics/create.js`` pour créer une nouvelle instance du modèle ``Comic`` et l'ajouter à la liste
+   
+   **Test** : Les modifications doivent permettre de rendre passants les tests unitaire : [should create new model](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/create-test.js#L87)
+   et d'acceptance : [02 - Routing - 08 - Should display create route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
 
    
-      > ```console
-      > \app
-      >  |
-      >  |- \routes
-      >  |   |- \comics
-      >  |   |   |- create.js
-      >  |   |
-      >  |   |- application.js
-      >  |   |- comic.js
-      >  |   |- comics.js
-      >  |
-      >  |- \templates
-      >  |   |- \comics
-      >  |   |   |- create.hbs
-      >  |   |   |- error.hbs
-      >  |   |   |- index.hbs
-      >  |   |- \comic
-      >  |   |
-      >  |   |- application.hbs
-      >  |   |- comic.hbs
-      >  |   |- comics.hbs
-      >  |   |- error.hbs
-      > ```
-      
-      > ```html
-      > {{!-- app/templates/comics/create.hbs --}}
-      > 
-      > <div class="selected-comic">
-      >   <form>
-      >     <div class="buttons">
-      >       <button type="submit" class="btn-submit"></button>
-      >       <button type="reset" class="btn-cancel"></button>
-      >     </div>
-      >     <div class="title">
-      >       {{input id="title" type="text" value=model.title}}
-      >     </div>
-      >   
-      >     <div class="description">
-      >       <div class="scriptwriter">
-      >         <label for="scriptwriter">Scriptwriter</label>
-      >         <span class="control">{{input id="scriptwriter" type="text" value=model.scriptwriter required="required"}}</span>
-      >       </div>
-      >       <div class="illustrator">
-      >         <label for="illustrator">Illustrator</label>
-      >         <span class="control">{{input id="illustrator" type="text" value=model.illustrator}}</span>
-      >       </div>
-      >       <div class="publisher">
-      >         <label for="publisher">Publisher</label>
-      >         <span class="control">{{input id="publisher" type="text" value=model.publisher}}</span>
-      >       </div>
-      >     </div>
-      >   </form>
-      > </div>
-      > ```
-      
-      > ```javascript
-      > // app/routes/comics/create.js
-      > 
-      > import Ember from 'ember';
-      > import Comic from 'ember-training/models/comic';
-      > 
-      > export default Ember.Route.extend({
-      >   model () {
-      >     let newComic = Comic.create();
-      >     this.modelFor('comics').pushObject(newComic);
-      >     return newComic;
-      >   }
-      > });
-      > ```
-      
-    On remarque ici aussi le *binding* ainsi que le fait qu'une fois ajouté à la liste, le nouveau comic apparait bien dans la liste 
-    à gauche
+   > ```console
+   > \app
+   >  |
+   >  |- \routes
+   >  |   |- \comics
+   >  |   |   |- create.js
+   >  |   |
+   >  |   |- application.js
+   >  |   |- comic.js
+   >  |   |- comics.js
+   >  |
+   >  |- \templates
+   >  |   |- \comics
+   >  |   |   |- create.hbs
+   >  |   |   |- error.hbs
+   >  |   |   |- index.hbs
+   >  |   |- \comic
+   >  |   |
+   >  |   |- application.hbs
+   >  |   |- comic.hbs
+   >  |   |- comics.hbs
+   >  |   |- error.hbs
+   > ```
+   
+   > ```html
+   > {{!-- app/templates/comics/create.hbs --}}
+   > 
+   > <div class="selected-comic">
+   >   <form>
+   >     <div class="buttons">
+   >       <button type="submit" class="btn-submit"></button>
+   >       <button type="reset" class="btn-cancel"></button>
+   >     </div>
+   >     <div class="title">
+   >       {{input id="title" type="text" value=model.title}}
+   >     </div>
+   >   
+   >     <div class="description">
+   >       <div class="scriptwriter">
+   >         <label for="scriptwriter">Scriptwriter</label>
+   >         <span class="control">{{input id="scriptwriter" type="text" value=model.scriptwriter required="required"}}</span>
+   >       </div>
+   >       <div class="illustrator">
+   >         <label for="illustrator">Illustrator</label>
+   >         <span class="control">{{input id="illustrator" type="text" value=model.illustrator}}</span>
+   >       </div>
+   >       <div class="publisher">
+   >         <label for="publisher">Publisher</label>
+   >         <span class="control">{{input id="publisher" type="text" value=model.publisher}}</span>
+   >       </div>
+   >     </div>
+   >   </form>
+   > </div>
+   > ```
+   
+   > ```javascript
+   > // app/routes/comics/create.js
+   > 
+   > import Ember from 'ember';
+   > import Comic from 'ember-training/models/comic';
+   > 
+   > export default Ember.Route.extend({
+   >   model () {
+   >     let newComic = Comic.create();
+   >     this.modelFor('comics').pushObject(newComic);
+   >     return newComic;
+   >   }
+   > });
+   > ```
+     
+   On remarque ici aussi le *binding* ainsi que le fait qu'une fois ajouté à la liste, le nouveau comic apparait bien dans la liste 
+   à gauche
 
 1. Modifier l'affichage de la liste de comics pour ajouter après la liste un lien vers la route de création ``comics.create``
-    * Utiliser la forme *inline* du *helper* ``link-to``
-    * Le lien est vide et doit porter la classe ``add-comic``
-    
-    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 09 - Should link to create route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
-    
-    > ```html
-    > {{!-- app/templates/comics.hbs --}}
-    > 
-    > <div class="row">
-    >   <div class="comics">
-    >     <h2>Comics list</h2>
-    >     <ul...>
-    >     {{link-to '' 'comics.create' class="add-comic"}}
-    >   </div>
-    > 
-    >   {{outlet}}
-    > </div>
-    > ```
+   * Utiliser la forme *inline* du *helper* ``link-to``
+   * Le lien est vide et doit porter la classe ``add-comic``
+   
+   **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 09 - Should link to create route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+   
+   > ```html
+   > {{!-- app/templates/comics.hbs --}}
+   > 
+   > <div class="row">
+   >   <div class="comics">
+   >     <h2>Comics list</h2>
+   >     <ul...>
+   >     {{link-to '' 'comics.create' class="add-comic"}}
+   >   </div>
+   > 
+   >   {{outlet}}
+   > </div>
+   > ```
     
    
   {% endraw %}

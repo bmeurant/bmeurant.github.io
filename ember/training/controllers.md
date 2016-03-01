@@ -3,7 +3,7 @@ layout: ember-training
 title: Formation Ember - Actions & Contrôleurs
 permalink:  ember/training/actions-controllers/
 prev: ember/training/routing
-next: ember/training/controllers
+next: ember/training/components
 ---
 
 <div id="toc"></div>
@@ -169,38 +169,38 @@ actions: {
 
 1. Déclencher et intercepter l'action ``save`` au clic sur le bouton ``.btn-submit`` de manière à effectuer une simple transition
 vers la route ``comic``
-    * Définir dans le template ``comic.edit`` l'action 'save' comme déclenchée au clic sur le bouton ``.btn-submit``
-    * Définir dans la route ``comic.edit`` la méthode d'interception de l'action 'save'
-    
-    **Test** : *Les modifications doivent permettre de rendre le test [03 - Controller - 01 - Should save on edit submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) passant.*
-    
-    **NB** : Il n'est pas nécessaire d'effectuer d'autre opération car les modifications effectuées onté déjà été répercutées automatiquement
-    grâce au binding bidirectionnel.
-    
-       > ```html
-       > {{!-- app/templates/comic/edit.hbs --}}
-       > <form>
-       >     <div class="buttons">
-       >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
-       >       <button type="reset" class="btn-cancel"></button>
-       >     </div>
-       >     ...
-       > </form>
-       > ```
-       > 
-       > ```javascript
-       > // app/routes/comic/edit.js
-       >
-       > import Ember from 'ember';
-       > 
-       > export default Ember.Route.extend({
-       >   actions: {
-       >     save () {
-       >       this.transitionTo('comic');
-       >     }
-       >   }
-       > });
-       > ```
+   * Définir dans le template ``comic.edit`` l'action 'save' comme déclenchée au clic sur le bouton ``.btn-submit``
+   * Définir dans la route ``comic.edit`` la méthode d'interception de l'action 'save'
+   
+   **Test** : *Les modifications doivent permettre de rendre le test [03 - Controller - 01 - Should save on edit submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) passant.*
+   
+   **NB** : Il n'est pas nécessaire d'effectuer d'autre opération car les modifications effectuées onté déjà été répercutées automatiquement
+   grâce au binding bidirectionnel.
+   
+   > ```html
+   > {{!-- app/templates/comic/edit.hbs --}}
+   > <form>
+   >     <div class="buttons">
+   >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
+   >       <button type="reset" class="btn-cancel"></button>
+   >     </div>
+   >     ...
+   > </form>
+   > ```
+   > 
+   > ```javascript
+   > // app/routes/comic/edit.js
+   >
+   > import Ember from 'ember';
+   > 
+   > export default Ember.Route.extend({
+   >   actions: {
+   >     save () {
+   >       this.transitionTo('comic');
+   >     }
+   >   }
+   > });
+   > ```
 
 1. Déclencher et intercepter l'action ``cancel`` au clic sur le bouton ``.btn-cancel`` de manière à annuler les modifications
    effectuées sur le model courant puis effectuer une transition vers la route ``comic``
@@ -210,114 +210,114 @@ vers la route ``comic``
     * De manière à réinitialiser proprement le modèle sans outil tel qu'[Ember Data](../ember-data), implémenter la méthode
     ``reset`` suivante dans ``app/model/comic.js`` :
     
-       ```javascript
-       ...
-       
-       reset(comic) {
-         this.set('title', comic.get('title'));
-         this.set('scriptwriter', comic.get('scriptwriter'));
-         this.set('illustrator', comic.get('illustrator'));
-         this.set('publisher', comic.get('publisher'));
-       }
-       ```
+      ```javascript
+      ...
+      
+      reset(comic) {
+        this.set('title', comic.get('title'));
+        this.set('scriptwriter', comic.get('scriptwriter'));
+        this.set('illustrator', comic.get('illustrator'));
+        this.set('publisher', comic.get('publisher'));
+      }
+      ```
     * Réinitialiser le modèle en cas de ``cancel``
     
     **Test** : Les modifications doivent permettre de rendre passant le test [03 - Controller - 02 - Should cancel on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
     
-      > ```html
-      > {{!-- app/templates/comic/edit.hbs --}}
-      > <form>
-      >     <div class="buttons">
-      >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
-      >       <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
-      >     </div>
-      >     ...
-      > </form>
-      > ```
-      
-      > ```javascript
-      > // app/routes/comic/edit.js
-      > 
-      > import Ember from 'ember';
-      > import Comic from 'ember-training/models/comic';
-      > 
-      > export default Ember.Route.extend({
-      >   afterModel (model) {
-      >     this.set('initialModel', Comic.create(model));
-      >   },
-      >   actions: {
-      >     save () {
-      >       this.transitionTo('comic');
-      >     },
-      >     cancel () {
-      >       this.get('controller.model').reset(this.get('initialModel'));
-      >       this.transitionTo('comic');
-      >     }
-      >   }
-      > });
-      > ```
-      > 
-      > La copie initiale du modèle se fait évidement dans le *hook* ``afterModel`` puisque c'est dans celui-là seulement
-      > que l'on dispose du modèle initialisé. Cet objet est conservé dans une propriété ``initialModel``.
-      >
-      > La réinitialisation du modèle lui-même s'effectue en appelant la méthode ``reset`` avec le modèle conservé.
-      > On note l'utilisation de la notation chaînée `.`
-    
-1. Intercepter et traiter les actions 'save' et 'cancel' pour la route `comics.create`
-    * Rediriger vers la route ``comic.edit`` du nouveau comic suite à validation.
-    * Nettoyer la liste de comics et rediriger vers la route ``comics`` suite à annulation. Utiliser pour cela la fonction
-      [removeObject()](http://emberjs.com/api/classes/Ember.MutableArray.html#method_removeObject) de ``Ember.MutableArray``.
-    * Transformer la propriété ``slug`` d'un ``Comic`` en **computed propety** de manière à ce que le *slug* corresponde à
-      la valeur du titre transformée grâce à la fonction [dasherize()](http://emberjs.com/api/classes/Ember.String.html#method_dasherize) 
-      et qu'il soit mis à jour à chaque modification du titre.
-      
-    **Test** : Les modifications doivent permettre de rendre passants les tests 
-    [03 - Controller - 03 - Should save on create submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
-    et [03 - Controller - 04 - Should reinit list on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
-      
-    > ```javascript
-    > // app/models/comic.js
-    > 
-    > import Ember from 'ember';
-    > 
-    > export default Ember.Object.extend({
-    >   slug: function() {
-    >     return this.get('title').dasherize();
-    >   }.property('title'),
-    >   title: '',
-    >   scriptwriter: '',
-    >   illustrator: '',
-    >   publisher: '',
-    >
-    >   reset (comic) { ... }
-    > });
+    > ```html
+    > {{!-- app/templates/comic/edit.hbs --}}
+    > <form>
+    >     <div class="buttons">
+    >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
+    >       <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
+    >     </div>
+    >     ...
+    > </form>
     > ```
-    > 
+    
     > ```javascript
-    > // app/routes/comics/create.js
+    > // app/routes/comic/edit.js
     > 
     > import Ember from 'ember';
     > import Comic from 'ember-training/models/comic';
     > 
     > export default Ember.Route.extend({
-    >   templateName: 'comic/edit',
-    >
-    >   model () {...},
-    > 
+    >   afterModel (model) {
+    >     this.set('initialModel', Comic.create(model));
+    >   },
     >   actions: {
     >     save () {
-    >       this.transitionTo('comic', this.get('controller.model'));
+    >       this.transitionTo('comic');
     >     },
     >     cancel () {
-    >       this.modelFor('comics').removeObject(this.get('controller.model'));
-    >       this.transitionTo('comics');
+    >       this.get('controller.model').reset(this.get('initialModel'));
+    >       this.transitionTo('comic');
     >     }
     >   }
     > });
     > ```
     > 
-    > On note le passage du model à la route ``comic`` lors de la transition suite au ``save`` puisque celui-ci vient 
-    > d'être créé et était inconnu.
+    > La copie initiale du modèle se fait évidement dans le *hook* ``afterModel`` puisque c'est dans celui-là seulement
+    > que l'on dispose du modèle initialisé. Cet objet est conservé dans une propriété ``initialModel``.
+    >
+    > La réinitialisation du modèle lui-même s'effectue en appelant la méthode ``reset`` avec le modèle conservé.
+    > On note l'utilisation de la notation chaînée `.`
+    
+1. Intercepter et traiter les actions 'save' et 'cancel' pour la route `comics.create`
+   * Rediriger vers la route ``comic.edit`` du nouveau comic suite à validation.
+   * Nettoyer la liste de comics et rediriger vers la route ``comics`` suite à annulation. Utiliser pour cela la fonction
+     [removeObject()](http://emberjs.com/api/classes/Ember.MutableArray.html#method_removeObject) de ``Ember.MutableArray``.
+   * Transformer la propriété ``slug`` d'un ``Comic`` en **computed propety** de manière à ce que le *slug* corresponde à
+     la valeur du titre transformée grâce à la fonction [dasherize()](http://emberjs.com/api/classes/Ember.String.html#method_dasherize) 
+     et qu'il soit mis à jour à chaque modification du titre.
+     
+   **Test** : Les modifications doivent permettre de rendre passants les tests 
+   [03 - Controller - 03 - Should save on create submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+   et [03 - Controller - 04 - Should reinit list on edit reset](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+     
+   > ```javascript
+   > // app/models/comic.js
+   > 
+   > import Ember from 'ember';
+   > 
+   > export default Ember.Object.extend({
+   >   slug: function() {
+   >     return this.get('title').dasherize();
+   >   }.property('title'),
+   >   title: '',
+   >   scriptwriter: '',
+   >   illustrator: '',
+   >   publisher: '',
+   >
+   >   reset (comic) { ... }
+   > });
+   > ```
+   > 
+   > ```javascript
+   > // app/routes/comics/create.js
+   > 
+   > import Ember from 'ember';
+   > import Comic from 'ember-training/models/comic';
+   > 
+   > export default Ember.Route.extend({
+   >   templateName: 'comic/edit',
+   >
+   >   model () {...},
+   > 
+   >   actions: {
+   >     save () {
+   >       this.transitionTo('comic', this.get('controller.model'));
+   >     },
+   >     cancel () {
+   >       this.modelFor('comics').removeObject(this.get('controller.model'));
+   >       this.transitionTo('comics');
+   >     }
+   >   }
+   > });
+   > ```
+   > 
+   > On note le passage du model à la route ``comic`` lors de la transition suite au ``save`` puisque celui-ci vient 
+   > d'être créé et était inconnu.
       
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -353,26 +353,26 @@ et des ``closure actions`` de l'autre qui doivent être intercéptées obligatoi
 et qui ne font pas intervenir de *bubbling* à ce niveau.
 
 * les **element space actions** sont les actions historiques d'[Ember][ember]. 
-     Elles interviennent lors de l'utilisation des syntaxes standard telles que :
-     
-     ```html
-     <div {{action 'save' model}}>confirm</div>
-     <div {{action 'save' model on 'mouseUp'}}>confirm</div>
-     {{input enter='save' value="confirm"}}
-     ```
-     
-     Ces actions peuvent être indifféremment intercéptées dans un contrôleur, un composant ou une route. 
+  Elles interviennent lors de l'utilisation des syntaxes standard telles que :
+  
+  ```html
+  <div {{action 'save' model}}>confirm</div>
+  <div {{action 'save' model on 'mouseUp'}}>confirm</div>
+  {{input enter='save' value="confirm"}}
+  ```
+  
+  Ces actions peuvent être indifféremment intercéptées dans un contrôleur, un composant ou une route. 
 
 * les **closure actions** constituent un nouveau types d'actions. 
-     Elles interviennent lors de l'utilisation des syntaxes imbriquées ou précisant les évènements DOM telles que :
-     
-     ```html
-     {{input enter=(action 'save' model.id) value="confirm"}}
-     <input type="text" value="confirm" onclick={{action 'save' model}} />
-     ```
+  Elles interviennent lors de l'utilisation des syntaxes imbriquées ou précisant les évènements DOM telles que :
   
-     Entre le template et le contrôleur / composant, ces actions ne se propagent pas pas via *bubling* et doivent 
-     impérativement être interceptées **dans un contrôleur ou un composant** et, éventuellement, propagées explicitement.
+  ```html
+  {{input enter=(action 'save' model.id) value="confirm"}}
+  <input type="text" value="confirm" onclick={{action 'save' model}} />
+  ```
+  
+  Entre le template et le contrôleur / composant, ces actions ne se propagent pas pas via *bubling* et doivent 
+  impérativement être interceptées **dans un contrôleur ou un composant** et, éventuellement, propagées explicitement.
 
 **NB:** Cette situation est problématique mais temporaire et les **closure actions** sont amenées à devenir le seul système de gestion des actions 
 entre le template et le contrôleur / composant dans un avenir proche. Pour d'avantage de détails, se reporter à cette 
@@ -409,51 +409,51 @@ promesse est rejetée au sein de l'un des *hooks* de la route (échec dans la r�
 ainsi que la propagation de cette action via le *bubbling* permet la gestion de l'erreur à n'importe quel niveau de
 la hiérarchie de route.
    
-   ```javascript
-   actions: {
-     /*
-      * @error: thrown error
-      * @transition: failed transition
-      */
-     error: function(error, transition) { ... }
-   }
-   ```
+  ```javascript
+  actions: {
+    /*
+     * @error: thrown error
+     * @transition: failed transition
+     */
+    error: function(error, transition) { ... }
+  }
+  ```
 
 * [loading](http://emberjs.com/api/classes/Ember.Route.html#event_loading) : Une action ``loading`` est levée lorsque 
 l'un des *hooks* de la route retourne une promesse non encore résolue.
 
-   ```javascript
-   actions: {
-     /*
-      * @transition: current transition
-      * @route: route that triggered the event
-      */
-     loading: function(transition, route) { ... }
-   }
-   ```
+  ```javascript
+  actions: {
+    /*
+     * @transition: current transition
+     * @route: route that triggered the event
+     */
+    loading: function(transition, route) { ... }
+  }
+  ```
 
 * [didTransition](http://emberjs.com/api/classes/Ember.Route.html#event_didTransition) : Une action ``didTransition``
 est levée lorsque la transition s'est effectuée complètement, c'est à dire après l'exécution des *hooks* d'entrée
 (``beforeModel``, ``model``, ``afterModel``, ``setupController``). Cette
 action est courament utilisée pour des opération de *tracking* (visites, etc.).
  
-   ```javascript
-   actions: {
-     didTransition: function() { ... }
-   }
-   ``` 
+  ```javascript
+  actions: {
+    didTransition: function() { ... }
+  }
+  ``` 
 
 * [willTransition](http://emberjs.com/api/classes/Ember.Route.html#event_willTransition) : Une action ``willTransition``
 est levée lorsqu'une tentative de transition est effectuée depuis cette route.
 
-   ```javascript
-   actions: {
-     /*
-      * @transition: attempted transition
-      */
-     willTransition: function(transition) { ... }
-   }
-   ``` 
+  ```javascript
+  actions: {
+    /*
+     * @transition: attempted transition
+     */
+    willTransition: function(transition) { ... }
+  }
+  ``` 
    
 <div class="work answer">
   {% capture m %}
@@ -462,88 +462,88 @@ est levée lorsqu'une tentative de transition est effectuée depuis cette route.
 1. Modifier la route ``comic.edit`` pour gérer l'action ``willTransition`` de manière à ce que si l'utilisateur change
 de route (en cliquant sur un autre comic par exemple) sans avoir sauvegardé, l'ensemble des modifications soient 
 annulées.
-    * L'annulation des modifications correspond aux mêmes opérations que celles effectuées lors d'un ``cancel``
-    * Conserver la propagation de l'action ``willTransition`` aux routes parentes.
-    
-    **Test** : Les modifications doivent permettre de rendre passant le test [03 - Controller - 05 - Should cancel edit on transition](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
-    
-    > ```javascript
-    > // app/routes/comic/edit.js
-    > 
-    > afterModel (model) { ... },
-    > 
-    > resetComic () {
-    >   this.get('controller.model').reset(this.get('initialModel'));
-    > },
-    > 
-    > actions: {
-    >   save () {
-    >     this.transitionTo('comic');
-    >   },
-    >   cancel () {
-    >     this.resetComic();
-    >     this.transitionTo('comic');
-    >   },
-    >   willTransition () {
-    >     this.resetComic();
-    >     return true;
-    >   }
-    > }
-    > ```
-    
-    On remarque que le save ne fonctionne plus (le test [03 - Controller - 01 - Should save on edit submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
-    ne passe plus) et que les changements semblent être annulées systématiquement.
-    L'action ``willTransition`` est en effet exécutée après les autres actions et notament le ``save`` qui déclenche une transition
-    via ``transitionTo``. De ce fait, quelques soient les opérations effectuées dans le ``save``, les annulations
-    effectuées par ``willTransition`` sont appliquées.
+   * L'annulation des modifications correspond aux mêmes opérations que celles effectuées lors d'un ``cancel``
+   * Conserver la propagation de l'action ``willTransition`` aux routes parentes.
+   
+   **Test** : Les modifications doivent permettre de rendre passant le test [03 - Controller - 05 - Should cancel edit on transition](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+   
+   > ```javascript
+   > // app/routes/comic/edit.js
+   > 
+   > afterModel (model) { ... },
+   > 
+   > resetComic () {
+   >   this.get('controller.model').reset(this.get('initialModel'));
+   > },
+   > 
+   > actions: {
+   >   save () {
+   >     this.transitionTo('comic');
+   >   },
+   >   cancel () {
+   >     this.resetComic();
+   >     this.transitionTo('comic');
+   >   },
+   >   willTransition () {
+   >     this.resetComic();
+   >     return true;
+   >   }
+   > }
+   > ```
+   
+   On remarque que le save ne fonctionne plus (le test [03 - Controller - 01 - Should save on edit submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+   ne passe plus) et que les changements semblent être annulées systématiquement.
+   L'action ``willTransition`` est en effet exécutée après les autres actions et notament le ``save`` qui déclenche une transition
+   via ``transitionTo``. De ce fait, quelques soient les opérations effectuées dans le ``save``, les annulations
+   effectuées par ``willTransition`` sont appliquées.
     
 1. Créer le contrôleur ``app/controllers/comic/edit.js`` et y intercepter les actions ``save`` et ``cancel``
-    * Ces actions se contentent de positionner une propriété ``hasUserSavedOrCancel`` à ``true`` dans le contrôleur de manière
-    à signaler que l'utilisateur a délibérément effectué une opération.
-    * Faire que ces actions continuent de se propager à la route.
-    * Modifier le gestionnaire de l'action ``willTransition`` de manière à n'effectuer les opérations d'annulation que si 
-    l'utilisateur n'a effectué aucune des deux actions ``save`` ou ``cancel``
-    * Comme on le verra plus tard, l'utilisation d'un outil tel qu'[Ember Data](../ember-data) permet, via les fonctions
-    avancées de gestion de l'état des modèles et du ``store``, d'éviter d'avoir à effectuer nous mêmes ces contrôles.
-    
-    **Test** : Les modifications doivent permettre de rendre de nouveau passant le test [03 - Controller - 01 - Should save on edit submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
+   * Ces actions se contentent de positionner une propriété ``hasUserSavedOrCancel`` à ``true`` dans le contrôleur de manière
+   à signaler que l'utilisateur a délibérément effectué une opération.
+   * Faire que ces actions continuent de se propager à la route.
+   * Modifier le gestionnaire de l'action ``willTransition`` de manière à n'effectuer les opérations d'annulation que si 
+   l'utilisateur n'a effectué aucune des deux actions ``save`` ou ``cancel``
+   * Comme on le verra plus tard, l'utilisation d'un outil tel qu'[Ember Data](../ember-data) permet, via les fonctions
+   avancées de gestion de l'état des modèles et du ``store``, d'éviter d'avoir à effectuer nous mêmes ces contrôles.
+   
+   **Test** : Les modifications doivent permettre de rendre de nouveau passant le test [03 - Controller - 01 - Should save on edit submit](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87)
 
-     > ```javascript
-     > // app/controllers/comic/edit.js
-     > 
-     > import Ember from 'ember';
-     > 
-     > export default Ember.Controller.extend({
-     > 
-     >   actions: {
-     >     save() {
-     >       this.set('hasUserSavedOrCancel', true);
-     >       return true;
-     >     },
-     > 
-     >     cancel() {
-     >       this.set('hasUserSavedOrCancel', true);
-     >       return true;
-     >     }
-     >   }
-     > });
-     > ```
-     > 
-     > ```javascript
-     > // app/routes/comic/edit.js
-     > 
-     > actions: {
-     >   save () { ... },
-     >   cancel () { ... },
-     >   willTransition () {
-     >     if (!this.controller.get('hasUserSavedOrCancel')) {
-     >       this.resetComic();
-     >     }
-     >     
-     >     return true;
-     >   }
-     > }
-     > ```
+   > ```javascript
+   > // app/controllers/comic/edit.js
+   > 
+   > import Ember from 'ember';
+   > 
+   > export default Ember.Controller.extend({
+   > 
+   >   actions: {
+   >     save() {
+   >       this.set('hasUserSavedOrCancel', true);
+   >       return true;
+   >     },
+   > 
+   >     cancel() {
+   >       this.set('hasUserSavedOrCancel', true);
+   >       return true;
+   >     }
+   >   }
+   > });
+   > ```
+   > 
+   > ```javascript
+   > // app/routes/comic/edit.js
+   > 
+   > actions: {
+   >   save () { ... },
+   >   cancel () { ... },
+   >   willTransition () {
+   >     if (!this.controller.get('hasUserSavedOrCancel')) {
+   >       this.resetComic();
+   >     }
+   >     
+   >     return true;
+   >   }
+   > }
+   > ```
      
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -716,138 +716,138 @@ contrôleur permet ensuite de propager automatiquement ce changement partout où
   
 1. Nous allons maintenant ajouter un champ permettant de filtrer la liste les comics ainsi q'un bouton de tri permettant 
 de trier les comics dans un ordre croissant ou décroissant.
-    * Créer le contrôleur ``app/controllers/comics.js`` en se basant sur le modèle proposé plus bas.
-    * Implémenter le corps de l'action ``sort`` de manière à inverser la valeur de la propriété ``sortAsc``. 
-    Indice : utiliser pour cela une méthode de [Ember.Controller](http://emberjs.com/api/classes/Ember.Controller.html)
-    qui permet d'inverser la valeur d'une propriété booléenne.
-    * Compléter la propriété ``filteredComics`` afin que celle-ci se base sur la collection récupérée initialement.
-    * Compléter la liste des propriétés observées par la propriété calculée ``filteredComics`` de manière à ce que celle-ci
-    soit recalculée à chaque fois que la propriété ``filter`` change, chaque fois que l'on ajoute ou supprime un comic
-    dans la liste et enfin lorsque l'on modifie le titre de n'importe quel comic.
-    * Compléter la propriété observée par ``sortDefinition`` de manière à ce que celle-ci soit recalculée chaque fois que 
-    la direction du tri est modifiée.
-    * Compléter la propriété ``sortedComics`` afin que celle-ci se base sur la collection filtrée (``filteredComics``).
-    * On remarque l'utilisation de la méthode [Ember.computed.filter](http://emberjs.com/api/classes/Ember.computed.html#method_filter)
-    qui permet de filtrer facilement une collection et de la méthode [Ember.computed.sort](http://emberjs.com/api/classes/Ember.computed.html#method_sort)
-    qui permet, elle, de faciliter le tri. Cette dernière s'appuie également sur une propriété calculée définissant les 
-    caractéristiques du tri (propriété, ordre). Ici ``['title:asc']`` ou ``['title:desc']``.
-    * Modifier le template ``app/templates/comics.hbs`` en se basant sur le modèle proposé plus bas.
-    * Ajouter avant la liste de comics un ``input`` permettant de modifier la valeur de ``filter`` ainsi qu'un bouton 
-    permettant de déclencher l'action ``sort``. Ce bouton doit     porter les classes css ``sort sort-asc`` ou 
-    ``sort sort-desc`` en fonction de la valeur de ``sortAsc``.
-    * Modifier la collection parcourue par le ``{{#each}}`` de façon à utiliser la liste triée.
-    * Enfin, modifier le span de classe ``comics-number`` afin d'afficher, en temps réel, le nombre de comics triés 
-    (ne pas modifier le contrôleur).
-    
-    ```javascript
-    import Ember from 'ember';
-    
-    export default Ember.Controller.extend({
-      filter: "",
-      sortAsc: true,
-    
-      filteredComics: Ember.computed.filter(..., function (model) {
-        let title = model.get('title');
-        return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
-      }).property(???, ???, ???),
-    
-      sortDefinition: function () {
-        return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')];
-      }.property(???),
-    
-      sortedComics: Ember.computed.sort(???, 'sortDefinition'),
-    
-      actions: {
-        sort () {
-          // @TODO ???
-        }
-      }
-    });
-    ```
-    
-    ```html
-    <div class="row">
-      <div class="comics">
-        <h2>Comics list</h2>
-    
-        {{input type=text value=... class="filter"}}
-        <button ??? class="???"></button>
-    
-        <ul>
-          {{#each ??? as |comic|...}}
-        </ul>
-        {{link-to '' 'comics.create' class="add-comic"}}
-    
-        <span class="comics-number">Number of comics: ???</span>
-      </div>
-    
-      {{outlet}}
-    </div>
-    ```
-    
-    **Tests** : Les modifications doivent permettre de rendre passants les tests 
-    [03 - Controller - 13 - Should filter](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87),
-    [03 - Controller - 14 - Should sort](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) ainsi
-    que l'ensemble des [tests unitaires du controller comics](https://github.com/bmeurant/ember-training/blob/master/tests/unit/controllers/comics-test.js)
+   * Créer le contrôleur ``app/controllers/comics.js`` en se basant sur le modèle proposé plus bas.
+   * Implémenter le corps de l'action ``sort`` de manière à inverser la valeur de la propriété ``sortAsc``. 
+   Indice : utiliser pour cela une méthode de [Ember.Controller](http://emberjs.com/api/classes/Ember.Controller.html)
+   qui permet d'inverser la valeur d'une propriété booléenne.
+   * Compléter la propriété ``filteredComics`` afin que celle-ci se base sur la collection récupérée initialement.
+   * Compléter la liste des propriétés observées par la propriété calculée ``filteredComics`` de manière à ce que celle-ci
+   soit recalculée à chaque fois que la propriété ``filter`` change, chaque fois que l'on ajoute ou supprime un comic
+   dans la liste et enfin lorsque l'on modifie le titre de n'importe quel comic.
+   * Compléter la propriété observée par ``sortDefinition`` de manière à ce que celle-ci soit recalculée chaque fois que 
+   la direction du tri est modifiée.
+   * Compléter la propriété ``sortedComics`` afin que celle-ci se base sur la collection filtrée (``filteredComics``).
+   * On remarque l'utilisation de la méthode [Ember.computed.filter](http://emberjs.com/api/classes/Ember.computed.html#method_filter)
+   qui permet de filtrer facilement une collection et de la méthode [Ember.computed.sort](http://emberjs.com/api/classes/Ember.computed.html#method_sort)
+   qui permet, elle, de faciliter le tri. Cette dernière s'appuie également sur une propriété calculée définissant les 
+   caractéristiques du tri (propriété, ordre). Ici ``['title:asc']`` ou ``['title:desc']``.
+   * Modifier le template ``app/templates/comics.hbs`` en se basant sur le modèle proposé plus bas.
+   * Ajouter avant la liste de comics un ``input`` permettant de modifier la valeur de ``filter`` ainsi qu'un bouton 
+   permettant de déclencher l'action ``sort``. Ce bouton doit     porter les classes css ``sort sort-asc`` ou 
+   ``sort sort-desc`` en fonction de la valeur de ``sortAsc``.
+   * Modifier la collection parcourue par le ``{{#each}}`` de façon à utiliser la liste triée.
+   * Enfin, modifier le span de classe ``comics-number`` afin d'afficher, en temps réel, le nombre de comics triés 
+   (ne pas modifier le contrôleur).
+   
+   ```javascript
+   import Ember from 'ember';
+   
+   export default Ember.Controller.extend({
+     filter: "",
+     sortAsc: true,
+   
+     filteredComics: Ember.computed.filter(..., function (model) {
+       let title = model.get('title');
+       return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
+     }).property(???, ???, ???),
+   
+     sortDefinition: function () {
+       return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')];
+     }.property(???),
+   
+     sortedComics: Ember.computed.sort(???, 'sortDefinition'),
+   
+     actions: {
+       sort () {
+         // @TODO ???
+       }
+     }
+   });
+   ```
+   
+   ```html
+   <div class="row">
+     <div class="comics">
+       <h2>Comics list</h2>
+   
+       {{input type=text value=... class="filter"}}
+       <button ??? class="???"></button>
+   
+       <ul>
+         {{#each ??? as |comic|...}}
+       </ul>
+       {{link-to '' 'comics.create' class="add-comic"}}
+   
+       <span class="comics-number">Number of comics: ???</span>
+     </div>
+   
+     {{outlet}}
+   </div>
+   ```
+   
+   **Tests** : Les modifications doivent permettre de rendre passants les tests 
+   [03 - Controller - 13 - Should filter](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87),
+   [03 - Controller - 14 - Should sort](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/03-controller-test.js#L87) ainsi
+   que l'ensemble des [tests unitaires du controller comics](https://github.com/bmeurant/ember-training/blob/master/tests/unit/controllers/comics-test.js)
 
-    
-      > ```javascript
-      > // app/controllers/comics.js
-      >
-      > import Ember from 'ember';
-      > 
-      > export default Ember.Controller.extend({
-      >   filter: "",
-      >   sortAsc: true,
-      > 
-      >   filteredComics: Ember.computed.filter('model', function (model) {
-      >     let title = model.get('title');
-      >     return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
-      >   }).property('filter', 'model.[]', 'model.@each.title'),
-      > 
-      >   sortDefinition: function () {
-      >     return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')];
-      >   }.property('sortAsc'),
-      > 
-      >   sortedComics: Ember.computed.sort('filteredComics', 'sortDefinition'),
-      > 
-      >   actions: {
-      >     sort () {
-      >       this.toggleProperty('sortAsc');
-      >     }
-      >   }
-      > });
-      > ```
-    
-      > ```html
-      > {{!-- app/templates/comics.hbs --}}
-      >
-      > <div class="row">
-      >   <div class="comics">
-      >     <h2>Comics list</h2>
-      > 
-      >     {{input type=text value=filter class="filter"}}
-      >     <button {{action "sort"}} class="sort {{if sortAsc 'sort-asc' 'sort-desc'}}"></button>
-      > 
-      >     <ul>
-      >       {{#each sortedComics as |comic|}}
-      >         <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
-      >           {{#link-to "comic" comic}}
-      >             {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
-      >           {{/link-to}}
-      >         </li>
-      >       {{else}}
-      >         Sorry, no comic found
-      >       {{/each}}
-      >     </ul>
-      >     {{link-to '' 'comics.create' class="add-comic"}}
-      > 
-      >     <span class="comics-number">Number of comics: {{sortedComics.length}}</span>
-      >   </div>
-      > 
-      >   {{outlet}}
-      > </div>
-      > ```
+   
+   > ```javascript
+   > // app/controllers/comics.js
+   >
+   > import Ember from 'ember';
+   > 
+   > export default Ember.Controller.extend({
+   >   filter: "",
+   >   sortAsc: true,
+   > 
+   >   filteredComics: Ember.computed.filter('model', function (model) {
+   >     let title = model.get('title');
+   >     return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
+   >   }).property('filter', 'model.[]', 'model.@each.title'),
+   > 
+   >   sortDefinition: function () {
+   >     return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')];
+   >   }.property('sortAsc'),
+   > 
+   >   sortedComics: Ember.computed.sort('filteredComics', 'sortDefinition'),
+   > 
+   >   actions: {
+   >     sort () {
+   >       this.toggleProperty('sortAsc');
+   >     }
+   >   }
+   > });
+   > ```
+   
+   > ```html
+   > {{!-- app/templates/comics.hbs --}}
+   >
+   > <div class="row">
+   >   <div class="comics">
+   >     <h2>Comics list</h2>
+   > 
+   >     {{input type=text value=filter class="filter"}}
+   >     <button {{action "sort"}} class="sort {{if sortAsc 'sort-asc' 'sort-desc'}}"></button>
+   > 
+   >     <ul>
+   >       {{#each sortedComics as |comic|}}
+   >         <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+   >           {{#link-to "comic" comic}}
+   >             {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
+   >           {{/link-to}}
+   >         </li>
+   >       {{else}}
+   >         Sorry, no comic found
+   >       {{/each}}
+   >     </ul>
+   >     {{link-to '' 'comics.create' class="add-comic"}}
+   > 
+   >     <span class="comics-number">Number of comics: {{sortedComics.length}}</span>
+   >   </div>
+   > 
+   >   {{outlet}}
+   > </div>
+   > ```
   
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}

@@ -58,22 +58,22 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
 
 1. Commençons simplement par modifier le titre de l'application par `"Comic books library"` et par faire quelques autres modifications destinées à intégrer le style [Bootstrap](http://getbootstrap.com/) :
 
-    ```html
-    {{!-- /app/templates/application.hbs --}}
-    <div class="container">
+   ```html
+   {{!-- /app/templates/application.hbs --}}
+   <div class="container">
+   
+     <div class="page-header">
+       <h1 id="title">Comic books library</h1>
+     </div>
     
-      <div class="page-header">
-        <h1 id="title">Comic books library</h1>
-      </div>
-     
-      {{outlet}}
-    
-    </div>
-    ```  
-    
-    On constate que l'application est mise à jour et rechargée à la volée par [Ember CLI](http://www.ember-cli.com/) et à l'exécution préalable de la
-    commande ``ember server``. Via cette commande, en effet, l'application est lancée et, lors de toute modification d'un fichier source, 
-    [Ember CLI](http://www.ember-cli.com/) se charge d'exécuter l'*asset pipeline* et de recharger l'application.
+     {{outlet}}
+   
+   </div>
+   ```  
+   
+   On constate que l'application est mise à jour et rechargée à la volée par [Ember CLI](http://www.ember-cli.com/) et à l'exécution préalable de la
+   commande ``ember server``. Via cette commande, en effet, l'application est lancée et, lors de toute modification d'un fichier source, 
+   [Ember CLI](http://www.ember-cli.com/) se charge d'exécuter l'*asset pipeline* et de recharger l'application.
   
   {% endraw %}
    
@@ -91,67 +91,67 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
 
 1. Créer un objet javascript contenant les données que l'on souhaite injecter. 
 
-    Cette opération s'effectue en renvoyant un ``model`` au sein d'une ``Route`` de la manière suivante.
-    On expliquera ces notions en détail dans le chapitre [routing](../routing), admettons pour le moment que nous avons un fichier ``app/routes/application.js`` :
+   Cette opération s'effectue en renvoyant un ``model`` au sein d'une ``Route`` de la manière suivante.
+   On expliquera ces notions en détail dans le chapitre [routing](../routing), admettons pour le moment que nous avons un fichier ``app/routes/application.js`` :
 
-    (On note l'utilisation des modules Ecmascript 6 rendue possible par la transpilation par [Ember CLI](http://www.ember-cli.com/). cf. [chapitre précédent](../ember-cli))
-     
-    ```javascript
-    // app/routes/application.js
+   (On note l'utilisation des modules Ecmascript 6 rendue possible par la transpilation par [Ember CLI](http://www.ember-cli.com/). cf. [chapitre précédent](../ember-cli))
     
-    import Ember from 'ember';
-    
-    export default Ember.Route.extend({
-    
-      model: function() {
-        // WARN : SOULD NOT BE DONE : We should not affect anything to windows but 
-        // for the exercice, we want to access to comic from console today
-        window.comic = {title: "Blacksad"};
-    
-        return comic;
-      }
-    });
-    ```
-    
-    On peut ensuite utiliser cet objet dans notre template : 
-    
-    ```html
-    {{!-- /app/templates/application.hbs --}}
-    
-    <div class="container">
-    
-      <div class="page-header">
-        <h1 id="title">Comic books library</h1>
-      </div>
-    
-      <div class="row">
-        <span class="comics">{{model.title}}</span>
-      </div>
-    
-      {{outlet}}
-    
-    </div>
-    ```
-    
-    On constate que notre application affiche désormais le nom du comic que nous avons créé et injecté dans le template
+   ```javascript
+   // app/routes/application.js
+   
+   import Ember from 'ember';
+   
+   export default Ember.Route.extend({
+   
+     model: function() {
+       // WARN : SOULD NOT BE DONE : We should not affect anything to windows but 
+       // for the exercice, we want to access to comic from console today
+       window.comic = {title: "Blacksad"};
+   
+       return comic;
+     }
+   });
+   ```
+   
+   On peut ensuite utiliser cet objet dans notre template : 
+   
+   ```html
+   {{!-- /app/templates/application.hbs --}}
+   
+   <div class="container">
+   
+     <div class="page-header">
+       <h1 id="title">Comic books library</h1>
+     </div>
+   
+     <div class="row">
+       <span class="comics">{{model.title}}</span>
+     </div>
+   
+     {{outlet}}
+   
+   </div>
+   ```
+   
+   On constate que notre application affiche désormais le nom du comic que nous avons créé et injecté dans le template
 
 1. Ouvrir la console javascript et modifier le titre du comic. Quels sont les deux constats majeurs que l'on peut effectuer ?
 
-    > ```javascript
-    > > comic
-    > Object {__ember_meta__: Meta}
-    > 
-    > > comic.title = "new title"
-    > Uncaught EmberError {description: undefined, fileName: undefined, lineNumber: undefined, message: "Assertion Failed: You must use Ember.set() to set … `title` property (of [object Object]) to `test`.", name: "Error"…}
-    >
-    > > Ember.set(comic, 'title', 'new title');
-    > "new title"
-    > ```
-    
-    > On constate les choses suivantes : 
-    >
-    > 1. L'objet 'comic' créé a été enrichi par Ember. De ce fait, on ne peut doit plus et on ne peut plus manipuler directement ses propriétés sans accesseurs. cf [Modèle objet](../object-model)
-    > 2. En utilisant les outils proposés par le modèle objet d'[Ember](http://emberjs.com), on constate que le template est automatiquement mis à jour lorsque l'on modifie l'objet. C'est ce que l'on appelle le **binding**.
+   > ```javascript
+   > > comic
+   > Object {__ember_meta__: Meta}
+   > 
+   > > comic.title = "new title"
+   > Uncaught EmberError {description: undefined, fileName: undefined, lineNumber: undefined, message: "Assertion Failed: You must use Ember.set() to set … `title` property (of [object Object]) to `test`.", name: "Error"…}
+   >
+   > > Ember.set(comic, 'title', 'new title');
+   > "new title"
+   > ```
+   
+   > On constate les choses suivantes : 
+   >
+   > 1. L'objet 'comic' créé a été enrichi par Ember. De ce fait, on ne peut doit plus et on ne peut plus manipuler directement ses propriétés sans accesseurs. cf [Modèle objet](../object-model)
+   > 2. En utilisant les outils proposés par le modèle objet d'[Ember](http://emberjs.com), on constate que le template est automatiquement mis à jour lorsque l'on modifie l'objet. C'est ce que l'on appelle le **binding**.
 
   {% endraw %}
    
@@ -299,31 +299,31 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
 1. **Parcourir et afficher une liste** : Nous allons avoir plusieurs comics, transformer l'affichage du model seul par celui d'une liste complète de comics (un seul élément pour le moment).
 
-    **Style** : encapsuler la liste dans une ``<div class="comics">``
-    
-    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 01 - Should display comics](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L55) passant.*
-      
-    >  ```javascript
-    >  // app/routes/application.js
-    >  ...
-    >  window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes"}];
-    >  ...
-    >  ```
-    >  
-    >  ```html
-    >  {{!-- app/templates/application.hbs --}}
-    >  ...
-    >  <div class="row">
-    >    <div class="comics">
-    >      <ul>
-    >        {{#each model as |comic|}}
-    >          <li>{{comic.title}}</li>
-    >        {{/each}}
-    >      </ul>
-    >    </div>
-    >  </div>
-    >  ...
-    >  ```
+   **Style** : encapsuler la liste dans une ``<div class="comics">``
+   
+   **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 01 - Should display comics](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L55) passant.*
+     
+   > ```javascript
+   > // app/routes/application.js
+   > ...
+   > window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes"}];
+   > ...
+   > ```
+   >  
+   > ```html
+   > {{!-- app/templates/application.hbs --}}
+   > ...
+   > <div class="row">
+   >   <div class="comics">
+   >     <ul>
+   >       {{#each model as |comic|}}
+   >         <li>{{comic.title}}</li>
+   >       {{/each}}
+   >     </ul>
+   >   </div>
+   > </div>
+   > ...
+   > ```
         
 1. Via la console, accéder à l'objet `comics` et ajouter un élément à la liste.
     * Utiliser d'abord la méthode `push` native des arrays javascript : [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) 
@@ -359,26 +359,24 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     * Pour chaque comic afficher l'auteur si il existe à côté du titre sous la forme ``<title> by <scriptwriter>`` ou ``<titre> by unknown scriptwriter`` si aucun auteur n'existe. 
       Ajouter à la liste un comic en renseignant son auteur pour constater les changements.
      
-     
     **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 02 - Should display scriptwriter if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L87) passant.*
-
     
-    >  ```javascript
-    >  // app/routes/application.js
-    >  ...
-    >  window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes", scriptwriter:"Bill Watterson"}];
-    >  ...
-    >  ```
-    >  ```html
-    >  {{!-- app/templates/application.hbs --}}
-    >  ...
-    >  <ul>
-    >    {{#each model as |comic|}}
-    >      <li>{{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}</li>
-    >    {{/each}}
-    >  </ul>
-    >  ...
-    >  ```    
+    > ```javascript
+    > // app/routes/application.js
+    > ...
+    > window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes", scriptwriter:"Bill Watterson"}];
+    > ...
+    > ```
+    > ```html
+    > {{!-- app/templates/application.hbs --}}
+    > ...
+    > <ul>
+    >   {{#each model as |comic|}}
+    >     <li>{{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}</li>
+    >   {{/each}}
+    > </ul>
+    > ...
+    > ```    
     >
     > * Pour effectuer l'affichage conditionnel on a utilisé le *helper inline* if tertiaire : ``{{if <condition> <val_if_true> <val_if_false>}}``
 
@@ -390,11 +388,11 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     Que constate-t-on ?
     
     > ```javascript
-    >  > Ember.set(comics[0], 'scriptwriter', "Juan Diaz Canales")
-    >  "Juan Diaz Canales"
-    >  .
-    >  > Ember.set(comics[1], 'scriptwriter', "New scriptwriter")
-    >  "New scriptwriter"
+    > > Ember.set(comics[0], 'scriptwriter', "Juan Diaz Canales")
+    > "Juan Diaz Canales"
+    > .
+    > > Ember.set(comics[1], 'scriptwriter', "New scriptwriter")
+    > "New scriptwriter"
     > ```
     
 1. Modifier l'affichage de chaque comic pour changer la classe de l'élément en fonction du fait que l'auteur soit renseigné ou non.
