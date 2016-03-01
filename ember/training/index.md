@@ -1,7 +1,7 @@
 ---
 layout: ember-training
 title: Formation Ember - Introduction
-permalink:  /
+permalink:  ember/training/
 next: ember/training/overview
 ---
 
