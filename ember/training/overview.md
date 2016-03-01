@@ -1,7 +1,7 @@
 ---
 layout: ember-training
 title: Formation Ember - Principes généraux
-permalink:  ember/training/overview/
+permalink:  overview/
 prev: ember/training/
 next: ember/training/underlyings
 ---
@@ -42,7 +42,7 @@ L'exemple suivant permet le rendu des URLs :
 * `/books/:book_id/edit`
 * `/books/create`
 
-```js
+```javascript
 App.Router.map(function() {
   this.route('books', function() {
       this.route('book', { path: '/:book_id' }, function () {
@@ -58,7 +58,7 @@ App.Router.map(function() {
 Les routes sont en charge de la récupération d'un modèle associé à la reqête de l'utilisateur puis puis de l'association avec contrôleur (et de son initialisation) et un template (et de son rendu).
 La récupération du modèle ainsi que l'association entre un (ou plusieurs) modèle(s) et un (ou plusieurs) template(s) implique également la gestion des transitions entre les différentes URLs de l'application. 
 
-```js
+```javascript
 App.BooksRoute = Ember.Route.extend({
     model: function () {
         return this.store.findAll('book');

@@ -1,7 +1,7 @@
 ---
 layout: ember-training
 title: Formation Ember - Actions & Contrôleurs
-permalink:  ember/training/actions-controllers/
+permalink:  actions-controllers/
 prev: ember/training/routing
 next: ember/training/components
 ---

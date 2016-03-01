@@ -1,7 +1,7 @@
 ---
 layout: ember-training
 title: Formation Ember
-permalink:  ember/training/ember-data/
+permalink:  ember-data/
 prev: ember/training/ember-cli
 next: ember/training/ember-data
 ---
