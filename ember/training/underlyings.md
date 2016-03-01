@@ -1,7 +1,7 @@
 ---
 layout: ember-training
 title: Formation Ember - Mécanismes sous-jacents
-permalink:  underlyings/
+permalink:  ember/training/underlyings/
 prev: ember/training/overview
 next: ember/training/ember-cli
 ---

@@ -1,7 +1,7 @@
 ---
 layout: ember-training
 title: Formation Ember - Routing
-permalink:  routing/
+permalink:  ember/training/routing/
 prev: ember/training/templates
 next: ember/training/actions-controllers
 ---

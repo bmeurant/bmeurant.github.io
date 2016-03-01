@@ -1,7 +1,7 @@
 ---
 layout: ember-training
 title: Formation Ember - Principes généraux
-permalink:  overview/
+permalink:  ember/training/overview/
 prev: ember/training/
 next: ember/training/underlyings
 ---
@@ -43,14 +43,14 @@ L'exemple suivant permet le rendu des URLs :
 * `/books/create`
 
 ```javascript
-App.Router.map(function() {
-  this.route('books', function() {
-      this.route('book', { path: '/:book_id' }, function () {
-          this.route('edit');
-      });
-      this.route('create');
-  });
-});
+ App.Router.map(function() {
+   this.route('books', function() {
+       this.route('book', { path: '/:book_id' }, function () {
+           this.route('edit');
+       });
+       this.route('create');
+   });
+ });
 ```
 
 ## Routes
