@@ -51,14 +51,14 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
  
    ```console
    $ node -v
-   v4.2.3
+   v4.2.6
    ```
     
 1. Installer Bower : 
 
    ```console
    $ npm install -g bower
-   bower@1.7.0
+   bower@1.7.2
    ```
 
 1. Puis [Ember CLI](http://www.ember-cli.com/) : 
@@ -66,17 +66,16 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ npm install -g ember-cli
    $ ember -v
-   version: 1.13.13
-   node: 4.2.3
-   npm: 2.13.13
+   version: 2.4.2
+   node: 4.2.6
+   npm: 2.13.15
    ```
 
 1. Créer une nouvelle application ``ember-training`` via [Ember CLI](http://www.ember-cli.com/) et la ligne de commande `ember` :
 
    ```console
    $ ember new ember-training
-   $ cd ember-training
-   version: 1.13.8
+   version: 2.4.2
    installing app
      create .bowerrc
      ...
@@ -86,58 +85,13 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    Successfully initialized git.
    ```
 
-1. Ouvrir le dossier de l'application et le fichier ``bower.json``. Dans les dépendances, changer les versions 
-d' [Ember][ember] à ``2.2.0`` et d' [Ember Data](https://github.com/emberjs/data) pour ``^2.2.1`` si ce n'est pas déjà le cas : 
-
-   ```javascript
-   // bower.json
-   
-   {
-     "name": "ember-training",
-     "dependencies": {
-       "ember": "^2.2.0",
-       ...
-       "ember-data": "^2.2.1",
-       ...
-   }
-   ```
-
-1. Mettre à jour les dépendances via ``bower install``
-
-   Changer également la version d' ``ember-data`` dans le fichier ``package.json`` : 
-
-   ```javascript
-   // package.json
-   
-   {
-     "name": "ember-training",
-     
-     ...
-     
-     "devDependencies": {
-       ...
-       "ember-data": "2.2.1",
-       ...
-     }
-   }
-   ``` 
-
-1. Mettre à jour les dépendances via ``npm install`` puis ``bower install``
-
-1. Ouvrir le fichier ``.ember-cli`` et changer le port de livereloading en ajoutant la ligne ``"live-reload-port": 49155`` :
-
-   ```text
-     "disableAnalytics": true,
-     "live-reload-port": 49155
-   ```
-
 1. Lancer enfin cette nouvelle application via la ligne de commande : 
 
    ```console
    $ cd ember-training
    $ ember serve
-   version: 1.13.13
-   Livereload server on http://localhost:49155
+   version: 2.4.2
+   Livereload server on http://localhost:49152
    Serving on http://localhost:4200/
    ```
 
@@ -145,9 +99,9 @@ d' [Ember][ember] à ``2.2.0`` et d' [Ember Data](https://github.com/emberjs/dat
 
    ```console
    DEBUG: -------------------------------
-   DEBUG: Ember      : 2.2.0
-   DEBUG: Ember Data : 2.2.1
-   DEBUG: jQuery     : 1.11.3
+   DEBUG: Ember      : 2.4.3
+   DEBUG: Ember Data : 2.4.2
+   DEBUG: jQuery     : 1.12.2
    DEBUG: -------------------------------
    ```
 
@@ -198,7 +152,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    
      "devDependencies": {
        ...
-       "ember-cli-sass": "^5.2.0",
+       "ember-cli-sass": "^5.3.0",
        ...
      }
    ...
@@ -221,7 +175,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    ...
    
      "dependencies": {
-       "ember": "^2.1.0",
+       "ember": "~2.4.3",
        ...
        "bootstrap-sass": "~3.3.6"
      }

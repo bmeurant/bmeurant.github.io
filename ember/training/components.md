@@ -1,7 +1,7 @@
 ---
 layout: ember-training
 title: Formation Ember - Composants
-permalink:  ember/training/components
+permalink:  ember/training/components/
 prev: ember/training/actions-controllers
 next: ember/training/ember-data
 ---
@@ -48,15 +48,15 @@ Il peut s'agir :
 
 * de composants de type *inline* :
  
-   ```html
-   {{my-component}}
-   ```
+```html
+{{my-component}}
+```
    
 * de composants de type "block" encapsulant du contenu :  
 
-   ```html
-   {{#my-component}}<p>anything</p>{{/my-component}}
-   ```
+```html
+{{#my-component}}<p>anything</p>{{/my-component}}
+```
 
 ## Passage de paramètres
 
@@ -87,7 +87,7 @@ Les deux paramètres ``title`` (litéral) et ``user`` (complexe) ont donc été 
 
 1. On souhaite afficher l'image de couverture pour chaque comic juste après le titre. Comme on anticipe que l'on aura besoin de réutiliser cet élément (dans une future notion d'album ?),
 on va en faire un composant. 
-   * Créer un composant très simple (template uniquement) affichant la couverture du comic dans une image de classe `cover`.
+   * Créer un composant `image-cover` très simple (template uniquement) affichant la couverture du comic dans une image de classe `cover`.
    * Copier les images de couverture en copiant [ce repertoire](https://github.com/bmeurant/ember-training/tree/master/public/assets/images) vers ``public/assets/images``
    * Pour le moment, se contenter d'afficher, pour tous les comics, la couverture par défaut (``public/assets/images/comics/covers/default.jpg``) 
    * Mettre à jour le template ``app/templates/comic/index.hbs`` pour ajouter l'appel du composant juste après le titre 
@@ -141,6 +141,13 @@ on va en faire un composant.
 </div>
 
 {% raw %}
+
+## Personalisation des composants
+
+
+
+
+{% endraw %}
 
 
 [ember]: http://emberjs.com/

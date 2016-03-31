@@ -12,7 +12,7 @@ next: ember/training/routing
 
 **NB :** *Les exercices de cette section seront validés par le passage des cas de tests associés. Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet* :
 
-* [01-templates-test.js](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js) dans ``tests/acceptance``.
+* [01-templates-test.js](https://github.com/bmeurant/ember-training/blob/templates-tests/tests/acceptance/01-templates-test.js) dans ``tests/acceptance``.
 
 Les tests peuvent être lancés via la commande suivante (pour l'instant ils sont non passants) :
 
@@ -302,7 +302,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
    **Style** : encapsuler la liste dans une ``<div class="comics">``
    
-   **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 01 - Should display comics](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L55) passant.*
+   **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 01 - Should display comics](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L34) passant.*
      
    > ```javascript
    > // app/routes/application.js
@@ -360,7 +360,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     * Pour chaque comic afficher l'auteur si il existe à côté du titre sous la forme ``<title> by <scriptwriter>`` ou ``<titre> by unknown scriptwriter`` si aucun auteur n'existe. 
       Ajouter à la liste un comic en renseignant son auteur pour constater les changements.
      
-    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 02 - Should display scriptwriter if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L87) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 02 - Should display scriptwriter if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L51) passant.*
     
     > ```javascript
     > // app/routes/application.js
@@ -400,7 +400,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     
     **style** : utiliser les classes `comic-with-scriptwriter` et `comic-without-scriptwriter`.
     
-    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 03 - Should change class if no scriptwriter](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L115) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 03 - Should change class if no scriptwriter](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L68) passant.*
     
     > ```html
     > {{!-- app/templates/application.hbs --}}
@@ -420,7 +420,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 1. Modifier le template pour afficher un simple message `"Sorry, no comic found"` si la liste est vide. 
     * Via la console, supprimer tous les objets de la liste et constater les changements. 
     
-       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 04 - Should display message if empty](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L133) passant.*
+       **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 04 - Should display message if empty](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L84) passant.*
  
     > ```html
     > {{!-- app/templates/application.hbs --}}

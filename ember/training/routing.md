@@ -123,18 +123,14 @@ imbrication président donc à l'organisation des différents templates de notre
   {% capture m %}
   {% raw %}
    
-1. Copier le test d'acceptance [02-routing-test.js](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js) dans ``tests/acceptance``.
-
-1. Renommer le test unitaire ``tests/unit/comics-test.js`` en ``tests/unit/02-routing-test.js``
-
 1. Modifier le contenu du template ``app/templates/comics.hbs`` :
     * Déplacer le contenu de la route ``application.js`` dans la route ``comics.js``
     * Déplacer le contenu de la ``<div class="row">`` du template ``application.hbs`` dans le tempate ``comics.hbs``
     * Ajouter un sous-titre ``Comics list`` juste après l'ouverture de la ``<div class="comics">``
     * Ajouter un paragraph de classe ``no-selected-comic`` juste après la fermeture de la ``<div class="comics">`` contenant le texte "Please select on comic book for detailled information."
  
-    **Tests** : Les modifications doivent permettre de rendre les tests suivants passants : [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
-    et [02 - Routing - 02 - Should display text on comics/](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
+    **Tests** : Les modifications doivent permettre de rendre les tests suivants passants : [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L60)
+    et [02 - Routing - 02 - Should display text on comics/](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L75)
 
     > ```html
     > {{!-- app/templates/application.hbs --}}
@@ -240,43 +236,43 @@ Comme évoqué juste au-dessus, trois *hooks* [Ember][ember] s'intéressent donc
  
 * ``model()`` : Cette fonction doit retourner un objet ou une collection d'objet. Elle est automatiquement appelée lorsque la route est activée.
   
-     Le modèle ainsi récupéré (en synchrone ou en asynchrone) est ainsi transmis au template associé ainsi qu'aux éventuelles routes filles. La gestion de l'asynchronisme
-     est effectuée pour nous par le framework en utilisant des promesses (*promises*). Manipuler un objet ou une collection mémoire ou le retour d'une requête à une API est donc
-     strictement équivalent de ce point de vue.
+  Le modèle ainsi récupéré (en synchrone ou en asynchrone) est ainsi transmis au template associé ainsi qu'aux éventuelles routes filles. La gestion de l'asynchronisme
+  est effectuée pour nous par le framework en utilisant des promesses (*promises*). Manipuler un objet ou une collection mémoire ou le retour d'une requête à une API est donc
+  strictement équivalent de ce point de vue.
 
-     ```javascript
-     model: function () {
-       return [{title: "Blacksad"}, {title: "Calvin and Hobbes", scriptwriter: "Bill Watterson"}];
-     }
-     ```
-     
-     A noter que cette méthode n'est pas appelée si un modèle est fourni à la route lors de son activation, par exemple via le *helper* ``link-to`` ou
-     un appel à ``transitionTo``. Nous reviendrons sur ces deux cas par la suite.
+  ```javascript
+  model: function () {
+    return [{title: "Blacksad"}, {title: "Calvin and Hobbes", scriptwriter: "Bill Watterson"}];
+  }
+  ```
+  
+  A noter que cette méthode n'est pas appelée si un modèle est fourni à la route lors de son activation, par exemple via le *helper* ``link-to`` ou
+  un appel à ``transitionTo``. Nous reviendrons sur ces deux cas par la suite.
 
 * ``beforeModel()`` : Cette méthode est appelée au tout début de la résolution de la route et, comme son nom l'indique, avant la récupération du modèle vie la méthode
-   ``model()``. 
-   
-     Elle est courament utilisée pour effectuer une vérification susceptible d'entrainer l'annulation de la transition en cours ou une redirection sans 
-     que la résolution du modèle soit préalablement nécessaire. 
-     
-     Comme elle prend totalement en charge l'aspect asynchrone, cela lui permet d'être aussi très utile lorsqu'il 
-     est nécessaire d'effectuer une opération asynchrone avant de pouvoir tenter de récupérer le modèle. En effet, le cycle d'exécution attendra automatiquement la résolution 
-     de l'appel asynchrone avant d'exécuter la méthode ``model``.
-   
-     ```javascript
-     beforeModel: function(transition) {
-       ...
-     }
-     ```
+  ``model()``. 
+  
+  Elle est courament utilisée pour effectuer une vérification susceptible d'entrainer l'annulation de la transition en cours ou une redirection sans 
+  que la résolution du modèle soit préalablement nécessaire. 
+  
+  Comme elle prend totalement en charge l'aspect asynchrone, cela lui permet d'être aussi très utile lorsqu'il 
+  est nécessaire d'effectuer une opération asynchrone avant de pouvoir tenter de récupérer le modèle. En effet, le cycle d'exécution attendra automatiquement la résolution 
+  de l'appel asynchrone avant d'exécuter la méthode ``model``.
+  
+  ```javascript
+  beforeModel: function(transition) {
+    ...
+  }
+  ```
    
 * ``afterModel()`` : Cette méthode est appelée après la résolution du modèle et est utilisée régulièrement pour déclencher des transitions, des redirections ou toute sorte d'opération
   nécessitant la résolution préalable du modèle.
   
-    ```javascript
-    afterModel: function(model, transition) {
-      ...
-    }
-    ```
+  ```javascript
+  afterModel: function(model, transition) {
+    ...
+  }
+  ```
  
 Noter que dans ces deux dernières méthodes, un objet ``transition`` est fourni automatiquement. Cet objet permet d'agir sur la transaction en cours et notamment d'annuler
 la transition courante (``transition.abort()``) ou de reprendre une transition précédemment annulée (``transition.retry()``).
@@ -394,7 +390,7 @@ Par convention, les éléments constitutifs des routes filles (template, route, 
     * La nouvelle route doit afficher un texte *"Comic selected !"* dans une div de classe ``selected-comic`` à droite de la liste de comics
     * Ne pas oublier l' ``{{outlet}}`` dans la route mère
 
-    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 03 - Should display single comic zone](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 03 - Should display single comic zone](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L83) passant.*
 
     > ```console
     > $ ember generate route comics/comic
@@ -524,6 +520,8 @@ notation, plus évolutive, est à privilégier lorsque l'on souhaite accéder au
   {% capture m %}
   {% raw %}
   
+1. Copier le contenu du test unitaire [comic-test.js](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comic-test.js) dans ``comic-test.js``.
+  
 1. Pour le moment, transformons la route ``comics.comic`` avec un segment dynamique nous permettant d'afficher le détail d'un comic à la 
 place du texte précédent. 
     * La nouvelle route doit répondre à l'URL ``/comics/<slug>`` ou ``slug`` correspond à la propriété ``slug`` du modèle ``comic``
@@ -549,8 +547,8 @@ place du texte précédent.
       </div>
       ```
     
-    **Test** : Les modifications doivent permettre de rendre passants les tests unitaires : [model() should retrieve existing slug](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/comic-test.js#L87)
-    et d'acceptance : [02 - Routing - 04 - Should display the comic detail](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
+    **Test** : Les modifications doivent permettre de rendre passants les tests unitaires : [model() should retrieve existing slug](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comic-test.js#L52)
+    et d'acceptance : [02 - Routing - 04 - Should display the comic detail](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L91)
 
     > ```javascript
     > // app/router.js
@@ -736,7 +734,7 @@ comic deviennent un lien cliquable vers la route du comic ``/comic/<comic_slug>`
    * Modifier la route ``app/routes/comics/comic.js`` pour ajouter un ``console.log`` avant le ``return`` de la
      méthode ``model``
    
-   **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 05 - Should display links](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+   **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 05 - Should display links](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L110) passant.*
 
    Ouvrir la console puis accéder au détail du comic en cliquant sur le lien puis accéeder eu détail d'un autre comic en entrant 
    directement l'URL dans le navigateur.
@@ -904,7 +902,7 @@ par défaut vide, bien entendu.
     * Ajouter un template ``error`` au niveau de l'application (``app/templates/error.hbs``). Ce template se 
       contente d'afficher le model dans un paragraphe d'id ``error``
       
-    **Test** : *Les modifications doivent permettre de rendre le test unitaire [model() should throw error if slug not found](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/comic-test.js#L87) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test unitaire [model() should throw error if slug not found](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comic-test.js#L61) passant.*
       
     > ```javascript
     >   // app/routes/comics/comic.js
@@ -1175,7 +1173,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
      </div>
      ```
      
-     **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 06 - Should display edit route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+     **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 06 - Should display edit route](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L128) passant.*
       
      > ```console
      > \app
@@ -1283,7 +1281,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    * Le lien est vide et doit porter la classe ``btn-edit``
    * Encapsuler le lien dans une div de classe ``buttons`` en haut du template :
    
-   **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 07 - Should link to edit route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+   **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 07 - Should link to edit route](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L147) passant.*
    
    ```html
    <div class="buttons">
@@ -1304,13 +1302,12 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    >
    > </div>
    > ```
-
+   
 1. Créer la route ``comic.create`` fille de la route ``comic`` accessible à l'URL ``comics/create``
    * Copier dans le template de cette route exactement le même template que la route ``comic.edit``
    * Modifier / implémenter la route ``app/routes/comics/create.js`` pour créer une nouvelle instance du modèle ``Comic`` et l'ajouter à la liste
    
-   **Test** : Les modifications doivent permettre de rendre passants les tests unitaire : [should create new model](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comics/create-test.js#L87)
-   et d'acceptance : [02 - Routing - 08 - Should display create route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87)
+   **Test** : Les modifications doivent permettre de rendre passants le test : [02 - Routing - 08 - Should display create route](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L166)
 
    
    > ```console
@@ -1390,7 +1387,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    * Utiliser la forme *inline* du *helper* ``link-to``
    * Le lien est vide et doit porter la classe ``add-comic``
    
-   **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 09 - Should link to create route](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/02-routing-test.js#L87) passant.*
+   **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 09 - Should link to create route](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L188) passant.*
    
    > ```html
    > {{!-- app/templates/comics.hbs --}}
