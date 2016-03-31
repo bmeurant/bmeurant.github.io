@@ -187,7 +187,7 @@ Jusqu'à [Ember][ember] 2.0, tous les *bindings* étaient par défaut voire obli
 *binding* unidirectionnel et pas toujours pertinent. Dans le cas majoritaire où l'on souhaite simplement afficher une information non éditable qui sera mise à jour au changement du modèle mais non modifiable
 par les utilisateurs, la mise en place d'un tel mécanisme est inutile. 
 
-Depuis [Ember][ember] 2.0, le *binding* est unidirectionnel par défaut lorsque l'on utilise la notation *chevron* (`<` ou *angle-bracket*) pour nos composants, standards ou custom :
+Depuis [Ember][ember] 2.0, le *binding* est unidirectionnel par défaut lorsque l'on utilise la notation *chevron* (`<` ou *angle-bracket*) pour nos composants standards :
 
 ```html
 {{!-- one-way binding --}}
@@ -201,11 +201,12 @@ Le *binding* bidirectionnel est possible si l'on utilise l'ancienne notation *ac
 {{input type="text" value=comic.title}}
 ```
 
-Cette dernière option est notamment obligatoire si l'on souhaite un *binding* bidirectionnel sur des composants standards (``input``, ``textarea``, etc.) pour lesquels le helper ``mut`` n'est pas supporté.
-Dans tous les autres cas de composants custom, l'utilisation de ce helper ``mut`` est à privilégier pour indiquer le caractère mutable de la propriété *bindée*.
+Cette dernière option est notamment obligatoire si l'on souhaite un *binding* bidirectionnel sur des composants standards (``input``, ``textarea``, etc.) pour lesquels le helper ``mut`` ne sera pas supporté.
+Dans les versions à venir (lorsque le support des *angle bracket components* ou *glimmer components* sera disponible) et pour tous les autres cas de composants standard ou custom, 
+l'utilisation du helper ``mut`` sera à privilégier pour indiquer le caractère mutable de la propriété *bindée*.
 
 ```html
-{{!-- two-way binding --}}
+{{!-- two-way binding (future syntax) --}}
 <my-component value={{mut comic.title}} />
 ```
 

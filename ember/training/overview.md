@@ -149,10 +149,10 @@ Ce qui explique l'absence des contrôleurs sur la figure ci-dessus.
 
 ## Composants
 
-Un composant [Ember][ember] permet de définir une balise HTML personnalisée, permettant ainsi de partager de puissants éléments réutilisables au sein d'une application [Ember][ember]. 
-Depuis toujours [Ember][ember] met fortement en avant son approche composants. Avec la version 2, celle-ci s'est encore renforcée avec la disparition des *vues*, avantageusement remplacées par des composants.
-Les composants Ember peuvent embarquer des contrôleur explicites ou non qui se comportent comme n'importe quel contrôleur. Dans les toutes prochaines versions à venir, l'apparition de composants 
-directement routables devrait rendre l'utilisation de contrôleurs seuls obsolète.
+Un composant [Ember][ember] permet de partager de puissants éléments réutilisables au sein d'une application [Ember][ember]. 
+Depuis toujours [Ember][ember] met fortement en avant son approche composants. Avec la version 2, celle-ci s'est encore renforcée avec la disparition des *vues* remplacées par des composants.
+Les composants [Ember][ember] s'articulent autour d'une partie template et/ou d'une partie logique. Dans les prochaines versions à venir, l'apparition de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md)
+devrait rendre l'utilisation de contrôleurs seuls obsolète.
 
 -> [doc officielle](http://emberjs.com/guides/components/).
 
