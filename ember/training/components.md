@@ -58,7 +58,7 @@ Il peut s'agir :
 {{#my-component}}<p>anything</p>{{/my-component}}
 ```
 
-## Passage de paramètres
+### Passage de paramètres
 
 Il est bien entendu possible de passer des paramètres aux composants afin qu'ils puissent les afficher voire les manipuler. Ce passage de paramètres se fait tout naturellement
 selon une syntaxe d'attribut html de type ``nom=valeur``. La valeur pouvant évidemment être un objet complexe. Aini la déclaration suivante : 
@@ -90,7 +90,7 @@ on va en faire un composant.
    * Créer un composant `image-cover` très simple (template uniquement) affichant la couverture du comic dans une image de classe `cover`.
    * Copier les images de couverture en copiant [ce repertoire](https://github.com/bmeurant/ember-training/tree/master/public/assets/images) vers ``public/assets/images``
    * Pour le moment, se contenter d'afficher, pour tous les comics, la couverture par défaut (``public/assets/images/comics/covers/default.jpg``) 
-   * Mettre à jour le template ``app/templates/comic/index.hbs`` pour ajouter l'appel du composant juste après le titre 
+   * Mettre à jour les templates ``app/templates/comic/index.hbs`` et ``app/templates/comic/edit.hbs`` pour ajouter l'appel du composant juste après le titre 
    
    > ```html
    > {{!-- app/templates/components/image-cover.hbs --}}
@@ -103,6 +103,17 @@ on va en faire un composant.
    > <h3>{{model.title}}</h3>
    > {{image-cover}}
    > <dl>
+   > ...
+   > ```
+   >
+   > ```html
+   > {{!-- app/templates/comic/edit.hbs --}}
+   > ... 
+   > <div class="title">
+   >   {{input id="title" type="text" value=model.title}}
+   > </div>
+   > {{image-cover name=model.slug}}
+   > <div class="description">
    > ...
    > ```
 
@@ -199,7 +210,7 @@ Il est également possible de spécifier explicitement le nom de la propriété 
 
 ```javascript
 export default Ember.Component.extend({
-  attributeBindings: 'name:userName',
+  attributeBindings: 'userName:name',
   userName: "username"
 });
 ```
@@ -208,12 +219,27 @@ Cela permet notamment de définir des valeurs d'attributs à partir de valeurs d
 
 ### Paramètres dynamiques et computed properties
 
-Il est nécessaire de rappeler explicitement que les paramètres passés dynamiquement aux composants ne sont, par définition, pas disponibles au moment de la déclaration des propriétés de notre composant. Ainsi,
-la syntaxe suivante (où `user` est passé au composant par le template englobant) ne peut pas fonctionner :
+Les binding de classes ou d'attributs peuvent faire directement référence à des paramètres passés au composant. Ainsi si un composant est invoqué de la manière suivante : 
+ 
+```html
+{{my-component selected=true}}
+```
+
+Il peut parfaitement déclarer le binding suivant :
 
 ```javascript
 export default Ember.Component.extend({
-  attributeBindings: 'name:userName',
+  classNameBindings: 'selected'
+});
+```
+
+Dans le cas ou un traitement doit être effectué avec le paramètre, en revanche, il est nécessaire de rappeler explicitement que les paramètres passés dynamiquement aux composants ne sont, 
+par définition, pas disponibles au moment de la déclaration des propriétés de notre composant. Ainsi, la syntaxe suivante (où `user` est passé au composant par le template englobant) 
+ne peut pas fonctionner :
+
+```javascript
+export default Ember.Component.extend({
+  attributeBindings: 'userName:name',
   userName: user.get('fullName')
 });
 ```
@@ -223,7 +249,7 @@ d'utiliser une **computed property** :
 
 ```javascript
 export default Ember.Component.extend({
-  attributeBindings: 'name:userName',
+  attributeBindings: 'userName:name',
   userName: function () {
       return this.get('user.fullName');
   }.property('user.fullName')
@@ -240,7 +266,7 @@ export default Ember.Component.extend({
    * Supprimer le fichier de tempates et créer le composant javascript
    * Faire en sorte de supprimer la div englobante tout en conservant le fonctionnement du composant
    
-   **Test** : Ces modifications doivent conserver passant le test [image-cover-test - renders image-cover](TODO link) et
+   **Tests** : Ces modifications doivent conserver passant le test [image-cover-test - renders image-cover](TODO link) et
    rendre passant le test [renders image-cover - root is image](TODO link)
    
    > ```javascript
@@ -257,12 +283,84 @@ export default Ember.Component.extend({
    >   }.property('name')
    > });
    > ```
-
+   >
+   > On note au passage l'utilisation des *littéraux de gabarits (template literals)* ES6. cf. [MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Litt%C3%A9raux_gabarits)
+   
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
 </div>
 
 {% raw %}
+
+## Gestion des évènements DOM
+
+Les composants que nous avons manipulés plus haut se contentent d'effectuer des tâches de rendu spécifiques mais ne proposent pas d'interaction avec l'utilisateur. Il est néanmoins 
+évidemment possible et très courant de demander à un composant de réagir à différents évènements DOM le concernant (c'est à dire intervenant sur la portion d'arbre DOM qu'il gère).
+
+Cela se fait simplement en déclarant dans le composant une fonction du même nom que l'évènement auquel on souhaite que le composant réagisse. La liste des évènements gérés nativement
+est disponible dans la [documentation officielle](https://guides.emberjs.com/v2.4.0/components/handling-events/#toc_event-names). 
+
+Un paramètre est passé automatiquement à la function. Il contient l'évènement d'origine afin de permettre la récupération d'informations complémentaires (data, origine, etc.). L'évènement
+n'est pas consommmé et continue à être propagé au sein de l'arbre d'appel. Il est possible de stopper cette propagation en renvoyant `false`.
+
+```javascript
+export default Ember.Component.extend({
+  click(event) {
+      // do whatever you want
+      ...
+      
+      // stop event propagation if you want
+      return false; 
+  }
+});
+```
+
+A noter qu'il est également possible de définir des évènements personnalisés pour gérer des évènements non pris en charge nativement. Nous y reviendrons.
+
+{% endraw %}
+
+<div class="work answer">
+  {% capture m %}
+  {% raw %}
+
+1. Créer un composant ``fav-btn`` qui va mettre en place un bouton permettant de sélectionner / désélectionner un comic en favori
+   * il doit porter la classe ``btn-fav``
+   * le comic est considéré favori si sa propriété ``isFavorite`` est à ``true``
+   * le clic sur le bouton doit changer l'affichage en positionnant / enlevant la classe ``selected`` sur ce composant
+   * le clic doit inverser la valeur de la propriété ``isFavorite`` du comic
+   * modifier les templates ``comic/index.hbs`` et ``comic/edit.hbs`` pour intégrer ce composant juste en dessous de l'élément racine. L'appel doit être de cette forme : 
+    
+     ```html
+     {{fav-btn selected=...}}
+     ```
+   
+   **Test** : Ces modifications doivent rendre passant les tests [renders fav-btn](TODO link), 
+   [update fav-btn after external change](TODO link) 
+   et [update fav-btn after click](TODO link)
+   
+   > ```javascript
+   > // app/components/fav-btn.js
+   > 
+   > import Ember from 'ember';
+   > 
+   > export default Ember.Component.extend({
+   >   tagName: 'span',
+   >   classNames: 'btn-fav',
+   >   classNameBindings: 'selected',
+   > 
+   >   click: function () {
+   >     this.toggleProperty('selected');
+   >   }
+   > });
+   > ```
+   
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
+{% raw %}
+
+## Gestion des actions
 
 {% endraw %}
 
