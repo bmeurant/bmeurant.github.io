@@ -144,10 +144,125 @@ on va en faire un composant.
 
 {% raw %}
 
-## Personalisation des composants
+## Personalisation du rendu d'un composant
 
+Le rendu des composants [Ember][ember] peut être très largement personalisé en créant une sous classe de [Ember.Components](http://emberjs.com/api/classes/Ember.Component.html) dans ``app/components``. 
+Il est alors possible de configurer différentes choses : 
+ 
+### Elément HTML
 
+On a vu plus haut qu'[Ember][ember] encapsule par défaut les composants dans des div englobantes. Il est facilement possible de modifier ce comportement grâce à la propriété ``tagName`` du composant.
+Cette propriété attend une chaîne de caractère contenant le type de l'élément : 
 
+```javascript
+export default Ember.Component.extend({
+  tagName: 'li'
+});
+```
+
+### Classes
+
+De la même manière il est possible de spécifier le ou les noms de classe(s) associés au composant via la propriété ``classNames``. Cette propriété attend soit une chaîne de caractère avec le nom de la classe unique
+à ajouter au composant soit un tableau de chaînes de caractères dans le cas de classes multiples : 
+
+```javascript
+export default Ember.Component.extend({
+  classNames: ['btn', 'success']
+});
+```
+
+Il est également possible de positionner des classes sur l'élément racine d'un composant en fonction de critères applicatifs - de la valeur d'une propriété booléenne en l'occurrence. Cela s'effectue grâce
+à la propriété ``classNameBindings``. La présence d'une classe sur le composant dépend ainsi de la valeur de la propriété booléenne associée sur le format ``<prop>:<classIfTrue>:<classIfFalse>``.
+
+```javascript
+export default Ember.Component.extend({
+  classNameBindings: 'isSuccess:success:error',
+  isSuccess: true
+});
+```
+
+Tout comme la propriété ``classNames``, cette propriété accèpte aussi  bien une châine unique (une seule classe) qu'un tableau de chaînes.
+
+### Attributs
+
+Il est également posssible de positionner et de modifier différents attributs sur l'élément racine du composant via la propriété ``attributeBindings``. Celle-ci fonctionne comme la précédente et autorise
+également la présence d'un seul identifiant d'attribut (chaîne) ou d'une liste d'identifiants. Elle permet de positionner l'attribut spécifié à la valeur de la propriété de même nom.
+
+```javascript
+export default Ember.Component.extend({
+  attributeBindings: 'name',
+  name: "username"
+});
+```
+
+Il est également possible de spécifier explicitement le nom de la propriété : 
+
+```javascript
+export default Ember.Component.extend({
+  attributeBindings: 'name:userName',
+  userName: "username"
+});
+```
+
+Cela permet notamment de définir des valeurs d'attributs à partir de valeurs de paramètres passés au composant.
+
+### Paramètres dynamiques et computed properties
+
+Il est nécessaire de rappeler explicitement que les paramètres passés dynamiquement aux composants ne sont, par définition, pas disponibles au moment de la déclaration des propriétés de notre composant. Ainsi,
+la syntaxe suivante (où `user` est passé au composant par le template englobant) ne peut pas fonctionner :
+
+```javascript
+export default Ember.Component.extend({
+  attributeBindings: 'name:userName',
+  userName: user.get('fullName')
+});
+```
+
+En effet, au moment de la déclaration de ``userName``, ``user`` n'est pas définit et la valeur ne serait, à fortiori pas mise à jour lors du changement de la valeur ``user.fullName``. Il est donc nécessaire
+d'utiliser une **computed property** : 
+
+```javascript
+export default Ember.Component.extend({
+  attributeBindings: 'name:userName',
+  userName: function () {
+      return this.get('user.fullName');
+  }.property('user.fullName')
+});
+```
+
+{% endraw %}
+
+<div class="work answer">
+  {% capture m %}
+  {% raw %}
+
+1. Modifier le composant ``image-cover`` pour passer sur une version full javascript 
+   * Supprimer le fichier de tempates et créer le composant javascript
+   * Faire en sorte de supprimer la div englobante tout en conservant le fonctionnement du composant
+   
+   **Test** : Ces modifications doivent conserver passant le test [image-cover-test - renders image-cover](TODO link) et
+   rendre passant le test [renders image-cover - root is image](TODO link)
+   
+   > ```javascript
+   > // app/components/image-cover.js
+   > 
+   > import Ember from 'ember';
+   > 
+   > export default Ember.Component.extend({
+   >   tagName: 'img',
+   >   classNames: 'cover',
+   >   attributeBindings: 'src',
+   >   src: function () {
+   >     return `/assets/images/comics/covers/${this.get('name')}.jpg`;
+   >   }.property('name')
+   > });
+   > ```
+
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
+{% raw %}
 
 {% endraw %}
 
