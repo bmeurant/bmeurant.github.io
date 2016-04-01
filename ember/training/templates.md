@@ -255,10 +255,8 @@ Ou d'une autre sorte de *helper* ``if`` :
 Les *helpers inline* sont fréquement utilisés pour dynamiser les valeurs d'attributs HTML :
 
 ```html
-<div class={{if isSelected 'current'}}>
-  ...
-</div>
-  ```
+<div class={{if isSelected 'current'}}> ... </div>
+```
   
 A noter que les *helpers* (et notament les *helpers inline*) peuvent être imbriqués (*nested*) à l'aide de parenthèses ``()``
 

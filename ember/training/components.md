@@ -110,6 +110,8 @@ on va en faire un composant.
    * Modifier le template ``app/templates/comic/index.hbs`` pour ajouter les passage d'un paramètre au composant lui permettant d'accéder à l'identifiant (`slug`) du comic.
    * Modifier le template du composant pour remplacer *"default"* par la valeur de ce slug
    
+   **Test** : Ces modifications doivent permettre de rendre passant le test [image-cover-test - renders image-cover](TODO link)
+   
    > ```html
    > {{!-- app/templates/comic/index.hbs --}}
    > ... 
@@ -132,7 +134,7 @@ on va en faire un composant.
    > <div id="ember483" class="ember-view"><img class="cover" src="/assets/images/comics/covers/blacksad.jpg"></div>
    > ```
    > 
-   > On retrouve bien le code de notre template mais on constate également qu'il a été encapsulé dans un élément ``div`` englobant attaché par Ember
+   > On retrouve bien le code de notre template et on constate qu'il a été encapsulé dans un élément ``div`` englobant attaché par Ember
    > à notre composant.
    
 

@@ -44,18 +44,18 @@ L'accès au(x) contrôleur(s) au sein d'une route peut s'effectuer de différent
 * via l'accès direct à la propriété [controller](http://emberjs.com/api/classes/Ember.Route.html#property_controller) 
 définie et provisionnée par [Ember][ember] au sein de la route :
 
-   ```javascript
-   this.get('controller');
-   ```
+  ```javascript
+  this.get('controller');
+  ```
   
 * via l'utilisation de la méthode [controllerFor()](http://emberjs.com/api/classes/Ember.Route.html#method_controllerFor) qui,
 comme la méthode [modelFor](http://emberjs.com/api/classes/Ember.Route.html#method_modelFor) pour le modèle, permet d'accéder
 au contrôleur associé à une route donnée :
 
-   ```javascript
-   this.controllerFor('mere.fille');
-   this.controllerFor(this.routeName);
-   ```
+  ```javascript
+  this.controllerFor('mere.fille');
+  this.controllerFor(this.routeName);
+  ```
 
 L'objet modèle peut donc être récupéré, manipulé et modifié, depuis le contrôleur, via l'accés à la propriété ``model`` et depuis la route,
 en passant par le contrôleur :
