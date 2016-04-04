@@ -92,7 +92,7 @@ Il peut s'agir :
     {{#each model.paragraphs as |paragraph|}}
       <p>paragraph</p>
     {{/each}}
-  {{/my-component}}
+  {{/full-article}}
   ```
   
   avec le template suivant :
@@ -121,7 +121,7 @@ Il peut s'agir :
   ```html
   <div class="article">
     <article>
-      <h2>title</h2>
+      <h2>Lorem ipsum ...</h2>
       <div class="content">
         <p>Lorem ipsum dolor sit amet</p>
         <p>consectetur adipiscing elit</p>
@@ -482,7 +482,7 @@ export default Ember.Component.extend({
      {{fav-btn selected=...}}
      ```
    
-   **Test** : Ces modifications doivent rendre passant les tests [renders fav-btn](TODO link), 
+   **Tests** : Ces modifications doivent rendre passant les tests [renders fav-btn](TODO link), 
    [update fav-btn after external change](TODO link) 
    et [update fav-btn after click](TODO link)
    
@@ -755,7 +755,110 @@ export default Ember.Component.extend({
 
 ## Cycle de vie des composants
 
+Les opération de création, de rendu, de mise à jour et de destruction des composants obéissent à un cycle de vie complet
+constitué des différentes méthodes appelées à chaque étape. Ces méthodes sont autant de *hook* qu'il est possible 
+d'étendre pour enrichir le composant et effectuer des opérations complémentaires.
+
+Lorsque l'on souhaite surcharger l'une de ces méthodes pour y greffer nos opérations, il est généralement nécessaire d'appeler la 
+méthode originale même si toutes ces méthodes n'ont pas nécessairement d'implémentation par défaut :
+ 
+```javascript
+didInsertElement() {
+  this._super(...arguments);
+  ...
+}
+```
+
+Les cycles de vie liés au rendu initial et aux rendus ultérieurs (mises à jour) sont sensiblement différents :
+
+### Rendu initial
+
+1. ``init`` : Initialisation du composant, initialisation des attributs, etc.
+1. ``didReceiveAttrs`` : Appelé juste après ``init`` et à chaque mise à jour des attributs. Ce *hook* peut être
+   utilisé pour effectuer des opérations complémentaires sur les attributs avant les opérations de rendu.
+1. ``willRender`` : Appelé à chaque fois que le template va être rendu, quelqu'en soit la raison. Mais avant le rendu lui même.
+1. ``didInsertElement`` : Appelé aprés le rendu (initial uniquement), une fois que le template a été totalement rendu et inséré
+   dans le DOM. A ce moment, le composant est accessible via la notation ``this.$()``. Ce *hook* est trés fréquement exploité
+   pour interagir avec des éléments issus de librairies third-party qui nécessitent d'être insérées dans le DOM avant d'être 
+   manipulés (datePicker, etc.)
+1. ``didRender`` : Appelé après l'ensemble des opérations de rendu et de mise à jour du DOM.
+
+### Rendus ultérieurs
+
+1. ``didUpdateAttrs`` : Appelé quand les attributs du composant sont mise à jour mais pas lors des changement de valeur
+   des propriétés passées au compoosant. Ce *hook* n'est pas appelé non plus lors d'un rerender explicite.
+1. ``didReceiveAttrs`` : cf. plus haut
+1. ``willUpdate`` : Appelé à chaque fois que le template va être rendu, quelqu'en soit la raison.
+1. ``willRender`` : cf. plus haut
+1. ``didUpdate`` : Appelé lors que le DOM a été pleinement mis à jour.
+1. ``didRender`` : cf. plus haut 
+
+Des *hooks* sont également disponible lors de la phase de destruction :
+
+### Destruction
+
+1. ``willDestroyElement`` : Appelé lorsqu'un composant détécte qu'il doit être supprimé, avant sa suppression. Ce *hook*
+   permet notamment de supprimer d'éventuels listeners.
+1. ``willClearRender`` : Appelé lorsque la vue contenant le composant va être renrendue.
+1. ``didDestroyElement`` : Appelé après la destruction de l'élément du composant.
+
+La très grand majorité de ces *hook* est très rarement utilisée. Les plus fréquents sont ``didInsertElement``, 
+``willDestroyElement`` et moins fréquement ``didReceiveAttrs``.
+
 {% endraw %}
+
+<div class="work answer">
+  {% capture m %}
+  {% raw %}
+
+1. On souhaite désormais enrichir le composant ``image-cover`` afin qu'il affiche une image par défaut si aucune jaquette
+   n'est disponible pour le comic. Notamment lors de la création.
+   * pour cela on doit se baser sur l'évènement ``onerror`` de l'élément ``img`` racine
+   * comme l'évènement ``onerror`` n'est pas un évènement qui se [propage](https://en.wikipedia.org/wiki/DOM_events) (de même que ``onload`` etc.), 
+     il n'est pas possible de s'appuyer sur les ``customEvents``
+   * on doit donc installer, via le *hook* approprié, un *listener* sur l'évènement ``onerror`` via jQuery (attention au ``this``)
+   * implémenter ce listener de manière à changer la source de l'image pour ``default.jpg`` en cas d'erreur
+   * ne pas oublier de supprimer le listener avant la destruction du composant pour éviter les fuites mémoire
+   
+   **Tests** : Ces modifications doivent rendre passant les tests [04 - Components - 03 - Image cover should fallback](TODO link)
+   et [04 - Components - 04 - Image cover should change if model changes](TODO link)
+   
+   > ```javascript
+   > //app/components/image-cover.js
+   > import Ember from 'ember';
+   > 
+   > export default Ember.Component.extend({
+   >   tagName: 'img',
+   >   classNames: 'cover',
+   >   attributeBindings: 'src',
+   >   src: function () {
+   >     return this.getImagePath(this.get('name'));
+   >   }.property('name'),
+   > 
+   >   getImagePath(name) {
+   >     return `/assets/images/comics/covers/${name}.jpg`;
+   >   },
+   > 
+   >   didInsertElement() {
+   >     this._super(...arguments);
+   >     this.$().on('error', () => {
+   >       return this.onError();
+   >     });
+   >   },
+   > 
+   >   willDestroyElement(){
+   >     this.$().off('error');
+   >   },
+   > 
+   >   onError() {
+   >     this.$().attr('src', this.getImagePath('default'));
+   >   }
+   > });
+   > ```
+   
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
 
 
 [ember]: http://emberjs.com/
