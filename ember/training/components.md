@@ -46,17 +46,89 @@ Une fois créé, un composant s'utilise de la même manière qu'un [helper](./te
 
 Il peut s'agir : 
 
-* de composants de type *inline* :
+* de composants de type *inline* : Ces composants n'embarquent pas de contenu externe et se suffisent à eux-même. Il peut s'agir de
+  composants très simples ou très complexes. Les informations et propriétés de l'expérieur leur sont exclusivement passées via
+  des paramètres. Ainsi un composant invoqué de cette manière :
  
-```html
-{{my-component}}
-```
+  ```html 
+  {{user-name class="admin" user=model}}
+  ```
+  
+  avec le template suivant :
+  
+  ```html
+  <dl>
+    <dt>First name: </dt><dd>user.firstName</dd>
+    <dt>Last name: </dt><dd>user.lastName</dd>
+  </dl>
+  ```
+  
+  et le modèle suivant :
+  
+  ```javascript
+  {
+    firstName: "Franck",
+    lastName: "Underwood"
+  }
+  ```
+  
+  donnera l'HTML suivant :
+  
+  ```html
+  <div class="admin">
+    <dl>
+      <dt>First name: </dt><dd>Franck</dd>
+      <dt>Last name: </dt><dd>Underwood</dd>
+    </dl>
+  </div>
+  ```
    
-* de composants de type "block" encapsulant du contenu :  
+* de composants de type *block* encapsulant du contenu. Ces composants fonctionnent exactement comme les premiers à la
+  différence près qu'ils permettent d'y insérer du contenu externe. Ce contenu s'insèrera dans le template du composant
+  en lieu et place de l'expression ``{{yield}}``. Ainsi un composant invoqué de cette manière :
 
-```html
-{{#my-component}}<p>anything</p>{{/my-component}}
-```
+  ```html
+  {{#full-article class="article" title="model.title"}}
+    {{#each model.paragraphs as |paragraph|}}
+      <p>paragraph</p>
+    {{/each}}
+  {{/my-component}}
+  ```
+  
+  avec le template suivant :
+  
+  ```html
+  <article>
+    <h2>title</h2>
+    <div class="content">{{yield}}</div>
+  </article>
+  ```
+  
+  et le modèle suivant :
+  
+  ```javascript
+  {
+    title: "Lorem ipsum ...",
+    paragraphs: [
+      "Lorem ipsum dolor sit amet",
+      "Consectetur adipiscing elit"
+    ]
+  }
+  ```
+  
+  donnera l'HTML suivant :
+  
+  ```html
+  <div class="article">
+    <article>
+      <h2>title</h2>
+      <div class="content">
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>consectetur adipiscing elit</p>
+      </div>
+    </article>
+  </div>
+  ```
 
 ### Passage de propriétés
 
