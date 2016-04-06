@@ -315,7 +315,7 @@ Cela permet notamment de définir des valeurs d'attributs à partir de valeurs d
 
 ## Interactions 
 
-Les principales formes d'interactions des composants avec leur environnement sont les suivantes :
+Suivant le principe DDAU (Data Down Actions Up), les principales formes d'interactions des composants [Ember][ember] avec leur environnement sont les suivantes :
  
  * Depuis les éléments parents vers les enfants. Les éléments parents sont ceux qui déclarent un composant - généralement en incluant sa définition au sein de leur template. Cette
    communication *descendante* se fait via l'utilisation de **propriétés dynamiques.**
@@ -613,7 +613,7 @@ export default Ember.Component.extend({
     this.get('action')();
   },
   click() {
-    this.sendAction('save');
+    this.sendAction('onSubmit');
   }
 });
 ```

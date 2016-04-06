@@ -1,23 +1,13 @@
 
 ## Plan
 
-### Components
-
--> image simple + type ? présence ? ou simplement classe et url
-
--> default en full js avec http://stackoverflow.com/questions/4301968/checking-a-url-in-jquery-javascript
-
-like / fav component
-
--> actions, etc. event natif onclick ... init, blah blah
-
-retour sur composant image -> custom events onerror ? http://emberjs.com/api/classes/Ember.Application.html#property_customEvents
-
-relation -> albums ...
-
-Validation formulaire en mode simple avec https://www.npmjs.com/package/ember-cp-validations (au passage pres addons)
 
 ### Persistence / Ember Data
+
+1. Intro, store, etc.
+2. definition model, types, default etc. -> modification du model
+createModel -> modification route comics init & createModel
+find, peek, query -> modification route comics avec peekAll + route comic & peekAll.findBy
 
 Extraction model, création "store" et injection dans routes (au passage brief injections)
 Ember-data, store, relations, etc.
