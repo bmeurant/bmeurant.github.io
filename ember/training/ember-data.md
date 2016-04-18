@@ -129,7 +129,8 @@ export default DS.Model.extend({
 ## Création
 
 Une fois les modèles définis, il est possible d'en créer des instances. Celles-ci doivent être créées exclusivement dans le store à l'aide de 
-la méthode [createRecord()](http://emberjs.com/api/data/classes/DS.Store.html#method_createRecord) :
+la méthode [createRecord()](http://emberjs.com/api/data/classes/DS.Store.html#method_createRecord). Il n'est pas possible de créer une instance
+d'un objet [Ember Data][ember-data] en dehors du store :
 
 ```javascript
 this.store.createRecord('user', {
@@ -235,27 +236,147 @@ Ces fonctions retournent un [``PromiseArray``](http://emberjs.com/api/data/class
 *Promise* dans le cas d'un objet seul. Ces promesses seront résolues respectivement en un [``RecordArray``](http://emberjs.com/api/data/classes/DS.RecordArray.html)
 et un *record* du type demandé au retour de la requête.
 
--> Exo modification route comics model
--> Exo modification route comics avec peekAll + route comic & peekAll.findBy
+{% endraw %}
 
-## Ember CLI Mirage
+<div class="work answer">
+  {% capture m %}
+  {% raw %}
+  
+1. Modifier le fichier ``app/models/comic.js``
+   * Faire étendre la classe de ``DS.Model``
+   * Modifier les attributs pour utiliser ``DS.attr()``. Définir les valeurs par défaut si besoin.
+   
+   > ```javascript
+   > // app/models/comic.js
+   >
+   > import DS from 'ember-data';
+   > 
+   > export default DS.Model.extend({
+   >   slug: function () {
+   >     return this.get('title').dasherize();
+   >   }.property('title'),
+   >   
+   >   title: DS.attr('string'),
+   >   scriptwriter: DS.attr('string'),
+   >   illustrator: DS.attr('string'),
+   >   publisher: DS.attr('string'),
+   >   isFavorite: DS.attr('boolean', {defaultValue: false}),
+   > 
+   >   ...
+   > });
+   > ```
+   
+   Lorsque l'on tente d'accèder à la route ``/comics``, l'application lève une erreur fatale : 
+    
+   ```console
+   > Uncaught Error: You should not call `create` on a model. Instead, call `store.createRecord` with the attributes you would like to set.
+   ```
+   
+   En effet, comme évoqué plus haut, le ``store`` doit impérativement être utilisé pour créer les objets [Ember Data][ember-data] via la méthode
+   ``createRecord``. Ainsi les appels à ``Comic.create(...)`` de la route ``app/routes/comics.js`` génèrent ces erreurs.
+   
+1. Modifier la route ``app/routes/comic.js`` pour supprimer les appels à ``Comic.create(...)`` et utiliser la méthode ``createRecord`` du store
+   à la place
+   * utiliser le hook ``init`` pour la création des objets
+   * modifier le hook ``model`` pour renvoyer la liste des objets [Ember Data][ember-data] en utilisant la méthode ``findAll`` du store. Que constate-t-on ?
+   
+   > ```javascript
+   > // app/routes/comic.js
+   >
+   > import Ember from 'ember';
+   > 
+   > let blackSad = {
+   >   title: 'Blacksad',
+   >   scriptwriter: 'Juan Diaz Canales',
+   >   illustrator: 'Juanjo Guarnido',
+   >   publisher: 'Dargaud'
+   > };
+   > 
+   > let calvinAndHobbes = {
+   >   title: 'Calvin and Hobbes',
+   >   scriptwriter: 'Bill Watterson',
+   >   illustrator: 'Bill Watterson',
+   >   publisher: 'Andrews McMeel Publishing'
+   > };
+   > 
+   > let akira = {
+   >   title: 'Akira',
+   >   scriptwriter: 'Katsuhiro Otomo',
+   >   illustrator: 'Katsuhiro Otomo',
+   >   publisher: 'Epic Comics'
+   > };
+   > 
+   > export default Ember.Route.extend({
+   >   init() {
+   >     this._super(...arguments);
+   >     this.store.createRecord('comic', akira);
+   >     this.store.createRecord('comic', blackSad);
+   >     this.store.createRecord('comic', calvinAndHobbes);
+   >   },
+   >   model () {
+   >     return this.store.findAll('comic');
+   >   }
+   > });
+   > ```
+   >
+   > En utilisant la méthode ``findAll``, on constate que les résultats du store local sont bien renvoyés mais après une requête back en erreur (puisque celui-ci
+   > n'existe pas). En effet, par défaut, comme expliqué plus haut, la manipulation du store entraîne des interrogations serveur.
+   >
+   > ```console
+   > > Error: Ember Data Request GET /comics returned a 404
+   > Payload (text/html; charset=utf-8)
+   > Cannot GET /comics
+   > ```
+   
+   * faire en sorte de supprimer toutes les erreurs
+   
+   > ```javascript
+   > // app/routes/comic.js
+   >
+   > import Ember from 'ember';
+   > 
+   > ...
+   > 
+   > export default Ember.Route.extend({
+   >   init() {
+   >     ...
+   >   },
+   >   model () {
+   >     return this.store.peekAll('comic');
+   >   }
+   > });
+   > ```
+   >
+   > En utilisant la méthode ``peekAll``, on constate cette fois-ci qu'aucune requête n'est effectuée au serveur. Le store se contente alors de 
+   > requêtes / réponses locales. 
+   
+{% raw %}
+
+## Simulation d'un serveur (Ember CLI Mirage)
+
+### Ember addon
+
+### Routes & **raccourcis**
+
+### Factories & Fixtures
+
+### Adapters
 
 -> Exo (ou providing) config pour Mirage
+-> Exo modification route comic & query
 -> Exo modif vers find puis findId puis findBySlug 
 
 ## Modification
 
-### Modification
+## Suppression
 
-## Sauvegarde
+## Enregistrement / Sauvegarde
+
+### Etat des objets
 
 ### Promesses & validation
 
 -> addon ?
-
-## Suppression
-
-#### Etat des objets
 
 ## Relations
 
