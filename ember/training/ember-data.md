@@ -393,6 +393,7 @@ Les routes peuvent ainsi être :
 
   ```javascript
   this.get('/contacts');
+  ```
   
 * déclarées et implémentées. Dans ce cas [Ember CLI Mirage][ember-mirage] exécutera l'implémentation fournie :
 
@@ -431,7 +432,7 @@ directement des données mais également - et de manière plus intéressante - s
   sont définies dans ``app/fixtures``. Elles sont ensuite chargées dans ``app/scenarions/default.js`` ou dans chaque test : 
   
   ```javascript
-   server.loadFixtures();
+  server.loadFixtures();
   ```
   
   cf. [documentation](http://www.ember-cli-mirage.com/docs/v0.1.x/seeding-your-database/#fixtures)
@@ -624,11 +625,6 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
 </div>
 
 {% raw %}
-
--> Exo install Mirage
--> Exo (ou providing) config pour Mirage
--> Exo modification route comic & query
--> Exo modif vers find puis findId puis findBySlug 
 
 ## Modification
 
