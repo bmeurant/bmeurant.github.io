@@ -5,6 +5,8 @@ permalink:  ember/training/ember-data/
 prev: ember/training/components
 ---
 
+<div id="toc"></div>
+
 {% raw %}
 
 [Ember Data][ember-data] est une librairie indépendante mais complémentaire d'[Ember][ember] qui propose une prise en charge complète de la définition des modèles
@@ -168,7 +170,7 @@ le store déterminera au cas par cas si il doit intérroger l'API distante ou se
 
 Il existe trois grandes familles de requêtes :
 
-### ``find*``
+### Méthodes ``find*``
 
 Les méthodes ``find`` permettent de retrouver des objets localement si ils sont disponible ou en interrogeant l'API distante, dans le cas contraire.
 
@@ -188,7 +190,7 @@ Ces fonctions retournent un [``PromiseArray``](http://emberjs.com/api/data/class
 *Promise* dans le cas d'un objet seul. Ces promesses seront résolues respectivement en un [``RecordArray``](http://emberjs.com/api/data/classes/DS.RecordArray.html)
 et un *record* du type demandé au retour de la requête.
 
-### ``peek*``
+### Méthodes ``peek*``
 
 Les méthodes ``peek`` sont très similaires aux ``find`` à ceci près qu'elles ne travaillent que localement et ne déclenchent jamais de requêtes
 vers le serveur. Elles permettent donc d'interroger uniquement les objets déjà chargés dans le store.
@@ -207,7 +209,7 @@ this.store.peekRecord('user', 1);
 
 Ces fonctions retournent directement un [``RecordArray``](http://emberjs.com/api/data/classes/DS.RecordArray.html) ou un *record* du type demandé.
 
-### ``query*``
+### Méthodes ``query*``
 
 Les méthodes ``query``, quant à elles, permettent de préciser des critères de recherche complexes via les options qui seront passées en paramètres
 de requête.
@@ -278,7 +280,7 @@ et un *record* du type demandé au retour de la requête.
 1. Modifier la route ``app/routes/comic.js`` pour supprimer les appels à ``Comic.create(...)`` et utiliser la méthode ``createRecord`` du store
    à la place
    * utiliser le hook ``init`` pour la création des objets
-   * modifier le hook ``model`` pour renvoyer la liste des objets [Ember Data][ember-data] en utilisant la méthode ``findAll`` du store. Que constate-t-on ?
+   * modifier le hook ``model`` pour renvoyer la liste des objets [Ember Data](https://guides.emberjs.com/v2.4.0/models/ en utilisant la méthode ``findAll`` du store. Que constate-t-on ?
    
    > ```javascript
    > // app/routes/comic.js
@@ -470,13 +472,13 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
   {% capture m %}
   {% raw %}
   
-1. Nous allons maintenant configurer un serveur [Ember CLI Mirage][ember-mirage] permettant d'exposer notre liste de comics sous forme de *fixtures* (puisque nos données sont complètes
+1. Nous allons maintenant configurer un serveur [Ember CLI Mirage](http://www.ember-cli-mirage.com/) permettant d'exposer notre liste de comics sous forme de *fixtures* (puisque nos données sont complètes
    et ne nécessitent pas d'être générées dynamiquement).
-   * Installer [Ember CLI Mirage][ember-mirage]
+   * Installer [Ember CLI Mirage](http://www.ember-cli-mirage.com/)
    * Supprimer les factories inutiles
-   * Créer la route [Ember CLI Mirage][ember-mirage] pour répondre à un GET ``/comics``
+   * Créer la route [Ember CLI Mirage](http://www.ember-cli-mirage.com/) pour répondre à un GET ``/comics``
    * Ajouter les fixtures nécessaires et y déplacer la définition des comics
-   * Modififer le scénario par défaut d'[Ember CLI Mirage][ember-mirage] pour charger les fixtures
+   * Modififer le scénario par défaut d'[Ember CLI Mirage](http://www.ember-cli-mirage.com/) pour charger les fixtures
    * Dans la route ``comics``, supprimer la création des comics et changer le précédent ``peekAll`` en ``findAll``
    
    > ```console
@@ -559,8 +561,8 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
    	* One or more of the following keys must be present: "data", "errors", "meta".
    ```
    
-   En effet, comme on l'a évoqué plus haut, [Ember CLI Mirage][ember-mirage] fournit une implémentation par défaut correspondant à un [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html)
-   alors qu'[Ember Data][ember-data] s'appuie par défaut sur un [JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html)
+   En effet, comme on l'a évoqué plus haut, [Ember CLI Mirage](http://www.ember-cli-mirage.com/) fournit une implémentation par défaut correspondant à un [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html)
+   alors qu'[Ember Data](https://guides.emberjs.com/v2.4.0/models/) s'appuie par défaut sur un [JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html)
    
 1. Modifier l'adapter général de l'application pour utiliser un ``RESTAdapter`` basique
    * Naviguer ensuite sur la route ``/comics`` pour constater que l'application répond désormais correctement
@@ -575,12 +577,12 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
    > ```
    
 1. Modifier la route ``app/routes/comic.js`` pour effectuer une requête paramétrée sur le store plutôt qu'un ``this.modelFor(...).findBy(...)`` afin de récupérer un comic par son *slug*
-   * Modifier la route [Ember CLI Mirage][ember-mirage] ``users`` et l'implémenter pour accepter le parametre ``slug`` 
+   * Modifier la route [Ember CLI Mirage](http://www.ember-cli-mirage.com/) ``users`` et l'implémenter pour accepter le parametre ``slug`` 
      (hints: cf [query params](http://www.ember-cli-mirage.com/docs/v0.1.x/defining-routes/#dynamic-paths-and-query-params) et 
      [API database](http://www.ember-cli-mirage.com/docs/v0.1.x/database/#where).
    * Cette route doit renvoyer la liste des comics si elle est appelée sans paramètre et le comic damandé sinon. Dans tous les cas, le résultat doit être encapsulé de cette manière : ``{comics: <result>}``.
    * Utiliser la fonction [classify](http://emberjs.com/api/classes/Ember.String.html#method_classify) pour rechercher un comic à partir du titre reconstruit (le slug n'est pas enregistré)
-   * Charger ensuite la route ``/comics/akira`` via un Ctrl-F5 pour constater dans la console que la requête ``GET /comics?slug=akira`` a bien été exécutée et qu'[Ember CLI Mirage][ember-mirage]
+   * Charger ensuite la route ``/comics/akira`` via un Ctrl-F5 pour constater dans la console que la requête ``GET /comics?slug=akira`` a bien été exécutée et qu'[Ember CLI Mirage](http://www.ember-cli-mirage.com/)
      y a répondu correctement
    * Pourquoi cette requête n'est-elle pas effectuée lorsque l'on vient de la route ``/comics`` ?
    
@@ -618,7 +620,7 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
    >
    > Lorsque l'on vient de la route ``/comics``, le model complet est passé à la route ``/comics/{slug}`` via le ``linkTo``. Dans ce cas [Ember][ember] n'exécute pas le hook ``model``
    > puisqu'il en dispose déjà. Dans le cas d'un chargement initial, au contraire, le modèle n'est pas disponible et [Ember][ember] exécute le hook, entraînant une requête de la part
-   > d'[Ember Data][ember-data].
+   > d'[Ember Data](https://guides.emberjs.com/v2.4.0/models/).
    
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
