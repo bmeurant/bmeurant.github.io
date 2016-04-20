@@ -234,9 +234,29 @@ Ou un objet seul ([``queryRecord``](http://emberjs.com/api/data/classes/DS.Store
 this.store.queryRecord('user', {filter: {login: "funderwood"}});
 ```
 
-Ces fonctions retournent un [``PromiseArray``](http://emberjs.com/api/data/classes/DS.PromiseArray) dans le cas d'une collection ou une simple
-*Promise* dans le cas d'un objet seul. Ces promesses seront résolues respectivement en un [``RecordArray``](http://emberjs.com/api/data/classes/DS.RecordArray.html)
-et un *record* du type demandé au retour de la requête.
+### Asynchronicité (promesses)
+
+Ces méthodes effectuent des requêtes serveur et retournent donc des  promesses. En l'occurence, un [``PromiseArray``](http://emberjs.com/api/data/classes/DS.PromiseArray) dans le cas d'une 
+collection ou une simple *Promise* dans le cas d'un objet seul. Ces promesses seront résolues respectivement en un [``RecordArray``](http://emberjs.com/api/data/classes/DS.RecordArray.html)
+et un *record* du type demandé au retour de la requête ou rejetée en cas d'erreur.
+
+Si l'on souhaite effectuer des opérations complémentaires sur un objet au retour du serveur, il est donc impératif d'attendre la résolution de la promesse en implémentatnt le traitement dans 
+sa méthode ``then()``. 
+
+```javascript
+this.store.findRecord('user', 1).then((user) => {
+  // anything using user
+});
+```
+
+En revanche, lorsque l'on retourne directement le résultat de l'une de ces méthodes au sein de l'un des hook des routes (``model`` par exemple), la gestion des promesses est effectuée pour nous
+et il n'est pas nécessaire d'attendre le retour effectif pour renvoyer le résultat
+
+```javascript
+  model() {
+    return this.store.findRecord('user', 1);
+  });
+```
 
 {% endraw %}
 
@@ -274,13 +294,13 @@ et un *record* du type demandé au retour de la requête.
    > Uncaught Error: You should not call `create` on a model. Instead, call `store.createRecord` with the attributes you would like to set.
    ```
    
-   En effet, comme évoqué plus haut, le ``store`` doit impérativement être utilisé pour créer les objets [Ember Data][ember-data] via la méthode
+   En effet, comme évoqué plus haut, le ``store`` doit impérativement être utilisé pour créer les objets [Ember Data](https://guides.emberjs.com/v2.4.0/models/) via la méthode
    ``createRecord``. Ainsi les appels à ``Comic.create(...)`` de la route ``app/routes/comics.js`` génèrent ces erreurs.
    
 1. Modifier la route ``app/routes/comic.js`` pour supprimer les appels à ``Comic.create(...)`` et utiliser la méthode ``createRecord`` du store
    à la place
    * utiliser le hook ``init`` pour la création des objets
-   * modifier le hook ``model`` pour renvoyer la liste des objets [Ember Data](https://guides.emberjs.com/v2.4.0/models/ en utilisant la méthode ``findAll`` du store. Que constate-t-on ?
+   * modifier le hook ``model`` pour renvoyer la liste des objets [Ember Data](https://guides.emberjs.com/v2.4.0/models/) en utilisant la méthode ``findAll`` du store. Que constate-t-on ?
    
    > ```javascript
    > // app/routes/comic.js
@@ -442,7 +462,7 @@ directement des données mais également - et de manière plus intéressante - s
 Ces deux mécanismes peuvent être combinés. Ils contribuent à peupler une base locale ``db`` qui est ensuite requêtée automatiquement par [Ember CLI Mirage][ember-mirage] pour retrouver les données
 et peut également être manipulée à la main lors de la définition de nos propres implémentations.
 
-## Ember Data Adapters & Ember CLI Mirage
+### Adapters
 
 Avant de poursuivre, il est nécessaire d'introduire très rapidement la notion d'**Adapter**. [Ember Data][ember-data] s'appuie en effet sur le mécanisme central des **adapters** définit plus haut
 permettant de traduire une opération effectuée sur le store en une requête serveur, adaptée au format de celui-ci. les adapters sont à définir dans ``app/adapters``. Il existe des adapters généraux
@@ -618,8 +638,8 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
    > }
    > ```
    >
-   > Lorsque l'on vient de la route ``/comics``, le model complet est passé à la route ``/comics/{slug}`` via le ``linkTo``. Dans ce cas [Ember][ember] n'exécute pas le hook ``model``
-   > puisqu'il en dispose déjà. Dans le cas d'un chargement initial, au contraire, le modèle n'est pas disponible et [Ember][ember] exécute le hook, entraînant une requête de la part
+   > Lorsque l'on vient de la route ``/comics``, le model complet est passé à la route ``/comics/{slug}`` via le ``linkTo``. Dans ce cas [Ember](http://emberjs.com/) n'exécute pas le hook ``model``
+   > puisqu'il en dispose déjà. Dans le cas d'un chargement initial, au contraire, le modèle n'est pas disponible et [Ember](http://emberjs.com/) exécute le hook, entraînant une requête de la part
    > d'[Ember Data](https://guides.emberjs.com/v2.4.0/models/).
    
   {% endraw %}
@@ -630,17 +650,333 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
 
 ## Modification
 
+La modification d'une instance de modèle [Ember Data][ember-data] n'implique, en elle même, aucune opération particulière puisqu'il suffit d'utiliser les *setters* de l'object de manière tout à fait classique.
+
+```javascript
+let user = this.store.findRecord('user', 1).then((user) => {
+  user.set('lastName', 'New Last Name');
+});
+```
+
+## Sauvegarde
+
+Une fois l'instance de modèle [Ember Data][ember-data] créée et/ou modifiée, [Ember Data][ember-data] permet de persister ces changement sur le serveur. A la différence de la création ou des recherches,
+la sauvegarde d'une instance de modèle s'effectue directement depuis l'instance, via l'invocation de la méthode [save()](http://emberjs.com/api/data/classes/DS.Model.html#method_save). 
+Une requête est alors envoyée au serveur de manière à effectuer cette mise à jour :
+
+```javascript
+let user = this.store.createRecord('user', {
+  firstName: 'Franck',
+  lastName: 'Underwood'
+});
+
+user.save(); // -> POST /users/:id
+
+let user = this.store.findRecord('user', 1).then((user) => {
+  user.set('lastName', 'New Last Name');
+  
+  user.save(); // -> PUT /users/1
+}); 
+```
+
+[Ember Data][ember-data] détérmine le type de requête (dans le cas présent, un POST pour une création, un PUT pour une modification) en fonction de l'état interne de l'objet (cf. plus loin).
+
+### Asynchronicité (promesses)
+
+Puisque la méthode ``save`` déclenche une requête vers le serveur, il s'agit d'un appel asynchrone. La méthode ``save`` renvoie en fait un objet ``Promise`` qui sera résolu une fois la requête effectuée
+avec succès ou rejetée en cas d'erreur.
+
+Si l'on souhaite effectuer une action à la suite d'une opération de sauvegarde, il est donc impératif d'attendre la résolution de la promesse en implémentatnt le traitement dans sa méthode ``then()``.
+Dans le cas contraire, le traitement serait exécuté immédiatement après l'appel, sans attendre la réponse du serveur :
+
+```javascript
+user.save().then(() => {
+  console.log("saved");
+});
+
+console.log("sent");
+```
+
 ## Suppression
 
-## Enregistrement / Sauvegarde
+La suppression d'une instance peut s'effectuer de trois manières différentes : 
 
-### Etat des objets
+* Soit via la méthode du modèle [deleteRecord()](http://emberjs.com/api/data/classes/DS.Model.html#method_deleteRecord). Celle-ci se contente de placer l'objet dans un état (cf. ci-dessous) pariculier. L'objet
+  est alors vu comme supprimé du store (et ne sera plus accessible) mais la requête de suppression ne sera envoyée au serveur que lors d'un ``save``.
+  
+  ```javascript
+  user.deleteRecord();
+  user.save(); // -> DELETE /users/:id
+  ```
+  
+* Soit via la méthode du modèle [destroyRecord()](http://emberjs.com/api/data/classes/DS.Model.html#method_destroyRecord). Celle-ci effectue la requête de suppression au serveur immédiatement. Tout comme la méthode 
+  ``save``, elle est asynchrone.
+  
+  ```javascript
+  user.destroyRecord(); // -> DELETE /users/:id
+  ```
+  
+* Soit via la méthode du store [deleteRecord()](http://emberjs.com/api/data/classes/DS.Store.html#method_deleteRecord) qui effectue également la requête immédiatement;
 
-### Promesses & validation
+  ```javascript
+  this.store.deleteRecord(user); // -> DELETE /users/:id
+  ```
 
--> addon ?
+## Gestion d'états
+
+[Ember Data][ember-data] effectue l'ensemble de ces opérations en s'appuyant sur une gestion fine des états de l'objet en fonction des différentes opérations effectuées. Il existe un grand nombre d'états
+différents. Parmis les principaux
+
+* [isNew](http://emberjs.com/api/data/classes/DS.Model.html#property_isNew) : positionné à la création de l'instance
+* [hasDirtyAttributes](http://emberjs.com/api/data/classes/DS.Model.html#property_hasDirtyAttributes) : positionné lorsque l'objet a été modifié depuis son chargement. Remis à ``false`` suite à un ``save``.
+* [isDeleted](http://emberjs.com/api/data/classes/DS.Model.html#property_isDeleted) : positionné lorsqu'un objet a été marqué pour suppression
+
+[Ember Data][ember-data] s'appuie ensuite sur ces états pour déterminer les actions à effectuer sur les objets et notamment le type des requêtes à envoyer au serveur (``POST``, ``PUT``, ``DELETE``).
+
+Ainsi le code suivant : 
+
+```javascript
+let comic = this.store.createRecord('comic');
+console.log("1 - new ? - "+ comic.get('isNew'));
+console.log("1 - dirty ? - "+ comic.get('hasDirtyAttributes'));
+console.log("1 - deleted ? - "+ comic.get('isDeleted'));
+
+comic.save().then(() => {
+  console.log("3 - new ? - "+ comic.get('isNew'));
+  console.log("3 - dirty ? - "+ comic.get('hasDirtyAttributes'));
+  console.log("3 - deleted ? - "+ comic.get('isDeleted'));
+
+  comic.set('title', 'new');
+  console.log("4 - new ? - " + comic.get('isNew'));
+  console.log("4 - dirty ? - " + comic.get('hasDirtyAttributes'));
+  console.log("4 - deleted ? - " + comic.get('isDeleted'));
+
+  comic.save().then(() => {
+    console.log("5 - new ? - " + comic.get('isNew'));
+    console.log("5 - dirty ? - " + comic.get('hasDirtyAttributes'));
+    console.log("5 - deleted ? - " + comic.get('isDeleted'));
+
+    comic.deleteRecord();
+    console.log("6 - new ? - " + comic.get('isNew'));
+    console.log("6 - dirty ? - " + comic.get('hasDirtyAttributes'));
+    console.log("6 - deleted ? - " + comic.get('isDeleted'));
+
+    comic.save().then(() => {
+      console.log("7 - new ? - " + comic.get('isNew'));
+      console.log("7 - dirty ? - " + comic.get('hasDirtyAttributes'));
+      console.log("7 - deleted ? - " + comic.get('isDeleted'));
+    });
+  });
+});
+
+console.log("2 - new ? - "+ comic.get('isNew'));
+console.log("2 - dirty ? - "+ comic.get('hasDirtyAttributes'));
+console.log("2 - deleted ? - "+ comic.get('isDeleted'));
+```
+
+produira la sortie suivante : 
+
+```console
+1 - new ? - true
+1 - dirty ? - true
+1 - deleted ? - false
+
+2 - new ? - true
+2 - dirty ? - true
+2 - deleted ? - false
+
+Successful request: POST /comics
+
+3 - new ? - false
+3 - dirty ? - false
+3 - deleted ? - false
+
+4 - new ? - false
+4 - dirty ? - false
+4 - deleted ? - false
+
+Successful request: PUT /comics/4
+
+5 - new ? - false
+5 - dirty ? - false
+5 - deleted ? - false
+
+6 - new ? - false
+6 - dirty ? - true
+6 - deleted ? - true
+
+Successful request: DELETE /comics/4
+
+7 - new ? - false
+7 - dirty ? - false
+7 - deleted ? - true
+```
+
+### Annulation des modifications
+
+L'état ``hasDirtyAttributes`` permet également d'effectuer d'annuler un ensemble de modifications effectuées sur un objet et de le remettre dans son état initial. Cette annulation s'effectue via la méthode 
+[http://emberjs.com/api/data/classes/DS.Model.html#method_rollbackAttributes](http://emberjs.com/api/data/classes/DS.Model.html#method_rollbackAttributes).
+
+La méthode [changedAttributes()](http://emberjs.com/api/data/classes/DS.Model.html#method_changedAttributes) permet, en complément, d'obtenir la liste des modifications effectuées.
+
+Ainsi le code suivant : 
+
+```javascript
+comic.set('title', 'new');
+console.log("1 - dirty ? - " + comic.get('hasDirtyAttributes'));
+console.log(comic.changedAttributes());
+
+comic.rollbackAttributes();
+console.log("2 - dirty ? - " + comic.get('hasDirtyAttributes'));
+console.log(comic.changedAttributes());
+```
+
+produira la sortie suivante : 
+
+```console
+1 - dirty ? - true
+EmptyObject {title: Array[2]}
+
+2 - dirty ? - false
+EmptyObject {}
+```
+
+### Validations
+
+On remarque également que les modèles [Ember Data][ember-data] gèrent un état [isValid](http://emberjs.com/api/data/classes/DS.Model.html#property_isValid).
+Celui ci est positionné lors de la réception d'erreurs de validation depuis le serveur. [Ember Data][ember-data] ne fournir en effet pas de gestion native de 
+validation. En fonction des normes respectées, les adapters sont en revanche capables de récupérer les erreurs en provenance du serveur. La présence d'erreurs
+de validation dans la réponse du serveur aura alors pour effet de positionner l'état de l'objet à ``isValid=false``. La liste des erreurs pourra ensuite être
+accédée via la propriété [errors](http://emberjs.com/api/data/classes/DS.Model.html#property_errors) : ``user.get('errors')``.
+
+Il ne faut cependant pas confondre cette récupérations d'erreurs de validations côté serveur avec une gestion de la validation des modèles côté client (dans un
+formulaire, par exemple). [Ember Data][ember-data] ne fournit pas d'outillage à ce niveau là mais l'on peut se tourner vers l'addon 
+[Ember CP Validations](http://offirgolan.github.io/ember-cp-validations/docs/modules/Home.html) qui en fournit une implémentation complète et de qualité, 
+comprenant l'internationalisation.
+ 
+{% endraw %}
+
+<div class="work answer">
+  {% capture m %}
+  {% raw %}
+  
+1. On peut désormais simplifier grandement les opérations concernant la création et l'édition d'un comic. Modifier les routes ``comic.edit`` et ``comic.create``
+   dans ce sens.
+   * La gestion de l'état de sauvegarde (``hasUserSavedOrCancel``) peut disparaître au profit d'appels à ``save`` et de gestions d'états 
+     [Ember Data](https://guides.emberjs.com/v2.4.0/models/)
+   * De la même manière, la réinitialisation (``reset``) peut être avantageusement remplacée par un ``rollbackAttributes``.
+   * Le modèle peut être accédé via ``this.get('controller.model')``
+   * Le contrôleur ``app/controllers/comic/edit.js`` peut ensuite être supprimé sans impact.
+   
+   > ```javascript
+   > // app/models/comic.js
+   >
+   > import DS from 'ember-data';
+   > 
+   > export default DS.Model.extend({
+   >   slug: function () {
+   >     return this.get('title').dasherize();
+   >   }.property('title'),
+   > 
+   >   title: DS.attr('string', {defaultValue: 'new'}),
+   >   scriptwriter: DS.attr('string'),
+   >   illustrator: DS.attr('string'),
+   >   publisher: DS.attr('string'),
+   >   isFavorite: DS.attr('boolean', {defaultValue: false})
+   > });
+   > ```
+   >
+   > ```javascript
+   > // app/mirage/config.js
+   >
+   > export default function() {
+   > 
+   >   this.get('/comics', function(db, request) {
+   >     ...
+   >   });
+   > 
+   >   this.put('/comics/:id');
+   >   this.post('/comics');
+   > });
+   > ```
+   >
+   > ```javascript
+   > // app/routes/comic/edit.js
+   >
+   > import Ember from 'ember';
+   > 
+   > export default Ember.Route.extend({
+   > 
+   >   actions: {
+   >     save () {
+   >       this.get('controller.model').save().then(() => {
+   >         this.transitionTo('comic');
+   >       });
+   >     },
+   >     cancel () {
+   >       this.get('controller.model').rollbackAttributes();
+   >       this.transitionTo('comic');
+   >     },
+   >     willTransition (transition) {
+   >       if (this.get('controller.model.hasDirtyAttributes')) {
+   >         if (confirm('Are you sure you want to abandon progress?')) {
+   >           this.get('controller.model').rollbackAttributes();
+   >         } else {
+   >           transition.abort();
+   >         }
+   >       }
+   >     }
+   >   }
+   > });
+   > ```
+   >
+   > ```javascript
+   > // app/routes/comics/create.js
+   >
+   > import Ember from 'ember';
+   > 
+   > export default Ember.Route.extend({
+   >   templateName: 'comic/edit',
+   >   controllerName: 'comic/edit',
+   > 
+   >   model () {
+   >     return this.store.createRecord('comic');
+   >   },
+   > 
+   >   actions: {
+   >     save () {
+   >       this.get('controller.model').save().then(() => {
+   >         this.transitionTo('comic', this.get('controller.model'));
+   >       });
+   >     },
+   >     cancel () {
+   >       this.get('controller.model').rollbackAttributes();
+   >       this.transitionTo('comics');
+   >     },
+   >     willTransition (transition) {
+   >       if (this.get('controller.model.hasDirtyAttributes')) {
+   >         if (confirm('Are you sure you want to abandon progress?')) {
+   >           this.get('controller.model').rollbackAttributes();
+   >         } else {
+   >           transition.abort();
+   >         }
+   >       }
+   >     }
+   >   }
+   > });
+   > ```
+   
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
+   
+{% raw %}
 
 ## Relations
+
+belongsTo, hasMany
+
+-> Exo albums
 
 
 
