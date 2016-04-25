@@ -250,12 +250,22 @@ this.store.findRecord('user', 1).then((user) => {
 ```
 
 En revanche, lorsque l'on retourne directement le résultat de l'une de ces méthodes au sein de l'un des hook des routes (``model`` par exemple), la gestion des promesses est effectuée pour nous
-et il n'est pas nécessaire d'attendre le retour effectif pour renvoyer le résultat
+et il n'est pas nécessaire d'attendre le retour effectif pour renvoyer le résultat. A noter qu'il est impératif de retourner cette promesse dans le *hook*, sans quoi le modèle demeurera null.
 
 ```javascript
   model() {
     return this.store.findRecord('user', 1);
   });
+```
+
+Il est cependant possible de retourner la promesse tout en enregistrant un callback. Cela peut notament s'avérer utile dans le traitement des erreurs : 
+
+```javascript
+return this.store.findRecord('user', 1).then(user => {
+  // anything using user
+}).catch(reason => {
+  // error handling
+});
 ```
 
 {% endraw %}
@@ -400,8 +410,10 @@ et permet des recherches avancées.
 [Ember CLI Mirage][ember-mirage] est l'un de ces addons et, comme tel, peut être installé de la manière suivante : 
 
 ```console
-ember install ember-cli-mirage
+ember install ember-cli-mirage@beta
 ```
+
+On installe la beta car celle-ci apporte des améiliorations indispensables, notament dans la gestion des relations.
 
 ### Routes & **raccourcis**
 
@@ -414,17 +426,18 @@ Les routes peuvent ainsi être :
 * déclarées simplement. Dans ce cas [Ember CLI Mirage][ember-mirage] exécutera l'implémentation par défaut en se basant sur le nom de la route (recherche dans les données locales, etc.) : 
 
   ```javascript
+  // mirage/config.js
   this.get('/contacts');
   ```
   
 * déclarées et implémentées. Dans ce cas [Ember CLI Mirage][ember-mirage] exécutera l'implémentation fournie :
 
   ```javascript
-  // JSON API support
+  // mirage/config.js
   this.get('/contacts', function(db, request) {
     return {
       data: db.contacts.map(attrs => (
-        { type: 'contacts', id: attrs.id, attributes: attrs }
+        ... // anything
       ))
     };
   })
@@ -433,58 +446,59 @@ Les routes peuvent ainsi être :
 Par défaut, les routes non définies explicitement conduisent à des erreurs mais l'utilisation de ``this.passthrough()`` dans le fichier de configuration permet de damander à 
 [Ember CLI Mirage][ember-mirage] d'effectuer plutôt un appel réel vers le serveur. Ce mécanisme permet la mise à disposition de mocks partiels, en développement notamment.
 
-Pour plus de précision se reporter à la [documentation](http://www.ember-cli-mirage.com/docs/v0.1.x/defining-routes/).
+Pour plus de précision se reporter à la [documentation](http://www.ember-cli-mirage.com/docs/v0.2.0-beta.8/defining-routes/).
 
 ### Factories & Fixtures
 
 L'un des composants clefs d'[Ember CLI Mirage][ember-mirage] est sa **base de données locale**. En effet, les requêtes simulées (et déclarées via les routes) peuvent renvoyer
 directement des données mais également - et de manière plus intéressante - s'appuyer sur une base de données locale alimentée par des mécanismes tels que les **fixtures** et les
-**factories**. Cela s'effectue en développement via un **scénario** définit dans ``app/scenarios/default.js`` et en tests via des configurations équivalentes dans chaque test.
+**factories**. Cela s'effectue en développement via un **scénario** définit dans ``mirage/scenarios/default.js`` et en tests via des configurations équivalentes dans chaque test.
 
 * Les **factories** constituent un outil très puissant permettant de générer aléatoirement un ensemble de données de test en fonction de différents critères : suite numérique, random,
-  liste prédéfinie, etc. Les **factories** sont définies dans ``app/factories``. Elles sont ensuite créées dans ``app/scenarios/default.js`` ou dans chaque test : 
+  liste prédéfinie, etc. Les **factories** sont définies dans ``mirage/factories``. Elles sont ensuite créées dans ``mirage/scenarios/default.js`` ou dans chaque test : 
   
   ```javascript
+  // mirage/scenarios/default.js
   server.createList('contact', 10);
   ```
   
-  cf. [documentation](http://www.ember-cli-mirage.com/docs/v0.1.x/seeding-your-database/#defining-factories)
+  cf. [documentation](http://www.ember-cli-mirage.com/docs/v0.2.0-beta.8/seeding-your-database/#defining-factories)
 
 * Les **fixtures** permettent de fournir un ensemble de données statiques (et non générés dynamiquement comme les factories) sous la forme de données au format JSON. Les **fixtures** 
-  sont définies dans ``app/fixtures``. Elles sont ensuite chargées dans ``app/scenarions/default.js`` ou dans chaque test : 
+  sont définies dans ``mirage/fixtures``. Elles sont ensuite chargées dans ``mirage/scenarios/default.js`` ou dans chaque test : 
   
   ```javascript
+  // mirage/scenarios/default.js
   server.loadFixtures();
   ```
   
-  cf. [documentation](http://www.ember-cli-mirage.com/docs/v0.1.x/seeding-your-database/#fixtures)
+  cf. [documentation](http://www.ember-cli-mirage.com/docs/v0.2.0-beta.8/seeding-your-database/#fixtures)
 
 Ces deux mécanismes peuvent être combinés. Ils contribuent à peupler une base locale ``db`` qui est ensuite requêtée automatiquement par [Ember CLI Mirage][ember-mirage] pour retrouver les données
 et peut également être manipulée à la main lors de la définition de nos propres implémentations.
 
-### Adapters
+### Models
 
-Avant de poursuivre, il est nécessaire d'introduire très rapidement la notion d'**Adapter**. [Ember Data][ember-data] s'appuie en effet sur le mécanisme central des **adapters** définit plus haut
-permettant de traduire une opération effectuée sur le store en une requête serveur, adaptée au format de celui-ci. les adapters sont à définir dans ``app/adapters``. Il existe des adapters généraux
-qui s'appliquent à tous les objects [Ember Data][ember-data] tel que ``app/adapters/application.js`` ou des adapters spécifiques à chaque objet tels que ``app/adapters/contact.js``.
-
-Le fonctionnement et la personnalisation des adapters par objet seront détaillés plus tard. Il est cependant nécessaire de s'arrêter un peu sur l'adapter ``application``. En effet, celui-ci défini
-les règles génériques de l'API avec laquelle l'application souhaite interragir. [Ember Data][ember-data] supporte nativment les adapters [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html)
-et [JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html). C'est ce dernier, respectant la spécification [JSON API](http://jsonapi.org/) qui est activé par défaut.
-
-La modification de l'adapter général est très facile : 
+Les modèles [Ember CLI Mirage][ember-mirage] sont à différencier absolument des modèles [Ember Data][ember-data]. Ils doivent être définis dans ``mirage\models`` pour pouvoir être manipulés par la 
+database [Ember CLI Mirage][ember-mirage] mais il n'est pas néccessaire de redéfinir les attributs. 
 
 ```javascript
-import DS from 'ember-data';
+//mirage/models/user.js
+import { Model } from 'ember-cli-mirage';
 
-export default DS.RESTAdapter.extend({
-  // others configurations (optional)
-});
+export default Model;
 ```
 
-C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-ci ne supporte pas par défaut JSON API. Il est cependant possible de personnaliser les routes pour le supporté tel que décrit dans la
-[documentation](http://www.ember-cli-mirage.com/docs/v0.1.x/working-with-json-api/).
+Comme on l'expérimentera plus tard, ils permettent en outre de gérer la définition des relations exposées par l'API [Ember CLI Mirage][ember-mirage].
 
+```javascript
+//mirage/models/user.js
+import { Model } from 'ember-cli-mirage';
+
+export default Model.extend({
+  children: hasMany()
+});
+```
 
 {% endraw %}
 
@@ -502,26 +516,32 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
    * Dans la route ``comics``, supprimer la création des comics et changer le précédent ``peekAll`` en ``findAll``
    
    > ```console
-   > ember install ember-cli-mirage
-   > version: 2.4.2
+   > ember install ember-cli-mirage@beta
    > Installed packages for tooling via npm.
    > installing ember-cli-mirage
-   >   create app\mirage\config.js
-   >   create app\mirage\factories\contact.js
-   >   create app\mirage\scenarios\default.js
-   >   install bower packages pretender, lodash, Faker
-   > Installing browser packages via Bower...
+   >   create \\mirage\config.js\
+   >   create \\mirage\scenarios\default.js
+   >   create \\mirage\serializers\application.js
+   >   install bower packages pretender, Faker
+   >   not-cached https://github.com/trek/pretender.git#~0.12.0
    >   cached https://github.com/Marak/Faker.js.git#3.0.1
-   >   cached https://github.com/lodash/lodash.git#3.7.0
-   >   cached https://github.com/trek/pretender.git#0.10.1
-   >   cached https://github.com/trek/FakeXMLHttpRequest.git#1.2.1
-   >   cached https://github.com/tildeio/route-recognizer.git#0.1.9
+   >   resolved https://github.com/trek/pretender.git#0.12.0
+   >   not-cached https://github.com/trek/FakeXMLHttpRequest.git#^1.3.0
+   >   resolved https://github.com/trek/FakeXMLHttpRequest.git#1.4.0
+   >   conflict Unable to find suitable version for pretender
+   >     1) pretender ~0.10.1
+   >     2) pretender ~0.12.0
+   > ? Answer 2
+   >   conflict Unable to find suitable version for FakeXMLHttpRequest
+   >     1) FakeXMLHttpRequest ~1.2.1
+   >     2) FakeXMLHttpRequest ^1.3.0
+   > ? Answer 2
    > Installed browser packages via Bower.
    > Installed addon package.
    > ```
    >
    > ```javascript
-   > // app/mirage/config.js
+   > // mirage/config.js
    >
    > export default function() {
    >   this.get('/comics');
@@ -529,9 +549,10 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
    > ```
    >
    > ```javascript
-   > // app/mirage/fixtures/comics.js
+   > // mirage/fixtures/comics.js
    > 
    > let blackSad = {
+   >   id: 1,
    >   title: 'Blacksad',
    >   scriptwriter: 'Juan Diaz Canales',
    >   illustrator: 'Juanjo Guarnido',
@@ -539,6 +560,7 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
    > };
    > 
    > let calvinAndHobbes = {
+   >   id: 2,
    >   title: 'Calvin and Hobbes',
    >   scriptwriter: 'Bill Watterson',
    >   illustrator: 'Bill Watterson',
@@ -546,6 +568,7 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
    > };
    > 
    > let akira = {
+   >   id: 3,
    >   title: 'Akira',
    >   scriptwriter: 'Katsuhiro Otomo',
    >   illustrator: 'Katsuhiro Otomo',
@@ -556,7 +579,7 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
    > ```
    >
    > ```javascript
-   > // app/mirage/scenarios/default.js
+   > // mirage/scenarios/default.js
    >
    > export default function (server) {
    >   server.loadFixtures();
@@ -574,34 +597,27 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
    > });
    > ```
    
-   En accédant à la route ``/comics`` dans le navigateur, on constate l'erreur suivante : 
-   
-   ```console
-   > Error: Assertion Failed: normalizeResponse must return a valid JSON API document:
-   	* One or more of the following keys must be present: "data", "errors", "meta".
-   ```
-   
-   En effet, comme on l'a évoqué plus haut, [Ember CLI Mirage](http://www.ember-cli-mirage.com/) fournit une implémentation par défaut correspondant à un [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html)
-   alors qu'[Ember Data](https://guides.emberjs.com/v2.4.0/models/) s'appuie par défaut sur un [JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html)
-   
-1. Modifier l'adapter général de l'application pour utiliser un ``RESTAdapter`` basique
-   * Naviguer ensuite sur la route ``/comics`` pour constater que l'application répond désormais correctement
-   
-   > ```javascript
-   > // app/adapters/application.js
-   >
-   > import DS from 'ember-data';
-   > 
-   > export default DS.RESTAdapter.extend({
-   > });
-   > ```
-   
-1. Modifier la route ``app/routes/comic.js`` pour effectuer une requête paramétrée sur le store plutôt qu'un ``this.modelFor(...).findBy(...)`` afin de récupérer un comic par son *slug*
-   * Modifier la route [Ember CLI Mirage](http://www.ember-cli-mirage.com/) ``users`` et l'implémenter pour accepter le parametre ``slug`` 
-     (hints: cf [query params](http://www.ember-cli-mirage.com/docs/v0.1.x/defining-routes/#dynamic-paths-and-query-params) et 
-     [API database](http://www.ember-cli-mirage.com/docs/v0.1.x/database/#where).
-   * Cette route doit renvoyer la liste des comics si elle est appelée sans paramètre et le comic damandé sinon. Dans tous les cas, le résultat doit être encapsulé de cette manière : ``{comics: <result>}``.
-   * Utiliser la fonction [classify](http://emberjs.com/api/classes/Ember.String.html#method_classify) pour rechercher un comic à partir du titre reconstruit (le slug n'est pas enregistré)
+1. Récupérer un ``comic`` par son *slug*
+   * Modifier la route ``app/routes/comic.js`` pour effectuer une requête paramétrée sur le store plutôt qu'un ``this.modelFor(...).findBy(...)`` afin de récupérer un comic par son *slug*
+   * Modifier la route [Ember CLI Mirage](http://www.ember-cli-mirage.com/) ``comics`` et y copier l'implémentation suivante pour accepter le parametre ``slug`` 
+     
+     ```javascript
+     this.get('/comics', ({comic}, request) => {
+       let slug = request.queryParams.slug;
+     
+       if (slug) {
+         let foundComic = comic.where({title: slug.classify()})[0];
+         if (foundComic) {
+           return serializer.serialize(foundComic, request);
+         } else {
+           return new Mirage.Response(404, {}, "No comic found with slug: " + slug);
+         }
+       } else {
+         return serializer.serialize(comic.all(), request);
+       }
+     });
+     ```
+     
    * Charger ensuite la route ``/comics/akira`` via un Ctrl-F5 pour constater dans la console que la requête ``GET /comics?slug=akira`` a bien été exécutée et qu'[Ember CLI Mirage](http://www.ember-cli-mirage.com/)
      y a répondu correctement
    * Pourquoi cette requête n'est-elle pas effectuée lorsque l'on vient de la route ``/comics`` ?
@@ -640,7 +656,45 @@ C'est notamment nécessaire avec [Ember CLI Mirage][ember-mirage] puisque celui-
    >
    > Lorsque l'on vient de la route ``/comics``, le model complet est passé à la route ``/comics/{slug}`` via le ``linkTo``. Dans ce cas [Ember](http://emberjs.com/) n'exécute pas le hook ``model``
    > puisqu'il en dispose déjà. Dans le cas d'un chargement initial, au contraire, le modèle n'est pas disponible et [Ember](http://emberjs.com/) exécute le hook, entraînant une requête de la part
-   > d'[Ember Data](https://guides.emberjs.com/v2.4.0/models/).
+   > d'[Ember Data](https://guides.emberjs.com/v2.5.0/models/).
+   
+1. Rétablir la gestion des erreurs
+
+   La gestion d'erreur actuelle de la route ``comics.index`` est désormais inopérante. En effet, elle se base sur un retour supposé immédiat de ``queryRecord`` contenant le model. Or, comme on 
+   l'a expliqué plus haut, les fonctions de recherche du store manipulent exclusivement des promesses. Cela signifie que le retour de cette fonction sera toujours une promesse, résolue ou 
+   rejetée de manière asynchrone. 
+   
+   Nous pourrions réecrire cette gestion d'erreur en s'appuyant sur les promesses via un ``catch`` de la manière suivante : 
+   
+   ```javascript
+   model (params) {
+     return this.store.queryRecord('comic', {slug: params.comic_slug}).catch( reason => {
+       throw new Error("No comic found with slug: " + params.comic_slug);
+     });
+   },
+   ```
+   
+   Cependant, cela réduirait la gestion des erreurs exclusivement à une gestion du statut 404. En outre, la route [Ember CLI Mirage](http://www.ember-cli-mirage.com/) renvoie une erreur complète que
+   l'on peut exploiter. Pour cela, il suffit de s'appuyer simplement sur les mécanismes natifs de gestion d'erreurs d'[Ember](http://emberjs.com/). Toute erreur sera en effet propagée pour être ensuite
+   affichée par le template approprié (en l'occurrence ``comics.error.hbs``). C'est également le cas des erreurs en provenance du serveur. Il suffit donc de modifier le template comme suit : 
+   
+   ```html
+   {{!-- app/templates/comics/error.hbs --}}
+   <p id="error">
+     Comic error: {{model.errors.[0].detail}}
+   </p>
+   ```
+   
+   et de supprimer toute gestion d'erreur dans la route 
+   
+   ```javascript
+   // app/routes/comics.js
+   model (params) {
+     return this.store.queryRecord('comic', {slug: params.comic_slug});
+   },
+   ```
+   
+   On constate que l'accès à un comic inexistant (par exemple ``comics/test``) affiche bien l'erreur.
    
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
