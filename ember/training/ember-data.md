@@ -418,7 +418,7 @@ On installe la beta car celle-ci apporte des améiliorations indispensables, not
 ### Routes & **raccourcis**
 
 A l'initialisation, [Ember CLI Mirage][ember-mirage] n'est capable de répondre à aucune requête car il ne définit par défaut aucune route (à ne pas confondre avec
-les routes [Ember][ember]). Il est donc nécessaire de définir les routes que l'on souhaite simuler dans le fichier ``app/mirage/config.js`` généré lors de l'installation.
+les routes [Ember][ember]). Il est donc nécessaire de définir les routes que l'on souhaite simuler dans le fichier ``mirage/config.js`` généré lors de l'installation.
 le fichier généré comporte d'ailleur un grand nombre de commentaires destinés à expliquer le fonctionnement et la définition des routes. Il est à consulter pour d'avantage de détails.
 
 Les routes peuvent ainsi être :
@@ -477,7 +477,7 @@ directement des données mais également - et de manière plus intéressante - s
 Ces deux mécanismes peuvent être combinés. Ils contribuent à peupler une base locale ``db`` qui est ensuite requêtée automatiquement par [Ember CLI Mirage][ember-mirage] pour retrouver les données
 et peut également être manipulée à la main lors de la définition de nos propres implémentations.
 
-### Models
+### Modèles
 
 Les modèles [Ember CLI Mirage][ember-mirage] sont à différencier absolument des modèles [Ember Data][ember-data]. Ils doivent être définis dans ``mirage\models`` pour pouvoir être manipulés par la 
 database [Ember CLI Mirage][ember-mirage] mais il n'est pas néccessaire de redéfinir les attributs. 
@@ -512,7 +512,8 @@ export default Model.extend({
    * Supprimer les factories inutiles
    * Créer la route [Ember CLI Mirage](http://www.ember-cli-mirage.com/) pour répondre à un GET ``/comics``
    * Ajouter les fixtures nécessaires et y déplacer la définition des comics
-   * Modififer le scénario par défaut d'[Ember CLI Mirage](http://www.ember-cli-mirage.com/) pour charger les fixtures
+   * Créer le modèle mirage ``mirage/models/comic.js``
+   * Modifier le scénario par défaut d'[Ember CLI Mirage](http://www.ember-cli-mirage.com/) pour charger les fixtures
    * Dans la route ``comics``, supprimer la création des comics et changer le précédent ``peekAll`` en ``findAll``
    
    > ```console
@@ -579,12 +580,20 @@ export default Model.extend({
    > ```
    >
    > ```javascript
+   > // mirage/models/comic.js
+   > import { Model, hasMany } from 'ember-cli-mirage';
+   > 
+   > export default Model;
+   > ```
+   >
+   > ```javascript
    > // mirage/scenarios/default.js
    >
    > export default function (server) {
    >   server.loadFixtures();
    > }
    > ```
+   >
    > ```javascript
    > // app/routes/comics.js
    >
@@ -638,7 +647,7 @@ export default Model.extend({
    > ```
    >
    > ```javascript
-   > // app/mirage/config.js
+   > // mirage/config.js
    >
    > export default function() {
    > 
@@ -941,7 +950,7 @@ comprenant l'internationalisation.
    > ```
    >
    > ```javascript
-   > // app/mirage/config.js
+   > // mirage/config.js
    >
    > export default function() {
    > 
@@ -1028,14 +1037,352 @@ comprenant l'internationalisation.
 
 ## Relations
 
-belongsTo, hasMany
+### Types de relations
 
--> Exo albums
+[Ember Data][ember-data] permet également d'adresser la problématique de définition et de gestion des relatiosn entre différents modèles.
+Ces relations se définissent à l'aide des notations ``DS.belongsTo()`` et ``DS.hasMany()``. Ces deux notations permettent de définir tout
+type de relation : 
+ 
+ * *One to One* :
+ 
+   ```javascript
+   // app/models/user.js
+   export default DS.Model.extend({
+     identity: DS.belongsTo('identity')
+   });
+   ```
+   
+   ```javascript
+   // app/models/identity.js
+   export default DS.Model.extend({
+     user: DS.belongsTo('user')
+   });
+   ```
+ 
+ * *One to Many* :
+ 
+   ```javascript
+   // app/models/parent.js
+   export default DS.Model.extend({
+     children: DS.hasMany('child')
+   });
+   ```
+   
+   ```javascript
+   // app/models/child.js
+   export default DS.Model.extend({
+     parent: DS.belongsTo('parent')
+   });
+   ```
+ 
+ * *Many to Many* :
 
+   ```javascript
+   // app/models/book.js
+   export default DS.Model.extend({
+     authors: DS.hasMany('author')
+   });
+   ```
+   
+   ```javascript
+   // app/models/author.js
+   export default DS.Model.extend({
+     books: DS.hasMany('book')
+   });
+   ``` 
+ 
+A noter qu'il est possible d'expliciter la relation inverse à l'aide de l'option ``{inverse: '...'}`` aussi bien dans un sens que dans l'autre :
+Dans la plupart des cas, néanmoins, cette précision est inutile, [Ember Data][ember-data] gérant parfaitement cette problématique pour nous.
+Elle peut s'avérer nécessaire dans le cas de relations reflexives (au sein d'un même modèle).
 
+```javascript
+// app/models/element.js
+export default DS.Model.extend({
+  parent: DS.belongsTo('element', {inverse: 'children'}),
+  children: DS.hasMany('element', {inverse: 'parent'})
+});
+``` 
 
+### Manipulation des relations
+
+Les relations sont définies et manipulées au sein d'une instance de modèle [Ember Data][ember-data] comme n'importe quel autre attribut à la 
+différence que ces attributs sont constitué d'instance de modèles [Ember Data][ember-data] et non de valeurs simples.
+
+Ainsi, une relation peut être : 
+
+* initialisée à la création : 
+
+  ```javascript
+  let parent = this.store.createRecord('parent', {title: "parent1"});
+  let child = this.store.createRecord('child', {
+    title: "child1",
+    parent: parent
+  });
+  ```
+  
+  ou
+  
+  ```javascript
+  let child1 = this.store.createRecord('child', {title: "child1"});
+  let child2 = this.store.createRecord('child', {title: "child2"});
+  let parent = this.store.createRecord('parent', {
+    title: "parent1",
+    children: [child1, child2]
+  });
+  ```
+
+* modifiée : 
+
+  ```javascript
+  let parent = this.store.createRecord('parent', {title: "parent1"});
+  let child = this.store.createRecord('child', {title: "child1"});
+  child.set('parent', parent);
+  ```
+  
+  ou
+  
+  ```javascript
+  let child1 = this.store.createRecord('child', {title: "child1"});
+  let child2 = this.store.createRecord('child', {title: "child2"});
+  let parent = this.store.createRecord('parent', {title: "parent1"});
+  parent.get('children').pushObject(child1);
+  parent.get('children').pushObject(child2);
+  ```
+
+* supprimée :
+
+  ```javascript
+  child.set('parent', null);
+  ```
+  
+  ou
+  
+  ```javascript
+  parent.get('children').removeObject(child1);
+  parent.get('children').removeObject(child2);
+  ```
+  
+Lorsque l'objet englobant est sauvegardé à l'aide de la méthode ``save()``, les relations qu'il contient seront également sauvegardées.
+
+* accédées : les relations d'un objet sont accessibles via des promesses et il est donc nécessaire de placer les traitements éventuels
+  à effectuer sur les relations dans la méthode ``then`` (aussi bien pour un ``belongsTo`` que pour un ``hasMany`` : 
+  
+  ```javascript
+  parent.get('children').then(children => {
+    // children. ...
+  });
+  ```
+
+### Chargement des relations
+
+Par défaut, les *adapters* [Ember Data][ember-data] s'attendent à recevoir les relations sous forme d'une liste d'identifiants et non d'une
+liste d'objets complets. Cela signifie que lorsque l'on récupère un objet parent seule la liste des identifiants de ses enfants est attendue.
+cela signifie également qu'[Ember Data][ember-data] doit récupérer les relations d'une manière ou d'une autre. 
+
+Par défaut, lors de l'accès à la ou aux relations, [Ember Data][ember-data] va effectuer, vers le serveur, autant de requêtes complémentaires
+qu'il existe de relations à récupérer. Ces requêtes ne sont effectuées que lorsque l'on accède effectivement (programmatiquement ou via 
+l'accès depuis un template) à ces relations.
 
 {% endraw %}
+
+<div class="work answer">
+  {% capture m %}
+  {% raw %}
+  
+1. Créer une nouvelle relation ``comics -> albums``
+   * Ajouter le modèle ``album`` : 
+   
+     ```javascript
+     // app/models/album.js
+     import DS from 'ember-data';
+     
+     export default DS.Model.extend({
+       title: DS.attr('string'),
+       publicationDate     : DS.attr('date'),
+       number              : DS.attr('number'),
+       coverName           : DS.attr('string', {defaultValue: 'default.jpg'}),
+       coverUrl: function() {
+         return '/assets/images/albums/covers/' + this.get('coverName');
+       }.property('coverName')
+     });
+     ```
+   
+   * Ajouter/modifier les modèles mirage et les fixtures pour les albums (on remarque le lien vers le model ``comic`` via l'attribut ``comicId`` :
+   
+     ```javascript
+     // mirage/models/album.js
+     
+     import { Model, hasMany } from 'ember-cli-mirage';
+     
+     export default Model;
+     ```
+     
+     ```javascript
+     // mirage/models/comic.js
+     
+     import { Model, hasMany } from 'ember-cli-mirage';
+     
+     export default Model.extend({
+       albums: hasMany()
+     });
+     ```
+   
+     ```javascript
+     // mirage/fixtures/albums
+     
+     export default [{
+       title: 'Somewhere Within the Shadows',
+       publicationDate: '2000-11-01',
+       number: 1,
+       coverName: 'blacksad-1.jpg',
+       comicId: 1
+     }, {
+       title: 'Arctic-Nation',
+       publicationDate: '2003-04-01',
+       number: 2,
+       coverName: 'blacksad-2.jpg',
+       comicId: 1
+     }, {
+       title: 'Red Soul',
+       publicationDate: '2005-11-01',
+       number: 3,
+       coverName: 'blacksad-3.jpg',
+       comicId: 1
+     }, {
+       title: 'A Silent Hell',
+       publicationDate: '2010-09-01',
+       number: 4,
+       coverName: 'blacksad-4.jpg',
+       comicId: 1
+     }, {
+       title: 'Amarillo',
+       publicationDate: '2013-11-01',
+       number: 5,
+       coverName: 'blacksad-5.jpg',
+       comicId: 1
+     }];
+     ```  
+   
+   * Modifier le modèle ``comic`` pour ajouter une relation One to Many ``albums`` vers le modèle ``album``
+   
+     > ```javascript
+     > // app/models/comic.js
+     >
+     > import DS from 'ember-data';
+     > 
+     > export default DS.Model.extend({
+     >   slug: function () {
+     >     return this.get('title').dasherize();
+     >   }.property('title'),
+     > 
+     >   title: DS.attr('string', {defaultValue: 'new'}),
+     >   scriptwriter: DS.attr('string'),
+     >   illustrator: DS.attr('string'),
+     >   publisher: DS.attr('string'),
+     >   isFavorite: DS.attr('boolean', {defaultValue: false}),
+     >   albums: DS.hasMany('album')
+     > });
+     > ```
+   
+   * Ajouter le composant ``comic-album`` :
+   
+     ```html
+     {{!-- app/templates/components/comic-album.hbs --}}
+     
+     <li class="album">
+       <img src={{model.coverUrl}} class="cover"/>
+     
+       <div class="description">
+         <h4>{{model.title}}</h4>
+         <dl>
+           <dt>volume</dt>
+           <dd>{{model.number}}</dd>
+           <dt>date</dt>
+           <dd>{{model.publicationDate}}</dd>
+         </dl>
+       </div>
+     </li>
+     ```
+     
+   * Modifier le template ``comics`` pour afficher la liste des albums :
+   
+     ```html
+     {{!-- app/templates/comics.hbs --}}
+     
+     <div class="comic-albums">
+       <ul>
+         {{#each model.albums as |album|}}
+           {{comic-album model=album}}
+         {{/each}}
+       </ul>
+     </div>
+     ```
+     
+   * Que se passe-t-il lorsque l'on active la route ``comics/blacksad`` ? Pourquoi ces erreurs ne se produisaient-elles pas auparavant ?
+   
+     > En activant cette route on constate qu'après avoir chargé le comic demandé, Ember Data effectue des requêtes complémentaires pour
+     > récupérer les albums liés. En effet, la première requête vers le comic n'a renvoyé qu'une liste des identifiants des albums et 
+     > Ember Data doit désormais les récupérer.
+     
+   * Ajouter la route mirage manquante
+   
+     > ```javascript
+     > // mirage/config.js
+     > 
+     > export default function() {
+     > 
+     >   ...  
+     >
+     >   this.put('/comics/:id');
+     >   this.post('/comics');
+     >   
+     >   this.get('/albums/:id');
+     > }
+     > ```
+     
+1. L'affichage des albums se fait désormais correctement mais l'affichage des dates laisse à désirer. On va donc créer un transformateur
+   personnalisé comme évoqué plus haut (cf. [documentation](https://guides.emberjs.com/v2.5.0/models/defining-models/#toc_custom-transforms))
+   pour gérer une date de forme ``Mois Année``.
+   * Installer [ember-moment](https://www.npmjs.com/package/ember-moment) qui permet d'utiliser la librairie de gestion de date ``moment``
+   
+     > ```console
+     > ember install ember-moment
+     > ```
+     
+   * Créer un nouveau transformateur ``app/transforms/pub-date.js`` : 
+   
+     ```javascript
+     import DS from 'ember-data';
+     import moment from 'moment';
+     
+     export default DS.DateTransform.extend({
+     
+       deserialize: function (serialized) {
+         if (serialized) {
+           return moment(serialized).format("MMMM YYYY");
+         }
+         return serialized;
+       }
+     });
+     ```
+     
+   * Modifier le modèle ``album`` pour utiliser ce transformateur
+   
+     > ```javascript
+     > // app/models/album.js
+     >
+     > import DS from 'ember-data';
+     > 
+     > export default DS.Model.extend({
+     >   title: DS.attr('string'),
+     >   publicationDate     : DS.attr('pubDate'),
+     >   ...
+     > });
+     > ```
+   
+  {% endraw %}
+  {% endcapture %}{{ m | markdownify }}
+</div>
 
 [ember]: http://emberjs.com/
 [ember-data]: https://guides.emberjs.com/v2.4.0/models/
