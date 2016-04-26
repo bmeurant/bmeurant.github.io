@@ -51,14 +51,14 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
  
    ```console
    $ node -v
-   v4.2.6
+   v4.4.3
    ```
     
 1. Installer Bower : 
 
    ```console
    $ npm install -g bower
-   bower@1.7.2
+   bower@1.7.9
    ```
 
 1. Puis [Ember CLI](http://www.ember-cli.com/) : 
@@ -66,16 +66,22 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ npm install -g ember-cli
    $ ember -v
-   version: 2.4.2
-   node: 4.2.6
-   npm: 2.13.15
+   version: 2.5.0
+   node: 4.4.3
+   ```
+   
+1. Vérifier la version de npm. Si celle-ci est inférieure à 3.7.x, la mettre à jour via ``npm install -g npm``  : 
+
+   ```console
+   $ npm -v
+   3.8.7
    ```
 
 1. Créer une nouvelle application ``ember-training`` via [Ember CLI](http://www.ember-cli.com/) et la ligne de commande `ember` :
 
    ```console
    $ ember new ember-training
-   version: 2.4.2
+   version: 2.5.0
    installing app
      create .bowerrc
      ...
@@ -90,7 +96,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ cd ember-training
    $ ember serve
-   version: 2.4.2
+   version: 2.5.0
    Livereload server on http://localhost:49152
    Serving on http://localhost:4200/
    ```
@@ -99,9 +105,9 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    ```console
    DEBUG: -------------------------------
-   DEBUG: Ember      : 2.4.3
-   DEBUG: Ember Data : 2.4.2
-   DEBUG: jQuery     : 1.12.2
+   DEBUG: Ember      : 2.5.1
+   DEBUG: Ember Data : 2.5.2
+   DEBUG: jQuery     : 2.2.3
    DEBUG: -------------------------------
    ```
 
@@ -175,7 +181,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    ...
    
      "dependencies": {
-       "ember": "~2.4.3",
+       "ember": "~2.5.1",
        ...
        "bootstrap-sass": "~3.3.6"
      }

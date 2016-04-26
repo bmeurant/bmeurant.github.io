@@ -12,7 +12,7 @@ Les composants [Ember][ember] sont une part importante de la structure du framew
 de converger vers les [Web components](http://w3c.github.io/webcomponents/) et les [Custom elements](http://w3c.github.io/webcomponents/spec/custom/) en particulier.
 
 [Ember][ember] permet ainsi de définir - sous la forme de composants - des éléments évolués offrant une réutilisation maximales à la fois de structures d'affichage et de structures 
-logique au sein d'une application voire, via le packaging de ces composants au sein d'[addons](https://guides.emberjs.com/v2.4.0/addons-and-dependencies/managing-dependencies/#toc_addons), 
+logique au sein d'une application voire, via le packaging de ces composants au sein d'[addons](https://guides.emberjs.com/v2.5.0/addons-and-dependencies/managing-dependencies/#toc_addons), 
 au sein de plusieurs applications [Ember][ember].
 
 Le futures versions d'[Ember][ember] doivent même voir la notion de contrôleur totalement remplacée par l'utilisation de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md).
@@ -413,7 +413,7 @@ Ces mécanismes permettent donc de propager naturellement aux composants, via le
 Une autre forme évidente d'interaction consiste à demander à un composant de réagir à différents évènements DOM le concernant (c'est à dire intervenant sur la portion d'arbre DOM qu'il gère).
 
 Cela se fait simplement en déclarant dans le composant une fonction du même nom que l'évènement auquel on souhaite que le composant réagisse. La liste des évènements gérés nativement
-est disponible dans la [documentation officielle](https://guides.emberjs.com/v2.4.0/components/handling-events/#toc_event-names). 
+est disponible dans la [documentation officielle](https://guides.emberjs.com/v2.5.0/components/handling-events/#toc_event-names). 
 
 Un paramètre est passé automatiquement à la function. Il contient l'évènement d'origine afin de permettre la récupération d'informations complémentaires (data, origine, etc.). L'évènement
 n'est pas consommmé et continue à être propagé au sein de l'arbre d'appel. Il est possible de stopper cette propagation en renvoyant `false`.
