@@ -127,7 +127,7 @@ imbrication président donc à l'organisation des différents templates de notre
     * Déplacer le contenu de la route ``application.js`` dans la route ``comics.js``
     * Déplacer le contenu de la ``<div class="row">`` du template ``application.hbs`` dans le tempate ``comics.hbs``
     * Ajouter un sous-titre ``Comics list`` juste après l'ouverture de la ``<div class="comics">``
-    * Ajouter un paragraph de classe ``no-selected-comic`` juste après la fermeture de la ``<div class="comics">`` contenant le texte "Please select on comic book for detailled information."
+    * Ajouter un paragraph ayant pour identifiant ``no-selected-comic`` juste après la fermeture de la ``<div class="comics">`` contenant le texte "Please select on comic book for detailled information."
  
     **Tests** : Les modifications doivent permettre de rendre les tests suivants passants : [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L60)
     et [02 - Routing - 02 - Should display text on comics/](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L75)
@@ -282,7 +282,7 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
   {% raw %}
   
 1. Créer dans ``app/models/comic.js`` une classe ``Comic`` étendant ``Ember.Object``
-   * Définir les propriétés ``id``, ``title``, ``scriptwriter``, ``illustrator``, ``publisher``
+   * Définir les propriétés ``slug``, ``title``, ``scriptwriter``, ``illustrator``, ``publisher``
 
      > ```javascript
      > // app/models/comics
@@ -300,6 +300,34 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
 1. Modifier la route ``comics`` pour passer sur un modèle plus complet : 
    * Importer le modèle ``Comic``
    * Créer trois instances de ce modèle de la façon définie ci-dessous
+  
+     ```javascript
+     // Blacksad
+     {
+        slug: 'blacksad',
+        title: 'Blacksad',
+        scriptwriter: 'Juan Diaz Canales',
+        illustrator: 'Juanjo Guarnido',
+        publisher: 'Dargaud'
+     };
+     // Calvin and Hobbes
+     {
+        slug: 'calvin-and-hobbes',
+        title: 'Calvin and Hobbes',
+        scriptwriter: 'Bill Watterson',
+        illustrator: 'Bill Watterson',
+        publisher: 'Andrews McMeel Publishing'
+     };
+     // Akira
+     {
+        slug: 'akira',
+        title: 'Akira',
+        scriptwriter: 'Katsuhiro Ôtomo',
+        illustrator: 'Katsuhiro Ôtomo',
+        publisher: 'Epic Comics'
+     };
+     ```
+  
    * Retourner ces trois instances en tant que modèle de la route
   
      > ```javascript
@@ -389,8 +417,6 @@ Par convention, les éléments constitutifs des routes filles (template, route, 
     * Utiliser la ligne de commande [Ember CLI](http://ember-cli.com) ``generate route comics/comic`` pour générer la route
     * La nouvelle route doit afficher un texte *"Comic selected !"* dans une div de classe ``selected-comic`` à droite de la liste de comics
     * Ne pas oublier l' ``{{outlet}}`` dans la route mère
-
-    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 03 - Should display single comic zone](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L83) passant.*
 
     > ```console
     > $ ember generate route comics/comic
@@ -520,7 +546,7 @@ notation, plus évolutive, est à privilégier lorsque l'on souhaite accéder au
   {% capture m %}
   {% raw %}
   
-1. Copier le contenu du test unitaire [comic-test.js](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comic-test.js) dans ``comic-test.js``.
+1. Copier le contenu du test unitaire [comic-test.js](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/unit/routes/comics/comic-test.js) dans ``comic-test.js``.
   
 1. Pour le moment, transformons la route ``comics.comic`` avec un segment dynamique nous permettant d'afficher le détail d'un comic à la 
 place du texte précédent. 
@@ -547,8 +573,8 @@ place du texte précédent.
       </div>
       ```
     
-    **Test** : Les modifications doivent permettre de rendre passants les tests unitaires : [model() should retrieve existing slug](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comic-test.js#L52)
-    et d'acceptance : [02 - Routing - 04 - Should display the comic detail](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L91)
+    **Test** : Les modifications doivent permettre de rendre passants les tests unitaires : [model() should retrieve existing slug](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/unit/routes/comics/comic-test.js#L52)
+    et d'acceptance : [02 - Routing - 03 - Should display single comic zone](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L83) et [02 - Routing - 04 - Should display the comic detail](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L91)
 
     > ```javascript
     > // app/router.js
