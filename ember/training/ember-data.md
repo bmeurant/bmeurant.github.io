@@ -3,6 +3,7 @@ layout: ember-training
 title: Formation Ember - Ember Data
 permalink:  ember/training/ember-data/
 prev: ember/training/components
+next: ember/training/backend
 ---
 
 <div id="toc"></div>
