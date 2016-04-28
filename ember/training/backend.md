@@ -246,6 +246,31 @@ export default DS.RESTSerializer.extend(EmbeddedRecordsMixin, {
 }););
 ```
 
+En réalité, ``childs: { embedded: 'always' }`` est un raccourci pour 
+
+```javascript
+childs: {
+  serialize: 'records',
+  deserialize: 'records'
+}
+```
+
+Cela signifie qu'[Ember Data][ember-data] doit s'attendre à des ``childs`` embarqués dans le ``parent`` mais qu'il doit également les envoyer
+embarqués au serveur lors d'une modification.
+
+Si l'on avait utilisé, en revanche : 
+
+```javascript
+childs: {
+  serialize: 'ids',
+  deserialize: 'ids'
+}
+```
+
+[Ember Data][ember-data] s'attendrait à récupérer et à envoyer des identifiants.
+
+En mixant ces valeurs, on peut ajuster finement la manière dont les relations sont reçues et envoyées.
+
 Pour la liste complète des propriétés / méthodes des adapters, se référer à [JSONSerializer](http://emberjs.com/api/data/classes/DS.JSONSerializer.html), 
 [RESTSerializer](http://emberjs.com/api/data/classes/DS.RESTSerializer.html) ou
 [JSONAPISerializer](http://emberjs.com/api/data/classes/DS.JSONAPISerializer.html) en fonction de l'*adapter* que l'on souhaite étendre.
@@ -399,17 +424,49 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      > });
      > ```
      
-   * Configurer l'application pour qu'[Ember Data](https://guides.emberjs.com/v2.5.0/models/) gère les albums comme des relations embarquées du modèle ``comic``
+   * Configurer l'application pour qu'[Ember Data](https://guides.emberjs.com/v2.5.0/models/) récupère les albums comme des relations embarquées du modèle ``comic``
+   * Attention ! On souhaite récupérer les albums embarqués mais n'envoyer au serveur des identifiants lors d'une modification. En effet, dans le cas contraire,
+     les albums seraient définitivement enregistrés dans le json du comic lui-même, ce que l'on ne souhaite pas.
    
      > ```javascript
      > // app/serializers/comic.js
      >
      > import DS from 'ember-data';
-     > import BaseSerializer from './application'
+     > import BaseSerializer from './application';
      > 
      > export default BaseSerializer.extend(DS.EmbeddedRecordsMixin, {
      >   attrs: {
-     >     albums: {embedded: 'always'}
+     >     albums: {
+     >       serialize: 'ids',
+     >       deserialize: 'records'
+     >     }
+     >   }
+     > });
+     >
+     > ```
+     >
+     > Si l'on avait utilisé la notation ``embedded: always``, les albums auraient aussi été inclus entièrement dans la requête de modification.
+     
+1. Retourner à la racine de l'application ``http://localhost:4200/comics`` puis sélectionner ``blacksad``
+   
+   On constate que les albums ne sont plus chargés. En effet, on a indiqué grâce à la méthode ``urlForQueryRecord`` que l'on souhaitait les embarquer
+   lors d'une requête unitaire. Or, lorsqu'on passe par la route ``comics``, on utilise la méthode ``findAll``. Lorsque sélectionne ensuite un
+   comic, [Ember Data](https://guides.emberjs.com/v2.5.0/models/) détecte que l'on a déjà chargé le modèle, n'éxécute pas le *hook* ``model`` ni
+   la méthode ``queryRecord``. Or la méthode ``findAll`` n'appelle pas la méthode serveur qui embarque les albums.
+    
+   * Modifier l'adapter pour embarquer aussi les albums lors d'un ``findAll``
+   
+     > ```javascript
+     > import BaseAdapter from './application';
+     > 
+     > export default BaseAdapter.extend({
+     > 
+     >   urlForQueryRecord(query, modelName) {
+     >     return this._buildURL(modelName) + "?_embed=albums";
+     >   },
+     > 
+     >   urlForFindAll(modelName, snapshot) {
+     >     return this._buildURL(modelName) + "?_embed=albums";
      >   }
      > });
      > ```
