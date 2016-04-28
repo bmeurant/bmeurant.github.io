@@ -1329,7 +1329,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    > </div>
    > ```
    
-1. Créer la route ``comic.create`` fille de la route ``comic`` accessible à l'URL ``comics/create``
+1. Créer la route ``comics.create`` fille de la route ``comics`` accessible à l'URL ``comics/create``
    * Copier dans le template de cette route exactement le même template que la route ``comic.edit``
    * Modifier / implémenter la route ``app/routes/comics/create.js`` pour créer une nouvelle instance du modèle ``Comic`` et l'ajouter à la liste
    
