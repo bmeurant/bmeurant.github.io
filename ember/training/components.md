@@ -7,6 +7,13 @@ next: ember/training/ember-data
 ---
 
 <div id="toc"></div>
+**NB :** *Les exercices de cette section seront validés par le passage des cas de tests associés. Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet* :
+
+* [04-components-test.js](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js) dans ``tests/acceptance``.
+* [fav-btn-test.js](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/fav-btn-test.js) dans ``tests/integration/components``.
+* [image-cover-test.js](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/image-cover-test.js) dans ``tests/integration/components``.
+
+## Componsants
 
 Les composants [Ember][ember] sont une part importante de la structure du framework. [Ember][ember] revendique en effet depuis toujours une approche composants ainsi que la volonté
 de converger vers les [Web components](http://w3c.github.io/webcomponents/) et les [Custom elements](http://w3c.github.io/webcomponents/spec/custom/) en particulier.
@@ -193,7 +200,7 @@ on va en faire un composant.
    * Modifier le template ``app/templates/comic/index.hbs`` pour ajouter les passage d'un paramètre au composant lui permettant d'accéder à l'identifiant (`slug`) du comic.
    * Modifier le template du composant pour remplacer *"default"* par la valeur de ce slug
    
-   **Test** : Ces modifications doivent permettre de rendre passant le test [image-cover-test - renders image-cover](TODO link)
+   **Test** : Ces modifications doivent permettre de rendre passant le test [renders image-cover](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/image-cover-test.js#L8)
    
    > ```html
    > {{!-- app/templates/comic/index.hbs --}}
@@ -382,8 +389,8 @@ Ces mécanismes permettent donc de propager naturellement aux composants, via le
    * Supprimer le fichier de tempates et créer le composant javascript
    * Faire en sorte de supprimer la div englobante tout en conservant le fonctionnement du composant
    
-   **Tests** : Ces modifications doivent conserver passant le test [image-cover-test - renders image-cover](TODO link) et
-   rendre passant le test [renders image-cover - root is image](TODO link)
+   **Tests** : Ces modifications doivent conserver passant le test [image-cover-test - renders image-cover](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/image-cover-test.js#L8) et
+   rendre passant le test [renders image-cover - root is image](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/image-cover-test.js#L19)
    
    > ```javascript
    > // app/components/image-cover.js
@@ -482,9 +489,9 @@ export default Ember.Component.extend({
      {{fav-btn selected=...}}
      ```
    
-   **Tests** : Ces modifications doivent rendre passant les tests [renders fav-btn](TODO link), 
-   [update fav-btn after external change](TODO link) 
-   et [update fav-btn after click](TODO link)
+   **Tests** : Ces modifications doivent rendre passant les tests [renders fav-btn](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/fav-btn-test.js#L19), 
+   [update fav-btn after external change](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/fav-btn-test.js#L30) 
+   et [update fav-btn after click](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/fav-btn-test.js#L46)
    
    > ```javascript
    > // app/components/fav-btn.js
@@ -633,8 +640,8 @@ export default Ember.Component.extend({
      La classe ``Ember.Logger`` offre une simple surcoûche à l'objet natif ``console`` permettant de s'abstraire d'éventuelles problématiques et API non
      standard, propre à chaque navigateur. En l'occurence, l'utilisation de cette classe nous permet également d'intercepter la fonction de log pour des besoins de tests.
    
-   **Test** : Ces modifications doivent rendre passant les tests [04 - Components - 01 - Should log on index](TODO link)
-   et [04 - Components - 02 - Should log on edit](TODO link)
+   **Test** : Ces modifications doivent rendre passant les tests [04 - Components - 01 - Should log on index](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L73)
+   et [04 - Components - 02 - Should log on edit](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L98)
    
    > **Element space actions**
    >
@@ -820,8 +827,8 @@ La très grand majorité de ces *hook* est très rarement utilisée. Les plus fr
    * implémenter ce listener de manière à changer la source de l'image pour ``default.jpg`` en cas d'erreur
    * ne pas oublier de supprimer le listener avant la destruction du composant pour éviter les fuites mémoire
    
-   **Tests** : Ces modifications doivent rendre passant les tests [04 - Components - 03 - Image cover should fallback](TODO link)
-   et [04 - Components - 04 - Image cover should change if model changes](TODO link)
+   **Tests** : Ces modifications doivent rendre passant les tests [04 - Components - 03 - Image cover should fallback](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L123)
+   et [04 - Components - 04 - Image cover should change if model changes](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L129)
    
    > ```javascript
    > //app/components/image-cover.js
