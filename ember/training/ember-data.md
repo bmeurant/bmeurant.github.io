@@ -618,7 +618,7 @@ export default Model.extend({
        if (slug) {
          let foundComic = comic.where({title: slug.classify()})[0];
          if (foundComic) {
-           return serializer.serialize(foundComic, request);
+           return {comic: serializer.serialize(foundComic, request)};
          } else {
            return new Mirage.Response(404, {}, "No comic found with slug: " + slug);
          }
