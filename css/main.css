@@ -1900,6 +1900,9 @@ div#toc {
   .toggle-answers:focus {
     outline: none; }
 
+.site-footer {
+  font-size: 12px; }
+
 @media only screen and (min-width: 40.0625em) {
   .page-content .page-main {
     padding-left: 0.9375rem;
