@@ -8,6 +8,11 @@ next: ember/training/components
 
 <div id="toc"></div>
 
+**NB :** *Les exercices de cette section seront validés par le passage des cas de tests associés. Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet* :
+
+* [03-controllers-test.js](https://github.com/bmeurant/ember-training/blob/controllers-tests/tests/acceptance/03-controller-test.js) dans ``tests/acceptance``.
+
+
 Les contrôleurs [Ember][ember] se limitent à deux responsabilités :
 
 * maintenir l'état de l'application en fonction de la route courante en s'appuyant sur leur propriétés propres. Cet état

@@ -7,6 +7,7 @@ next: ember/training/ember-data
 ---
 
 <div id="toc"></div>
+
 **NB :** *Les exercices de cette section seront validés par le passage des cas de tests associés. Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet* :
 
 * [04-components-test.js](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js) dans ``tests/acceptance``.

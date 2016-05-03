@@ -28,8 +28,8 @@ Nous allons explorer pas à pas certains de ces comportements. Pour cela, il fau
        <meta charset="utf-8">
        <title>Ember Object model</title>
        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-       <script src="http://builds.emberjs.com/tags/v2.0.0/ember.debug.js"></script>
-       <script src="http://builds.emberjs.com/tags/v2.0.0/ember-template-compiler.js"></script>
+       <script src="http://builds.emberjs.com/tags/v2.5.0/ember.debug.js"></script>
+       <script src="http://builds.emberjs.com/tags/v2.5.0/ember-template-compiler.js"></script>
      </head>
      <body>
 
@@ -510,7 +510,7 @@ Que constate-t-on ?
    >       authors: function() {
    >         console.log('computed property calculated');
    >         return this.get('writer') + ' and ' + this.get('drawer');
-   >       }.property('writer', 'drawer')
+   >       }.property()
    >     });
    >
    >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});

@@ -8,6 +8,10 @@ next: ember/training/actions-controllers
 
 <div id="toc"></div>
 
+**NB :** *Les exercices de cette section seront validés par le passage des cas de tests associés. Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet* :
+
+* [02-routing-test.js](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js) dans ``tests/acceptance``.
+
 ## Routeur
 
 Le routeur est un composant central d'[Ember][ember]. Loin de constituer une pièce rapportée venant compléter un framework existant, il en est la pierre angulaire. 
@@ -288,7 +292,7 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
      > // app/models/comics
      > import Ember from 'ember';
      > 
-     > let Comic = Ember.Object.extend({
+     > export default Ember.Object.extend({
      >   slug: '',
      >   title: '',
      >   scriptwriter: '',
@@ -614,10 +618,9 @@ place du texte précédent.
     > });
     > ```
       
-1. Mettre un point d'arrêt dans la méthode ``model`` de ``comics`` et constater les choses suivantes :
+1. Mettre un point d'arrêt dans la méthode ``model`` de ``comics.comic`` et constater les choses suivantes :
     * l'utilisation de ``this.get('model')`` ne renvoie pas le modèle mais la fonction ``model()``
-    * l'utilisation de ``this.modelFor('comics')`` ou de ``this.modelFor(this.routeName)`` renvoie l'objet model. Les deux
-      sont équivalents dans ce cas.
+    * l'utilisation de ``this.modelFor('comics')`` renvoie l'objet model.
       
       ```console
       $ this.get('model')
@@ -928,7 +931,7 @@ par défaut vide, bien entendu.
     * Ajouter un template ``error`` au niveau de l'application (``app/templates/error.hbs``). Ce template se 
       contente d'afficher le model dans un paragraphe d'id ``error``
       
-    **Test** : *Les modifications doivent permettre de rendre le test unitaire [model() should throw error if slug not found](https://github.com/bmeurant/ember-training/blob/master/tests/unit/routes/comic-test.js#L61) passant.*
+    **Test** : *Les modifications doivent permettre de rendre le test unitaire [model() should throw error if slug not found](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/unit/routes/comics/comic-test.js#L61) passant.*
       
     > ```javascript
     >   // app/routes/comics/comic.js
