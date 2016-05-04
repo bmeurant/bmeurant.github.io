@@ -319,7 +319,7 @@ effectués. Nous allons les adapter pour le faire passer de nouveau (sauf les te
      ```
      
 1. Modifier enfin les tests de manière à les corriger. Le test ``tests/unit/routes/comic-test`` peut être supprimé pusique nous délégons toute
-   la logie à [Ember Data](https://guides.emberjs.com/v2.5.0/models/)
+   la logique à [Ember Data](https://guides.emberjs.com/v2.5.0/models/)
    
    > L'ensemble des tests corrigés peut être trouvé sur le [repo github](https://github.com/bmeurant/ember-training/blob/controllers-tests/tests).
   

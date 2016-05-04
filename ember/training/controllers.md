@@ -269,7 +269,7 @@ vers la route ``comic``
     > On note l'utilisation de la notation chaînée `.`
     
 1. Intercepter et traiter les actions 'save' et 'cancel' pour la route `comics.create`
-   * Rediriger vers la route ``comic.edit`` du nouveau comic suite à validation.
+   * Rediriger vers la route ``comic.index`` du nouveau comic suite à validation.
    * Nettoyer la liste de comics et rediriger vers la route ``comics`` suite à annulation. Utiliser pour cela la fonction
      [removeObject()](http://emberjs.com/api/classes/Ember.MutableArray.html#method_removeObject) de ``Ember.MutableArray``.
    * Transformer la propriété ``slug`` d'un ``Comic`` en **computed propety** de manière à ce que le *slug* corresponde à

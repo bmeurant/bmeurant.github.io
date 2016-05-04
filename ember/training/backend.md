@@ -12,7 +12,7 @@ Au chapitre précédent nous avons utilisé [Ember Mirage][ember-mirage] pour é
 nous connecter à un serveur réel.
 
 Pour cela nous allons utiliser le serveur [json server][json-server]. Cet outil permet de mettre en place très rapidement un serveur REST
-(CRUD) à des fins de prototypage ou de tests.
+(CRUD) à des fins de prototypage ou de tests. 
 
 En revanche, il est peu configurable et cet exercice nous obligera à personnaliser le comportement d'[Ember Data][ember-data].
 
@@ -33,6 +33,7 @@ En revanche, il est peu configurable et cet exercice nous obligera à personnali
        "comics": [
          {
            "id": 1,
+           "slug": "blacksad",
            "title": "Blacksad",
            "scriptwriter": "Juan Diaz Canales",
            "illustrator": "Juanjo Guarnido",
@@ -41,6 +42,7 @@ En revanche, il est peu configurable et cet exercice nous obligera à personnali
          },
          {
            "id": 2,
+           "slug": "calvin-and-hobbes",
            "title": "Calvin and Hobbes",
            "scriptwriter": "Bill Watterson",
            "illustrator": "Bill Watterson",
@@ -48,6 +50,7 @@ En revanche, il est peu configurable et cet exercice nous obligera à personnali
          },
          {
            "id": 3,
+           "slug": "akira",
            "title": "Akira",
            "scriptwriter": "Katsuhiro Otomo",
            "illustrator": "Katsuhiro Otomo",
@@ -121,7 +124,7 @@ En revanche, il est peu configurable et cet exercice nous obligera à personnali
     ```
      
 1. Comme nous n'avons désormais plus besoin de [Ember Mirage](http://www.ember-cli-mirage.com/) pour le développement mais souhaitons le conserver pour les tests, on le désactive
-   dans le fichier ``app/config/environment.js`` :
+   dans le fichier ``config/environment.js`` :
    
    ```javascript
    module.exports = function(environment) {
@@ -152,7 +155,7 @@ On dispose désormais à l'adresse ``http://localhost:3000`` d'un serveur REST s
 différentes options pour les différents modèles définis dans le fichier ``db.json``.
 
 Cependant, l'application affiche une erreur puisque les requêtes ne sont pas résolues. En effet, en l'absence d'instructions complémentaires,
-[Ember Data][ember-data] effectue ses requêtes sur lui même (``http://localhost:4200``) ce qui, évidemment, renvoie une erreur :
+[Ember Data][ember-data] effectue ses requêtes sur lui-même (``http://localhost:4200``) ce qui, évidemment, renvoie une erreur :
 
 ```console
 > GET http://localhost:4200/comics 404 (Not Found)
@@ -168,7 +171,7 @@ Les adapters définissent la façon dont [Ember Data][ember-data] communique ave
 [JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html). C'est ce dernier, implémentant la norme [JSON API](http://jsonapi.org/) qui est utilisé par défaut.
 Le premier propose la communication avec une API REST non JSON API. Ces deux adapters étendent un même objet de base, [Adapter](http://emberjs.com/api/data/classes/DS.Adapter.html).
 
-La configuration / personalisation de la communication nécessite donc de proposer un *Adapter* personnalisé, étendant au minimum [Adapter](http://emberjs.com/api/data/classes/DS.Adapter.html) ou,
+La configuration / personalisation de la communication nécessite donc de proposer un *adapter* personnalisé, étendant au minimum [Adapter](http://emberjs.com/api/data/classes/DS.Adapter.html) ou,
 plus probablement, [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html) ou [JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html).
 
 Cela se fait en fournissant un adapter personnalisé ``app/adapters/application.js`` :
@@ -182,7 +185,7 @@ export default DS.RESTAdapter.extend({
 });
 ```
 
-Il est alors possible de fournir des valeurs particulières à des propriétés de l'adapter. Les propriétés sont définies dans les classes de base. Il peut s'agir de la configuration de l'hôte (``host``),
+Il est alors possible de fournir des valeurs particulières à des propriétés de l'*adapter*. Les propriétés sont définies dans les classes de base. Il peut s'agir de la configuration de l'hôte (``host``),
 du namespace de l'API (``namespace``), des headers (``headers``), etc. Il est également possible (et fréquent) de proposer des implémentations spécifiques pour certaines méthodes. En effet, un 
 *adapter* propose de nombreuses méthodes permettant de retrouver un objet(``findRecord``), une collection(``findMany``), une relation(``findBelongsTo`` ou ``findHasMany``), etc. Les surcharger
 permet de traiter les problématiques spécifiques d'une API.
@@ -199,16 +202,28 @@ export default DS.RESTAdapter.extend({
 });
 ```
 
-Pour la liste complète des propriétés / méthodes des adapters, se référer à [Adapter](http://emberjs.com/api/data/classes/DS.Adapter.html), 
+Attention, dans ce cas, il est probable que vous souhaitiez que cet *adapter* particulier hérite de la configuration et des comportements de l'*adapter*
+général (``app/adapters/application.js``). Auquel cas, la syntaxe est la suivante : 
+
+```javascript
+// app/adapters/user.js
+import BaseAdapter from './application';
+
+export default BaseAdapter.extend({
+  // custom props or methods
+});
+```
+
+Pour la liste complète des propriétés / méthodes des *adapters*, se référer à [Adapter](http://emberjs.com/api/data/classes/DS.Adapter.html), 
 [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html) ou
 [JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html) en fonction de l'*adapter* que l'on souhaite étendre.
 
 ## Serializers
 
-En complément des *adapters*, les *serializers*, eux, sont chargés des opérations de sérialisation / désérialisation entre objets json
-en provenance ou à destination du serveur et les objets locaux [Ember Data][ember-data]. 
+En complément des *adapters*, les *serializers*, sont chargés des opérations de sérialisation / désérialisation entre objets json
+- en provenance ou à destination du serveur - et les objets locaux [Ember Data][ember-data]. 
 
-Tout comme pour les *adapters*, [Ember Data][ember-data] propose en standard deux *serializers* complet : 
+Tout comme pour les *adapters*, [Ember Data][ember-data] propose en standard deux *serializers* complets : 
 [RESTSerializer](http://emberjs.com/api/data/classes/DS.RESTSerializer.html) et 
 [JSONAPISerializer](http://emberjs.com/api/data/classes/DS.JSONAPISerializer.html) qui étendent un même *serializer* de base 
 [JSONSerializer](http://emberjs.com/api/data/classes/DS.JSONSerializer.html).
@@ -236,33 +251,33 @@ complémentaires nécessaires. Si l'API serveur expose à la place les relations
 *serializer* spécifique pour ce model :
 
 ```javascript
-// app/serializers/parent.js
-import DS from 'ember-data';
+// app/serializers/post.js
+import BaseSerializer from './application';
 import EmbeddedRecordsMixin from 'ember-data/serializers/embedded-records-mixin';
 
-export default DS.RESTSerializer.extend(EmbeddedRecordsMixin, {
+export default BaseSerializer.extend(EmbeddedRecordsMixin, {
   attrs: {
-    childs: { embedded: 'always' }
+    comments: { embedded: 'always' }
   }
 }););
 ```
 
-En réalité, ``childs: { embedded: 'always' }`` est un raccourci pour 
+En réalité, ``comments: { embedded: 'always' }`` est un raccourci pour 
 
 ```javascript
-childs: {
+comments: {
   serialize: 'records',
   deserialize: 'records'
 }
 ```
 
-Cela signifie qu'[Ember Data][ember-data] doit s'attendre à des ``childs`` embarqués dans le ``parent`` mais qu'il doit également les envoyer
+Cela signifie qu'[Ember Data][ember-data] doit s'attendre à des ``comments`` embarqués dans le ``parent`` mais qu'il doit également les envoyer
 embarqués au serveur lors d'une modification.
 
 Si l'on avait utilisé, en revanche : 
 
 ```javascript
-childs: {
+comments: {
   serialize: 'ids',
   deserialize: 'ids'
 }
@@ -367,8 +382,8 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      > });
      > ```
      
-1. Effectuer le même genre d'opération pour que l'application comprène la réponse lors de l'accès à ``http://localhost:4200/comics/blacksad``
-   puisque là aussi l'application est en erreur
+1. Effectuer le même genre d'opération pour que l'application comprenne la réponse lors de l'accès à ``http://localhost:4200/comics/blacksad``
+   puisque, là aussi, l'application est en erreur
    
    > ```javascript
    > // app/serializers/application.js
@@ -411,7 +426,10 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
    * Pour cela, il est nécessaire de passer le paramètre de requête ``_embed=albums`` au serveur. Soit ``http://localhost:3000/comics?slug=blacksad&_embed=albums``
    * Configurer l'application pour faire en sorte qu'[Ember Data](https://guides.emberjs.com/v2.5.0/models/) ajoute ce paramètre à la requête. 
    * Attention à étendre les bons objets de manière à continuer à bénéficier des personnalisations précédentes
-     
+   * Configurer l'application pour qu'[Ember Data](https://guides.emberjs.com/v2.5.0/models/) récupère les albums comme des relations embarquées du modèle ``comic``
+   * Attention ! On souhaite récupérer les albums embarqués mais n'envoyer au serveur des identifiants lors d'une modification. En effet, dans le cas contraire,
+     les albums seraient définitivement enregistrés dans le json du comic lui-même, ce que l'on ne souhaite pas.
+   
      > ```javascript
      > // app/adapters/comic.js
      >
@@ -424,11 +442,7 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      >   }
      > });
      > ```
-     
-   * Configurer l'application pour qu'[Ember Data](https://guides.emberjs.com/v2.5.0/models/) récupère les albums comme des relations embarquées du modèle ``comic``
-   * Attention ! On souhaite récupérer les albums embarqués mais n'envoyer au serveur des identifiants lors d'une modification. En effet, dans le cas contraire,
-     les albums seraient définitivement enregistrés dans le json du comic lui-même, ce que l'on ne souhaite pas.
-   
+     >
      > ```javascript
      > // app/serializers/comic.js
      >
@@ -451,7 +465,7 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
 1. Retourner à la racine de l'application ``http://localhost:4200/comics`` puis sélectionner ``blacksad``
    
    On constate que les albums ne sont plus chargés. En effet, on a indiqué grâce à la méthode ``urlForQueryRecord`` que l'on souhaitait les embarquer
-   lors d'une requête unitaire. Or, lorsqu'on passe par la route ``comics``, on utilise la méthode ``findAll``. Lorsque sélectionne ensuite un
+   lors d'une requête unitaire. Or, lorsqu'on passe par la route ``comics``, on utilise la méthode ``findAll``. Lorsque l'on sélectionne ensuite un
    comic, [Ember Data](https://guides.emberjs.com/v2.5.0/models/) détecte que l'on a déjà chargé le modèle, n'éxécute pas le *hook* ``model`` ni
    la méthode ``queryRecord``. Or la méthode ``findAll`` n'appelle pas la méthode serveur qui embarque les albums.
     

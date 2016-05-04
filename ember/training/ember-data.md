@@ -308,13 +308,13 @@ return this.store.findRecord('user', 1).then(user => {
    En effet, comme évoqué plus haut, le ``store`` doit impérativement être utilisé pour créer les objets [Ember Data](https://guides.emberjs.com/v2.5.0/models/) via la méthode
    ``createRecord``. Ainsi les appels à ``Comic.create(...)`` de la route ``app/routes/comics.js`` génèrent ces erreurs.
    
-1. Modifier la route ``app/routes/comic.js`` pour supprimer les appels à ``Comic.create(...)`` et utiliser la méthode ``createRecord`` du store
+1. Modifier la route ``app/routes/comics.js`` pour supprimer les appels à ``Comic.create(...)`` et utiliser la méthode ``createRecord`` du store
    à la place
    * utiliser le hook ``init`` pour la création des objets
    * modifier le hook ``model`` pour renvoyer la liste des objets [Ember Data](https://guides.emberjs.com/v2.5.0/models/) en utilisant la méthode ``findAll`` du store. Que constate-t-on ?
    
    > ```javascript
-   > // app/routes/comic.js
+   > // app/routes/comics.js
    >
    > import Ember from 'ember';
    > 
@@ -510,7 +510,6 @@ export default Model.extend({
 1. Nous allons maintenant configurer un serveur [Ember CLI Mirage](http://www.ember-cli-mirage.com/) permettant d'exposer notre liste de comics sous forme de *fixtures* (puisque nos données sont complètes
    et ne nécessitent pas d'être générées dynamiquement).
    * Installer [Ember CLI Mirage](http://www.ember-cli-mirage.com/)
-   * Supprimer les factories inutiles
    * Créer la route [Ember CLI Mirage](http://www.ember-cli-mirage.com/) pour répondre à un GET ``/comics``
    * Ajouter les fixtures nécessaires et y déplacer la définition des comics
    * Créer le modèle mirage ``mirage/models/comic.js``
@@ -612,20 +611,28 @@ export default Model.extend({
    * Modifier la route [Ember CLI Mirage](http://www.ember-cli-mirage.com/) ``comics`` et y copier l'implémentation suivante pour accepter le parametre ``slug`` 
      
      ```javascript
-     this.get('/comics', ({comic}, request) => {
-       let slug = request.queryParams.slug;
+     import Mirage from 'ember-cli-mirage';
+     import Serializer from 'ember-training/mirage/serializers/application'
      
-       if (slug) {
-         let foundComic = comic.where({title: slug.classify()})[0];
-         if (foundComic) {
-           return {comic: serializer.serialize(foundComic, request)};
+     let serializer = new Serializer();
+     
+     export default function() {
+     
+       this.get('/comics', ({comic}, request) => {
+         let slug = request.queryParams.slug;
+       
+         if (slug) {
+           let foundComic = comic.where({title: slug.classify()})[0];
+           if (foundComic) {
+             return serializer.serialize(foundComic, request);
+           } else {
+             return new Mirage.Response(404, {}, "No comic found with slug: " + slug);
+           }
          } else {
-           return new Mirage.Response(404, {}, "No comic found with slug: " + slug);
+           return serializer.serialize(comic.all(), request);
          }
-       } else {
-         return serializer.serialize(comic.all(), request);
-       }
-     });
+       });
+     }
      ```
      
    * Charger ensuite la route ``/comics/akira`` via un Ctrl-F5 pour constater dans la console que la requête ``GET /comics?slug=akira`` a bien été exécutée et qu'[Ember CLI Mirage](http://www.ember-cli-mirage.com/)
@@ -698,7 +705,7 @@ export default Model.extend({
    et de supprimer toute gestion d'erreur dans la route 
    
    ```javascript
-   // app/routes/comics.js
+   // app/routes/comic.js
    model (params) {
      return this.store.queryRecord('comic', {slug: params.comic_slug});
    },
@@ -795,7 +802,7 @@ différents. Parmis les principaux
 * [hasDirtyAttributes](http://emberjs.com/api/data/classes/DS.Model.html#property_hasDirtyAttributes) : positionné lorsque l'objet a été modifié depuis son chargement. Remis à ``false`` suite à un ``save``.
 * [isDeleted](http://emberjs.com/api/data/classes/DS.Model.html#property_isDeleted) : positionné lorsqu'un objet a été marqué pour suppression
 
-[Ember Data][ember-data] s'appuie ensuite sur ces états pour déterminer les actions à effectuer sur les objets et notamment le type des requêtes à envoyer au serveur (``POST``, ``PUT``, ``DELETE``).
+[Ember Data][ember-data] s'appuie ensuite sur ces états pour déterminer les actions à effectuer sur les objets et notamment le type des requêtes à envoyer au serveur (``POST``, ``PATCH``, ``PUT``, ``DELETE``).
 
 Ainsi le code suivant : 
 
@@ -930,7 +937,6 @@ comprenant l'internationalisation.
      [Ember Data](https://guides.emberjs.com/v2.5.0/models/)
    * De la même manière, la réinitialisation (``reset``) peut être avantageusement remplacée par un ``rollbackAttributes``.
    * Le modèle peut être accédé via ``this.get('controller.model')``
-   * Le contrôleur ``app/controllers/comic/edit.js`` peut ensuite être supprimé sans impact.
    
    > ```javascript
    > // app/models/comic.js
@@ -959,6 +965,7 @@ comprenant l'internationalisation.
    >     ...
    >   });
    > 
+   >   this.patch('/comics/:id');
    >   this.put('/comics/:id');
    >   this.post('/comics');
    > });
@@ -1305,10 +1312,10 @@ l'accès depuis un template) à ces relations.
      </li>
      ```
      
-   * Modifier le template ``comics`` pour afficher la liste des albums :
+   * Modifier le template ``comic`` pour afficher la liste des albums :
    
      ```html
-     {{!-- app/templates/comics.hbs --}}
+     {{!-- app/templates/comic.hbs --}}
      
      <div class="comic-albums">
        <ul>

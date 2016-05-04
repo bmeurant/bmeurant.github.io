@@ -16,11 +16,11 @@ next: ember/training/ember-data
 
 ## Componsants
 
-Les composants [Ember][ember] sont une part importante de la structure du framework. [Ember][ember] revendique en effet depuis toujours une approche composants ainsi que la volonté
+Les composants [Ember][ember] constituent une part importante de la structure du framework. [Ember][ember] revendique en effet depuis toujours une approche composants ainsi que la volonté
 de converger vers les [Web components](http://w3c.github.io/webcomponents/) et les [Custom elements](http://w3c.github.io/webcomponents/spec/custom/) en particulier.
 
 [Ember][ember] permet ainsi de définir - sous la forme de composants - des éléments évolués offrant une réutilisation maximales à la fois de structures d'affichage et de structures 
-logique au sein d'une application voire, via le packaging de ces composants au sein d'[addons](https://guides.emberjs.com/v2.5.0/addons-and-dependencies/managing-dependencies/#toc_addons), 
+logiques au sein d'une application. Voire, via le packaging de ces composants au sein d'[addons](https://guides.emberjs.com/v2.5.0/addons-and-dependencies/managing-dependencies/#toc_addons), 
 au sein de plusieurs applications [Ember][ember].
 
 Le futures versions d'[Ember][ember] doivent même voir la notion de contrôleur totalement remplacée par l'utilisation de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md).
@@ -141,7 +141,7 @@ Il peut s'agir :
 ### Passage de propriétés
 
 Il est bien entendu possible de passer des propriétés - dynamiques ou non - aux composants afin qu'ils puissent les afficher et/ou les manipuler. Ce passage de propriétés se fait tout naturellement
-selon la syntaxe habituelle ``nom=valeur``. Aini la déclaration suivante : 
+selon la syntaxe habituelle ``name=value``. Aini la déclaration suivante : 
 
 ```html
 {{custom-user title='My title' user=model}}
@@ -290,7 +290,7 @@ Résultat :
 <div id="ember123" class="ember-view success"></div>
 ```
 
-Tout comme la propriété ``classNames``, cette propriété accèpte aussi  bien une châine unique (une seule classe) qu'un tableau de chaînes.
+Tout comme la propriété ``classNames``, cette propriété accèpte aussi bien une chaîne unique (une seule classe) qu'un tableau de chaînes.
 
 ### Attributs
 
@@ -327,15 +327,15 @@ Suivant le principe DDAU (Data Down Actions Up), les principales formes d'intera
  
  * Depuis les éléments parents vers les enfants. Les éléments parents sont ceux qui déclarent un composant - généralement en incluant sa définition au sein de leur template. Cette
    communication *descendante* se fait via l'utilisation de **propriétés dynamiques.**
- * Depuis le DOM suite à des actions de l'utilisation via l' **interception d'évènements**.
- * Depuis les éléments enfants vers les parents. Les composants peuvent ainsi informer leurs parents de la survenue d'évènements extérieurs. Cela s'effectue via des **actions.**
+ * Depuis le DOM suite à des actions de l'utilisation via l'**interception d'évènements**.
+ * Depuis les éléments enfants vers les parents. Les composants peuvent ainsi informer leurs parents de la survenue d'évènements extérieurs. Cela s'effectue via des **actions**.
 
 ### Interactions parents -> enfants (propriétés)
 
 Les composants suivent les principes de communication standard d'[Ember][ember] et cette forme de communication *descendante* s'appuie sur la manipulation de propriétés
 dynamiques *bindées*. En effet, de manière générale, [Ember][ember] n'utilise pas de mécanismes de type *bus d'évènement* ou de *broadcasting* à proprement parler pour communiquer. 
 A la place, un *état* est partagé entre les différents composants sous la forme de **propriétés dynamiques**. Ces propriétés sont ainsi passées par les parents aux enfants sous la
-forme de paramètres classiques (``name=valeur``) comme vu plus haut. Tout évènement de changement de valeur de cette propriété sera ainsi disponible pour les composants enfants qui
+forme de paramètres classiques (``name=value``) comme vu plus haut. Tout évènement de changement de valeur de cette propriété sera ainsi disponible pour les composants enfants qui
 souhaitent l'écouter, leur permettant ainsi de réagir à ce changement en adaptant leur comportement et/ou leur rendu.
 
 Les binding de classes ou d'attributs peuvent faire directement référence à ces propriétés passées au composant. Ainsi, si un composant est invoqué de la manière suivante : 
@@ -510,6 +510,10 @@ export default Ember.Component.extend({
    > });
    > ```
    
+   > ```html
+   > {{fav-btn selected=model.isFavorite}}
+   > ```
+   
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -531,7 +535,7 @@ Pour des raisons historiques, il existe deux modes de déclaration et de gestion
 
 #### Element space actions
 
-Dans cette première forme, à l'issue d'un traitement (après la gestion du'un évènement DOM par exemple), un composant peut appeler la méthode ``sendAction`` pour propager une action
+Dans cette première forme, à l'issue d'un traitement (après la gestion d'un évènement DOM par exemple), un composant peut appeler la méthode ``sendAction`` pour propager une action
 et avertir ainsi ses parents.
 
 Cette méthode prend en premier paramètre le nom de l'action. Sans paramètre, c'est le nom par défaut "action" qui est pris. Tous les paramètres suivants seront vu comme des paramètres, 
@@ -557,7 +561,7 @@ le composant définit de la manière suivante :
 ```
 
 ... entraînera l'éxécution de l'action ``'customAction'`` lors d'un ``this.sendAction()`` et de l'action ``'save'`` lors d'un ``this.sendAction('onSubmit', args)``. Ces deux actions sont à définir
-dans l'un des parents du composant (autre composant, controlleur, routes). L'action est propagée au travers de l'arbre hiérarchie, jusqu'à trouver un gestionnaire.
+dans l'un des parents du composant (autre composant, controlleur, routes). L'action est propagée au travers de la hiérarchie, jusqu'à trouver un gestionnaire.
 
 ```javascript
 // route
@@ -633,7 +637,7 @@ export default Ember.Component.extend({
   {% raw %}
 
 1. Modifier le composant ``fav-btn`` de manière à propager une action en fin de méthode ``click()``
-   * le gestionnaire d'action doit simplement permettre de logger, dans la route, le message suivant : ``<comic.slug> - favorite: <comic.isFavorite>``
+   * le gestionnaire d'action doit simplement permettre de *logger*, dans la route, le message suivant : ``<comic.slug> - favorite: <comic.isFavorite>``
    * cette action doit être exécutée aussi bien en consultation qu'en édition 
    * les deux typologies d'actions définies plus haut peuvent être indifférement utilisées
    * utiliser impérativement [Ember.Logger.debug](http://emberjs.com/api/classes/Ember.Logger.html#method_debug) pour cette opération
@@ -793,8 +797,8 @@ Les cycles de vie liés au rendu initial et aux rendus ultérieurs (mises à jou
 
 ### Rendus ultérieurs
 
-1. ``didUpdateAttrs`` : Appelé quand les attributs du composant sont mise à jour mais pas lors des changement de valeur
-   des propriétés passées au compoosant. Ce *hook* n'est pas appelé non plus lors d'un rerender explicite.
+1. ``didUpdateAttrs`` : Appelé quand les attributs du composant sont mise à jour mais pas lors des changements de valeur
+   des propriétés passées au compoosant. Ce *hook* n'est pas appelé non plus lors d'un *rerende*r explicite.
 1. ``didReceiveAttrs`` : cf. plus haut
 1. ``willUpdate`` : Appelé à chaque fois que le template va être rendu, quelqu'en soit la raison.
 1. ``willRender`` : cf. plus haut
@@ -805,7 +809,7 @@ Des *hooks* sont également disponible lors de la phase de destruction :
 
 ### Destruction
 
-1. ``willDestroyElement`` : Appelé lorsqu'un composant détécte qu'il doit être supprimé, avant sa suppression. Ce *hook*
+1. ``willDestroyElement`` : Appelé lorsqu'un composant détecte qu'il doit être supprimé, avant sa suppression. Ce *hook*
    permet notamment de supprimer d'éventuels listeners.
 1. ``willClearRender`` : Appelé lorsque la vue contenant le composant va être renrendue.
 1. ``didDestroyElement`` : Appelé après la destruction de l'élément du composant.

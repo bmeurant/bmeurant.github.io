@@ -26,9 +26,9 @@ Typiquement pour une URL `test`, [Ember][ember] s'attend à trouver une `TestRou
 
 ## Application
 
-La figure suivante, extraite de la [Documentation officielle](http://guides.emberjs.com/v2.4.0/getting-started/core-concepts/), montre une vue générale du fonctionnement d'une application [Ember][ember] et des différents objets impliqués :
+La figure suivante, extraite de la [Documentation officielle](http://guides.emberjs.com/v2.5.0/getting-started/core-concepts/), montre une vue générale du fonctionnement d'une application [Ember][ember] et des différents objets impliqués :
 
-![Application Ember](http://guides.emberjs.com/v2.4.0/images/ember-core-concepts/ember-core-concepts.png)
+![Application Ember](http://guides.emberjs.com/v2.5.0/images/ember-core-concepts/ember-core-concepts.png)
 
 ## Routeur
 
@@ -55,7 +55,7 @@ L'exemple suivant permet le rendu des URLs :
 
 ## Routes
 
-Les routes sont en charge de la récupération d'un modèle associé à la reqête de l'utilisateur puis puis de l'association avec contrôleur (et de son initialisation) et un template (et de son rendu).
+Les routes sont en charge de la récupération d'un modèle associé à la reqête de l'utilisateur puis de l'association avec un contrôleur (et de son initialisation) et un template (ainsi que de son rendu).
 La récupération du modèle ainsi que l'association entre un (ou plusieurs) modèle(s) et un (ou plusieurs) template(s) implique également la gestion des transitions entre les différentes URLs de l'application. 
 
 ```javascript
@@ -66,7 +66,7 @@ App.BooksRoute = Ember.Route.extend({
 });
 ```
 
--> [doc officielle](http://guides.emberjs.com/v2.4.0/routing/).
+-> [doc officielle](http://guides.emberjs.com/v2.5.0/routing/).
 
 
 ## Templates
@@ -96,7 +96,7 @@ imbrications à mesure que les routes de l'application sont activées.
 Tout élément de modèle injecté dans un template sera **automatiquement mis à jour** (binding) par [Ember][ember] lorsque le modèle associé au template sera modifié. 
 Évidemment, seul cet élément sera rafraîchi et non le template entier. Ce *binding*, qu'il soit unidirectionnel ou bidirectionnel est au coeur du fonctionnement d'[Ember][ember].
 
--> [doc officielle](http://guides.emberjs.com/v2.4.0/templates/handlebars-basics/).
+-> [doc officielle](http://guides.emberjs.com/v2.5.0/templates/handlebars-basics/).
 
 
 ## Modèles
@@ -118,7 +118,7 @@ var Book = DS.Model.extend({
 Cependant, l'ensemble des mécanismes décrits plus bas (les *bindings* notamment) peuvent parfaitement fonctionner en s'appuyant directement sur le modèle objet d'ember et la 
 classe ``Ember.Object`` [en détail](http://eviltrout.com/2013/03/23/ember-without-data.html).
 
--> [doc officielle](http://guides.emberjs.com/v2.4.0/models/).
+-> [doc officielle](http://guides.emberjs.com/v2.5.0/models/).
 
 ## Contrôleurs
 
@@ -141,7 +141,7 @@ App.BooksController = Ember.Controller.extend({
 });
 ```
 
--> [doc officielle](http://guides.emberjs.com/v2.4.0/controllers/).
+-> [doc officielle](http://guides.emberjs.com/v2.5.0/controllers/).
 
 **Note**: Les contrôleurs [Ember][ember] sont appelés à disparaître progressivement au profit de l'utilisation de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md). 
 Ce qui explique l'absence des contrôleurs sur la figure ci-dessus.
