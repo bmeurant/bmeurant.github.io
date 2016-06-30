@@ -27,9 +27,9 @@ Nous allons explorer pas à pas certains de ces comportements. Pour cela, il fau
      <head>
        <meta charset="utf-8">
        <title>Ember Object model</title>
-       <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-       <script src="http://builds.emberjs.com/tags/v2.5.0/ember.debug.js"></script>
-       <script src="http://builds.emberjs.com/tags/v2.5.0/ember-template-compiler.js"></script>
+       <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+       <script src="http://builds.emberjs.com/tags/v2.6.1/ember.debug.js"></script>
+       <script src="http://builds.emberjs.com/tags/v2.6.1/ember-template-compiler.js"></script>
      </head>
      <body>
 
@@ -762,13 +762,13 @@ Des observeurs [Ember][ember] peuvent également être déclarés sur toute prop
   {% endcapture %}{{ m | markdownify }}
 </div>
     
-La documentation est très complète sur le sujet et il n'est nul besoin de la paraphraser ici, je vous invite donc à vous y reporter [ici](http://guides.emberjs.com/v2.5.0/object-model/observers/).
+La documentation est très complète sur le sujet et il n'est nul besoin de la paraphraser ici, je vous invite donc à vous y reporter [ici](http://guides.emberjs.com/v2.6.0/object-model/observers/).
 Cependant, pour résumer, il est bon de noter les points suivants : 
 
 * Les observeurs sont exécutés de manière **synchrône** comme on a pu le constater. Le déclenchement a eu lieu immédiatement après la modification de la propriété, avant même le calcul de la
   propriété calculée qui en dépend.
 * Cela signifie que plusieurs modifications déclencheront plusieurs fois les observeurs de manière non optimisée. Si l'on souhaite maîtriser d'avantage ces déclenchements, il est nécessaire de
-  faire appel à la méthode ``Ember.run.once`` comme expliqué dans la [documentation](http://guides.emberjs.com/v2.5.0/object-model/observers/)
+  faire appel à la méthode ``Ember.run.once`` comme expliqué dans la [documentation](http://guides.emberjs.com/v2.6.0/object-model/observers/)
   
 Les observeurs permettent donc de déclencher des traitements (et non de recalculer des propriétés) lors du changement d'une propriété. Ils sont en particulier très utiles lorsque l'on souhaite 
 déclencher un traitement après que le *binding* ait été effectué.
@@ -779,7 +779,7 @@ Ember gère ses collections et énumérations (et nous propose de gérer les nô
 s'appuie sur les opérations de l'API javascript standard (``array``). Cette API permet de gérer toutes les collections d'objets via une interface normalisée et commune et nous permet donc
 d'utiliser et de proposer des structures de données complètement nouvelles sans impact sur le reste de notre application.
 
-Cette API est décrite de manière succinte [ici](http://guides.emberjs.com/v2.5.0/object-model/enumerables/) et exhaustive [ici](http://emberjs.com/api/classes/Ember.Enumerable.html).
+Cette API est décrite de manière succinte [ici](http://guides.emberjs.com/v2.6.0/object-model/enumerables/) et exhaustive [ici](http://emberjs.com/api/classes/Ember.Enumerable.html).
 
 
 ## *RunLoop*
@@ -804,7 +804,7 @@ Les queues sont :
 C'est ce mécanisme qui permet, en quelque sorte, d'empiler les calculs de propriétés calculées lorsque les propriétés
 *observées* sont modifiées et surtout c'est grâce à ce mécanisme que le rendu n'est effectué qu'une seule fois lors de la modification d'un modèle.
 
-Pour reprendre l'exemple de la [doc officielle](http://guides.emberjs.com/v2.5.0/applications/run-loop/), si l'on a l'objet suivant :
+Pour reprendre l'exemple de la [doc officielle](http://guides.emberjs.com/v2.6.0/applications/run-loop/), si l'on a l'objet suivant :
 
 {% raw %}
 
@@ -830,7 +830,7 @@ Et le template :
 Sans la *RunLoop*, on exécuterait le rendu deux fois si l'on modifie successivement `firstname` puis `lastname`. La *RunLoop* met tout ça (et plein d'autres
 choses) en queue et n'effectue le rendu qu'une seule et unique fois, lorsque nécessaire.
 
-our aller plus loin, se référer à la [documentation officielle](http://guides.emberjs.com/v2.5.0/applications/run-loop) et à cette 
+our aller plus loin, se référer à la [documentation officielle](http://guides.emberjs.com/v2.6.0/applications/run-loop) et à cette 
 [présentation d'Eric Bryn](http://talks.erikbryn.com/backburner.js-and-the-ember-run-loop).
 
 [ember]: http://emberjs.com

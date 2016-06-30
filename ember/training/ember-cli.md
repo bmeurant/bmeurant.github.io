@@ -66,7 +66,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ npm install -g ember-cli
    $ ember -v
-   version: 2.5.0
+   version: 2.6.2
    node: 4.4.3
    ```
    
@@ -81,7 +81,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    ```console
    $ ember new ember-training
-   version: 2.5.0
+   version: 2.6.2
    installing app
      create .bowerrc
      ...
@@ -96,7 +96,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ cd ember-training
    $ ember serve
-   version: 2.5.0
+   version: 2.6.2
    Livereload server on http://localhost:49152
    Serving on http://localhost:4200/
    ```

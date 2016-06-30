@@ -287,7 +287,7 @@ On retiendra les *helpers* [Ember][ember] principaux :
 La liste complète des *helpers* [Ember][ember] est accessible dans la [documentation](http://emberjs.com/api/classes/Ember.Templates.helpers.html).
 
 [Ember][ember] et [Handlebars][handlebars] facilitent enfin la création et la contribution de nouveaux *helpers* via la fonction ``registerHelper`` d'[Handlebars](http://handlebarsjs.com/#helpers),
-la commande ``ember generate helper helper-name`` ou la contribution directe dans le dossier ``app/helpers``. cf [Ember documentation](http://guides.emberjs.com/v2.5.0/templates/writing-helpers/) & 
+la commande ``ember generate helper helper-name`` ou la contribution directe dans le dossier ``app/helpers``. cf [Ember documentation](http://guides.emberjs.com/v2.6.0/templates/writing-helpers/) & 
 [Ember CLI documentation](http://www.ember-cli.com/user-guide/#resolving-handlebars-helpers) sur le sujet (attention au `-` obligatoire dans le nom pour [Ember CLI][ember-cli]).
 
 {% endraw %}
@@ -351,7 +351,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     > Cela s'explique par le fait que la méthode `pushObject` proposée par [Ember](http://emberjs.com) génère des évènements permettant de connaitre et de réagir aux changements. On dit qu'elle est
     > compatible *KVO* - *Key-Value Observing*). Cette méthode est mise à disposition par [Ember](http://emberjs.com) alors même que nous utilisons un objet `array` natif et non pas un objet 
     > [Ember](http://emberjs.com) parce que ce dernier enrichit le prototype de certains objets de manière transparente (note : ce comportement peut être désactivé). 
-    > cf. [documentation](http://guides.emberjs.com/v2.5.0/configuring-ember/disabling-prototype-extensions/)
+    > cf. [documentation](http://guides.emberjs.com/v2.6.0/configuring-ember/disabling-prototype-extensions/)
 
 1. Modifier l'application pour afficher les auteurs des comics.
     * Dans la route, modifier la collection `comics` pour ajouter l'auteur au second comic
