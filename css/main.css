@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
 meta.foundation-version {
-  font-family: "/5.5.2/"; }
+  font-family: "/5.5.3/"; }
 
 meta.foundation-mq-small {
   font-family: "/only screen/";
@@ -44,15 +44,12 @@ meta.foundation-data-attribute-namespace {
 html, body {
   height: 100%; }
 
-html {
-  box-sizing: border-box; }
-
 *,
 *:before,
 *:after {
-  -webkit-box-sizing: inherit;
-  -moz-box-sizing: inherit;
-  box-sizing: inherit; }
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 html,
 body {
@@ -370,13 +367,6 @@ dl {
 
 ul {
   margin-left: 1.1rem; }
-  ul.no-bullet {
-    margin-left: 0; }
-    ul.no-bullet li ul,
-    ul.no-bullet li ol {
-      margin-left: 1.25rem;
-      margin-bottom: 0;
-      list-style: none; }
 
 /* Unordered Lists */
 ul li ul,
@@ -399,9 +389,6 @@ ul.disc {
   list-style-type: disc;
   margin-left: 1.1rem; }
 
-ul.no-bullet {
-  list-style: none; }
-
 /* Ordered Lists */
 ol {
   margin-left: 1.4rem; }
@@ -409,6 +396,15 @@ ol {
   ol li ol {
     margin-left: 1.25rem;
     margin-bottom: 0; }
+
+.no-bullet {
+  list-style-type: none;
+  margin-left: 0; }
+  .no-bullet li ul,
+  .no-bullet li ol {
+    margin-left: 1.25rem;
+    margin-bottom: 0;
+    list-style: none; }
 
 /* Definition Lists */
 dl dt {
@@ -489,6 +485,53 @@ blockquote p {
     font-size: 1.125rem; }
   h6 {
     font-size: 1rem; } }
+
+/*
+       * Print styles.
+       *
+       * Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/
+       * Credit to Paul Irish and HTML5 Boilerplate (html5boilerplate.com)
+      */
+@media print {
+  * {
+    background: transparent !important;
+    color: #000000 !important;
+    /* Black prints faster: h5bp.com/s */
+    box-shadow: none !important;
+    text-shadow: none !important; }
+  a,
+  a:visited {
+    text-decoration: underline; }
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+  .ir a:after,
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: ""; }
+  pre,
+  blockquote {
+    border: 1px solid #999999;
+    page-break-inside: avoid; }
+  thead {
+    display: table-header-group;
+    /* h5bp.com/t */ }
+  tr,
+  img {
+    page-break-inside: avoid; }
+  img {
+    max-width: 100% !important; }
+  @page {
+    margin: 0.34in; }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
+  h2,
+  h3 {
+    page-break-after: avoid; } }
 
 .row {
   margin: 0 auto;
@@ -1380,8 +1423,12 @@ button, .button {
     padding: 0.625rem 1.25rem 0.6875rem 1.25rem;
     font-size: 0.6875rem; }
   button.expand, .button.expand {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 1rem 2rem 1.0625rem 2rem;
+    font-size: 1rem;
+    padding-bottom: 1.0625rem;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     width: 100%; }
   button.left-align, .button.left-align {
     text-align: left;

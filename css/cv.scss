@@ -56,7 +56,7 @@ section {
     }
   }
 
-  article {
+  article:first-of-type {
     @include grid-column(12);
 
     @media #{$large-up} {
@@ -79,7 +79,7 @@ section {
   display: table;
   padding-top: 0;
 
-  article {
+  article:first-of-type {
     display: table-cell;
     vertical-align: middle;
     @include grid-column(12);
@@ -196,6 +196,7 @@ section {
 
   a {
     color: $orange;
+    font-weight: 500;
   }
 
   h2 {
@@ -203,6 +204,57 @@ section {
     @include grid-column(12);
     padding-left: 0;
     padding-right: 0;
+  }
+
+  h3 {
+    font-weight: 500;
+    color: $white;
+    margin-bottom: 1em;
+  }
+
+  .works {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .work {
+    list-style-type: none;
+    
+    @include grid-column(12);
+
+    li {
+      margin-bottom: 0.5em;
+    }
+
+    li:before {
+      font-family: FontAwesome;
+      display: inline-block;
+      margin-left: -1.3em; /* same as padding-left set on li */
+      width: 1.3em; /* same as padding-left set on li */
+    }
+
+    .code:before {
+      content: "\f121";
+    }
+
+    .writing:before {
+      content: "\f044";
+    }
+
+    .training:before {
+      content: "\f19d";
+    }
+
+    a, strong {
+      font-weight: 500;
+    }
+  }
+
+  .works.past .work {
+    @media #{$large-up} {
+      margin-left: 0;
+      @include grid-column(4);
+    }
   }
 
   div.profile-photo {

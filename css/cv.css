@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
 meta.foundation-version {
-  font-family: "/5.5.2/"; }
+  font-family: "/5.5.3/"; }
 
 meta.foundation-mq-small {
   font-family: "/only screen/";
@@ -44,15 +44,12 @@ meta.foundation-data-attribute-namespace {
 html, body {
   height: 100%; }
 
-html {
-  box-sizing: border-box; }
-
 *,
 *:before,
 *:after {
-  -webkit-box-sizing: inherit;
-  -moz-box-sizing: inherit;
-  box-sizing: inherit; }
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 html,
 body {
@@ -370,13 +367,6 @@ dl {
 
 ul {
   margin-left: 1.1rem; }
-  ul.no-bullet {
-    margin-left: 0; }
-    ul.no-bullet li ul,
-    ul.no-bullet li ol {
-      margin-left: 1.25rem;
-      margin-bottom: 0;
-      list-style: none; }
 
 /* Unordered Lists */
 ul li ul,
@@ -399,9 +389,6 @@ ul.disc {
   list-style-type: disc;
   margin-left: 1.1rem; }
 
-ul.no-bullet {
-  list-style: none; }
-
 /* Ordered Lists */
 ol {
   margin-left: 1.4rem; }
@@ -409,6 +396,15 @@ ol {
   ol li ol {
     margin-left: 1.25rem;
     margin-bottom: 0; }
+
+.no-bullet {
+  list-style-type: none;
+  margin-left: 0; }
+  .no-bullet li ul,
+  .no-bullet li ol {
+    margin-left: 1.25rem;
+    margin-bottom: 0;
+    list-style: none; }
 
 /* Definition Lists */
 dl dt {
@@ -489,6 +485,53 @@ blockquote p {
     font-size: 1.125rem; }
   h6 {
     font-size: 1rem; } }
+
+/*
+       * Print styles.
+       *
+       * Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/
+       * Credit to Paul Irish and HTML5 Boilerplate (html5boilerplate.com)
+      */
+@media print {
+  * {
+    background: transparent !important;
+    color: #000000 !important;
+    /* Black prints faster: h5bp.com/s */
+    box-shadow: none !important;
+    text-shadow: none !important; }
+  a,
+  a:visited {
+    text-decoration: underline; }
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+  .ir a:after,
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: ""; }
+  pre,
+  blockquote {
+    border: 1px solid #999999;
+    page-break-inside: avoid; }
+  thead {
+    display: table-header-group;
+    /* h5bp.com/t */ }
+  tr,
+  img {
+    page-break-inside: avoid; }
+  img {
+    max-width: 100% !important; }
+  @page {
+    margin: 0.34in; }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
+  h2,
+  h3 {
+    page-break-after: avoid; } }
 
 .row {
   margin: 0 auto;
@@ -1315,19 +1358,45 @@ blockquote p {
   .progress .meter {
     background: #008CBA;
     display: block;
-    height: 100%; }
+    height: 100%;
+    float: left;
+    width: 0%; }
+    .progress .meter.secondary {
+      background: #e7e7e7;
+      display: block;
+      height: 100%;
+      float: left;
+      width: 0%; }
+    .progress .meter.success {
+      background: #43AC6A;
+      display: block;
+      height: 100%;
+      float: left;
+      width: 0%; }
+    .progress .meter.alert {
+      background: #f04124;
+      display: block;
+      height: 100%;
+      float: left;
+      width: 0%; }
   .progress.secondary .meter {
     background: #e7e7e7;
     display: block;
-    height: 100%; }
+    height: 100%;
+    float: left;
+    width: 0%; }
   .progress.success .meter {
     background: #43AC6A;
     display: block;
-    height: 100%; }
+    height: 100%;
+    float: left;
+    width: 0%; }
   .progress.alert .meter {
     background: #f04124;
     display: block;
-    height: 100%; }
+    height: 100%;
+    float: left;
+    width: 0%; }
   .progress.radius {
     border-radius: 3px; }
     .progress.radius .meter {
@@ -1377,20 +1446,20 @@ section {
       @media only screen and (min-width: 64.0625em) {
         section aside h2 {
           text-align: left; } }
-  section article {
+  section article:first-of-type {
     padding-left: 0.9375rem;
     padding-right: 0.9375rem;
     width: 100%;
     float: left; }
     @media only screen and (min-width: 64.0625em) {
-      section article {
+      section article:first-of-type {
         padding-left: 0.9375rem;
         padding-right: 0.9375rem;
         width: 75%;
         float: left; } }
-    section article h3 {
+    section article:first-of-type h3 {
       margin-top: 0; }
-    section article p {
+    section article:first-of-type p {
       margin-bottom: 1.5em; }
 
 .profile-summary {
@@ -1398,7 +1467,7 @@ section {
   text-align: center;
   display: table;
   padding-top: 0; }
-  .profile-summary article {
+  .profile-summary article:first-of-type {
     display: table-cell;
     vertical-align: middle;
     padding-left: 0.9375rem;
@@ -1477,7 +1546,8 @@ section {
   background-color: #5D5C59;
   color: #f0efe7; }
   .about a {
-    color: #d75330; }
+    color: #d75330;
+    font-weight: 500; }
   .about h2 {
     color: #f0efe7;
     padding-left: 0.9375rem;
@@ -1486,6 +1556,43 @@ section {
     float: left;
     padding-left: 0;
     padding-right: 0; }
+  .about h3 {
+    font-weight: 500;
+    color: #f0efe7;
+    margin-bottom: 1em; }
+  .about .works {
+    padding-left: 0.5em;
+    padding-right: 0.5em; }
+  .about .work {
+    list-style-type: none;
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+    width: 100%;
+    float: left; }
+    .about .work li {
+      margin-bottom: 0.5em; }
+    .about .work li:before {
+      font-family: FontAwesome;
+      display: inline-block;
+      margin-left: -1.3em;
+      /* same as padding-left set on li */
+      width: 1.3em;
+      /* same as padding-left set on li */ }
+    .about .work .code:before {
+      content: "\f121"; }
+    .about .work .writing:before {
+      content: "\f044"; }
+    .about .work .training:before {
+      content: "\f19d"; }
+    .about .work a, .about .work strong {
+      font-weight: 500; }
+  @media only screen and (min-width: 64.0625em) {
+    .about .works.past .work {
+      margin-left: 0;
+      padding-left: 0.9375rem;
+      padding-right: 0.9375rem;
+      width: 33.3333333333%;
+      float: left; } }
   .about div.profile-photo {
     padding-left: 0.9375rem;
     padding-right: 0.9375rem;
@@ -1576,6 +1683,8 @@ section {
             background: #d75330;
             display: block;
             height: 100%;
+            float: left;
+            width: 0%;
             text-transform: uppercase;
             font-weight: 500;
             text-align: left;
