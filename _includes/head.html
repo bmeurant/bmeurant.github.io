@@ -4,12 +4,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
-    <meta name="description" content="{{ site.description }}">
+    <meta name="title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+    <meta name="author" content="{% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}">
 
     <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="{{ "/css/font-awesome.min.css" | prepend: site.baseurl }}">
-    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
-    <link rel="icon" type="image/png" href="http://www.gravatar.com/avatar/c28e672be1580d9cb3dc6f7dc7f370c4.png">
+    <link rel="url" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">    <link rel="icon" type="image/png" href="http://www.gravatar.com/avatar/c28e672be1580d9cb3dc6f7dc7f370c4.png">
 
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="/assets/javascript/toc.js"></script>

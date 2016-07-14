@@ -4,6 +4,7 @@ title: Formation Ember - Principes généraux
 permalink:  ember/training/overview/
 prev: ember/training/
 next: ember/training/underlyings
+description: formation / tutoriel emberjs - Principes généraux : fondamentaux ember
 ---
 
 <div id="toc"></div>
