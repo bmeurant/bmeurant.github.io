@@ -411,7 +411,7 @@ et permet des recherches avancées.
 [Ember CLI Mirage][ember-mirage] est l'un de ces addons et, comme tel, peut être installé de la manière suivante : 
 
 ```console
-ember install ember-cli-mirage@beta
+ember install ember-cli-mirage
 ```
 
 On installe la beta car celle-ci apporte des améiliorations indispensables, notament dans la gestion des relations.
@@ -517,25 +517,25 @@ export default Model.extend({
    * Dans la route ``comics``, supprimer la création des comics et changer le précédent ``peekAll`` en ``findAll``
    
    > ```console
-   > ember install ember-cli-mirage@beta
+   > ember install ember-cli-mirage
    > Installed packages for tooling via npm.
    > installing ember-cli-mirage
    >   create \\mirage\config.js\
    >   create \\mirage\scenarios\default.js
    >   create \\mirage\serializers\application.js
    >   install bower packages pretender, Faker
-   >   not-cached https://github.com/trek/pretender.git#~0.12.0
-   >   cached https://github.com/Marak/Faker.js.git#3.0.1
-   >   resolved https://github.com/trek/pretender.git#0.12.0
+   >   not-cached https://github.com/trek/pretender.git#~1.1.0
+   >   cached https://github.com/Marak/Faker.js.git#3.1.0
+   >   resolved https://github.com/trek/pretender.git#1.1.0
    >   not-cached https://github.com/trek/FakeXMLHttpRequest.git#^1.3.0
    >   resolved https://github.com/trek/FakeXMLHttpRequest.git#1.4.0
    >   conflict Unable to find suitable version for pretender
-   >     1) pretender ~0.10.1
-   >     2) pretender ~0.12.0
+   >     1) pretender ~0.12.0
+   >     2) pretender ~1.1.0
    > ? Answer 2
    >   conflict Unable to find suitable version for FakeXMLHttpRequest
-   >     1) FakeXMLHttpRequest ~1.2.1
-   >     2) FakeXMLHttpRequest ^1.3.0
+   >     1) FakeXMLHttpRequest ~3.0.1
+   >     2) FakeXMLHttpRequest ~3.1.0
    > ? Answer 2
    > Installed browser packages via Bower.
    > Installed addon package.
@@ -581,7 +581,7 @@ export default Model.extend({
    >
    > ```javascript
    > // mirage/models/comic.js
-   > import { Model, hasMany } from 'ember-cli-mirage';
+   > import { Model } from 'ember-cli-mirage';
    > 
    > export default Model;
    > ```
@@ -608,36 +608,6 @@ export default Model.extend({
    
 1. Récupérer un ``comic`` par son *slug*
    * Modifier la route ``app/routes/comic.js`` pour effectuer une requête paramétrée sur le store plutôt qu'un ``this.modelFor(...).findBy(...)`` afin de récupérer un comic par son *slug*
-   * Modifier la route [Ember CLI Mirage](http://www.ember-cli-mirage.com/) ``comics`` et y copier l'implémentation suivante pour accepter le parametre ``slug`` 
-     
-     ```javascript
-     import Mirage from 'ember-cli-mirage';
-     import Serializer from 'ember-training/mirage/serializers/application'
-     
-     let serializer = new Serializer();
-     
-     export default function() {
-     
-       this.get('/comics', ({comic}, request) => {
-         let slug = request.queryParams.slug;
-       
-         if (slug) {
-           let foundComic = comic.where({title: slug.classify()})[0];
-           if (foundComic) {
-             return serializer.serialize(foundComic, request);
-           } else {
-             return new Mirage.Response(404, {}, "No comic found with slug: " + slug);
-           }
-         } else {
-           return serializer.serialize(comic.all(), request);
-         }
-       });
-     }
-     ```
-     
-   * Charger ensuite la route ``/comics/akira`` via un Ctrl-F5 pour constater dans la console que la requête ``GET /comics?slug=akira`` a bien été exécutée et qu'[Ember CLI Mirage](http://www.ember-cli-mirage.com/)
-     y a répondu correctement
-   * Pourquoi cette requête n'est-elle pas effectuée lorsque l'on vient de la route ``/comics`` ?
    
    > ```javascript
    > // app/routes/comic.js
@@ -653,24 +623,35 @@ export default Model.extend({
    >   ...
    > });
    > ```
-   >
-   > ```javascript
-   > // mirage/config.js
-   >
-   > export default function() {
-   > 
-   >   this.get('/comics', function(db, request) {
-   >     let slug = request.queryParams.slug;
-   > 
-   >     if (slug) {
-   >       return {comics: db.comics.where({title: slug.classify()})};
-   >     } else {
-   >       return {comics: db.comics};
-   >     }
-   >   });
-   > }
-   > ```
-   >
+   
+   * Modifier la route [Ember CLI Mirage](http://www.ember-cli-mirage.com/) ``comics`` et y copier l'implémentation suivante pour accepter le parametre ``slug`` 
+     
+     ```javascript
+     import Mirage from 'ember-cli-mirage';
+          
+     export default function() {
+     
+       this.get('/comics', ({comics}, request) => {
+         let slug = request.queryParams.slug;
+       
+         if (slug) {
+           let foundComic = comics.where({title: slug.classify()}).models[0];
+           if (foundComic) {
+             return foundComic;
+           } else {
+             return new Mirage.Response(404, {}, "No comic found with slug: " + slug);
+           }
+         } else {
+           return comics.all();
+         }
+       });
+     }
+     ```
+     
+   * Charger ensuite la route ``/comics/akira`` via un Ctrl-F5 pour constater dans la console que la requête ``GET /comics?slug=akira`` a bien été exécutée et qu'[Ember CLI Mirage](http://www.ember-cli-mirage.com/)
+     y a répondu correctement
+   * Pourquoi cette requête n'est-elle pas effectuée lorsque l'on vient de la route ``/comics`` ?
+   
    > Lorsque l'on vient de la route ``/comics``, le model complet est passé à la route ``/comics/{slug}`` via le ``linkTo``. Dans ce cas [Ember](http://emberjs.com/) n'exécute pas le hook ``model``
    > puisqu'il en dispose déjà. Dans le cas d'un chargement initial, au contraire, le modèle n'est pas disponible et [Ember](http://emberjs.com/) exécute le hook, entraînant une requête de la part
    > d'[Ember Data](https://guides.emberjs.com/v2.6.0/models/).
@@ -961,7 +942,7 @@ comprenant l'internationalisation.
    >
    > export default function() {
    > 
-   >   this.get('/comics', function(db, request) {
+   >   this.get('/comics', function({comics}, request) {
    >     ...
    >   });
    > 
@@ -1220,7 +1201,7 @@ l'accès depuis un template) à ces relations.
      ```javascript
      // mirage/models/album.js
      
-     import { Model, hasMany } from 'ember-cli-mirage';
+     import { Model } from 'ember-cli-mirage';
      
      export default Model;
      ```
