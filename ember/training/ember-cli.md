@@ -96,12 +96,31 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ cd ember-training
    $ ember serve
-   version: 2.6.2
+   version: 2.6.3
    Livereload server on http://localhost:49152
    Serving on http://localhost:4200/
    ```
 
-1. Ouvrir le navigateur à [cette adresse](http://localhost:4200/) et constater que l'application est lancée en ouvrant la console :
+1. Ouvrir le navigateur à [cette adresse](http://localhost:4200/) et constater que la page ci-dessous est affichée :
+   ![Ember Welcome Page](/images/ember-welcome-page.png)
+   Cette page est le résultat de l'addon `ember-welcome-page` qui intercepte les requêtes sur la racine (`/`) et délivre une page d'accueil statique stylisée... mais ce n'est pas ce qui nous intéresse et on va le désinstaller aussitôt.
+
+1. Désinstaller l'addon `ember-welcome-page` via la ligne de commande :
+
+   ```console
+   $ npm uninstall ember-welcome-page --save-dev
+   ```
+
+1. Créer un fichier `/app/templates/application.hbs` avec le contenu suivant:
+   {% raw %}
+   ```html
+   <h2 id="title">Welcome to Ember</h2>
+   
+   {{outlet}}
+   ```
+   {% endraw %}
+
+1. Relancer le serveur puis ouvrir le navigateur à [cette adresse](http://localhost:4200/) et constater que l'application est lancée en ouvrant la console :
 
    ```console
    DEBUG: -------------------------------
@@ -109,7 +128,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    DEBUG: Ember Data : 2.5.2
    DEBUG: jQuery     : 2.2.3
    DEBUG: -------------------------------
-   ```
+   ``` 
 
 1. On en profite enfin pour installer le plugin de développement pour [Chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
 ou [Firefox](https://addons.mozilla.org/fr/firefox/addon/ember-inspector/)
