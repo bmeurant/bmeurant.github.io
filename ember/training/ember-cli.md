@@ -66,7 +66,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ npm install -g ember-cli
    $ ember -v
-   version: 2.6.2
+   version: 2.7.0
    node: 4.4.3
    ```
    
@@ -81,7 +81,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    ```console
    $ ember new ember-training
-   version: 2.6.2
+   version: 2.7.0
    installing app
      create .bowerrc
      ...
@@ -96,20 +96,16 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ cd ember-training
    $ ember serve
-   version: 2.6.3
+   version: 2.7.0
    Livereload server on http://localhost:49152
    Serving on http://localhost:4200/
    ```
 
-1. Ouvrir le navigateur à [cette adresse](http://localhost:4200/) et constater que la page ci-dessous est affichée :
+1. Ouvrir le navigateur à [cette adresse](http://localhost:4200/ember-getting-started) et constater que la page ci-dessous est affichée :
    ![Ember Welcome Page](/images/ember-welcome-page.png)
-   Cette page est le résultat de l'addon `ember-welcome-page` qui intercepte les requêtes sur la racine (`/`) et délivre une page d'accueil statique stylisée... mais ce n'est pas ce qui nous intéresse et on va le désinstaller aussitôt.
+   Cette page est le résultat de l'addon `ember-welcome-page` qui délivre une page d'accueil statique stylisée...
 
-1. Désinstaller l'addon `ember-welcome-page` via la ligne de commande :
-
-   ```console
-   $ npm uninstall ember-welcome-page --save-dev
-   ```
+   NB: Dans le cadre d'un projet, cet addon serait à désinstaller pour supprimer cette page d'aide (`npm uninstall ember-welcome-page --save-dev` )
 
 1. Créer un fichier `/app/templates/application.hbs` avec le contenu suivant:
    {% raw %}
@@ -124,9 +120,9 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    ```console
    DEBUG: -------------------------------
-   DEBUG: Ember      : 2.5.1
-   DEBUG: Ember Data : 2.5.2
-   DEBUG: jQuery     : 2.2.3
+   DEBUG: Ember      : 2.7.0
+   DEBUG: Ember Data : 2.7.0
+   DEBUG: jQuery     : 2.2.4
    DEBUG: -------------------------------
    ``` 
 
@@ -177,7 +173,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    
      "devDependencies": {
        ...
-       "ember-cli-sass": "^5.3.0",
+       "ember-cli-sass": "^5.4.0",
        ...
      }
    ...
@@ -200,9 +196,9 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    ...
    
      "dependencies": {
-       "ember": "~2.5.1",
+       "ember": "~2.7.0",
        ...
-       "bootstrap-sass": "~3.3.6"
+       "bootstrap-sass": "~3.3.7"
      }
    ...
    ```
