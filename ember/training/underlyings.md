@@ -376,7 +376,7 @@ les classes avec de nouvelles propriétés ou méthodes.
    >       displayTitle: function() {
    >         console.log('Title:');
    >         this._super();
-   >      });
+   >      }});
    >
    >  > three = Book.create({title: 'three'});
    >  Title:
@@ -551,6 +551,10 @@ d'entre elles.
 
    > ```javascript
    >  > Comic.reopen({
+   >	  authors: function() {
+   >     	console.log('computed property calculated');
+   >     	return this.get('writer') + ' and ' + this.get('drawer');
+   >   	  }.property('writer', 'drawer'),
    >      summary: function() {
    >    	return this.get('title') + ' by ' + this.get('authors');
    >      }.property('title', 'authors')
@@ -659,7 +663,9 @@ retourne le nombre de livres publiés dans la collection. Placer un log dans la 
    >   	return this.get('books').filterBy('isPublished', true).length;
    >     }.property('books.@each.isPublished')
    >   });
-   >   
+   >
+   > > newCollection = Collection.create({books: [one, two, three]});
+   > 
    > > newCollection.get('numberOfPublished');
    > compute numberOfPublished
    > 1

@@ -56,7 +56,7 @@ L'exemple suivant permet le rendu des URLs :
 
 ## Routes
 
-Les routes sont en charge de la récupération d'un modèle associé à la reqête de l'utilisateur puis de l'association avec un contrôleur (et de son initialisation) et un template (ainsi que de son rendu).
+Les routes sont en charge de la récupération d'un modèle associé à la requête de l'utilisateur puis de l'association avec un contrôleur (et de son initialisation) et un template (ainsi que de son rendu).
 La récupération du modèle ainsi que l'association entre un (ou plusieurs) modèle(s) et un (ou plusieurs) template(s) implique également la gestion des transitions entre les différentes URLs de l'application. 
 
 ```javascript
