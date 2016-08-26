@@ -82,7 +82,7 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
 
 ## Binding
 
-Un language et d'un moteur de templating tel qu'[Handlebars][handlebars] serait inutile s'il ne s'agissait que d'afficher ou d'assembler que du HTML statique. L'intérêt consiste à injecter dans ce template des valeurs
+Un moteur de templating tel qu'[Handlebars][handlebars] serait inutile s'il ne s'agissait que d'afficher ou d'assembler que du HTML statique. L'intérêt consiste à injecter dans ce template des valeurs
 et expressions dynamiques en fonction des données et de la logique de l'application.
 
 <div class="work">
@@ -104,7 +104,7 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
    export default Ember.Route.extend({
    
      model: function() {
-       // WARN : SOULD NOT BE DONE : We should not affect anything to windows but 
+       // WARN : SHOULD NOT BE DONE : We should not affect anything to window but 
        // for the exercice, we want to access to comic from console today
        window.comic = {title: "Blacksad"};
    
@@ -261,7 +261,7 @@ Les *helpers inline* sont fréquement utilisés pour dynamiser les valeurs d'att
 A noter que les *helpers* (et notament les *helpers inline*) peuvent être imbriqués (*nested*) à l'aide de parenthèses ``()``
 
 
-On retiendra les *hepers* [Handlebars][handlebars] principaux :
+On retiendra les *helpers* [Handlebars][handlebars] principaux :
 
 * conditionnels : ``if`` & ``unless``
 * listes et collections : ``each`` avec l'aide de ``this``, ``@index``, ``@key``, ``@first``, ``@last``
@@ -450,7 +450,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
 Cette section a permis d'explorer les aspects principaux du fonctionnement des templates et du binding dans [Ember][ember]. Au travers d'un exemple simple, nous avons pu nous familiariser également 
 avec les *helpers* [Handlebars][handlebars]. Cependant nous n'avons couvert qu'une infime partie des caractéristiques et des outils proposés par [Ember][ember] dans ce domaine. Au fil des expérimentations
-à venir dans les sections suivantes, nous poursuivrons cette découverte au travers d'exemples concrêts et de mises en pratique. Des outils et *helpers* fondamentaux d'[Ember][ember] tels que ``link-to``, 
+à venir dans les sections suivantes, nous poursuivrons cette découverte au travers d'exemples concrets et de mises en pratique. Des outils et *helpers* fondamentaux d'[Ember][ember] tels que ``link-to``, 
 ``action``, ``input`` ou encore ``textarea`` n'ont pas été abordés ici et seront largement détaillés par la suite.
  
 [handlebars]: http://handlebarsjs.com/
