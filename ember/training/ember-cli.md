@@ -39,7 +39,7 @@ sur l'outil de build [Broccoli][broccoli] et permet :
 * d'utiliser les [modules ES6](https://people.mozilla.org/~jorendorff/es6-draft.html) plutôt 
   qu'[AMD](http://en.wikipedia.org/wiki/Asynchronous_module_definition) ou 
   [CommonJS](http://en.wikipedia.org/wiki/CommonJS) pour la modularisation. Cette question a été
-  largement débattue. ici un [article très intéressant](http://tomdale.net/2012/01/amd-is-not-the-answer/) à ce sujet.
+  largement débattue. Ici un [article très intéressant](http://tomdale.net/2012/01/amd-is-not-the-answer/) à ce sujet.
 * ...
 
 Pour le reste, se reporter à la [doc officielle][ember-cli].
@@ -137,7 +137,7 @@ On dispose donc désormais d'un template d'application opérationel. La structur
 
 Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de projet standard. Il s'agit d'un outil de build complet comprenant : 
 
-* Un **asset pipeline** complet : A la manière d'une succession de tâches ``Grunt`` ou ``Gulp``, [Ember CLI][ember-cli] propose des outils pour compiler les templates, exécuter les pré-processeurs CSS,
+* Un **asset pipeline** complet : à la manière d'une succession de tâches ``Grunt`` ou ``Gulp``, [Ember CLI][ember-cli] propose des outils pour compiler les templates, exécuter les pré-processeurs CSS,
   servir et minifier JS et CSS, etc. cf [Asset compilation](http://www.ember-cli.com/user-guide/#asset-compilation)
 * L'exécution des tests. cf. [Tests](http://www.ember-cli.com/user-guide/#testing)
 * La translation des conventions de nommage [Ember][ember] en structure de fichiers. cf. [Naming conventions](http://www.ember-cli.com/user-guide/#naming-conventions)

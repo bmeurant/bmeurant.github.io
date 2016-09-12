@@ -211,10 +211,10 @@ Router.map(function() {
 Les routes [Ember][ember] étendent la classe `Ember.Route` et mettent à disposition un certain nombre de *hooks* relatifs au cycle de vie de la route.
 Ces *hooks* sont des méthodes de la classe mère, vides ou non, qui sont automatiquement appelées par [Ember][ember]. Cet appel se fait dans un ordre bien spécifique :
 
-1. [beforeModel(transition)](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel) : opérations préalables à la récuparation du modèle (redirections éventuelles, etc.).
-1. [model(params, transition)](http://emberjs.com/api/classes/Ember.Route.html#method_model) : récupèration du modèle.
+1. [beforeModel(transition)](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel) : opérations préalables à la récupération du modèle (redirections éventuelles, etc.).
+1. [model(params, transition)](http://emberjs.com/api/classes/Ember.Route.html#method_model) : récupération du modèle.
 1. [afterModel(resolvedModel, transition)](http://emberjs.com/api/classes/Ember.Route.html#method_afterModel) : opérations nécessitant la récupération préalable du modèle (redirections éventuelles, etc.).
-1. [activate()](http://emberjs.com/api/classes/Ember.Route.html#method_activate) : opérations d'activations (collectes statistiques, etc.). Exécuté lorsque'on entre dans la route mais pas lorsque seul le modèle change.
+1. [activate()](http://emberjs.com/api/classes/Ember.Route.html#method_activate) : opérations d'activations (collectes statistiques, etc.). Exécuté lorsqu'on entre dans la route mais pas lorsque seul le modèle change.
 1. [setupController(controller, model)](http://emberjs.com/api/classes/Ember.Route.html#method_setupController) : configuration du controller (contexte, etc.). Exécuté au changement de route ou de modèle.
 1. [renderTemplate(controller, model)](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate) : opérations de rendu du template associé à la route courante. Exécuté au changement de route ou de modèle.
 1. [resetController()](http://emberjs.com/api/classes/Ember.Route.html#method_resetController) : réinitialisation du controller. Exécuté au changement de route ou de modèle.
@@ -253,10 +253,10 @@ Comme évoqué juste au-dessus, trois *hooks* [Ember][ember] s'intéressent donc
   A noter que cette méthode n'est pas appelée si un modèle est fourni à la route lors de son activation, par exemple via le *helper* ``link-to`` ou
   un appel à ``transitionTo``. Nous reviendrons sur ces deux cas par la suite.
 
-* ``beforeModel()`` : Cette méthode est appelée au tout début de la résolution de la route et, comme son nom l'indique, avant la récupération du modèle vie la méthode
+* ``beforeModel()`` : Cette méthode est appelée au tout début de la résolution de la route et, comme son nom l'indique, avant la récupération du modèle via la méthode
   ``model()``. 
   
-  Elle est courament utilisée pour effectuer une vérification susceptible d'entrainer l'annulation de la transition en cours ou une redirection sans 
+  Elle est couramment utilisée pour effectuer une vérification susceptible d'entrainer l'annulation de la transition en cours ou une redirection sans 
   que la résolution du modèle soit préalablement nécessaire. 
   
   Comme elle prend totalement en charge l'aspect asynchrone, cela lui permet d'être aussi très utile lorsqu'il 
@@ -381,7 +381,7 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
 {% raw %}
 
 On a pu remarquer que le template définit au niveau de l'application (``application.hbs``) était toujours affiché (titre principal),
-en même temps que le template de la route ``comics``. Ceci est du au fait que la route ``comics`` est, comme toutes les routes d'une application 
+en même temps que le template de la route ``comics``. Ceci est dû au fait que la route ``comics`` est, comme toutes les routes d'une application 
 [Ember][ember], imbriquée dans la route ``application``.
 
 En effet il s'agit de la route de base de toute l'application. A la manière d'un conteneur, cette route permet classiquement de mettre en place
@@ -646,7 +646,7 @@ place du texte précédent.
 
 {% raw %}
 
-[Ember][ember] propose un *hekper* [link-to](http://emberjs.com/api/classes/Ember.Templates.helpers.html#method_link-to) qui permet de générer
+[Ember][ember] propose un *helper* [link-to](http://emberjs.com/api/classes/Ember.Templates.helpers.html#method_link-to) qui permet de générer
 un lien vers une route de notre application. L'utilisation de ce *helper* permet la génération et la gestion de liens internes à l'application.
 
 Un certain nombre de comportements sont apportés par l'utilisation de ce *helper* :
@@ -894,7 +894,7 @@ On constate que plusieurs types de routes sont implicitement créées lors de la
     En réalité, la bonne solution se trouve souvent dans un mix des deux avec la fourniture dun traitement général au niveau application spécialisé au besoin au niveau
     des routes mères.
 
-On note enfin que, grâce capacités de **génération d'objets** d'[Ember](http://emberjs.com/) déjà évoquées dans le chapitre [Overview - Génération d'objets](../overview/#génération-d'objets), 
+On note enfin que, grâce aux capacités de **génération d'objets** d'[Ember](http://emberjs.com/) déjà évoquées dans le chapitre [Overview - Génération d'objets](../overview/#génération-d'objets), 
 les routes n'ont pas été les seuls objets à avoir été implicitement créés. En effet, on remarque que les contrôleurs et templates associés ont été également créés. Ils proposent une implémentation
 par défaut vide, bien entendu.
 
@@ -1080,7 +1080,7 @@ Ceci tout en conservant les URLs existantes ainsi que l'imbrication des routes e
    > ```
    
    > ```html
-   > {{!-- app/comics.hbs --}}
+   > {{!-- app/templates/comics.hbs --}}
    > 
    > ...
    > 
@@ -1159,7 +1159,7 @@ les notions d'``outlet`` et d'``index`` que l'on définit le contenu et l'organi
 * la route ``index`` définit à chaque niveau, le contenu affiché lorsque l'on accède directement à la route mère. C'est
   en quelque sorte la route par défaut
 * lorsque l'on accède à une autre route fille, le contenu de l'``outlet`` est remplacé par celui de la nouvelle route
-* le contexte d'une route et notament le modèle qui y est associé est retrouvé dans la route elle-même puis successivement
+* le contexte d'une route et notamment le modèle qui y est associé est retrouvé dans la route elle-même puis successivement
   en remontant dans ses routes mères
 
 Cette opération se poursuit jusqu'à résolution complète de la route et donc jusqu'à un template ne contenant plus d'``outlet``
@@ -1452,7 +1452,7 @@ Cela s'effectue grâce à la propriété [templateName](http://emberjs.com/api/c
 permet de spécifier explicitement un nom de template (noter l'utilisation du ``/`` pour qualifier le template).
 
 Il existe également une méthode [renderTemplate](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate)
-automatiquement qui être surchargée de manière à personnaliser les opérations de rendu. Cette méthode est appelée avec 
+automatiquement créée, qui doit être surchargée de manière à personnaliser les opérations de rendu. Cette méthode est appelée avec 
 les objets contrôleur et modèle connus par la route. Par défaut, cette méthode effectue un simple appel à la méthode 
 [render](http://emberjs.com/api/classes/Ember.Route.html#method_render). Cette méthode ne doit pas être utilisée de 
 manière courante mais peut être utile dans le cas d'``outlets`` multiples ou de modèles multiples, par exemple.

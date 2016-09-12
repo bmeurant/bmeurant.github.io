@@ -156,7 +156,7 @@ dans le gestionnaire. Ce paramètre peut être un litéral ou un objet.
 <input type="text" value="confirm" {{action "save" model}} />
 ```
 
-On peut alors récupérer la valeur du paramètre dans l'action du crontrôleur ou de la route : 
+On peut alors récupérer la valeur du paramètre dans l'action du contrôleur ou de la route : 
 
 ```javascript
 actions: {
@@ -376,7 +376,7 @@ et qui ne font pas intervenir de *bubbling* à ce niveau.
   <input type="text" value="confirm" onclick={{action 'save' model}} />
   ```
   
-  Entre le template et le contrôleur / composant, ces actions ne se propagent pas pas via *bubling* et doivent 
+  Entre le template et le contrôleur / composant, ces actions ne se propagent pas via *bubling* et doivent 
   impérativement être interceptées **dans un contrôleur ou un composant** et, éventuellement, propagées explicitement.
 
 **NB:** Cette situation est problématique mais temporaire et les **closure actions** sont amenées à devenir le seul système de gestion des actions 
@@ -406,7 +406,7 @@ suit alors les règles de propagation et de bubbling standard définies plus hau
 ### Actions standards Ember
 
 [Ember][ember] fournit un certain nombre d'actions natives propagées automatiquement et interceptables au sein des routes.
-Le traitement de ecs actions se fait de la même manière que les actions vues précédement définies dans les templates, au
+Le traitement de ces actions se fait de la même manière que les actions vues précédement définies dans les templates, au
 sein du *hash* ``actions`` :
 
 * [error](http://emberjs.com/api/classes/Ember.Route.html#event_error) : Une action ``error`` est levée lorsqu'une
@@ -719,7 +719,7 @@ contrôleur permet ensuite de propager automatiquement ce changement partout où
   {% capture m %}
   {% raw %}
   
-1. Nous allons maintenant ajouter un champ permettant de filtrer la liste les comics ainsi q'un bouton de tri permettant 
+1. Nous allons maintenant ajouter un champ permettant de filtrer la liste les comics ainsi qu'un bouton de tri permettant 
 de trier les comics dans un ordre croissant ou décroissant.
    * Créer le contrôleur ``app/controllers/comics.js`` en se basant sur le modèle proposé plus bas.
    * Implémenter le corps de l'action ``sort`` de manière à inverser la valeur de la propriété ``sortAsc``. 

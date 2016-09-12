@@ -141,7 +141,7 @@ Il peut s'agir :
 ### Passage de propriétés
 
 Il est bien entendu possible de passer des propriétés - dynamiques ou non - aux composants afin qu'ils puissent les afficher et/ou les manipuler. Ce passage de propriétés se fait tout naturellement
-selon la syntaxe habituelle ``name=value``. Aini la déclaration suivante : 
+selon la syntaxe habituelle ``name=value``. Ainsi la déclaration suivante : 
 
 ```html
 {{custom-user title='My title' user=model}}
@@ -290,7 +290,7 @@ Résultat :
 <div id="ember123" class="ember-view success"></div>
 ```
 
-Tout comme la propriété ``classNames``, cette propriété accèpte aussi bien une chaîne unique (une seule classe) qu'un tableau de chaînes.
+Tout comme la propriété ``classNames``, cette propriété accepte aussi bien une chaîne unique (une seule classe) qu'un tableau de chaînes.
 
 ### Attributs
 
@@ -354,7 +354,7 @@ export default Ember.Component.extend({
 
 Par convention, la propriété booléenne``selected`` est automatiquement écoutée pour décider du positionnement de la classe de même nom.
 
-Il est cependant nécessaire de rappeler explicitement que les propriétées passées dynamiquement aux composants ne sont, par définition, pas disponibles au moment de la 
+Il est cependant nécessaire de rappeler explicitement que les propriétés passées dynamiquement aux composants ne sont, par définition, pas disponibles au moment de la 
 déclaration des propriétés du composant. Ainsi, la syntaxe suivante (où `user` est passé au composant par le parent) n'affichera jamais l'attribut ``name`` qui restera
 toujours ``null`` :
 
@@ -438,7 +438,7 @@ export default Ember.Component.extend({
 });
 ```
 
-Il est possible de permettre explicitement à une application [Ember][ember] de de gérer des évènements personnalisés via la propriété ``customEvents``. 
+Il est possible de permettre explicitement à une application [Ember][ember] de gérer des évènements personnalisés via la propriété ``customEvents``. 
 De manière plus générale, cette propriété permet de définir de nouveaux gestionnaires pour des évènements non pris en charge nativement mais également de neutraliser la gestion de certains évènements.
 Les évènements non pris en charge peuvent être des évènements DOM standard non pris en charge ou même des évènements plus métiers.
 
@@ -539,7 +539,7 @@ Dans cette première forme, à l'issue d'un traitement (après la gestion d'un �
 et avertir ainsi ses parents.
 
 Cette méthode prend en premier paramètre le nom de l'action. Sans paramètre, c'est le nom par défaut "action" qui est pris. Tous les paramètres suivants seront vu comme des paramètres, 
-le contexte d'exécution de l'action et remontés en même temps que le nom de l'action.
+le contexte d'exécution de l'action est remonté en même temps que le nom de l'action.
 
 ```javascript
 export default Ember.Component.extend({
@@ -560,7 +560,7 @@ le composant définit de la manière suivante :
 {{my-component action='customAction' onSubmit='save'}}
 ```
 
-... entraînera l'éxécution de l'action ``'customAction'`` lors d'un ``this.sendAction()`` et de l'action ``'save'`` lors d'un ``this.sendAction('onSubmit', args)``. Ces deux actions sont à définir
+... entraînera l'exécution de l'action ``'customAction'`` lors d'un ``this.sendAction()`` et de l'action ``'save'`` lors d'un ``this.sendAction('onSubmit', args)``. Ces deux actions sont à définir
 dans l'un des parents du composant (autre composant, controlleur, routes). L'action est propagée au travers de la hiérarchie, jusqu'à trouver un gestionnaire.
 
 ```javascript
@@ -790,7 +790,7 @@ Les cycles de vie liés au rendu initial et aux rendus ultérieurs (mises à jou
    utilisé pour effectuer des opérations complémentaires sur les attributs avant les opérations de rendu.
 1. ``willRender`` : Appelé à chaque fois que le template va être rendu, quelqu'en soit la raison. Mais avant le rendu lui même.
 1. ``didInsertElement`` : Appelé aprés le rendu (initial uniquement), une fois que le template a été totalement rendu et inséré
-   dans le DOM. A ce moment, le composant est accessible via la notation ``this.$()``. Ce *hook* est trés fréquement exploité
+   dans le DOM. A ce moment, le composant est accessible via la notation ``this.$()``. Ce *hook* est trés fréquemment exploité
    pour interagir avec des éléments issus de librairies third-party qui nécessitent d'être insérées dans le DOM avant d'être 
    manipulés (datePicker, etc.)
 1. ``didRender`` : Appelé après l'ensemble des opérations de rendu et de mise à jour du DOM.
