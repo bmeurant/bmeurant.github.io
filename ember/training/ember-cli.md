@@ -66,7 +66,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ npm install -g ember-cli
    $ ember -v
-   version: 2.7.0
+   version: 2.9.0
    node: 4.4.3
    ```
    
@@ -81,7 +81,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    ```console
    $ ember new ember-training
-   version: 2.7.0
+   version: 2.9.0
    installing app
      create .bowerrc
      ...
@@ -96,7 +96,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ cd ember-training
    $ ember serve
-   version: 2.7.0
+   version: 2.9.0
    Livereload server on http://localhost:49152
    Serving on http://localhost:4200/
    ```
@@ -120,8 +120,8 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    ```console
    DEBUG: -------------------------------
-   DEBUG: Ember      : 2.7.0
-   DEBUG: Ember Data : 2.7.0
+   DEBUG: Ember      : 2.9.0
+   DEBUG: Ember Data : 2.9.1
    DEBUG: jQuery     : 2.2.4
    DEBUG: -------------------------------
    ``` 
@@ -196,7 +196,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    ...
    
      "dependencies": {
-       "ember": "~2.7.0",
+       "ember": "~2.9.0",
        ...
        "bootstrap-sass": "~3.3.7"
      }
