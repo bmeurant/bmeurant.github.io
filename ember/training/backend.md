@@ -424,7 +424,8 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
    
 1. On souhaite désormais récupérer les albums embarqués lorsque l'on récupère un comic
    * Pour cela, il est nécessaire de passer le paramètre de requête ``_embed=albums`` au serveur. Soit ``http://localhost:3000/comics?slug=blacksad&_embed=albums``
-   * Configurer l'application pour faire en sorte qu'[Ember Data](https://guides.emberjs.com/v2.6.0/models/) ajoute ce paramètre à la requête. 
+   * Configurer l'application pour faire en sorte qu'[Ember Data](https://guides.emberjs.com/v2.6.0/models/) ajoute ce paramètre à la requête, dans le cas
+     spécifique du model `comic`. 
    * Attention à étendre les bons objets de manière à continuer à bénéficier des personnalisations précédentes
    * Configurer l'application pour qu'[Ember Data](https://guides.emberjs.com/v2.6.0/models/) récupère les albums comme des relations embarquées du modèle ``comic``
    * Attention ! On souhaite récupérer les albums embarqués mais n'envoyer au serveur des identifiants lors d'une modification. En effet, dans le cas contraire,
@@ -485,6 +486,52 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      >   }
      > });
      > ```
+
+  1. Enfin, un dernier warning doit apparaître dû au fait que la méthode [Ember Data](https://guides.emberjs.com/v2.6.0/models/) `queryRecord` attend un 
+     objet en réponse et non un tableau d'un seul élément, comme renvoyé par la nouvelle API.
+
+     On pourrait aisément modifier le hook `model` de la route `comic` pour traiter "manuellement ce cas" :
+
+     ```javascript
+     // app/routes/comic.js
+
+     ...
+
+       model (params) {
+         return this.store.query('comic', {slug: params.comic_slug}).then(comics => comics.get('firstObject'));
+       },
+
+     ...
+     
+     ```
+
+     Cependant, cette approche introduirait dans le code même de l'application une dépendance au format spécifique et non standard de l'API backend et nous
+     obligerait en outre à effectuer ce traitement chaque fois que l'on récupère un `comic` seul dans toute notre application. Il est donc plus judicieux
+     d'effectuer cette opération une fois pour toute au niveau des serializers.
+
+     * Modifier le serializer correspondant pour transformer la réponse reçue dans le cas d'un `comic` seul
+
+       > ```javascript
+       > // app/serializers/comic.js 
+       >
+       > import DS from 'ember-data';
+       > import BaseSerializer from './application';
+       > import {isEmberArray as isArray } from 'ember-array/utils';
+       > 
+       > export default BaseSerializer.extend(DS.EmbeddedRecordsMixin, {
+       >   attrs: {
+       >     ...
+       >   },
+       > 
+       >   normalizeSingleResponse(store, primaryModelClass, hash, id, requestType) {
+       >     let newHash = hash;
+       >     if (hash && isArray(hash)) {
+       >       newHash = hash[0];
+       >     } 
+       >     return this._super(store, primaryModelClass, newHash, id, requestType);
+       >   }
+       > });
+       > ```
 
   {% endcapture %}{{ m | markdownify }}
 </div>
