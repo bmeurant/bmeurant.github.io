@@ -274,7 +274,9 @@ vers la route ``comic``
      [removeObject()](http://emberjs.com/api/classes/Ember.MutableArray.html#method_removeObject) de ``Ember.MutableArray``.
    * Transformer la propriété ``slug`` d'un ``Comic`` en **computed propety** de manière à ce que le *slug* corresponde à
      la valeur du titre transformée grâce à la fonction [dasherize()](http://emberjs.com/api/classes/Ember.String.html#method_dasherize) 
-     et qu'il soit mis à jour à chaque modification du titre.
+     et qu'il soit mis à jour à chaque modification du titre. Supprimer l'affectation de la valeur par défaut `new` à la propriété `slug`
+     lors de la création du comic dans la route `create`. Attention cependant à bien conserver, dans la nouvelle propriété calculée, l'affectation
+     de la valeur par défaut dans le cas ou `title` n'est pas défini.
      
    **Test** : Les modifications doivent permettre de rendre passants les tests 
    [03 - Controller - 03 - Should save on create submit](https://github.com/bmeurant/ember-training/blob/controllers-tests/tests/acceptance/03-controller-test.js#L105)
@@ -287,7 +289,8 @@ vers la route ``comic``
    > 
    > export default Ember.Object.extend({
    >   slug: function() {
-   >     return this.get('title').dasherize();
+   >     let title = this.get('title') || 'new';
+   >     return title.dasherize();
    >   }.property('title'),
    >   title: '',
    >   scriptwriter: '',

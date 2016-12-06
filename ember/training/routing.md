@@ -1334,7 +1334,8 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    
 1. Créer la route ``comics.create`` fille de la route ``comics`` accessible à l'URL ``comics/create``
    * Copier dans le template de cette route exactement le même template que la route ``comic.edit``
-   * Modifier / implémenter la route ``app/routes/comics/create.js`` pour créer une nouvelle instance du modèle ``Comic`` et l'ajouter à la liste
+   * Modifier / implémenter la route ``app/routes/comics/create.js`` pour créer une nouvelle instance du modèle ``Comic`` et l'ajouter à la liste.
+     Lors de la création, veillez à forcer la valeur de la propriété `slug` afin d'éviter une erreur lors de l'utilisation du `link-to`. 
    
    **Test** : Les modifications doivent permettre de rendre passants le test : [02 - Routing - 08 - Should display create route](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L166)
 
@@ -1402,7 +1403,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    > 
    > export default Ember.Route.extend({
    >   model () {
-   >     let newComic = Comic.create();
+   >     let newComic = Comic.create({'slug': 'new'});
    >     this.modelFor('comics').pushObject(newComic);
    >     return newComic;
    >   }
