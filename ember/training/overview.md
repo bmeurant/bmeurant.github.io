@@ -23,7 +23,7 @@ Ce modèle de développement commence par les conventions de nommage. [Ember][em
 
 Typiquement pour une URL `test`, [Ember][ember] s'attend à trouver une `TestRoute`, un `TestController`, un template `test`.
 
--> [doc officielle](http://emberjs.com/guides/concepts/naming-conventions/).
+-> [doc officielle](https://guides.emberjs.com/v1.13.0/getting-started/naming-conventions/).
 
 ## Application
 
@@ -155,7 +155,7 @@ Depuis toujours [Ember][ember] met fortement en avant son approche composants. A
 Les composants [Ember][ember] s'articulent autour d'une partie template et/ou d'une partie logique. Dans les prochaines versions à venir, l'apparition de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md)
 devrait rendre l'utilisation de contrôleurs seuls obsolète.
 
--> [doc officielle](http://emberjs.com/guides/components/).
+-> [doc officielle](https://guides.emberjs.com/v2.10.0/components/defining-a-component/).
 
 
 ## Génération d'objets
@@ -184,7 +184,7 @@ App.Router.map(function() {
 
 Dans une application [Ember][ember], **il n'est donc nécessaire de définir que ce dont on a besoin !**
 
--> [doc officielle](http://emberjs.com/guides/routing/generated-objects/).
+-> [doc officielle](https://guides.emberjs.com/v1.13.0/routing/generated-objects/).
 
 Un bon moyen de se rendre compte de ça consiste à installer le debugger Ember sur votre navigateur préféré. Vous aurez, entre autres, la liste de l'ensemble des objets impliqués dans le rendu d'une URL 
 donnée. Cette liste distingue de manière claire les objets créés par vous et ceux générés par Ember.

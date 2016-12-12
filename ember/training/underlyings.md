@@ -10,7 +10,7 @@ next: ember/training/ember-cli
 
 ## Modèle object
 
-Avec [Ember][ember], la quasi totalité des objets utilisés est dérivée d'une classe de base, la classe ``Ember.Object`` : les contrôleurs, les vues, les modèles, l'application elle-même.
+Avec [Ember][ember], la quasi totalité des objets utilisés est dérivée d'une classe de base, la classe ``Ember.Object`` : les contrôleurs, les modèles, l'application elle-même.
 
 C'est cette classe qui permet aux objets [Ember][ember] de partager des comportements communs. Chaque objet [Ember][ember] est ainsi capable d'observer les valeur de propriétés portées par d'autres objets, d'éventuellement lier leurs propres propriétés à celles des objets observés, de construire et d'exposer des propriétés calculées, etc.
 
@@ -113,21 +113,21 @@ On souhaite désormais initialiser l'objet à sa création avec un titre et affi
 
 1. Ajouter une méthode d'initialisation qui réalise un simple log console du titre passé au create. Le résultat doit être le suivant :
 
-    ```javascript
-    > one = Book.create({title: "My Title"});
-    My Title
-    ```
+   ```javascript
+   > one = Book.create({title: "My Title"});
+   My Title
+   ```
 
-    > ```javascript
-    > > Book = Ember.Object.extend({
-    >     init: function() {
-    >       this.logTitle();
-    >     },
-    >     logTitle: function() {
-    >       console.log(this.title);
-    >     }
-    >   });
-    > ```
+   > ```javascript
+   > > Book = Ember.Object.extend({
+   >     init: function() {
+   >       this.logTitle();
+   >     },
+   >     logTitle: function() {
+   >       console.log(this.title);
+   >     }
+   >   });
+   > ```
 
   {% endcapture %}{{ m | markdownify }}
 </div>
@@ -136,7 +136,7 @@ On souhaite désormais initialiser l'objet à sa création avec un titre et affi
 
 On peut évidemment étendre une sous classe d'``Ember.Object`` plutôt que ``Ember.Object`` directement. 
 A noter que c'est ce qui est fait chaque fois que l'on étend un objet natif d'[Ember][ember] puisque
-tous étendent ``Ember.Object`` : ``Ember.View``, ``Ember.Controller``, ``Ember.Route``, etc.
+tous étendent ``Ember.Object`` : ``Ember.Controller``, ``Ember.Route``, etc.
 
 Dans le cas d'une route, par exemple :
 
@@ -215,7 +215,7 @@ Les méthodes de la classe mère peuvent être accédées via l'appel de la mét
    >   });
    > ```
 
-   L'appel à la méthode mère doit donc être explicite. Lorsque vous héritez d'un objet Ember (``Controller``, ``View``, ``Route``, etc.) et que vous surchargez la méthode ``init`` dans votre implémentation, soyez sûr de bien appeler la méthode ``_super`` au
+   L'appel à la méthode mère doit donc être explicite. Lorsque vous héritez d'un objet Ember (``Controller``, ``Route``, etc.) et que vous surchargez la méthode ``init`` dans votre implémentation, soyez sûr de bien appeler la méthode ``_super`` au
    tout début de l'init. Dans le cas contraire, les traitements d'initialisation standard prévus par [Ember](http://emberjs.com) ne pourraient pas s'exécuter correctement entraînant des comportements erratiques.
 
   {% endcapture %}{{ m | markdownify }}
@@ -497,8 +497,7 @@ précédentes séparées par ``' and '``. La propriété calculée ``authors`` d
    >  "new writer and 5 drawer"
    > ```
    > 
-   > Les deux syntaxes sont strictement équivalentes. C'est cependant la seconde qui est la plus fréquement utilisée et à privilégier. La première est utile et utilisée dans le cas où 
-   > l'on souhaite utiliser Ember en désactivant les extensions de prototype qu'il ajoute (cf. [documentation](http://emberjs.com/guides/configuring-ember/disabling-prototype-extensions/)) 
+   > Les deux syntaxes sont strictement équivalentes. Il est cependant conseillé d'utiliser la première version qui n'utilise pas la réécriture du prototype de ``function`` (cf. [documentation](http://emberjs.com/guides/configuring-ember/disabling-prototype-extensions/)) 
 
 1. Modifier la déclaration de la propriété calculée ``authors`` en supprimant la dépendance aux deux propriétés ``writer`` et ``drawer``. Réexécuter ensuite la série d'opérations précédente.
 Que constate-t-on ?
@@ -605,13 +604,14 @@ est de permettre la séquence suivante :
    >   authors: Ember.computed('writer', 'drawer', {
    > 	  get: function(key) {
    >       console.log('computed property calculated');
-   > 	    return this.get('writer') + ' and ' + this.get('drawer');
+   >       return this.get('writer') + ' and ' + this.get('drawer');
    >     },
    >     set: function(key, value) {
    >       console.log('computed property modified');
-   > 	    var  authors = value.split(/ and /);
-   > 	    this.set('writer', authors[0]);
-   > 	    this.set('drawer', authors[1]);
+   >       var  authors = value.split(/ and /);
+   >       this.set('writer', authors[0]);
+   >       this.set('drawer', authors[1]);
+   >       return value;
    >     }
    >   })
    > });
@@ -723,7 +723,7 @@ propriété ``isPublished`` (``books.[]``).
    > ```
     
 1. Modifier enfin une dernière fois ``Collection`` et la propriété ``numberOfPublished`` pour faire en sorte que la propriété
-soit recalculée à la fois lors de la modification d'un titre existant et lors de l'ajout ou la suppression d'un livre.
+soit recalculée à la fois lors de la modification d'un livre existant et lors de l'ajout ou la suppression d'un livre.
     
    > ```javascript
    >     > Collection.reopen({

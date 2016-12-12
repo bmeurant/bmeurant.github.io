@@ -635,9 +635,9 @@ export default Model.extend({
          let slug = request.queryParams.slug;
        
          if (slug) {
-           let foundComic = comics.where({title: slug.classify()}).models[0];
-           if (foundComic) {
-             return foundComic;
+           let found = comics.all().filter(({title}) => title.dasherize() === slug).models[0];
+           if (found) {
+             return found;
            } else {
              return new Mirage.Response(404, {}, "No comic found with slug: " + slug);
            }
