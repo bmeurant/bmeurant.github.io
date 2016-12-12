@@ -150,7 +150,7 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
    
    > On constate les choses suivantes : 
    >
-   > 1. L'objet 'comic' créé a été enrichi par Ember. De ce fait, on ne peut doit plus et on ne peut plus manipuler directement ses propriétés sans accesseurs. cf [Modèle objet](../object-model)
+   > 1. L'objet 'comic' créé a été enrichi par Ember. De ce fait, on ne doit plus et on ne peut plus manipuler directement ses propriétés sans accesseurs. cf [Modèle objet](../object-model)
    > 2. En utilisant les outils proposés par le modèle objet d'[Ember](http://emberjs.com), on constate que le template est automatiquement mis à jour lorsque l'on modifie l'objet. C'est ce que l'on appelle le **binding**.
 
   {% endraw %}

@@ -326,8 +326,8 @@ la transition courante (``transition.abort()``) ou de reprendre une transition p
      {
         slug: 'akira',
         title: 'Akira',
-        scriptwriter: 'Katsuhiro Ôtomo',
-        illustrator: 'Katsuhiro Ôtomo',
+        scriptwriter: 'Katsuhiro Otomo',
+        illustrator: 'Katsuhiro Otomo',
         publisher: 'Epic Comics'
      };
      ```
@@ -758,7 +758,7 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
   {% raw %}
   
 1. Modifier le template ``app/templates/comics.hbs`` à l'aide du *helper* ``link-to`` de manière à ce que titre du 
-comic deviennent un lien cliquable vers la route du comic ``/comic/<comic_slug>`` correspondant.
+comic deviennent un lien cliquable vers la route du comic ``/comics/<comic_slug>`` correspondant.
    * Utiliser un ``link-to`` avec le paramètre dynamique ``comic.slug`` (ne pas passer le modèle entier)
    * Modifier la route ``app/routes/comics/comic.js`` pour ajouter un ``console.log`` avant le ``return`` de la
      méthode ``model``
@@ -1540,7 +1540,7 @@ rediriger mais il est également possible de lui passer :
 1. Modifier l'application de manière à rediriger ``/`` vers ``/comics``
     
    > ```javascript
-   > //app/routes/application.js
+   > //app/routes/index.js
    >
    > import Ember from 'ember';
    > 

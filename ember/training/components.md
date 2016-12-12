@@ -66,8 +66,8 @@ Il peut s'agir :
   
   ```html
   <dl>
-    <dt>First name: </dt><dd>user.firstName</dd>
-    <dt>Last name: </dt><dd>user.lastName</dd>
+    <dt>First name: </dt><dd>{{user.firstName}}</dd>
+    <dt>Last name: </dt><dd>{{user.lastName}}</dd>
   </dl>
   ```
   
@@ -98,7 +98,7 @@ Il peut s'agir :
   ```html
   {{#full-article class="article" title="model.title"}}
     {{#each model.paragraphs as |paragraph|}}
-      <p>paragraph</p>
+      <p>{{paragraph}}</p>
     {{/each}}
   {{/full-article}}
   ```
@@ -107,7 +107,7 @@ Il peut s'agir :
   
   ```html
   <article>
-    <h2>title</h2>
+    <h2>{{title}}</h2>
     <div class="content">{{yield}}</div>
   </article>
   ```

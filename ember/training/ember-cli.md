@@ -33,8 +33,8 @@ devenu un standard *de facto* dans la communauté [Ember][ember] et a été ensu
 sur l'outil de build [Broccoli][broccoli] et permet : 
 
 * d'initialiser une application Ember avec, cette fois, une [structure de fichiers][folder-layout] et des
-  [conventions de nommage](http://www.ember-cli.com/#naming-conventions)
-* de générer différents objets en mode scaffolding via des [commandes](http://www.ember-cli.com/#using-ember-cli).
+  [conventions de nommage](http://www.ember-cli.com/user-guide/#naming-conventions)
+* de générer différents objets en mode scaffolding via des [commandes](http://www.ember-cli.com/user-guide/#using-ember-cli).
 * d'utiliser des outils de build basés sur [Broccoli][broccoli] pour le prétraitement des pré-processeurs CSS par exemple
 * d'utiliser les [modules ES6](https://people.mozilla.org/~jorendorff/es6-draft.html) plutôt 
   qu'[AMD](http://en.wikipedia.org/wiki/Asynchronous_module_definition) ou 
@@ -141,7 +141,7 @@ Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de pro
   servir et minifier JS et CSS, etc. cf [Asset compilation](http://www.ember-cli.com/user-guide/#asset-compilation)
 * L'exécution des tests. cf. [Tests](http://www.ember-cli.com/user-guide/#testing)
 * La translation des conventions de nommage [Ember][ember] en structure de fichiers. cf. [Naming conventions](http://www.ember-cli.com/user-guide/#naming-conventions)
-* La gestion des dépendances et librairies via ``Bower`` et ``Broccoli``. cf [Managing dependencies](http://www.ember-cli.com/user-guide/#naming-conventions)
+* La gestion des dépendances et librairies via ``Bower`` et ``Broccoli``. cf [Managing dependencies](http://www.ember-cli.com/user-guide/#managing-dependencies)
 * La gestion des environnements. cf. [Environnements](http://www.ember-cli.com/user-guide/#Environments). Un certain nombre de configuration sont mises en place et adaptées en fonction des environnements 
   (cache busting, etc.)
 * La gestion du packaging et du déploiement. cf. [Déploiements](http://www.ember-cli.com/user-guide/#deployments)

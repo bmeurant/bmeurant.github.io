@@ -297,26 +297,6 @@ effectués. Nous allons les adapter pour le faire passer de nouveau (sauf les te
          }
      });
      ```
-   
-   * et on modifie la configuration mirage pour adapter les réponses au RestSerializer:
-   
-     ```javascript
-     this.get('/comics', ({comic}, request) => {
-       let slug = request.queryParams.slug;
-     
-       if (slug) {
-         let foundComic = comic.where({title: slug.classify()})[0];
-         if (foundComic) {
-           return {comic: serializer.serialize(foundComic, request)};
-         } else {
-           return new Mirage.Response(404, {}, "No comic found with slug: " + slug);
-         }
-     
-       } else {
-         return serializer.serialize(comic.all(), request);
-       }
-     });
-     ```
      
 1. Modifier enfin les tests de manière à les corriger. Le test ``tests/unit/routes/comic-test`` peut être supprimé pusique nous délégons toute
    la logique à [Ember Data](https://guides.emberjs.com/v2.10.0/models/)
