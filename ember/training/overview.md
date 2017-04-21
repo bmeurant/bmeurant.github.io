@@ -182,7 +182,7 @@ App.Router.map(function() {
 * **contrôleur** : `AboutController`
 * **template** : `about`
 
-Dans une application [Ember][ember], **il n'est donc nécessaire de définir que ce dont on a besoin !**
+Dans une application [Ember][ember], **il n'est donc pas nécessaire de définir que ce dont on a besoin !**
 
 -> [doc officielle](https://guides.emberjs.com/v1.13.0/routing/generated-objects/).
 
