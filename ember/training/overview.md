@@ -21,20 +21,19 @@ description: formation / tutoriel emberjs - Principes généraux & fondamentaux 
 
 Ce modèle de développement commence par les conventions de nommage. [Ember][ember] applique en effet le principe de "*conventions over configuration*" et repose sur un nommage cohérent des différents composants de votre application.
 
-Typiquement pour une URL `test`, [Ember][ember] s'attend à trouver une `TestRoute`, un `TestController`, un template `test`.
+Ces conventions de nommage prennent la forme d'une structure d'application normalisée utilisant des noms de dossiers et des noms de fichiers particuliers, que le `Resolver` d'[Ember][ember] s'attend à retrouver.
 
--> [doc officielle](https://guides.emberjs.com/v1.13.0/getting-started/naming-conventions/).
+-> [doc officielle](https://ember-cli.com/user-guide/#naming-conventions).
 
 ## Application
 
-La figure suivante, extraite de la [Documentation officielle](http://guides.emberjs.com/v2.10.0/getting-started/core-concepts/), montre une vue générale du fonctionnement d'une application [Ember][ember] et des différents objets impliqués :
+La figure suivante, extraite de la [Documentation officielle](http://guides.emberjs.com/v2.13.0/getting-started/core-concepts/), montre une vue générale du fonctionnement d'une application [Ember][ember] et des différents objets impliqués :
 
-![Application Ember](http://guides.emberjs.com/v2.10.0/images/ember-core-concepts/ember-core-concepts.png)
+![Application Ember](http://guides.emberjs.com/v2.13.0/images/ember-core-concepts/ember-core-concepts.png)
 
 ## Routeur
 
-Le routeur permet de faire correspondre à une URL un ensemble de templates imbriqués permettant le rendu des modèles associés à
-chacun de ces templates.
+Le routeur permet de faire correspondre à une URL un ensemble de templates imbriqués permettant le rendu des modèles associés à chacun de ces templates.
 
 L'exemple suivant permet le rendu des URLs :
 
@@ -44,14 +43,16 @@ L'exemple suivant permet le rendu des URLs :
 * `/books/create`
 
 ```javascript
- App.Router.map(function() {
-   this.route('books', function() {
-       this.route('book', { path: '/:book_id' }, function () {
-           this.route('edit');
-       });
-       this.route('create');
-   });
- });
+// app/router.js
+
+Router.map(function() {
+  this.route('books', function() {
+    this.route('book', { path: '/:book_id' }, function () {
+      this.route('edit');
+    });
+    this.route('create');
+  });
+});
 ```
 
 ## Routes
@@ -60,14 +61,18 @@ Les routes sont en charge de la récupération d'un modèle associé à la requ�
 La récupération du modèle ainsi que l'association entre un (ou plusieurs) modèle(s) et un (ou plusieurs) template(s) implique également la gestion des transitions entre les différentes URLs de l'application. 
 
 ```javascript
-App.BooksRoute = Ember.Route.extend({
-    model: function () {
-        return this.store.findAll('book');
-    }
+// app/routes/books.js
+
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  model: function () {
+    return this.store.findAll('book');
+  }
 });
 ```
 
--> [doc officielle](http://guides.emberjs.com/v2.10.0/routing/).
+-> [doc officielle](http://guides.emberjs.com/v2.13.0/routing/).
 
 
 ## Templates
@@ -97,7 +102,7 @@ imbrications à mesure que les routes de l'application sont activées.
 Tout élément de modèle injecté dans un template sera **automatiquement mis à jour** (binding) par [Ember][ember] lorsque le modèle associé au template sera modifié. 
 Évidemment, seul cet élément sera rafraîchi et non le template entier. Ce *binding*, qu'il soit unidirectionnel ou bidirectionnel est au coeur du fonctionnement d'[Ember][ember].
 
--> [doc officielle](http://guides.emberjs.com/v2.10.0/templates/handlebars-basics/).
+-> [doc officielle](http://guides.emberjs.com/v2.13.0/templates/handlebars-basics/).
 
 
 ## Modèles
@@ -107,19 +112,23 @@ en HTML. Typiquement, les modèles peuvent être récupérés d'un back end via 
 Dans le premier cas, il s'agit d'un objet de type ``DS.Model``, ``DS`` étant le namespace commun à tous les éléments d'[Ember Data](https://github.com/emberjs/data).
 
 ```js
-var Book = DS.Model.extend({
-    title               : DS.attr('string'),
-    publicationDate     : DS.attr('date'),
-    author              : DS.attr('string'),
-    publisher           : DS.attr('string'),
-    summary             : DS.attr('string')
+// app/models/book.js
+
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  title               : DS.attr('string'),
+  publicationDate     : DS.attr('date'),
+  author              : DS.attr('string'),
+  publisher           : DS.attr('string'),
+  summary             : DS.attr('string')
 });
 ```
 
 Cependant, l'ensemble des mécanismes décrits plus bas (les *bindings* notamment) peuvent parfaitement fonctionner en s'appuyant directement sur le modèle objet d'ember et la 
 classe ``Ember.Object`` [en détail](http://eviltrout.com/2013/03/23/ember-without-data.html).
 
--> [doc officielle](http://guides.emberjs.com/v2.10.0/models/).
+-> [doc officielle](http://guides.emberjs.com/v2.13.0/models/).
 
 ## Contrôleurs
 
@@ -132,17 +141,22 @@ l'utilisateur sur l'interface rendue par le template :
 ```
 
 ```js
-App.BooksController = Ember.Controller.extend({
+// app/controllers/books.js
+
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
   actions: {
+
     // appelé lors du clic sur le bouton
     sort: function () {
-        ...
+      ...
     }
   }
 });
 ```
 
--> [doc officielle](http://guides.emberjs.com/v2.10.0/controllers/).
+-> [doc officielle](http://guides.emberjs.com/v2.13.0/controllers/).
 
 **Note**: Les contrôleurs [Ember][ember] sont appelés à disparaître progressivement au profit de l'utilisation de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md). 
 Ce qui explique l'absence des contrôleurs sur la figure ci-dessus.
@@ -155,7 +169,7 @@ Depuis toujours [Ember][ember] met fortement en avant son approche composants. A
 Les composants [Ember][ember] s'articulent autour d'une partie template et/ou d'une partie logique. Dans les prochaines versions à venir, l'apparition de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md)
 devrait rendre l'utilisation de contrôleurs seuls obsolète.
 
--> [doc officielle](https://guides.emberjs.com/v2.10.0/components/defining-a-component/).
+-> [doc officielle](https://guides.emberjs.com/v2.13.0/components/defining-a-component/).
 
 
 ## Génération d'objets
@@ -171,7 +185,7 @@ Si l'un de ces objet n'est pas trouvé, [Ember][ember] va en générer un par d�
 Donc si l'on crée dans le routeur la route suivante sans créer aucun autre objet :
 
 ```js
-App.Router.map(function() {
+Router.map(function() {
   this.route("about", { path: "/about" });
 });
 ```
@@ -186,7 +200,7 @@ Dans une application [Ember][ember], **il n'est donc nécessaire de définir que
 
 -> [doc officielle](https://guides.emberjs.com/v1.13.0/routing/generated-objects/).
 
-Un bon moyen de se rendre compte de ça consiste à installer le debugger Ember sur votre navigateur préféré. Vous aurez, entre autres, la liste de l'ensemble des objets impliqués dans le rendu d'une URL 
+Un bon moyen de se rendre compte de ça consiste à installer le plugin Ember le navigateur de votre choix. Vous aurez, entre autres, la liste de l'ensemble des objets impliqués dans le rendu d'une URL 
 donnée. Cette liste distingue de manière claire les objets créés par vous et ceux générés par Ember.
 
 Ce module s'appelle **Ember Inspector** et est disponible pour [Chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi?hl=en)
@@ -199,9 +213,9 @@ et [Firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/). C
 
 Il est résolument tourné vers le web et les URLs. Ses créateurs sont également ceux de son moteur de templates [Handlebars](http://handlebarsjs.com/) et sont très impliqués dans diverses initiatives 
 autour de la standardisation et de l'évolution du web. Pour n'en citer que deux : [JSON API](http://jsonapi.org/) et [Web Components](https://gist.github.com/wycats/9144666b0c606d1838be), 
-notamment au travers du compilateur de templates [HTMLBars](https://github.com/tildeio/htmlbars).
+notamment au travers de son moteur de rendu [Glimmer](https://glimmerjs.com).
 
-Ils embrassent très rapidement les nouveaux standards tels que [ES6 Harmony](https://people.mozilla.org/~jorendorff/es6-draft.html) à l'image des travaux effectués autour 
+Ils embrassent très rapidement les nouveaux standards tels que [ES6 Harmony](https://tc39.github.io/ecma262/) à l'image des travaux effectués autour 
 d'[ember-cli](http://www.ember-cli.com/).
 
 Enfin, contrairement aux *a priori*, la courbe d'apprentissage d'[Ember][ember] est progressive et il est très simple à prendre en main une fois les concepts de base appréhendés.

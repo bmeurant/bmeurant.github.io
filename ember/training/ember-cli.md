@@ -16,16 +16,12 @@ Historiquement, cependant, [Ember][ember] **ne faisait aucun choix particulier d
 
 Il est donc tout à fait possible d'organiser son application [Ember][ember] comme on le souhaite : 
 
-- dans un seul fichier JavaScript ou dans une balise `<script>`. On doit par contre impérativement respecter les conventions de 
-  nommage et enregistrer nos objets dans une variable globale
-- on peut essayer d'organiser nous-même notre application, nos fichiers, gérer des modules, etc. Tout ça va passer par l'utilisation 
-  d'un outil de build javascript de type [Grunt](http://gruntjs.com/), [Gulp](http://gulpjs.com/), [Broccoli][broccoli]. 
+- dans un seul fichier JavaScript ou dans une balise `<script>`. On doit par contre impérativement respecter les conventions de nommage et enregistrer nos objets dans une variable globale
+- on peut essayer d'organiser nous-même notre application, nos fichiers, gérer des modules, etc. Tout ça va passer par l'utilisation d'un outil de build javascript de type [Grunt](http://gruntjs.com/), [Gulp](http://gulpjs.com/), [Broccoli][broccoli]. 
   Ces outils vont nous permettre de concaténer nos différents fichiers JavaScript en un seul, de sortir les gabarits dans des fichiers
   `.hbs` et de les précompiler. On n'aura ensuite qu'à importer ces fichiers dans notre ``index.html``.
 
-Cependant, la complexité et la richesse des applications [Ember][ember] augmentant, le besoin de disposer d'un outillage plus complet
-et plus adapté s'est rapidement fait sentir. C'est suite à ce besoin que le projet [Ember CLI][ember-cli] est né, porté par une partie de la core team [Ember][ember]. Depuis, [Ember CLI][ember-cli] est
-devenu un standard *de facto* dans la communauté [Ember][ember] et a été ensuite officiellement supporté par l'équipe [Ember][ember].
+Cependant, la complexité et la richesse des applications [Ember][ember] augmentant, le besoin de disposer d'un outillage plus complet et plus adapté s'est rapidement fait sentir. C'est suite à ce besoin que le projet [Ember CLI][ember-cli] est né, porté par une partie de la core team [Ember][ember]. Depuis, [Ember CLI][ember-cli] est devenu un standard *de facto* dans la communauté [Ember][ember] et a été ensuite officiellement supporté par l'équipe [Ember][ember].
 
 ## Ember CLI
 
@@ -36,7 +32,7 @@ sur l'outil de build [Broccoli][broccoli] et permet :
   [conventions de nommage](http://www.ember-cli.com/user-guide/#naming-conventions)
 * de générer différents objets en mode scaffolding via des [commandes](http://www.ember-cli.com/user-guide/#using-ember-cli).
 * d'utiliser des outils de build basés sur [Broccoli][broccoli] pour le prétraitement des pré-processeurs CSS par exemple
-* d'utiliser les [modules ES6](https://people.mozilla.org/~jorendorff/es6-draft.html) plutôt 
+* d'utiliser les [modules ES6](https://tc39.github.io/ecma262/) plutôt 
   qu'[AMD](http://en.wikipedia.org/wiki/Asynchronous_module_definition) ou 
   [CommonJS](http://en.wikipedia.org/wiki/CommonJS) pour la modularisation. Cette question a été
   largement débattue. Ici un [article très intéressant](http://tomdale.net/2012/01/amd-is-not-the-answer/) à ce sujet.
@@ -51,43 +47,44 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
  
    ```console
    $ node -v
-   v4.4.3
+   v7.10.0
+   $ npm -v
+   4.6.1
    ```
     
-1. Installer Bower : 
+1. Installer Yarn : [ici](https://yarnpkg.com/lang/en/docs/install/)
 
    ```console
-   $ npm install -g bower
-   bower@1.7.9
+   $ yarn --version
+   0.24.5
    ```
 
 1. Puis [Ember CLI](http://www.ember-cli.com/) : 
 
    ```console
-   $ npm install -g ember-cli
+   $ yarn global add ember-cli
    $ ember -v
-   version: 2.10.0
-   node: 4.4.3
+   version: 2.13.2
+   node: 7.10.0
    ```
    
-1. Vérifier la version de npm. Si celle-ci est inférieure à 3.7.x, la mettre à jour via ``npm install -g npm``  : 
+1. Vérifier la version de npm. Si celle-ci est inférieure à 3.7.x, la mettre à jour via ``yarn global add npm``  : 
 
    ```console
    $ npm -v
-   3.8.7
+   4.6.1
    ```
 
 1. Créer une nouvelle application ``ember-training`` via [Ember CLI](http://www.ember-cli.com/) et la ligne de commande `ember` :
 
    ```console
-   $ ember new ember-training
-   version: 2.10.0
+   $ ember new ember-training --yarn
+   version: 2.13.2
    installing app
-     create .bowerrc
+     create .editorconfig
      ...
      create vendor\.gitkeep
-   Installed packages for tooling via npm.
-   Installed browser packages via Bower.
+   Yarn: Installed dependencies
    Successfully initialized git.
    ```
 
@@ -96,18 +93,18 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ cd ember-training
    $ ember serve
-   version: 2.10.0
+   version: 2.13.2
    Livereload server on http://localhost:49152
    Serving on http://localhost:4200/
    ```
 
-1. Ouvrir le navigateur à [cette adresse](http://localhost:4200/ember-getting-started) et constater que la page ci-dessous est affichée :
+1. Ouvrir le navigateur à [cette adresse](http://localhost:4200) et constater que la page ci-dessous est affichée :
    ![Ember Welcome Page](/images/ember-welcome-page.png)
    Cette page est le résultat de l'addon `ember-welcome-page` qui délivre une page d'accueil statique stylisée...
 
-   NB: Dans le cadre d'un projet, cet addon serait à désinstaller pour supprimer cette page d'aide (`npm uninstall ember-welcome-page --save-dev` )
+   Dans le cadre d'un projet, cet addon est à désinstaller pour supprimer cette page d'aide : `yarn remove ember-welcome-page` )
 
-1. Créer un fichier `/app/templates/application.hbs` avec le contenu suivant:
+1. Ouvrir le fichier `/app/templates/application.hbs`, supprimer le composant `{{welcome-page}}` et ajouter un titre:
    {% raw %}
    ```html
    <h2 id="title">Welcome to Ember</h2>
@@ -120,16 +117,16 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    ```console
    DEBUG: -------------------------------
-   DEBUG: Ember      : 2.10.0
-   DEBUG: Ember Data : 2.10.0
-   DEBUG: jQuery     : 3.1.1
+   DEBUG: Ember      : 2.13.2
+   DEBUG: Ember Data : 2.13.1
+   DEBUG: jQuery     : 3.2.1
    DEBUG: -------------------------------
    ``` 
 
 1. On en profite enfin pour installer le plugin de développement pour [Chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
 ou [Firefox](https://addons.mozilla.org/fr/firefox/addon/ember-inspector/)
 
-On dispose donc désormais d'un template d'application opérationel. La structure complète du projet créé est décrite dans la 
+On dispose donc désormais d'un template d'application opérationel. La structure complète du projet créée est décrite dans la 
 [documentation](folder-layout).
 
   {% endcapture %}{{ m | markdownify }}
@@ -157,11 +154,14 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
 
 <div class="work no-answer">
     {% capture m %}
-    
+
 1. Installer ember-cli-sass via npm. Ce plugin permet d'intégrer la précompilation sass dans [Ember CLI](http://www.ember-cli.com/) : 
 
    ```console
-   npm install --save-dev ember-cli-sass
+   $ ember install ember-cli-sass
+
+   Yarn: Installed ember-cli-sass
+   Installed addon package.
    ```
    
    En ouvrant le fichier ``package.json``, on constate que la dépendance ember-cli-sass a été ajoutée : 
@@ -173,60 +173,56 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    
      "devDependencies": {
        ...
-       "ember-cli-sass": "^5.4.0",
+       "ember-cli-sass": "^6.1.3",
+       ...
+     }
+   ...
+   ```
+1. Installer l'addon [ember-bootstrap](http://www.ember-bootstrap.com). Cet addon permet d'intégrer le framework CSS [Twitter Bootstrap](https://getbootstrap.com) et fournit des composants [Ember][ember] compatibles prêts à l'emploi:
+
+   ```console
+   $ ember install ember-bootstrap
+   
+   Yarn: Installed ember-bootstrap
+   installing ember-bootstrap
+   Installing for Bootstrap 3 using preprocessor sass
+     install package bootstrap
+   Yarn: Installed bootstrap@^3.3.7
+   Added ember-bootstrap configuration to ember-cli-build.js
+   Installed addon package.
+   ```
+
+   On constate que le fichier `package.json` a été mis à jour :
+
+   ```javascript
+   // package.json
+   
+   ...
+   
+     "devDependencies": {
+       "bootstrap": "^3.3.7",
+       "broccoli-asset-rev": "^2.4.5",
+       "ember-ajax": "^3.0.0",
+       "ember-bootstrap": "^1.0.0-alpha.12",
        ...
      }
    ...
    ```
 
-1. Installer bootstrap-sass via bower. Celui-ci permet de disposer d'une distribution sass du framework bootstrap : 
+   Le fichier de configuration `ember-cli-build.js` a également été mis à jour pour ajouter la configuration par défaut d'import des assets [Bootstrap](http://getbootstrap.com). Dans notre cas, nous utilisons Sass et ne voulons donc pas importer les CSS mais nous souhaitons utiliser les icônes :
 
-   ```console
-   $ bower install --save bootstrap-sass
-   ...
-   bower resolved      git://github.com/twbs/bootstrap-sass.git#3.3.6
-   bower install       bootstrap-sass#3.3.6
-   ```
-   
-   En ouvrant le fichier ``bower.json``, on constate que la dépendance bootstrap-sass a été ajoutée : 
-   
    ```javascript
-   // bower.json
-   
-   ...
-   
-     "dependencies": {
-       "ember": "~2.10.0",
-       ...
-       "bootstrap-sass": "~3.3.7"
+   // ember-cli-build.js
+
+   module.exports = function(defaults) {
+   var app = new EmberApp(defaults, {
+     'ember-bootstrap': {
+       'bootstrapVersion': 3,
+       'importBootstrapFont': true,
+       'importBootstrapCSS': false
      }
+   });
    ...
-   ```
-
-1. Renommer ensuite le fichier ``app/styles/app.css`` en ``app/styles/app.scss`` et importer le framework depuis les dépendances `bower` :
-
-   ```console
-   // app/styles/app.scss
-   
-   @import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
-   ```
-    
-1. Ouvrir le fichier ``ember-cli-build.js`` et modifier le fichier pour importer la police d'icônes de Bootstrap :
-
-   ```javascript
-     var app = new EmberApp(defaults, {
-       // Add options here
-     });
-     
-     app.import('bower_components/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff', {
-       destDir: 'fonts/bootstrap'
-     });
-   ```
-    
-1. Relancer l'application et constater qu'aucune erreur ne se produit. En particulier, le fichier ``ember-training.css`` doit avoir été chargé sans erreur et ne pas être vide :
-
-   ```console
-   ember server
    ```
     
 1. De manière à bénéficier de styles adaptés aux futurs exercices, copier le contenu de [ce fichier](https://raw.githubusercontent.com/bmeurant/ember-training/master/app/styles/app.scss) 
