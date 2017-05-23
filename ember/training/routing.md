@@ -56,7 +56,7 @@ On souhaite désormais créer une nouvelle route pour l'affichage et la manipula
    ```console
    $ ember generate route comics
    
-   version: 1.13.13
+   version: 2.13.2
    installing route
      identical app\routes\comics.js
      identical app\templates\comics.hbs
@@ -425,7 +425,7 @@ Par convention, les éléments constitutifs des routes filles (template, route, 
     > ```console
     > $ ember generate route comics/comic
     >
-    > version: 1.13.13
+    > version: 2.13.2
     > installing route
     >   create app\routes\comics\comic.js
     >   create app\templates\comics\comic.hbs
