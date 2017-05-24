@@ -10,7 +10,8 @@ next: ember/training/routing
 
 {% raw %}
 
-**NB :** *Les exercices de cette section seront validés par le passage des cas de tests associés. Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet* :
+**NB :** *Les exercices de cette section seront validés par le passage des cas de tests associés.
+Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet* :
 
 * [01-templates-test.js](https://github.com/bmeurant/ember-training/blob/templates-tests/tests/acceptance/01-templates-test.js) dans ``tests/acceptance``.
 
@@ -22,21 +23,21 @@ ember test --server
 
 ## Templating
 
-Les ``templates`` ou ``gabarits`` sont des fragments de code HTML qui peuvent être enrichis par des expressions (encadrées par la notation ``{{}}``) via le moteur de template [Handlebars][handlebars]. Ces expressions
-permettent d'intégrer dynamiquement dans les fragments HTML la ou les valeurs d'objets javascript ainsi que le résultat d'exécution d'opérateurs logiques (``helpers``) proposés par
-[Handlebars][handlebars], par [Ember][ember] ou développés au projet sous forme de contributions.
+Les ``templates`` ou ``gabarits`` sont des fragments de code HTML qui peuvent être enrichis par des expressions (encadrées par la notation ``{{}}``) via le moteur de template [Handlebars][handlebars].
+Ces expressions permettent d'intégrer dynamiquement dans les fragments HTML la ou les valeurs d'objets javascript ainsi que le résultat d'exécution d'opérateurs logiques (``helpers``) proposés par [Handlebars][handlebars], par [Ember][ember] ou développés au projet sous forme de contributions.
 
 Au sein de la structure de projet [Ember CLI][ember-cli] les templates se trouvent, dans le dossier ``app/templates`` puis, par convention, sont nommés et organisés en fonction de la route active (cf. chapitre [routing](../routing)).
-Il s'agit de fichiers à l'extension ``.hbs`` et dont la syntaxe correspond à des marqueurs HTML enrichis d'expressions [Handlebars][handlebars] via la notation ``{{}}``. [Ember CLI][ember-cli] ou tout autre forme d'outillage
-(plugins gulp, grunt, etc.) s'occupe, lors du déploiement de l'application ``Ember`` (via la commande ``server``) ou de son packaging (via la commande ``build``), du traitement de l'ensemble de ces templates. Ceux-ci
-sont rassemblés, identifiés et compilés sous la forme de fonctions javascript qui pourront être exécutées dynamiquement en fonction de paramètres représentant les expressions dynamiques du template et donc refléter
-les changements survenus sur les objets javascript attachés à ce template. Nous reviendrons plus loin (cf. ``bindings``) sur ce sujet.
+Il s'agit de fichiers à l'extension ``.hbs`` et dont la syntaxe correspond à des marqueurs HTML enrichis d'expressions [Handlebars][handlebars] via la notation ``{{}}``.
+[Ember CLI][ember-cli] ou tout autre forme d'outillage (plugins gulp, grunt, etc.) s'occupe, lors du déploiement de l'application ``Ember`` (via la commande ``server``) ou de son packaging (via la commande ``build``), du traitement de l'ensemble de ces templates.
+Ceux-ci sont rassemblés, identifiés et compilés sous la forme de fonctions javascript qui pourront être exécutées dynamiquement en fonction de paramètres représentant les expressions dynamiques du template et donc refléter les changements survenus sur les objets javascript attachés à ce template.
+Nous reviendrons plus loin (cf. ``bindings``) sur ce sujet.
 
 
 ### HTML
 
-La fonction la plus basique d'un template [Handlebars][handlebars] consiste donc à afficher tel quel un fragment HTML. Sans autre forme d'opération. C'est précisément ce que fait le template par défaut de l'application
-tel qu'il a été généré par [Ember CLI][ember-cli] :
+La fonction la plus basique d'un template [Handlebars][handlebars] consiste donc à afficher tel quel un fragment HTML.
+Sans autre forme d'opération.
+C'est précisément ce que fait le template par défaut de l'application tel qu'il a été généré par [Ember CLI][ember-cli] :
 
 ```html
 {{!-- /app/templates/application.hbs --}}
@@ -46,9 +47,10 @@ tel qu'il a été généré par [Ember CLI][ember-cli] :
 {{outlet}}
 ```
 
-On ignore pour le moment l'expression ``{{outlet}}`` liée aux opérations de ``routing`` sur lesquelles nous reviendrons juste après (cf. [routing](../routing)). On note tout de même la convention de nommage de ce fichier,
-placé à la racine du répertoire ``templates`` et nommé ``application``. Il s'agit là de l'application des conventions de nommage d'``Ember`` et est, une fois encore, très étroitement liée au routeur d'``Ember`` abordé
-au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du template principal de l'application dans lequel viendront s'imbriquer successivement l'ensemble des autres templates.
+On ignore pour le moment l'expression ``{{outlet}}`` liée aux opérations de ``routing`` sur lesquelles nous reviendrons juste après (cf. [routing](../routing)).
+On note tout de même la convention de nommage de ce fichier, placé à la racine du répertoire ``templates`` et nommé ``application``.
+Il s'agit là de l'application des conventions de nommage d'``Ember`` et est, une fois encore, très étroitement liée au routeur d'``Ember`` abordé au chapitre [routing](../routing).
+Retenons pour le moment qu'il s'agit du template principal de l'application dans lequel viendront s'imbriquer successivement l'ensemble des autres templates.
 
 {% endraw %}
 
@@ -71,9 +73,8 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
    </div>
    ```  
    
-   On constate que l'application est mise à jour et rechargée à la volée par [Ember CLI](http://www.ember-cli.com/) et à l'exécution préalable de la
-   commande ``ember server``. Via cette commande, en effet, l'application est lancée et, lors de toute modification d'un fichier source, 
-   [Ember CLI](http://www.ember-cli.com/) se charge d'exécuter l'*asset pipeline* et de recharger l'application.
+   On constate que l'application est mise à jour et rechargée à la volée par [Ember CLI](http://www.ember-cli.com/) et à l'exécution préalable de la commande ``ember server``.
+   Via cette commande, en effet, l'application est lancée et, lors de toute modification d'un fichier source, [Ember CLI](http://www.ember-cli.com/) se charge d'exécuter l'*asset pipeline* et de recharger l'application.
   
   {% endraw %}
    
@@ -82,8 +83,8 @@ au chapitre [routing](../routing). Retenons pour le moment qu'il s'agit du templ
 
 ## Binding
 
-Un moteur de templating tel qu'[Handlebars][handlebars] serait inutile s'il ne s'agissait que d'afficher ou d'assembler que du HTML statique. L'intérêt consiste à injecter dans ce template des valeurs
-et expressions dynamiques en fonction des données et de la logique de l'application.
+Un moteur de templating tel qu'[Handlebars][handlebars] serait inutile s'il ne s'agissait que d'afficher ou d'assembler que du HTML statique.
+L'intérêt consiste à injecter dans ce template des valeurs et expressions dynamiques en fonction des données et de la logique de l'application.
 
 <div class="work">
     {% capture m %}
@@ -94,7 +95,8 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
    Cette opération s'effectue en renvoyant un ``model`` au sein d'une ``Route`` de la manière suivante.
    On expliquera ces notions en détail dans le chapitre [routing](../routing), admettons pour le moment que nous avons un fichier ``app/routes/application.js`` :
 
-   (On note l'utilisation des modules Ecmascript 6 rendue possible par la transpilation par [Ember CLI](http://www.ember-cli.com/). cf. [chapitre précédent](../ember-cli))
+   (On note l'utilisation des modules Ecmascript 6 rendue possible par la transpilation par [Ember CLI](http://www.ember-cli.com/).
+   cf. [chapitre précédent](../ember-cli))
     
    ```javascript
    // app/routes/application.js
@@ -135,7 +137,8 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
    
    On constate que notre application affiche désormais le nom du comic que nous avons créé et injecté dans le template
 
-1. Ouvrir la console javascript et modifier le titre du comic. Quels sont les deux constats majeurs que l'on peut effectuer ?
+1. Ouvrir la console javascript et modifier le titre du comic.
+   Quels sont les deux constats majeurs que l'on peut effectuer ?
 
    > ```javascript
    > > comic
@@ -150,8 +153,11 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
    
    > On constate les choses suivantes : 
    >
-   > 1. L'objet 'comic' créé a été enrichi par Ember. De ce fait, on ne doit plus et on ne peut plus manipuler directement ses propriétés sans accesseurs. cf [Modèle objet](../object-model)
-   > 2. En utilisant les outils proposés par le modèle objet d'[Ember](http://emberjs.com), on constate que le template est automatiquement mis à jour lorsque l'on modifie l'objet. C'est ce que l'on appelle le **binding**.
+   > 1. L'objet 'comic' créé a été enrichi par Ember.
+   > De ce fait, on ne doit plus et on ne peut plus manipuler directement ses propriétés sans accesseurs.
+   > cf [Modèle objet](../object-model)
+   > 2. En utilisant les outils proposés par le modèle objet d'[Ember](http://emberjs.com), on constate que le template est automatiquement mis à jour lorsque l'on modifie l'objet.
+   > C'est ce que l'on appelle le **binding**.
 
   {% endraw %}
    
@@ -162,8 +168,7 @@ et expressions dynamiques en fonction des données et de la logique de l'applica
 
 ### Binding dans des attributs HTML
 
-Le *binding*, via la notation ``{{}}`` peut s'effectuer au sein d'un élément HTML mais il peut également être nécessaire de dynamiser le contenu des attributs eux-mêmes : noms de classes, url source d'une image ou
-d'un lien, etc.
+Le *binding*, via la notation ``{{}}`` peut s'effectuer au sein d'un élément HTML mais il peut également être nécessaire de dynamiser le contenu des attributs eux-mêmes : noms de classes, url source d'une image ou d'un lien, etc.
 
 Depuis la [version 1.11](http://emberjs.com/deprecations/v1.x/#toc_bind-attr), la syntaxe pour le *binding* d'attributs est similaire à celle utilisée pour le *binding* d'éléments :
  
@@ -171,21 +176,21 @@ Depuis la [version 1.11](http://emberjs.com/deprecations/v1.x/#toc_bind-attr), l
 <div title={{comic.title}} class="comic {{if comic.scriptwriter 'with-scriptwriter' 'no-scriptwriter'}}"></div>
 ```
 
-De la même manière que pour le *binding* d'éléments, le template est mis à jour automatiquement lors de la mise à jour du modèle. Cela peut s'avérer très utile pour conditionner les classes portées par
-un élément et donc son affichage d'un éléments en fonction de l'état des données injectées.
+De la même manière que pour le *binding* d'éléments, le template est mis à jour automatiquement lors de la mise à jour du modèle.
+Cela peut s'avérer très utile pour conditionner les classes portées par un élément et donc son affichage d'un éléments en fonction de l'état des données injectées.
 
 
 ### Binding bidirectionnel ou unidirectionnel
 
-Deux sortes de *bindings* sont régulièrement évoqués : le **binding bidirectionnel** (*two-way binding*) et le **binding unidirectionnel** (*one-way binding*). Dans chacun de ces deux modes, tout 
-changement survenant sur un objet du model est automatiquement répércuté dans l'ensemble des templates et fragments HTML qui y font référence. Dans le premier mode, en revanche, la réciproque est également 
-vraie et tout changement qui intervient au niveau HTML via un champ éditable (``input`` par exemple) est transmis au model et, par voie de conséquence, aux autres templates et fragments HTML.
-Comme nous l'illustrerons dans les chapitres suivants, ce fonctionnement permet de voir par exemple un changement de libellé immédiatement mis à jour dans une page alors même que l'on est encore en train de
-le saisir dans une autre zone de cette page - sans que nous ayions eu à implémenter une quelconque logique évènementielle pour cela. [Ember][ember] se charge de tout.
+Deux sortes de *bindings* sont régulièrement évoqués : le **binding bidirectionnel** (*two-way binding*) et le **binding unidirectionnel** (*one-way binding*).
+Dans chacun de ces deux modes, tout changement survenant sur un objet du model est automatiquement répércuté dans l'ensemble des templates et fragments HTML qui y font référence.
+Dans le premier mode, en revanche, la réciproque est également vraie et tout changement qui intervient au niveau HTML via un champ éditable (``input`` par exemple) est transmis au model et, par voie de conséquence, aux autres templates et fragments HTML.
+Comme nous l'illustrerons dans les chapitres suivants, ce fonctionnement permet de voir par exemple un changement de libellé immédiatement mis à jour dans une page alors même que l'on est encore en train de le saisir dans une autre zone de cette page - sans que nous ayions eu à implémenter une quelconque logique évènementielle pour cela.
+[Ember][ember] se charge de tout.
  
-Jusqu'à [Ember][ember] 2.0, tous les *bindings* étaient par défaut voire obligatoirement bidirectionnels. Or, si ce fonctionnement peut s'avérer extêmement puissant et utile, il est évidément plus coûteux qu'un 
-*binding* unidirectionnel et pas toujours pertinent. Dans le cas majoritaire où l'on souhaite simplement afficher une information non éditable qui sera mise à jour au changement du modèle mais non modifiable
-par les utilisateurs, la mise en place d'un tel mécanisme est inutile. 
+Jusqu'à [Ember][ember] 2.0, tous les *bindings* étaient par défaut voire obligatoirement bidirectionnels.
+Or, si ce fonctionnement peut s'avérer extêmement puissant et utile, il est évidément plus coûteux qu'un *binding* unidirectionnel et pas toujours pertinent.
+Dans le cas majoritaire où l'on souhaite simplement afficher une information non éditable qui sera mise à jour au changement du modèle mais non modifiable par les utilisateurs, la mise en place d'un tel mécanisme est inutile.
 
 Depuis [Ember][ember] 2.0, le *binding* est unidirectionnel par défaut lorsque l'on utilise la notation *chevron* (`<` ou *angle-bracket*) pour nos composants standards :
 
@@ -202,8 +207,7 @@ Le *binding* bidirectionnel est possible si l'on utilise l'ancienne notation *ac
 ```
 
 Cette dernière option est notamment obligatoire si l'on souhaite un *binding* bidirectionnel sur des composants standards (``input``, ``textarea``, etc.) pour lesquels le helper ``mut`` ne sera pas supporté.
-Dans les versions à venir (lorsque le support des *angle bracket components* ou *glimmer components* sera disponible) et pour tous les autres cas de composants standard ou custom, 
-l'utilisation du helper ``mut`` sera à privilégier pour indiquer le caractère mutable de la propriété *bindée*.
+Dans les versions à venir (lorsque le support des *angle bracket components* ou *glimmer components* sera disponible) et pour tous les autres cas de composants standard ou custom, l'utilisation du helper ``mut`` sera à privilégier pour indiquer le caractère mutable de la propriété *bindée*.
 
 ```html
 {{!-- two-way binding (future syntax) --}}
@@ -214,9 +218,11 @@ Nous aurons l'occasion de constater et d'expérimenter ces comportements dans le
 
 ## Helpers
 
-[Handlebars][handlebars] et [Ember][ember] propose de nombreux *helpers* qui permettent d'introduire un minimum de logique au sein de nos templates. Ces *helpers* peuvent être de types différents :
+[Handlebars][handlebars] et [Ember][ember] propose de nombreux *helpers* qui permettent d'introduire un minimum de logique au sein de nos templates.
+Ces *helpers* peuvent être de types différents :
 
-* **blocks** : C'est le cas majoritaire. Ces *helpers* englobent des éléments HTML (et / ou d'autres *helpers*) au sein d'un bloc comprenant un début et une fin.
+* **blocks** : C'est le cas majoritaire.
+  Ces *helpers* englobent des éléments HTML (et / ou d'autres *helpers*) au sein d'un bloc comprenant un début et une fin.
 
 C'est le cas, par exemple du *helper* ``each`` : 
 
@@ -286,9 +292,8 @@ On retiendra les *helpers* [Ember][ember] principaux :
 
 La liste complète des *helpers* [Ember][ember] est accessible dans la [documentation](http://emberjs.com/api/classes/Ember.Templates.helpers.html).
 
-[Ember][ember] et [Handlebars][handlebars] facilitent enfin la création et la contribution de nouveaux *helpers* via la fonction ``registerHelper`` d'[Handlebars](http://handlebarsjs.com/#helpers),
-la commande ``ember generate helper helper-name`` ou la contribution directe dans le dossier ``app/helpers``. cf [Ember documentation](http://guides.emberjs.com/2.13.0/templates/writing-helpers/) & 
-[Ember CLI documentation](http://www.ember-cli.com/user-guide/#resolving-handlebars-helpers) sur le sujet (attention au `-` obligatoire dans le nom pour [Ember CLI][ember-cli]).
+[Ember][ember] et [Handlebars][handlebars] facilitent enfin la création et la contribution de nouveaux *helpers* via la fonction ``registerHelper`` d'[Handlebars](http://handlebarsjs.com/#helpers), la commande ``ember generate helper helper-name`` ou la contribution directe dans le dossier ``app/helpers``.
+cf [Ember documentation](http://guides.emberjs.com/2.13.0/templates/writing-helpers/) & [Ember CLI documentation](http://www.ember-cli.com/user-guide/#resolving-handlebars-helpers) sur le sujet (attention au `-` obligatoire dans le nom pour [Ember CLI][ember-cli]).
 
 {% endraw %}
 
@@ -345,17 +350,17 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     > ```
     > 
     > * Dans le premier cas, en utilisant la méthode native `push`, le template n'a pas été mis à jour alors que l'objet a bien été ajouté (on a maintenant 2 éléments).
-    > * Dans le second cas, en utilisant la méthode [Ember](http://emberjs.com) `pushObject`, le template a été correctement mis à jour avec le nouvel objet. On constate d'ailleurs que l'élément
-    >   ajouté précédemment apparaît également.
+    > * Dans le second cas, en utilisant la méthode [Ember](http://emberjs.com) `pushObject`, le template a été correctement mis à jour avec le nouvel objet.
+    >   On constate d'ailleurs que l'élément ajouté précédemment apparaît également.
     >   
-    > Cela s'explique par le fait que la méthode `pushObject` proposée par [Ember](http://emberjs.com) génère des évènements permettant de connaitre et de réagir aux changements. On dit qu'elle est
-    > compatible *KVO* - *Key-Value Observing*). Cette méthode est mise à disposition par [Ember](http://emberjs.com) alors même que nous utilisons un objet `array` natif et non pas un objet 
-    > [Ember](http://emberjs.com) parce que ce dernier enrichit le prototype de certains objets de manière transparente (note : ce comportement peut être désactivé). 
+    > Cela s'explique par le fait que la méthode `pushObject` proposée par [Ember](http://emberjs.com) génère des évènements permettant de connaitre et de réagir aux changements.
+    > On dit qu'elle est compatible *KVO* - *Key-Value Observing*).
+    > Cette méthode est mise à disposition par [Ember](http://emberjs.com) alors même que nous utilisons un objet `array` natif et non pas un objet [Ember](http://emberjs.com) parce que ce dernier enrichit le prototype de certains objets de manière transparente (note : ce comportement peut être désactivé).
     > cf. [documentation](http://guides.emberjs.com/2.13.0/configuring-ember/disabling-prototype-extensions/)
 
 1. Modifier l'application pour afficher les auteurs des comics.
     * Dans la route, modifier la collection `comics` pour ajouter l'auteur au second comic
-    * Pour chaque comic afficher l'auteur si il existe à côté du titre sous la forme ``<title> by <scriptwriter>`` ou ``<titre> by unknown scriptwriter`` si aucun auteur n'existe. 
+    * Pour chaque comic afficher l'auteur si il existe à côté du titre sous la forme ``<title> by <scriptwriter>`` ou ``<titre> by unknown scriptwriter`` si aucun auteur n'existe.
       Ajouter à la liste un comic en renseignant son auteur pour constater les changements.
      
     **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 02 - Should display scriptwriter if exists](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L51) passant.*
@@ -381,7 +386,7 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
 
      
 1. Via la console, modifier ensuite les objets de la liste.
-    * Le premier objet d'abord (sans auteur) en supprimant / ajoutant le champ `scriptwriter`. 
+    * Le premier objet d'abord (sans auteur) en supprimant / ajoutant le champ `scriptwriter`.
     * Puis le second (avec auteur) pour modifier la valeur de la propriété `scriptwriter`.
     
     Que constate-t-on ?
@@ -412,11 +417,12 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
     > </ul>
     > ```
     > 
-    > Ici encore, on utilise le *helper inline* `if` tertiaire mais cette fois au sein d'un attribut `class` et non dans un élément HTML. On note que cela ne perturberait en rien l'utilisation d'une
-    > classe CSS *statique* déjà présente. Cela permet de conditionner très facilement un affichage sans avoir à gérer soi-même la logique d'affichage / masquage, etc. 
+    > Ici encore, on utilise le *helper inline* `if` tertiaire mais cette fois au sein d'un attribut `class` et non dans un élément HTML.
+    > On note que cela ne perturberait en rien l'utilisation d'une classe CSS *statique* déjà présente.
+    > Cela permet de conditionner très facilement un affichage sans avoir à gérer soi-même la logique d'affichage / masquage, etc.
  
-1. Modifier le template pour afficher un simple message `"Sorry, no comic found"` si la liste est vide. 
-    * Via la console, supprimer tous les objets de la liste et constater les changements. 
+1. Modifier le template pour afficher un simple message `"Sorry, no comic found"` si la liste est vide.
+    * Via la console, supprimer tous les objets de la liste et constater les changements.
     
        **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 04 - Should display message if empty](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L84) passant.*
  
@@ -448,10 +454,10 @@ la commande ``ember generate helper helper-name`` ou la contribution directe dan
  
 ## Conclusion
 
-Cette section a permis d'explorer les aspects principaux du fonctionnement des templates et du binding dans [Ember][ember]. Au travers d'un exemple simple, nous avons pu nous familiariser également 
-avec les *helpers* [Handlebars][handlebars]. Cependant nous n'avons couvert qu'une infime partie des caractéristiques et des outils proposés par [Ember][ember] dans ce domaine. Au fil des expérimentations
-à venir dans les sections suivantes, nous poursuivrons cette découverte au travers d'exemples concrets et de mises en pratique. Des outils et *helpers* fondamentaux d'[Ember][ember] tels que ``link-to``, 
-``action``, ``input`` ou encore ``textarea`` n'ont pas été abordés ici et seront largement détaillés par la suite.
+Cette section a permis d'explorer les aspects principaux du fonctionnement des templates et du binding dans [Ember][ember].
+Au travers d'un exemple simple, nous avons pu nous familiariser également avec les *helpers* [Handlebars][handlebars]. Cependant nous n'avons couvert qu'une infime partie des caractéristiques et des outils proposés par [Ember][ember] dans ce domaine.
+Au fil des expérimentations à venir dans les sections suivantes, nous poursuivrons cette découverte au travers d'exemples concrets et de mises en pratique.
+Des outils et *helpers* fondamentaux d'[Ember][ember] tels que ``link-to``, ``action``, ``input`` ou encore ``textarea`` n'ont pas été abordés ici et seront largement détaillés par la suite.
  
 [handlebars]: http://handlebarsjs.com/
 [ember-cli]: http://www.ember-cli.com/

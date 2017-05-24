@@ -10,32 +10,34 @@ next: ember/training/templates
 
 ## Structure d'une application Ember
 
-On a déjà évoqué le fait qu'[Ember][ember] était un framework avec des partis pris forts et un modèle de développement structurant. 
+On a déjà évoqué le fait qu'[Ember][ember] était un framework avec des partis pris forts et un modèle de développement structurant.
 
 Historiquement, cependant, [Ember][ember] **ne faisait aucun choix particulier du point de vue de l'organisation de nos applications**.
 
 Il est donc tout à fait possible d'organiser son application [Ember][ember] comme on le souhaite : 
 
-- dans un seul fichier JavaScript ou dans une balise `<script>`. On doit par contre impérativement respecter les conventions de nommage et enregistrer nos objets dans une variable globale
-- on peut essayer d'organiser nous-même notre application, nos fichiers, gérer des modules, etc. Tout ça va passer par l'utilisation d'un outil de build javascript de type [Grunt](http://gruntjs.com/), [Gulp](http://gulpjs.com/), [Broccoli][broccoli]. 
-  Ces outils vont nous permettre de concaténer nos différents fichiers JavaScript en un seul, de sortir les gabarits dans des fichiers
-  `.hbs` et de les précompiler. On n'aura ensuite qu'à importer ces fichiers dans notre ``index.html``.
+- dans un seul fichier JavaScript ou dans une balise `<script>`.
+  On doit par contre impérativement respecter les conventions de nommage et enregistrer nos objets dans une variable globale
+- on peut essayer d'organiser nous-même notre application, nos fichiers, gérer des modules, etc.
+  Tout ça va passer par l'utilisation d'un outil de build javascript de type [Grunt](http://gruntjs.com/), [Gulp](http://gulpjs.com/), [Broccoli][broccoli].
+  Ces outils vont nous permettre de concaténer nos différents fichiers JavaScript en un seul, de sortir les gabarits dans des fichiers `.hbs` et de les précompiler.
+  On n'aura ensuite qu'à importer ces fichiers dans notre ``index.html``.
 
-Cependant, la complexité et la richesse des applications [Ember][ember] augmentant, le besoin de disposer d'un outillage plus complet et plus adapté s'est rapidement fait sentir. C'est suite à ce besoin que le projet [Ember CLI][ember-cli] est né, porté par une partie de la core team [Ember][ember]. Depuis, [Ember CLI][ember-cli] est devenu un standard *de facto* dans la communauté [Ember][ember] et a été ensuite officiellement supporté par l'équipe [Ember][ember].
+Cependant, la complexité et la richesse des applications [Ember][ember] augmentant, le besoin de disposer d'un outillage plus complet et plus adapté s'est rapidement fait sentir.
+C'est suite à ce besoin que le projet [Ember CLI][ember-cli] est né, porté par une partie de la core team [Ember][ember].
+Depuis, [Ember CLI][ember-cli] est devenu un standard *de facto* dans la communauté [Ember][ember] et a été ensuite officiellement supporté par l'équipe [Ember][ember].
 
 ## Ember CLI
 
-[Ember CLI][ember-cli] est une **interface en ligne de commande** pour [Ember][ember]. Elle repose
-sur l'outil de build [Broccoli][broccoli] et permet : 
+[Ember CLI][ember-cli] est une **interface en ligne de commande** pour [Ember][ember].
+Elle repose sur l'outil de build [Broccoli][broccoli] et permet :
 
-* d'initialiser une application Ember avec, cette fois, une [structure de fichiers][folder-layout] et des
-  [conventions de nommage](http://www.ember-cli.com/user-guide/#naming-conventions)
+* d'initialiser une application Ember avec, cette fois, une [structure de fichiers][folder-layout] et des [conventions de nommage](http://www.ember-cli.com/user-guide/#naming-conventions)
 * de générer différents objets en mode scaffolding via des [commandes](http://www.ember-cli.com/user-guide/#using-ember-cli).
 * d'utiliser des outils de build basés sur [Broccoli][broccoli] pour le prétraitement des pré-processeurs CSS par exemple
-* d'utiliser les [modules ES6](https://tc39.github.io/ecma262/) plutôt 
-  qu'[AMD](http://en.wikipedia.org/wiki/Asynchronous_module_definition) ou 
-  [CommonJS](http://en.wikipedia.org/wiki/CommonJS) pour la modularisation. Cette question a été
-  largement débattue. Ici un [article très intéressant](http://tomdale.net/2012/01/amd-is-not-the-answer/) à ce sujet.
+* d'utiliser les [modules ES6](https://tc39.github.io/ecma262/) plutôt qu'[AMD](http://en.wikipedia.org/wiki/Asynchronous_module_definition) ou [CommonJS](http://en.wikipedia.org/wiki/CommonJS) pour la modularisation.
+  Cette question a été largement débattue.
+  Ici un [article très intéressant](http://tomdale.net/2012/01/amd-is-not-the-answer/) à ce sujet.
 * ...
 
 Pour le reste, se reporter à la [doc officielle][ember-cli].
@@ -59,7 +61,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    0.24.5
    ```
 
-1. Puis [Ember CLI](http://www.ember-cli.com/) : 
+1. Puis [Ember CLI](http://www.ember-cli.com/) :
 
    ```console
    $ yarn global add ember-cli
@@ -68,7 +70,8 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    node: 7.10.0
    ```
    
-1. Vérifier la version de npm. Si celle-ci est inférieure à 3.7.x, la mettre à jour via ``yarn global add npm``  : 
+1. Vérifier la version de npm.
+   Si celle-ci est inférieure à 3.7.x, la mettre à jour via ``yarn global add npm``  :
 
    ```console
    $ npm -v
@@ -126,25 +129,32 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 1. On en profite enfin pour installer le plugin de développement pour [Chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
 ou [Firefox](https://addons.mozilla.org/fr/firefox/addon/ember-inspector/)
 
-On dispose donc désormais d'un template d'application opérationel. La structure complète du projet créée est décrite dans la 
-[documentation](folder-layout).
+On dispose donc désormais d'un template d'application opérationel.
+La structure complète du projet créée est décrite dans la [documentation](folder-layout).
 
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de projet standard. Il s'agit d'un outil de build complet comprenant : 
+Mais [Ember CLI][ember-cli] est bien loin de ne proposer qu'une structure de projet standard.
+Il s'agit d'un outil de build complet comprenant :
 
-* Un **asset pipeline** complet : à la manière d'une succession de tâches ``Grunt`` ou ``Gulp``, [Ember CLI][ember-cli] propose des outils pour compiler les templates, exécuter les pré-processeurs CSS,
-  servir et minifier JS et CSS, etc. cf [Asset compilation](http://www.ember-cli.com/user-guide/#asset-compilation)
-* L'exécution des tests. cf. [Tests](http://www.ember-cli.com/user-guide/#testing)
-* La translation des conventions de nommage [Ember][ember] en structure de fichiers. cf. [Naming conventions](http://www.ember-cli.com/user-guide/#naming-conventions)
-* La gestion des dépendances et librairies via ``Bower`` et ``Broccoli``. cf [Managing dependencies](http://www.ember-cli.com/user-guide/#managing-dependencies)
-* La gestion des environnements. cf. [Environnements](http://www.ember-cli.com/user-guide/#Environments). Un certain nombre de configuration sont mises en place et adaptées en fonction des environnements 
-  (cache busting, etc.)
-* La gestion du packaging et du déploiement. cf. [Déploiements](http://www.ember-cli.com/user-guide/#deployments)
-* La transpilation de la syntaxe Ecmascript 6 et la gestion des modules dans une syntaxe Ecmascript 5 compatible avec tous les navigateurs. [Ember CLI][ember-cli] propose en effet d'utiliser en grande partie la
-  syntaxe Ecmascript 6 et notament la gestion des modules propre à cette version du language. Cette gestion de module permet de gérer les dépendances internes au projet (classes, modules, etc.) sans faire appel
-  à des librairies externes telles que ``requireJS``. cf. [Using Modules & the Resolver](http://www.ember-cli.com/user-guide/#using-modules)
+* Un **asset pipeline** complet : à la manière d'une succession de tâches ``Grunt`` ou ``Gulp``, [Ember CLI][ember-cli] propose des outils pour compiler les templates, exécuter les pré-processeurs CSS, servir et minifier JS et CSS, etc.
+  cf [Asset compilation](http://www.ember-cli.com/user-guide/#asset-compilation)
+* L'exécution des tests.
+  cf. [Tests](http://www.ember-cli.com/user-guide/#testing)
+* La translation des conventions de nommage [Ember][ember] en structure de fichiers.
+  cf. [Naming conventions](http://www.ember-cli.com/user-guide/#naming-conventions)
+* La gestion des dépendances et librairies via ``Bower`` et ``Broccoli``.
+  cf [Managing dependencies](http://www.ember-cli.com/user-guide/#managing-dependencies)
+* La gestion des environnements.
+  cf. [Environnements](http://www.ember-cli.com/user-guide/#Environments)
+  Un certain nombre de configuration sont mises en place et adaptées en fonction des environnements (cache busting, etc.)
+* La gestion du packaging et du déploiement.
+  cf. [Déploiements](http://www.ember-cli.com/user-guide/#deployments)
+* La transpilation de la syntaxe Ecmascript 6 et la gestion des modules dans une syntaxe Ecmascript 5 compatible avec tous les navigateurs.
+  [Ember CLI][ember-cli] propose en effet d'utiliser en grande partie la syntaxe Ecmascript 6 et notament la gestion des modules propre à cette version du language.
+  Cette gestion de module permet de gérer les dépendances internes au projet (classes, modules, etc.) sans faire appel à des librairies externes telles que ``requireJS``.
+  cf. [Using Modules & the Resolver](http://www.ember-cli.com/user-guide/#using-modules)
 
 
 ## Bootstrap & Sass
@@ -155,7 +165,8 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
 <div class="work no-answer">
     {% capture m %}
 
-1. Installer ember-cli-sass via npm. Ce plugin permet d'intégrer la précompilation sass dans [Ember CLI](http://www.ember-cli.com/) : 
+1. Installer ember-cli-sass via npm.
+   Ce plugin permet d'intégrer la précompilation sass dans [Ember CLI](http://www.ember-cli.com/) :
 
    ```console
    $ ember install ember-cli-sass
@@ -178,7 +189,8 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
      }
    ...
    ```
-1. Installer l'addon [ember-bootstrap](http://www.ember-bootstrap.com). Cet addon permet d'intégrer le framework CSS [Twitter Bootstrap](https://getbootstrap.com) et fournit des composants [Ember][ember] compatibles prêts à l'emploi:
+1. Installer l'addon [ember-bootstrap](http://www.ember-bootstrap.com).
+   Cet addon permet d'intégrer le framework CSS [Twitter Bootstrap](https://getbootstrap.com) et fournit des composants [Ember][ember] compatibles prêts à l'emploi:
 
    ```console
    $ ember install ember-bootstrap
@@ -209,7 +221,8 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    ...
    ```
 
-   Le fichier de configuration `ember-cli-build.js` a également été mis à jour pour ajouter la configuration par défaut d'import des assets [Bootstrap](http://getbootstrap.com). Dans notre cas, nous utilisons Sass et ne voulons donc pas importer les CSS mais nous souhaitons utiliser les icônes :
+   Le fichier de configuration `ember-cli-build.js` a également été mis à jour pour ajouter la configuration par défaut d'import des assets [Bootstrap](http://getbootstrap.com).
+   Dans notre cas, nous utilisons Sass et ne voulons donc pas importer les CSS mais nous souhaitons utiliser les icônes :
 
    ```javascript
    // ember-cli-build.js

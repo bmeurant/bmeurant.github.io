@@ -8,7 +8,8 @@ next: ember/training/ember-data
 
 <div id="toc"></div>
 
-**NB :** *Les exercices de cette section seront validés par le passage des cas de tests associés. Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet* :
+**NB :** *Les exercices de cette section seront validés par le passage des cas de tests associés.
+Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test dans le projet* :
 
 * [04-components-test.js](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js) dans ``tests/acceptance``.
 * [fav-btn-test.js](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/fav-btn-test.js) dans ``tests/integration/components``.
@@ -16,12 +17,12 @@ next: ember/training/ember-data
 
 ## Componsants
 
-Les composants [Ember][ember] constituent une part importante de la structure du framework. [Ember][ember] revendique en effet depuis toujours une approche composants ainsi que la volonté
-de converger vers les [Web components](http://w3c.github.io/webcomponents/) et les [Custom elements](http://w3c.github.io/webcomponents/spec/custom/) en particulier.
+Les composants [Ember][ember] constituent une part importante de la structure du framework.
+[Ember][ember] revendique en effet depuis toujours une approche composants ainsi que la volonté de converger vers les [Web components](http://w3c.github.io/webcomponents/) et les [Custom elements](http://w3c.github.io/webcomponents/spec/custom/) en particulier.
 
 [Ember][ember] permet ainsi de définir - sous la forme de composants - des éléments évolués offrant une réutilisation maximales à la fois de structures d'affichage et de structures 
-logiques au sein d'une application. Voire, via le packaging de ces composants au sein d'[addons](https://guides.emberjs.com/v2.13.0/addons-and-dependencies/managing-dependencies/#toc_addons), 
-au sein de plusieurs applications [Ember][ember].
+logiques au sein d'une application.
+Voire, via le packaging de ces composants au sein d'[addons](https://guides.emberjs.com/v2.13.0/addons-and-dependencies/managing-dependencies/#toc_addons), au sein de plusieurs applications [Ember][ember].
 
 Le futures versions d'[Ember][ember] doivent même voir la notion de contrôleur totalement remplacée par l'utilisation de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md).
 
@@ -32,9 +33,9 @@ Un composant [Ember][ember] se définit par les éléments suivants :
 * un template dans ``app/templates/components/my-component.hbs`` définissant le template spécifique du composant si il existe
 * une sous classe de [Ember.Components](http://emberjs.com/api/classes/Ember.Component.html) dans ``app/components/my-component.js`` qui permet d'implémenter l'intégralité de la logique propre du composant
 
-Comme à son habitude, [Ember][ember] ne nécessite pas que ces deux éléments soient explicitement déclarés si ce n'est pas nécessaire. Ainsi il est possible qu'un composant soit
-pleinement définit par son template (aucune logique spécifique) ou par son fichier js (aucun rendu spécifique). Dans ce cas, l'élément manquant est généré de manière transparente par [Ember][ember]
-sous la forme, respectivement, d'un object vide héritant d'[Ember.Components](http://emberjs.com/api/classes/Ember.Component.html) ou d'un template vide.  
+Comme à son habitude, [Ember][ember] ne nécessite pas que ces deux éléments soient explicitement déclarés si ce n'est pas nécessaire.
+Ainsi il est possible qu'un composant soit pleinement définit par son template (aucune logique spécifique) ou par son fichier js (aucun rendu spécifique).
+Dans ce cas, l'élément manquant est généré de manière transparente par [Ember][ember] sous la forme, respectivement, d'un object vide héritant d'[Ember.Components](http://emberjs.com/api/classes/Ember.Component.html) ou d'un template vide.
 
 A noter qu'[Ember][ember] fournit des outils permettant d'effectuer des tests d'intégration sur nos composants (en plus d'éventuels tests unitaires standards dans le cas de composants
 implémentant une logique propre complexe).
@@ -54,9 +55,10 @@ Une fois créé, un composant s'utilise de la même manière qu'un [helper](./te
 
 Il peut s'agir : 
 
-* de composants de type *inline* : Ces composants n'embarquent pas de contenu externe et se suffisent à eux-même. Il peut s'agir de
-  composants très simples ou très complexes. Les informations et propriétés de l'expérieur leur sont exclusivement passées via
-  des paramètres. Ainsi un composant invoqué de cette manière :
+* de composants de type *inline* : Ces composants n'embarquent pas de contenu externe et se suffisent à eux-même.
+  Il peut s'agir de composants très simples ou très complexes.
+  Les informations et propriétés de l'expérieur leur sont exclusivement passées via des paramètres.
+  Ainsi un composant invoqué de cette manière :
  
   ```html 
   {{user-name class="admin" user=model}}
@@ -91,9 +93,10 @@ Il peut s'agir :
   </div>
   ```
    
-* de composants de type *block* encapsulant du contenu. Ces composants fonctionnent exactement comme les premiers à la
-  différence près qu'ils permettent d'y insérer du contenu externe. Ce contenu s'insèrera dans le template du composant
-  en lieu et place de l'expression ``{{yield}}``. Ainsi un composant invoqué de cette manière :
+* de composants de type *block* encapsulant du contenu.
+  Ces composants fonctionnent exactement comme les premiers à la différence près qu'ils permettent d'y insérer du contenu externe.
+  Ce contenu s'insèrera dans le template du composant en lieu et place de l'expression ``{{yield}}``.
+  Ainsi un composant invoqué de cette manière :
 
   ```html
   {{#full-article class="article" title="model.title"}}
@@ -140,8 +143,9 @@ Il peut s'agir :
 
 ### Passage de propriétés
 
-Il est bien entendu possible de passer des propriétés - dynamiques ou non - aux composants afin qu'ils puissent les afficher et/ou les manipuler. Ce passage de propriétés se fait tout naturellement
-selon la syntaxe habituelle ``name=value``. Ainsi la déclaration suivante : 
+Il est bien entendu possible de passer des propriétés - dynamiques ou non - aux composants afin qu'ils puissent les afficher et/ou les manipuler.
+Ce passage de propriétés se fait tout naturellement selon la syntaxe habituelle ``name=value``.
+Ainsi la déclaration suivante : 
 
 ```html
 {{custom-user title='My title' user=model}}
@@ -157,7 +161,8 @@ permet la manipulation suivante dans le template du composant :
 </dl>
 ```
 
-Les deux propriétés ``title`` (litéral) et ``user`` ont donc été passées au composant qui peut alors les manipuler. Dans le cas précis il effectue un simple affichage
+Les deux propriétés ``title`` (litéral) et ``user`` ont donc été passées au composant qui peut alors les manipuler.
+Dans le cas précis il effectue un simple affichage
 
 {% endraw %}
 
@@ -165,8 +170,8 @@ Les deux propriétés ``title`` (litéral) et ``user`` ont donc été passées a
   {% capture m %}
   {% raw %}
 
-1. On souhaite afficher l'image de couverture pour chaque comic juste après le titre. Comme on anticipe que l'on aura besoin de réutiliser cet élément (dans une future notion d'album ?),
-on va en faire un composant. 
+1. On souhaite afficher l'image de couverture pour chaque comic juste après le titre.
+   Comme on anticipe que l'on aura besoin de réutiliser cet élément (dans une future notion d'album ?), on va en faire un composant.
    * Créer un composant `image-cover` très simple (template uniquement) affichant la couverture du comic dans une image de classe `cover`.
    * Copier les images de couverture en copiant [ce repertoire](https://github.com/bmeurant/ember-training/tree/master/public/assets/images) vers ``public/assets/images``
    * Pour le moment, se contenter d'afficher, pour tous les comics, la couverture par défaut (``public/assets/images/comics/covers/default.jpg``) 
@@ -197,7 +202,7 @@ on va en faire un composant.
    > ...
    > ```
 
-1. On souhaite maintenant dynamiser ce composant pour afficher l'image de couverture correspondant au comic sélectionné. 
+1. On souhaite maintenant dynamiser ce composant pour afficher l'image de couverture correspondant au comic sélectionné.
    * Modifier le template ``app/templates/comic/index.hbs`` pour ajouter les passage d'un paramètre au composant lui permettant d'accéder à l'identifiant (`slug`) du comic.
    * Modifier le template du composant pour remplacer *"default"* par la valeur de ce slug
    
@@ -217,7 +222,8 @@ on va en faire un composant.
    > <img class="cover" src="/assets/images/comics/covers/{{name}}.jpg"/>
    > ```
    
-   * Inspecter ensuite le DOM au niveau de l'image. Quel est le code qui a été généré ? Que constate-t-on ?
+   * Inspecter ensuite le DOM au niveau de l'image.
+     Quel est le code qui a été généré ? Que constate-t-on ?
    
    > Le code généré est le suivant :
    >
@@ -237,12 +243,13 @@ on va en faire un composant.
 
 ## Personalisation du rendu d'un composant
 
-Le rendu des composants [Ember][ember] peut être très largement personalisé en créant une sous classe de [Ember.Components](http://emberjs.com/api/classes/Ember.Component.html) dans ``app/components``. 
+Le rendu des composants [Ember][ember] peut être très largement personalisé en créant une sous classe de [Ember.Components](http://emberjs.com/api/classes/Ember.Component.html) dans ``app/components``.
 Il est alors possible de configurer différentes choses : 
  
 ### Elément HTML
 
-On a vu plus haut qu'[Ember][ember] encapsule par défaut les composants dans des div englobantes. Il est facilement possible de modifier ce comportement grâce à la propriété ``tagName`` du composant.
+On a vu plus haut qu'[Ember][ember] encapsule par défaut les composants dans des div englobantes.
+Il est facilement possible de modifier ce comportement grâce à la propriété ``tagName`` du composant.
 Cette propriété attend une chaîne de caractère contenant le type de l'élément : 
 
 ```javascript
@@ -259,8 +266,8 @@ Résultat :
 
 ### Classes
 
-De la même manière il est possible de spécifier le ou les noms de classe(s) associés au composant via la propriété ``classNames``. Cette propriété attend soit une chaîne de caractère avec le nom de la classe unique
-à ajouter au composant soit un tableau de chaînes de caractères dans le cas de classes multiples : 
+De la même manière il est possible de spécifier le ou les noms de classe(s) associés au composant via la propriété ``classNames``.
+Cette propriété attend soit une chaîne de caractère avec le nom de la classe unique à ajouter au composant soit un tableau de chaînes de caractères dans le cas de classes multiples : 
 
 ```javascript
 export default Ember.Component.extend({
@@ -274,8 +281,9 @@ Résultat :
 <div id="ember123" class="ember-view btn success"></div>
 ```
 
-Il est également possible de positionner des classes sur l'élément racine d'un composant en fonction de critères applicatifs - de la valeur d'une propriété booléenne en l'occurrence. Cela s'effectue grâce
-à la propriété ``classNameBindings``. La présence d'une classe sur le composant dépend ainsi de la valeur de la propriété booléenne associée sur le format ``<prop>:<classIfTrue>:<classIfFalse>``.
+Il est également possible de positionner des classes sur l'élément racine d'un composant en fonction de critères applicatifs - de la valeur d'une propriété booléenne en l'occurrence.
+Cela s'effectue grâce à la propriété ``classNameBindings``.
+La présence d'une classe sur le composant dépend ainsi de la valeur de la propriété booléenne associée sur le format ``<prop>:<classIfTrue>:<classIfFalse>``.
 
 ```javascript
 export default Ember.Component.extend({
@@ -294,8 +302,9 @@ Tout comme la propriété ``classNames``, cette propriété accepte aussi bien u
 
 ### Attributs
 
-Il est également posssible de positionner et de modifier différents attributs sur l'élément racine du composant via la propriété ``attributeBindings``. Celle-ci fonctionne comme la précédente et autorise
-également la présence d'un seul identifiant d'attribut (chaîne) ou d'une liste d'identifiants. Elle permet de positionner l'attribut spécifié à la valeur de la propriété de même nom.
+Il est également posssible de positionner et de modifier différents attributs sur l'élément racine du composant via la propriété ``attributeBindings``.
+Celle-ci fonctionne comme la précédente et autorise également la présence d'un seul identifiant d'attribut (chaîne) ou d'une liste d'identifiants.
+Elle permet de positionner l'attribut spécifié à la valeur de la propriété de même nom.
 
 ```javascript
 export default Ember.Component.extend({
@@ -325,20 +334,24 @@ Cela permet notamment de définir des valeurs d'attributs à partir de valeurs d
 
 Suivant le principe DDAU (Data Down Actions Up), les principales formes d'interactions des composants [Ember][ember] avec leur environnement sont les suivantes :
  
- * Depuis les éléments parents vers les enfants. Les éléments parents sont ceux qui déclarent un composant - généralement en incluant sa définition au sein de leur template. Cette
-   communication *descendante* se fait via l'utilisation de **propriétés dynamiques.**
+ * Depuis les éléments parents vers les enfants.
+   Les éléments parents sont ceux qui déclarent un composant - généralement en incluant sa définition au sein de leur template.
+   Cette communication *descendante* se fait via l'utilisation de **propriétés dynamiques.**
  * Depuis le DOM suite à des actions de l'utilisation via l'**interception d'évènements**.
- * Depuis les éléments enfants vers les parents. Les composants peuvent ainsi informer leurs parents de la survenue d'évènements extérieurs. Cela s'effectue via des **actions**.
+ * Depuis les éléments enfants vers les parents.
+   Les composants peuvent ainsi informer leurs parents de la survenue d'évènements extérieurs.
+   Cela s'effectue via des **actions**.
 
 ### Interactions parents -> enfants (propriétés)
 
-Les composants suivent les principes de communication standard d'[Ember][ember] et cette forme de communication *descendante* s'appuie sur la manipulation de propriétés
-dynamiques *bindées*. En effet, de manière générale, [Ember][ember] n'utilise pas de mécanismes de type *bus d'évènement* ou de *broadcasting* à proprement parler pour communiquer. 
-A la place, un *état* est partagé entre les différents composants sous la forme de **propriétés dynamiques**. Ces propriétés sont ainsi passées par les parents aux enfants sous la
-forme de paramètres classiques (``name=value``) comme vu plus haut. Tout évènement de changement de valeur de cette propriété sera ainsi disponible pour les composants enfants qui
-souhaitent l'écouter, leur permettant ainsi de réagir à ce changement en adaptant leur comportement et/ou leur rendu.
+Les composants suivent les principes de communication standard d'[Ember][ember] et cette forme de communication *descendante* s'appuie sur la manipulation de propriétés dynamiques *bindées*.
+En effet, de manière générale, [Ember][ember] n'utilise pas de mécanismes de type *bus d'évènement* ou de *broadcasting* à proprement parler pour communiquer.
+A la place, un *état* est partagé entre les différents composants sous la forme de **propriétés dynamiques**.
+Ces propriétés sont ainsi passées par les parents aux enfants sous la forme de paramètres classiques (``name=value``) comme vu plus haut.
+Tout évènement de changement de valeur de cette propriété sera ainsi disponible pour les composants enfants qui souhaitent l'écouter, leur permettant ainsi de réagir à ce changement en adaptant leur comportement et/ou leur rendu.
 
-Les binding de classes ou d'attributs peuvent faire directement référence à ces propriétés passées au composant. Ainsi, si un composant est invoqué de la manière suivante : 
+Les binding de classes ou d'attributs peuvent faire directement référence à ces propriétés passées au composant.
+Ainsi, si un composant est invoqué de la manière suivante : 
  
 ```html
 {{my-component selected=true}}
@@ -354,9 +367,8 @@ export default Ember.Component.extend({
 
 Par convention, la propriété booléenne``selected`` est automatiquement écoutée pour décider du positionnement de la classe de même nom.
 
-Il est cependant nécessaire de rappeler explicitement que les propriétés passées dynamiquement aux composants ne sont, par définition, pas disponibles au moment de la 
-déclaration des propriétés du composant. Ainsi, la syntaxe suivante (où `user` est passé au composant par le parent) n'affichera jamais l'attribut ``name`` qui restera
-toujours ``null`` :
+Il est cependant nécessaire de rappeler explicitement que les propriétés passées dynamiquement aux composants ne sont, par définition, pas disponibles au moment de la déclaration des propriétés du composant.
+Ainsi, la syntaxe suivante (où `user` est passé au composant par le parent) n'affichera jamais l'attribut ``name`` qui restera toujours ``null`` :
 
 ```javascript
 export default Ember.Component.extend({
@@ -365,9 +377,9 @@ export default Ember.Component.extend({
 });
 ```
 
-En effet, au moment de la déclaration de ``userName``, ``user`` n'est pas défini et sa valeur ne serait, à fortiori pas mise à jour lors du changement de la valeur ``user.fullName``. 
-Il est donc nécessaire d'utiliser une **computed property**. Dans ce cas, dès que la propriété dynamique ``userName`` passée par le parent changera de valeur, l'attribut ``name`` sera
-automatiquement mis à jour : 
+En effet, au moment de la déclaration de ``userName``, ``user`` n'est pas défini et sa valeur ne serait, à fortiori pas mise à jour lors du changement de la valeur ``user.fullName``.
+Il est donc nécessaire d'utiliser une **computed property**.
+Dans ce cas, dès que la propriété dynamique ``userName`` passée par le parent changera de valeur, l'attribut ``name`` sera automatiquement mis à jour : 
 
 ```javascript
 export default Ember.Component.extend({
@@ -408,7 +420,8 @@ Ces mécanismes permettent donc de propager naturellement aux composants, via le
    > });
    > ```
    >
-   > On note au passage l'utilisation des *littéraux de gabarits (template literals)* ES6. cf. [MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Litt%C3%A9raux_gabarits)
+   > On note au passage l'utilisation des *littéraux de gabarits (template literals)* ES6.
+   > cf. [MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Litt%C3%A9raux_gabarits)
    
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -420,11 +433,13 @@ Ces mécanismes permettent donc de propager naturellement aux composants, via le
 
 Une autre forme évidente d'interaction consiste à demander à un composant de réagir à différents évènements DOM le concernant (c'est à dire intervenant sur la portion d'arbre DOM qu'il gère).
 
-Cela se fait simplement en déclarant dans le composant une fonction du même nom que l'évènement auquel on souhaite que le composant réagisse. La liste des évènements gérés nativement
-est disponible dans la [documentation officielle](https://guides.emberjs.com/v2.13.0/components/handling-events/#toc_event-names). 
+Cela se fait simplement en déclarant dans le composant une fonction du même nom que l'évènement auquel on souhaite que le composant réagisse.
+La liste des évènements gérés nativement est disponible dans la [documentation officielle](https://guides.emberjs.com/v2.13.0/components/handling-events/#toc_event-names).
 
-Un paramètre est passé automatiquement à la function. Il contient l'évènement d'origine afin de permettre la récupération d'informations complémentaires (data, origine, etc.). L'évènement
-n'est pas consommmé et continue à être propagé au sein de l'arbre d'appel. Il est possible de stopper cette propagation en renvoyant `false`.
+Un paramètre est passé automatiquement à la function.
+Il contient l'évènement d'origine afin de permettre la récupération d'informations complémentaires (data, origine, etc.).
+L'évènement n'est pas consommmé et continue à être propagé au sein de l'arbre d'appel.
+Il est possible de stopper cette propagation en renvoyant `false`.
 
 ```javascript
 export default Ember.Component.extend({
@@ -438,17 +453,18 @@ export default Ember.Component.extend({
 });
 ```
 
-Il est possible de permettre explicitement à une application [Ember][ember] de gérer des évènements personnalisés via la propriété ``customEvents``. 
+Il est possible de permettre explicitement à une application [Ember][ember] de gérer des évènements personnalisés via la propriété ``customEvents``.
 De manière plus générale, cette propriété permet de définir de nouveaux gestionnaires pour des évènements non pris en charge nativement mais également de neutraliser la gestion de certains évènements.
 Les évènements non pris en charge peuvent être des évènements DOM standard non pris en charge ou même des évènements plus métiers.
 
 **NB** : 
 
 * La déclaration de la prise en charge de ces nouveaux évènements se fait au niveau de l'application et non du composant.
-* Les évènements DOM doivent être des [Bubble events](https://en.wikipedia.org/wiki/DOM_events). Les autres évènements ne peuvent être interceptés.
+* Les évènements DOM doivent être des [Bubble events](https://en.wikipedia.org/wiki/DOM_events).
+  Les autres évènements ne peuvent être interceptés.
 
-Ainsi le code suivant ajoute un gestionnaire pour l'évènement ``paste`` et supprime celui du ``doubleClick`` utilisateur. Le label associé à l'évènement correspond au nom du gestionnaire
-qui sera invoqué lors de la survenue de l'évènement : 
+Ainsi le code suivant ajoute un gestionnaire pour l'évènement ``paste`` et supprime celui du ``doubleClick`` utilisateur.
+Le label associé à l'évènement correspond au nom du gestionnaire qui sera invoqué lors de la survenue de l'évènement : 
 
 ```javascript
 export default Ember.Application.extend({
@@ -484,7 +500,8 @@ export default Ember.Component.extend({
    * le comic est considéré favori si sa propriété ``isFavorite`` est à ``true``
    * le clic sur le bouton doit changer l'affichage en positionnant / enlevant la classe ``selected`` sur ce composant
    * le clic doit inverser la valeur de la propriété ``isFavorite`` du comic
-   * modifier les templates ``comic/index.hbs`` et ``comic/edit.hbs`` pour intégrer ce composant juste en dessous de l'élément racine. L'appel doit être de cette forme : 
+   * modifier les templates ``comic/index.hbs`` et ``comic/edit.hbs`` pour intégrer ce composant juste en dessous de l'élément racine.
+     L'appel doit être de cette forme : 
     
      ```html
      {{fav-btn selected=...}}
@@ -522,24 +539,29 @@ export default Ember.Component.extend({
 
 ### Interactions enfants -> parents (actions)
 
-Enfin, la dernière forme d'interaction concerne la communication *ascendante*, c'est à dire depuis un composant enfant vers son ou ses parents. Cette mécanique s'appuie sur des 
-**actions**. Ainsi chaque composant peut, tout comme les contrôleurs, définir des gestionnaires d'actions via le hash ``actions: {}``. Mais ils peuvent également déclencher ou
-exécuter des actions pour communiquer avec leurs parents.
+Enfin, la dernière forme d'interaction concerne la communication *ascendante*, c'est à dire depuis un composant enfant vers son ou ses parents.
+Cette mécanique s'appuie sur des **actions**.
+Ainsi chaque composant peut, tout comme les contrôleurs, définir des gestionnaires d'actions via le hash ``actions: {}``.
+Mais ils peuvent également déclencher ou exécuter des actions pour communiquer avec leurs parents.
 
-Pour des raisons historiques, il existe deux modes de déclaration et de gestion des actions. Les actions peuvent ainsi être définies :
+Pour des raisons historiques, il existe deux modes de déclaration et de gestion des actions.
+Les actions peuvent ainsi être définies :
 
-* Sous forme de libellés par le composant (*element space actions*). Ce libellé, ainsi que d'éventuels paramètres peuvent être levés par le composant et propagés. L'action est 
-  exécutée par le parent avec les paramètres passés par le composant.
-* Sous forme de fonctions (*closure actions*) définies et implémentées par le ou les parents. La fonction est alors passée en propriété du composant. L'action est exécutée par 
-  l'enfant à qui l'on a passé l'action.
+* Sous forme de libellés par le composant (*element space actions*).
+  Ce libellé, ainsi que d'éventuels paramètres peuvent être levés par le composant et propagés.
+  L'action est exécutée par le parent avec les paramètres passés par le composant.
+* Sous forme de fonctions (*closure actions*) définies et implémentées par le ou les parents.
+  La fonction est alors passée en propriété du composant.
+  L'action est exécutée par l'enfant à qui l'on a passé l'action.
 
 #### Element space actions
 
 Dans cette première forme, à l'issue d'un traitement (après la gestion d'un évènement DOM par exemple), un composant peut appeler la méthode ``sendAction`` pour propager une action
 et avertir ainsi ses parents.
 
-Cette méthode prend en premier paramètre le nom de l'action. Sans paramètre, c'est le nom par défaut "action" qui est pris. Tous les paramètres suivants seront vu comme des paramètres, 
-le contexte d'exécution de l'action est remonté en même temps que le nom de l'action.
+Cette méthode prend en premier paramètre le nom de l'action.
+Sans paramètre, c'est le nom par défaut "action" qui est pris.
+Tous les paramètres suivants seront vu comme des paramètres, le contexte d'exécution de l'action est remonté en même temps que le nom de l'action.
 
 ```javascript
 export default Ember.Component.extend({
@@ -553,15 +575,16 @@ export default Ember.Component.extend({
 });
 ```
 
-Il est important de comprendre que cette méthode ne propage pas l'action ``'action'`` au travers de l'arbre des composants mais l'action définie lors de la définition du composant. Ainsi, 
-le composant définit de la manière suivante :
+Il est important de comprendre que cette méthode ne propage pas l'action ``'action'`` au travers de l'arbre des composants mais l'action définie lors de la définition du composant.
+Ainsi, le composant définit de la manière suivante :
 
 ```html
 {{my-component action='customAction' onSubmit='save'}}
 ```
 
-... entraînera l'exécution de l'action ``'customAction'`` lors d'un ``this.sendAction()`` et de l'action ``'save'`` lors d'un ``this.sendAction('onSubmit', args)``. Ces deux actions sont à définir
-dans l'un des parents du composant (autre composant, controlleur, routes). L'action est propagée au travers de la hiérarchie, jusqu'à trouver un gestionnaire.
+... entraînera l'exécution de l'action ``'customAction'`` lors d'un ``this.sendAction()`` et de l'action ``'save'`` lors d'un ``this.sendAction('onSubmit', args)``.
+Ces deux actions sont à définir dans l'un des parents du composant (autre composant, controlleur, routes).
+L'action est propagée au travers de la hiérarchie, jusqu'à trouver un gestionnaire.
 
 ```javascript
 // route
@@ -577,8 +600,8 @@ actions: {
 
 #### Closure actions
 
-Dans cette seconde forme, l'élément parent a passé au composant l'action elle-même, c'est à dire une fonction javascript. Le composant est donc en mesure d'exécuter directement cette méthode
-en lui ajoutant les paramètres dont il dispose localement.
+Dans cette seconde forme, l'élément parent a passé au composant l'action elle-même, c'est à dire une fonction javascript.
+Le composant est donc en mesure d'exécuter directement cette méthode en lui ajoutant les paramètres dont il dispose localement.
 
 Ainsi la définition s'effectue de la manière suivante : 
 
@@ -600,8 +623,8 @@ export default Ember.Component.extend({
 });
 ```
 
-Tout comme dans le cas des [closure actions vues au chapitre précédent](../actions-controllers#types-dactions), ces actions ne *bubblent* pas et doivent être explicitement définies dans le composant
-ou le contrôleur le plus proche du composant. Si nécessaire, elles peuvent être propagées via l'utilisation d'autres actions au travers de l'appel à la méthode ``send`` :
+Tout comme dans le cas des [closure actions vues au chapitre précédent](../actions-controllers#types-dactions), ces actions ne *bubblent* pas et doivent être explicitement définies dans le composant ou le contrôleur le plus proche du composant.
+Si nécessaire, elles peuvent être propagées via l'utilisation d'autres actions au travers de l'appel à la méthode ``send`` :
  
 ```javascript
 cancel() {
@@ -609,11 +632,13 @@ cancel() {
 }
 ```
 
-Les deux formes coexistent et sont partiellement compatibles mais il semble que la seconde soit celle qui doive perdurer. Cependant le statut n'est pas clair aujourd'hui et la seconde forme, si elle
-parait plus riche, puisque l'action est disponible à tout instant, introduit des contraintes supplémentaires telles que la nécessité absolue de les définir au plus bas niveau et de gérer manuellement 
-une éventuelle propagation. Toutes les questions n'ont donc pas encore été adressées à ce sujet. Il est donc possible d'utiliser la forme qui nous convient le mieux.
+Les deux formes coexistent et sont partiellement compatibles mais il semble que la seconde soit celle qui doive perdurer.
+Cependant le statut n'est pas clair aujourd'hui et la seconde forme, si elle parait plus riche, puisque l'action est disponible à tout instant, introduit des contraintes supplémentaires telles que la nécessité absolue de les définir au plus bas niveau et de gérer manuellement une éventuelle propagation.
+Toutes les questions n'ont donc pas encore été adressées à ce sujet.
+Il est donc possible d'utiliser la forme qui nous convient le mieux.
 
-A noter qu'il est possible de mixer certaines notations même si ce n'est pas l'option la plus lisible et donc pas celle à privilégier. Par exemple :
+A noter qu'il est possible de mixer certaines notations même si ce n'est pas l'option la plus lisible et donc pas celle à privilégier.
+Par exemple :
 
 ```html
 {{my-component action='customAction' onSubmit=(action 'save')}}
@@ -642,11 +667,10 @@ export default Ember.Component.extend({
    * les deux typologies d'actions définies plus haut peuvent être indifférement utilisées
    * utiliser impérativement [Ember.Logger.debug](http://emberjs.com/api/classes/Ember.Logger.html#method_debug) pour cette opération
     
-     La classe ``Ember.Logger`` offre une simple surcoûche à l'objet natif ``console`` permettant de s'abstraire d'éventuelles problématiques et API non
-     standard, propre à chaque navigateur. En l'occurence, l'utilisation de cette classe nous permet également d'intercepter la fonction de log pour des besoins de tests.
+     La classe ``Ember.Logger`` offre une simple surcoûche à l'objet natif ``console`` permettant de s'abstraire d'éventuelles problématiques et API non standard, propre à chaque navigateur.
+     En l'occurence, l'utilisation de cette classe nous permet également d'intercepter la fonction de log pour des besoins de tests.
    
-   **Test** : Ces modifications doivent rendre passant les tests [04 - Components - 01 - Should log on index](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L73)
-   et [04 - Components - 02 - Should log on edit](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L98)
+   **Test** : Ces modifications doivent rendre passant les tests [04 - Components - 01 - Should log on index](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L73) et [04 - Components - 02 - Should log on edit](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L98)
    
    > **Element space actions**
    >
@@ -767,12 +791,10 @@ export default Ember.Component.extend({
 
 ## Cycle de vie des composants
 
-Les opération de création, de rendu, de mise à jour et de destruction des composants obéissent à un cycle de vie complet
-constitué des différentes méthodes appelées à chaque étape. Ces méthodes sont autant de *hook* qu'il est possible 
-d'étendre pour enrichir le composant et effectuer des opérations complémentaires.
+Les opération de création, de rendu, de mise à jour et de destruction des composants obéissent à un cycle de vie complet constitué des différentes méthodes appelées à chaque étape.
+Ces méthodes sont autant de *hook* qu'il est possible d'étendre pour enrichir le composant et effectuer des opérations complémentaires.
 
-Lorsque l'on souhaite surcharger l'une de ces méthodes pour y greffer nos opérations, il est généralement nécessaire d'appeler la 
-méthode originale même si toutes ces méthodes n'ont pas nécessairement d'implémentation par défaut :
+Lorsque l'on souhaite surcharger l'une de ces méthodes pour y greffer nos opérations, il est généralement nécessaire d'appeler la méthode originale même si toutes ces méthodes n'ont pas nécessairement d'implémentation par défaut :
  
 ```javascript
 didInsertElement() {
@@ -786,19 +808,19 @@ Les cycles de vie liés au rendu initial et aux rendus ultérieurs (mises à jou
 ### Rendu initial
 
 1. ``init`` : Initialisation du composant, initialisation des attributs, etc.
-1. ``didReceiveAttrs`` : Appelé juste après ``init`` et à chaque mise à jour des attributs. Ce *hook* peut être
-   utilisé pour effectuer des opérations complémentaires sur les attributs avant les opérations de rendu.
-1. ``willRender`` : Appelé à chaque fois que le template va être rendu, quelqu'en soit la raison. Mais avant le rendu lui même.
-1. ``didInsertElement`` : Appelé aprés le rendu (initial uniquement), une fois que le template a été totalement rendu et inséré
-   dans le DOM. A ce moment, le composant est accessible via la notation ``this.$()``. Ce *hook* est trés fréquemment exploité
-   pour interagir avec des éléments issus de librairies third-party qui nécessitent d'être insérées dans le DOM avant d'être 
-   manipulés (datePicker, etc.)
+1. ``didReceiveAttrs`` : Appelé juste après ``init`` et à chaque mise à jour des attributs.
+   Ce *hook* peut être utilisé pour effectuer des opérations complémentaires sur les attributs avant les opérations de rendu.
+1. ``willRender`` : Appelé à chaque fois que le template va être rendu, quelqu'en soit la raison.
+   Mais avant le rendu lui même.
+1. ``didInsertElement`` : Appelé aprés le rendu (initial uniquement), une fois que le template a été totalement rendu et inséré dans le DOM.
+   A ce moment, le composant est accessible via la notation ``this.$()``.
+   Ce *hook* est trés fréquemment exploité pour interagir avec des éléments issus de librairies third-party qui nécessitent d'être insérées dans le DOM avant d'être manipulés (datePicker, etc.)
 1. ``didRender`` : Appelé après l'ensemble des opérations de rendu et de mise à jour du DOM.
 
 ### Rendus ultérieurs
 
-1. ``didUpdateAttrs`` : Appelé quand les attributs du composant sont mise à jour mais pas lors des changements de valeur
-   des propriétés passées au compoosant. Ce *hook* n'est pas appelé non plus lors d'un *rerende*r explicite.
+1. ``didUpdateAttrs`` : Appelé quand les attributs du composant sont mise à jour mais pas lors des changements de valeur des propriétés passées au compoosant.
+   Ce *hook* n'est pas appelé non plus lors d'un *rerende*r explicite.
 1. ``didReceiveAttrs`` : cf. plus haut
 1. ``willUpdate`` : Appelé à chaque fois que le template va être rendu, quelqu'en soit la raison.
 1. ``willRender`` : cf. plus haut
@@ -809,13 +831,13 @@ Des *hooks* sont également disponible lors de la phase de destruction :
 
 ### Destruction
 
-1. ``willDestroyElement`` : Appelé lorsqu'un composant détecte qu'il doit être supprimé, avant sa suppression. Ce *hook*
-   permet notamment de supprimer d'éventuels listeners.
+1. ``willDestroyElement`` : Appelé lorsqu'un composant détecte qu'il doit être supprimé, avant sa suppression.
+   Ce *hook* permet notamment de supprimer d'éventuels listeners.
 1. ``willClearRender`` : Appelé lorsque la vue contenant le composant va être renrendue.
 1. ``didDestroyElement`` : Appelé après la destruction de l'élément du composant.
 
-La très grand majorité de ces *hook* est très rarement utilisée. Les plus fréquents sont ``didInsertElement``, 
-``willDestroyElement`` et moins fréquement ``didReceiveAttrs``.
+La très grand majorité de ces *hook* est très rarement utilisée.
+Les plus fréquents sont ``didInsertElement``, ``willDestroyElement`` et moins fréquement ``didReceiveAttrs``.
 
 {% endraw %}
 
@@ -823,17 +845,15 @@ La très grand majorité de ces *hook* est très rarement utilisée. Les plus fr
   {% capture m %}
   {% raw %}
 
-1. On souhaite désormais enrichir le composant ``image-cover`` afin qu'il affiche une image par défaut si aucune jaquette
-   n'est disponible pour le comic. Notamment lors de la création.
+1. On souhaite désormais enrichir le composant ``image-cover`` afin qu'il affiche une image par défaut si aucune jaquette n'est disponible pour le comic.
+   Notamment lors de la création.
    * pour cela on doit se baser sur l'évènement ``onerror`` de l'élément ``img`` racine
-   * comme l'évènement ``onerror`` n'est pas un évènement qui se [propage](https://en.wikipedia.org/wiki/DOM_events) (de même que ``onload`` etc.), 
-     il n'est pas possible de s'appuyer sur les ``customEvents``
+   * comme l'évènement ``onerror`` n'est pas un évènement qui se [propage](https://en.wikipedia.org/wiki/DOM_events) (de même que ``onload`` etc.), il n'est pas possible de s'appuyer sur les ``customEvents``
    * on doit donc installer, via le *hook* approprié, un *listener* sur l'évènement ``onerror`` via jQuery (attention au ``this``)
    * implémenter ce listener de manière à changer la source de l'image pour ``default.jpg`` en cas d'erreur
    * ne pas oublier de supprimer le listener avant la destruction du composant pour éviter les fuites mémoire
    
-   **Tests** : Ces modifications doivent rendre passant les tests [04 - Components - 03 - Image cover should fallback](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L123)
-   et [04 - Components - 04 - Image cover should change if model changes](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L129)
+   **Tests** : Ces modifications doivent rendre passant les tests [04 - Components - 03 - Image cover should fallback](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L123) et [04 - Components - 04 - Image cover should change if model changes](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L129)
    
    > ```javascript
    > //app/components/image-cover.js

@@ -8,11 +8,11 @@ next: ember/training/testing
 
 <div id="toc"></div>
 
-Au chapitre précédent nous avons utilisé [Ember Mirage][ember-mirage] pour émuler un serveur côté client. Nous allons désormais
-nous connecter à un serveur réel.
+Au chapitre précédent nous avons utilisé [Ember Mirage][ember-mirage] pour émuler un serveur côté client.
+Nous allons désormais nous connecter à un serveur réel.
 
-Pour cela nous allons utiliser le serveur [json server][json-server]. Cet outil permet de mettre en place très rapidement un serveur REST
-(CRUD) à des fins de prototypage ou de tests. 
+Pour cela nous allons utiliser le serveur [json server][json-server].
+Cet outil permet de mettre en place très rapidement un serveur REST (CRUD) à des fins de prototypage ou de tests.
 
 En revanche, il est peu configurable et cet exercice nous obligera à personnaliser le comportement d'[Ember Data][ember-data].
 
@@ -144,18 +144,14 @@ En revanche, il est peu configurable et cet exercice nous obligera à personnali
    };
    ```
    
-   NB : On aurait pu aussi utiliser la fonction [passthrough](http://www.ember-cli-mirage.com/docs/v0.2.x/configuration/#passthrough) d'[Ember Mirage](http://www.ember-cli-mirage.com/)
-   qui permet de laisser passer tout ou partie des requêtes mais on aurait dans ce cas continué à utiliser [Ember Mirage](http://www.ember-cli-mirage.com/) comme "passe plat", ce que l'on ne 
-   souhaite pas.
+   NB : On aurait pu aussi utiliser la fonction [passthrough](http://www.ember-cli-mirage.com/docs/v0.2.x/configuration/#passthrough) d'[Ember Mirage](http://www.ember-cli-mirage.com/)    qui permet de laisser passer tout ou partie des requêtes mais on aurait dans ce cas continué à utiliser [Ember Mirage](http://www.ember-cli-mirage.com/) comme "passe plat", ce que l'on ne souhaite pas.
    
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-On dispose désormais à l'adresse ``http://localhost:3000`` d'un serveur REST simple mais opérationnel autorisant ``GET``, ``PUT``, ``POST``, ``DELETE`` ainsi que 
-différentes options pour les différents modèles définis dans le fichier ``db.json``.
+On dispose désormais à l'adresse ``http://localhost:3000`` d'un serveur REST simple mais opérationnel autorisant ``GET``, ``PUT``, ``POST``, ``DELETE`` ainsi que différentes options pour les différents modèles définis dans le fichier ``db.json``.
 
-Cependant, l'application affiche une erreur puisque les requêtes ne sont pas résolues. En effet, en l'absence d'instructions complémentaires,
-[Ember Data][ember-data] effectue ses requêtes sur lui-même (``http://localhost:4200``) ce qui, évidemment, renvoie une erreur :
+Cependant, l'application affiche une erreur puisque les requêtes ne sont pas résolues. En effet, en l'absence d'instructions complémentaires, [Ember Data][ember-data] effectue ses requêtes sur lui-même (``http://localhost:4200``) ce qui, évidemment, renvoie une erreur :
 
 ```console
 > GET http://localhost:4200/comics 404 (Not Found)
@@ -167,12 +163,12 @@ Nous allons donc devoir configurer notre application pour s'adapter à ce nouvea
 
 Les adapters définissent la façon dont [Ember Data][ember-data] communique avec le serveur : nom de l'hôte, structure des URLs, headers, codes de retour, etc.
 
-[Ember Data][ember-data] fournit en standard deux *adapters* complets : [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html) et 
-[JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html). C'est ce dernier, implémentant la norme [JSON API](http://jsonapi.org/) qui est utilisé par défaut.
-Le premier propose la communication avec une API REST non JSON API. Ces deux adapters étendent un même objet de base, [Adapter](http://emberjs.com/api/data/classes/DS.Adapter.html).
+[Ember Data][ember-data] fournit en standard deux *adapters* complets : [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html) et [JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html).
+C'est ce dernier, implémentant la norme [JSON API](http://jsonapi.org/) qui est utilisé par défaut.
+Le premier propose la communication avec une API REST non JSON API.
+Ces deux adapters étendent un même objet de base, [Adapter](http://emberjs.com/api/data/classes/DS.Adapter.html).
 
-La configuration / personalisation de la communication nécessite donc de proposer un *adapter* personnalisé, étendant au minimum [Adapter](http://emberjs.com/api/data/classes/DS.Adapter.html) ou,
-plus probablement, [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html) ou [JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html).
+La configuration / personalisation de la communication nécessite donc de proposer un *adapter* personnalisé, étendant au minimum [Adapter](http://emberjs.com/api/data/classes/DS.Adapter.html ou, plus probablement, [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html) ou [JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html).
 
 Cela se fait en fournissant un adapter personnalisé ``app/adapters/application.js`` :
 
@@ -185,13 +181,15 @@ export default DS.RESTAdapter.extend({
 });
 ```
 
-Il est alors possible de fournir des valeurs particulières à des propriétés de l'*adapter*. Les propriétés sont définies dans les classes de base. Il peut s'agir de la configuration de l'hôte (``host``),
-du namespace de l'API (``namespace``), des headers (``headers``), etc. Il est également possible (et fréquent) de proposer des implémentations spécifiques pour certaines méthodes. En effet, un 
-*adapter* propose de nombreuses méthodes permettant de retrouver un objet(``findRecord``), une collection(``findMany``), une relation(``findBelongsTo`` ou ``findHasMany``), etc. Les surcharger
-permet de traiter les problématiques spécifiques d'une API.
+Il est alors possible de fournir des valeurs particulières à des propriétés de l'*adapter*.
+Les propriétés sont définies dans les classes de base.
+Il peut s'agir de la configuration de l'hôte (``host``), du namespace de l'API (``namespace``), des headers (``headers``), etc.
+Il est également possible (et fréquent) de proposer des implémentations spécifiques pour certaines méthodes.
+En effet, un *adapter* propose de nombreuses méthodes permettant de retrouver un objet(``findRecord``), une collection(``findMany``), une relation(``findBelongsTo`` ou ``findHasMany``), etc.
+Les surcharger permet de traiter les problématiques spécifiques d'une API.
 
-Fournir un *adapter* au niveau application dans ``app/adapters/application.js`` permet donc de redéfinir le comportement pour toute l'application. Mais il est également possible de ne redéfinir un adapter
-que pour un model en particulier, exactement de la même façon : 
+Fournir un *adapter* au niveau application dans ``app/adapters/application.js`` permet donc de redéfinir le comportement pour toute l'application.
+Mais il est également possible de ne redéfinir un adapter que pour un model en particulier, exactement de la même façon : 
 
 ```javascript
 // app/adapters/user.js
@@ -202,8 +200,8 @@ export default DS.RESTAdapter.extend({
 });
 ```
 
-Attention, dans ce cas, il est probable que vous souhaitiez que cet *adapter* particulier hérite de la configuration et des comportements de l'*adapter*
-général (``app/adapters/application.js``). Auquel cas, la syntaxe est la suivante : 
+Attention, dans ce cas, il est probable que vous souhaitiez que cet *adapter* particulier hérite de la configuration et des comportements de l'*adapter* général (``app/adapters/application.js``).
+Auquel cas, la syntaxe est la suivante : 
 
 ```javascript
 // app/adapters/user.js
@@ -214,24 +212,16 @@ export default BaseAdapter.extend({
 });
 ```
 
-Pour la liste complète des propriétés / méthodes des *adapters*, se référer à [Adapter](http://emberjs.com/api/data/classes/DS.Adapter.html), 
-[RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html) ou
-[JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html) en fonction de l'*adapter* que l'on souhaite étendre.
+Pour la liste complète des propriétés / méthodes des *adapters*, se référer à [Adapter](http://emberjs.com/api/data/classes/DS.Adapter.html), [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html) ou [JSONAPIAdapter](http://emberjs.com/api/data/classes/DS.JSONAPIAdapter.html) en fonction de l'*adapter* que l'on souhaite étendre.
 
 ## Serializers
 
-En complément des *adapters*, les *serializers*, sont chargés des opérations de sérialisation / désérialisation entre objets json
-- en provenance ou à destination du serveur - et les objets locaux [Ember Data][ember-data]. 
+En complément des *adapters*, les *serializers*, sont chargés des opérations de sérialisation / désérialisation entre objets json - en provenance ou à destination du serveur - et les objets locaux [Ember Data][ember-data].
 
-Tout comme pour les *adapters*, [Ember Data][ember-data] propose en standard deux *serializers* complets : 
-[RESTSerializer](http://emberjs.com/api/data/classes/DS.RESTSerializer.html) et 
-[JSONAPISerializer](http://emberjs.com/api/data/classes/DS.JSONAPISerializer.html) qui étendent un même *serializer* de base 
-[JSONSerializer](http://emberjs.com/api/data/classes/DS.JSONSerializer.html).
+Tout comme pour les *adapters*, [Ember Data][ember-data] propose en standard deux *serializers* complets : [RESTSerializer](http://emberjs.com/api/data/classes/DS.RESTSerializer.html) et [JSONAPISerializer](http://emberjs.com/api/data/classes/DS.JSONAPISerializer.html) qui étendent un même *serializer* de base [JSONSerializer](http://emberjs.com/api/data/classes/DS.JSONSerializer.html).
 
-Les *serializers* permettent ainsi de nombreux points d'extension par surcharge ou extension de propriétés / méthodes. Il est ainsi
-possible de redéfinir la clef primaire (``primaryKey``), le mapping de n'importe quel attribut (``keyForAttribute``), la récupération
-des métadonnées (``extractMeta``) ainsi que de personnaliser toutes les méthodes de normalisation, c'est à dire de transformation 
-d'une réponse JSON en objet [Ember Data][ember-data] via les méthodes ``normalize*``.
+Les *serializers* permettent ainsi de nombreux points d'extension par surcharge ou extension de propriétés / méthodes.
+Il est ainsi possible de redéfinir la clef primaire (``primaryKey``), le mapping de n'importe quel attribut (``keyForAttribute``), la récupération des métadonnées (``extractMeta``) ainsi que de personnaliser toutes les méthodes de normalisation, c'est à dire de transformation d'une réponse JSON en objet [Ember Data][ember-data] via les méthodes ``normalize*``.
 
 Il est possible de fournir un *serializer* général au niveau application : 
 
@@ -244,11 +234,11 @@ export default DS.RESTSerializer.extend({
 });
 ```
 
-... ou des *serializers* spécifiques pour chacun des modèles. C'est notamment à cet endroit que l'on pourra forcer la récupération de
-*relations embarquées*. En effet, on a pu constater précédement que, par défaut, [Ember Data][ember-data] s'attend à ce que les relations
-d'une ressource soit exposées par le serveur sous la forme d'identifiants simples. Charge à lui ensuite d'effectuer les requêtes
-complémentaires nécessaires. Si l'API serveur expose à la place les relations emarquées, il est nécessaire de fournir un
-*serializer* spécifique pour ce model :
+... ou des *serializers* spécifiques pour chacun des modèles.
+C'est notamment à cet endroit que l'on pourra forcer la récupération de *relations embarquées*.
+En effet, on a pu constater précédement que, par défaut, [Ember Data][ember-data] s'attend à ce que les relations d'une ressource soit exposées par le serveur sous la forme d'identifiants simples.
+Charge à lui ensuite d'effectuer les requêtes complémentaires nécessaires.
+Si l'API serveur expose à la place les relations emarquées, il est nécessaire de fournir un *serializer* spécifique pour ce model :
 
 ```javascript
 // app/serializers/post.js
@@ -271,8 +261,7 @@ comments: {
 }
 ```
 
-Cela signifie qu'[Ember Data][ember-data] doit s'attendre à des ``comments`` embarqués dans le ``parent`` mais qu'il doit également les envoyer
-embarqués au serveur lors d'une modification.
+Cela signifie qu'[Ember Data][ember-data] doit s'attendre à des ``comments`` embarqués dans le ``parent`` mais qu'il doit également les envoyer embarqués au serveur lors d'une modification.
 
 Si l'on avait utilisé, en revanche : 
 
@@ -287,9 +276,7 @@ comments: {
 
 En mixant ces valeurs, on peut ajuster finement la manière dont les relations sont reçues et envoyées.
 
-Pour la liste complète des propriétés / méthodes des adapters, se référer à [JSONSerializer](http://emberjs.com/api/data/classes/DS.JSONSerializer.html), 
-[RESTSerializer](http://emberjs.com/api/data/classes/DS.RESTSerializer.html) ou
-[JSONAPISerializer](http://emberjs.com/api/data/classes/DS.JSONAPISerializer.html) en fonction de l'*adapter* que l'on souhaite étendre.
+Pour la liste complète des propriétés / méthodes des adapters, se référer à [JSONSerializer](http://emberjs.com/api/data/classes/DS.JSONSerializer.html), [RESTSerializer](http://emberjs.com/api/data/classes/DS.RESTSerializer.html) ou [JSONAPISerializer](http://emberjs.com/api/data/classes/DS.JSONAPISerializer.html) en fonction de l'*adapter* que l'on souhaite étendre.
 
 <div class="work answer">
   {% capture m %}
@@ -338,8 +325,7 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      ]
      ```
      
-     alors que le [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html) s'attend à ce que le résultat soit encapsulé
-     dans un hash ``comics`` : 
+     alors que le [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html) s'attend à ce que le résultat soit encapsulé dans un hash ``comics`` : 
      
      ```javascript
      {
@@ -382,8 +368,7 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      > });
      > ```
      
-1. Effectuer le même genre d'opération pour que l'application comprenne la réponse lors de l'accès à ``http://localhost:4200/comics/blacksad``
-   puisque, là aussi, l'application est en erreur
+1. Effectuer le même genre d'opération pour que l'application comprenne la réponse lors de l'accès à ``http://localhost:4200/comics/blacksad``    puisque, là aussi, l'application est en erreur
    
    > ```javascript
    > // app/serializers/application.js
@@ -404,8 +389,7 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
    > });
    > ```
    
-1. En inspectant les requêtes réseau, on observe qu'une fois le comic récupéré, l'application effectue autant de requêtes complémentaires
-   qu'il est associé d'albums à ce comic.
+1. En inspectant les requêtes réseau, on observe qu'une fois le comic récupéré, l'application effectue autant de requêtes complémentaires qu'il est associé d'albums à ce comic.
    * Modifier la configuration pour que l'application récupère les albums en une seule requête en utilisant l'une des propriétés du
      [RESTAdapter](http://emberjs.com/api/data/classes/DS.RESTAdapter.html).
      
@@ -424,12 +408,11 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
    
 1. On souhaite désormais récupérer les albums embarqués lorsque l'on récupère un comic
    * Pour cela, il est nécessaire de passer le paramètre de requête ``_embed=albums`` au serveur. Soit ``http://localhost:3000/comics?slug=blacksad&_embed=albums``
-   * Configurer l'application pour faire en sorte qu'[Ember Data](https://guides.emberjs.com/v2.13.0/models/) ajoute ce paramètre à la requête, dans le cas
-     spécifique du model `comic`. 
+   * Configurer l'application pour faire en sorte qu'[Ember Data](https://guides.emberjs.com/v2.13.0/models/) ajoute ce paramètre à la requête, dans le cas spécifique du model `comic`.
    * Attention à étendre les bons objets de manière à continuer à bénéficier des personnalisations précédentes
    * Configurer l'application pour qu'[Ember Data](https://guides.emberjs.com/v2.13.0/models/) récupère les albums comme des relations embarquées du modèle ``comic``
-   * Attention ! On souhaite récupérer les albums embarqués mais n'envoyer au serveur des identifiants lors d'une modification. En effet, dans le cas contraire,
-     les albums seraient définitivement enregistrés dans le json du comic lui-même, ce que l'on ne souhaite pas.
+   * Attention ! On souhaite récupérer les albums embarqués mais n'envoyer au serveur des identifiants lors d'une modification.
+     En effet, dans le cas contraire, les albums seraient définitivement enregistrés dans le json du comic lui-même, ce que l'on ne souhaite pas.
    
      > ```javascript
      > // app/adapters/comic.js
@@ -465,10 +448,12 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      
 1. Retourner à la racine de l'application ``http://localhost:4200/comics`` puis sélectionner ``blacksad``
    
-   On constate que les albums ne sont plus chargés. En effet, on a indiqué grâce à la méthode ``urlForQueryRecord`` que l'on souhaitait les embarquer
-   lors d'une requête unitaire. Or, lorsqu'on passe par la route ``comics``, on utilise la méthode ``findAll``. Lorsque l'on sélectionne ensuite un
-   comic, [Ember Data](https://guides.emberjs.com/v2.13.0/models/) détecte que l'on a déjà chargé le modèle, n'éxécute pas le *hook* ``model`` ni
-   la méthode ``queryRecord``. Or la méthode ``findAll`` n'appelle pas la méthode serveur qui embarque les albums.
+   On constate que les albums ne sont plus chargés.
+   En effet, on a indiqué grâce à la méthode ``urlForQueryRecord`` que l'on souhaitait les embarquer lors d'une requête unitaire.
+   Or, lorsqu'on passe par la route ``comics``, on utilise la méthode ``findAll``.
+   Lorsque l'on sélectionne ensuite un comic, [Ember Data](https://guides.emberjs.com/v2.13.0/models/) détecte que l'on a déjà chargé le modèle, n'éxécute pas le *hook* ``model`` ni
+   la méthode ``queryRecord``.
+   Or la méthode ``findAll`` n'appelle pas la méthode serveur qui embarque les albums.
     
    * Modifier l'adapter pour embarquer aussi les albums lors d'un ``findAll``
    
@@ -487,8 +472,7 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      > });
      > ```
 
-  1. Enfin, un dernier warning doit apparaître dû au fait que la méthode [Ember Data](https://guides.emberjs.com/v2.13.0/models/) `queryRecord` attend un 
-     objet en réponse et non un tableau d'un seul élément, comme renvoyé par la nouvelle API.
+  1. Enfin, un dernier warning doit apparaître dû au fait que la méthode [Ember Data](https://guides.emberjs.com/v2.13.0/models/) `queryRecord` attend un objet en réponse et non un tableau d'un seul élément, comme renvoyé par la nouvelle API.
 
      On pourrait aisément modifier le hook `model` de la route `comic` pour traiter "manuellement ce cas" :
 
@@ -505,9 +489,8 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      
      ```
 
-     Cependant, cette approche introduirait dans le code même de l'application une dépendance au format spécifique et non standard de l'API backend et nous
-     obligerait en outre à effectuer ce traitement chaque fois que l'on récupère un `comic` seul dans toute notre application. Il est donc plus judicieux
-     d'effectuer cette opération une fois pour toute au niveau des serializers.
+     Cependant, cette approche introduirait dans le code même de l'application une dépendance au format spécifique et non standard de l'API backend et nous obligerait en outre à effectuer ce traitement chaque fois que l'on récupère un `comic` seul dans toute notre application.
+     Il est donc plus judicieux d'effectuer cette opération une fois pour toute au niveau des serializers.
 
      * Modifier le serializer correspondant pour transformer la réponse reçue dans le cas d'un `comic` seul
 
