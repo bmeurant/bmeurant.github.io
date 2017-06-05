@@ -95,6 +95,8 @@ On souhaite désormais créer une nouvelle route pour l'affichage et la manipula
      Celui-ci ne contient qu'une simple assertion permettant de vérifier l'existence de la route.
 
      ```javascript
+     import { moduleFor, test } from 'ember-qunit';
+
      moduleFor('route:comics', 'Unit | Route | comics', {
        // Specify the other units that are required for this test.
        // needs: ['controller:foo']
@@ -137,8 +139,8 @@ L'organisation des routes au sein du routeur et leur imbrication président donc
 
 1. Modifier le contenu du template ``app/templates/comics.hbs`` :
     * Déplacer le contenu de la route ``application.js`` dans la route ``comics.js``
-    * Déplacer le contenu de la ``<div class="row">`` du template ``application.hbs`` dans le tempate ``comics.hbs``
-    * Ajouter un sous-titre ``Comics list`` juste après l'ouverture de la ``<div class="comics">``
+    * Déplacer le contenu de la ``<div class="main">`` (non incluse) du template ``application.hbs`` dans le tempate ``comics.hbs``
+    * Ajouter un sous-titre ``Comics list`` de classe ``comics-title`` juste après l'ouverture de la ``<div class="comics">``
     * Ajouter un paragraph ayant pour identifiant ``no-selected-comic`` juste après la fermeture de la ``<div class="comics">`` contenant le texte "Please select on comic book for detailled information."
 
     **Tests** : Les modifications doivent permettre de rendre les tests suivants passants : [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L60)
@@ -146,37 +148,37 @@ L'organisation des routes au sein du routeur et leur imbrication président donc
 
     > ```html
     > {{!-- app/templates/application.hbs --}}
-    > <div class="container">
+    > <div class="application">
     >
-    >   <div class="page-header">
+    >   <div class="header">
     >     <h1 id="title">Comic books library</h1>
     >   </div>
     >
-    >   {{outlet}}
+    >   <div class="main">
+    >     {{outlet}}
+    >   </div>
     >
     > </div>
     > ```
     >
     > ```html
     > {{!-- app/templates/comics.hbs --}}
-    > <div class="row">
-    >   <div class="comics">
-    >     <h2>Comics list</h2>
-    >     <ul>
-    >       {{#each model as |comic|}}
-    >         <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
-    >           {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
-    >         </li>
-    >       {{else}}
-    >         Sorry, no comic found
-    >       {{/each}}
-    >     </ul>
-    >   </div>
-    >
-    >   <p id="no-selected-comic">
-    >     Please select on comic book for detailled information.
-    >   </p>
+    > <div class="comics">
+    >   <h2 class="comics-title">Comics list</h2>
+    >   <ul class="comics-list">
+    >     {{#each model as |comic|}}
+    >       <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item"> 
+    >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
+    >       </li>
+    >     {{else}}
+    >       Sorry, no comic found
+    >     {{/each}}
+    >   </ul>
     > </div>
+    >
+    > <p id="no-selected-comic">
+    >   Please select on comic book for detailled information.
+    > </p>
     > ```
     >
     > ```javascript
@@ -429,7 +431,7 @@ Par convention, les éléments constitutifs des routes filles (template, route, 
 
 1. Créer une route ``comic``, fille de la route ``comics``.
     * Utiliser la ligne de commande [Ember CLI](http://ember-cli.com) ``generate route comics/comic`` pour générer la route
-    * La nouvelle route doit afficher un texte *"Comic selected !"* dans une div de classe ``selected-comic`` à droite de la liste de comics
+    * La nouvelle route doit afficher un texte *"Comic selected !"* dans une div de classe ``comic`` à droite de la liste de comics
     * Ne pas oublier l' ``{{outlet}}`` dans la route mère
 
     > ```console
@@ -458,21 +460,19 @@ Par convention, les éléments constitutifs des routes filles (template, route, 
     > ```html
     > {{!-- app/templates/comics.hbs--}}
     >
-    > <div class="row">
-    >   <div class="comics" ...>
+    > <div class="comics" ...>
+    >   
+    > <p id="no-selected-comic">
+    >   Please select on comic book for detailled information.
+    > </p>
     >
-    >   <p id="no-selected-comic">
-    >     Please select on comic book for detailled information.
-    >   </p>
-    >
-    >   {{outlet}}
-    > </div>
+    > {{outlet}}
     > ```
     >
     > ```html
     >  {{!-- app/templates/comics/comic.hbs--}}
     >
-    >  <div class="selected-comic">
+    >  <div class="comic">
     >    Comic selected !
     >  </div>
     > ```
@@ -565,15 +565,15 @@ place du texte précédent.
       ```html
       {{!-- app/templates/comics/comic.hbs --}}
 
-      <div class="selected-comic">
-        <h3>{{model.title}}</h3>
-        <dl>
-          <dt>scriptwriter</dt>
-          <dd>{{model.scriptwriter}} </dd>
-          <dt>illustrator</dt>
-          <dd>{{model.illustrator}}</dd>
-          <dt>publisher</dt>
-          <dd>{{model.publisher}}</dd>
+      <div class="comic">
+        <h3 class="comic-title">{{model.title}}</h3>
+        <dl class="comic-description">
+          <dt class="comic-label">scriptwriter</dt>
+          <dd class="comic-value">{{model.scriptwriter}} </dd>
+          <dt class="comic-label">illustrator</dt>
+          <dd class="comic-value">{{model.illustrator}}</dd>
+          <dt class="comic-label">publisher</dt>
+          <dd class="comic-value">{{model.publisher}}</dd>
         </dl>
       </div>
       ```
@@ -594,14 +594,14 @@ place du texte précédent.
     > {{!-- app/templates/comics/comic.hbs --}}
     >
     > <div class="selected-comic">
-    >   <h3>{{model.title}}</h3>
-    >   <dl>
-    >     <dt>scriptwriter</dt>
-    >     <dd>{{model.scriptwriter}} </dd>
-    >     <dt>illustrator</dt>
-    >     <dd>{{model.illustrator}}</dd>
-    >     <dt>publisher</dt>
-    >     <dd>{{model.publisher}}</dd>
+    >   <h3 class="comic-title">{{model.title}}</h3>
+    >   <dl class="comic-description">
+    >     <dt class="comic-label">scriptwriter</dt>
+    >     <dd class="comic-value">{{model.scriptwriter}} </dd>
+    >     <dt class="comic-label">illustrator</dt>
+    >     <dd class="comic-value">{{model.illustrator}}</dd>
+    >     <dt class="comic-label">publisher</dt>
+    >     <dd class="comic-value">{{model.publisher}}</dd>
     >   </dl>
     > </div>
     > ```
@@ -767,7 +767,7 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
    > ...
    > <ul>
    >   {{#each model as |comic|}}
-   >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+   >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
    >       {{#link-to "comics.comic" comic.slug}}
    >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
    >       {{/link-to}}
@@ -804,7 +804,7 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
    > ...
    > <ul>
    >   {{#each model as |comic|}}
-   >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+   >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
    >       {{#link-to "comics.comic" comic}}
    >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
    >       {{/link-to}}
@@ -893,18 +893,16 @@ Ils proposent une implémentation par défaut vide, bien entendu.
 
 1. Ajouter le template pour la route ``comics.index`` et modifier le template de la route ``comics`` de manière à ce que le paragraphe
 ``no-selected-comic`` ne s'affiche que lorsque aucun comic n'est selectionné.
-   C'est à dire pour l'URL (``/comics``)
+   C'est à dire pour l'URL ``/comics`` (sans rien derrière.)
 
     On note que l'on n'a pas besoin de définir l'objet route ``app/routes/comics/index.js`` parce que celle-ci est implicitement créée vide par [Ember](http://emberjs.com).
 
     > ```html
     > {{!-- app/templates/comics.hbs --}}
     >
-    > <div class="row">
-    >   <div class="comics"...>
+    > <div class="comics"...>
     >
-    >   {{outlet}}
-    > </div>
+    > {{outlet}}
     > ```
     >
     > ```html
@@ -1071,7 +1069,7 @@ Ceci tout en conservant les URLs existantes ainsi que l'imbrication des routes e
    >
    > ...
    >
-   > <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+   > <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
    >   {{#link-to "comic" comic}}
    >     {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
    >   {{/link-to}}
@@ -1158,29 +1156,25 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    * Si nécessaire, créer les dossiers nécessaires et ajouter et/ou modifier les templates pour afficher le contenu suivant :
 
      ```html
-     <div class="selected-comic">
+     <div class="comic">
        <form>
-         <div class="buttons">
-           <button type="submit" class="btn-submit"></button>
-           <button type="reset" class="btn-cancel"></button>
+         <div class="comic-header">
+           <div class="comic-title">
+             <input id="title" type="text" value={{model.title}} />
+           </div>
+           <div class="buttons">
+             <button type="submit" {{action 'save'}} class="btn-submit"></button>
+             <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
+           </div>
          </div>
-         <div class="title">
-           <input id="title" type="text" value={{model.title}} />
-         </div>
-
-         <div class="description">
-           <div class="scriptwriter">
-             <label for="scriptwriter">Scriptwriter</label>
-             <span class="control"><input id="scriptwriter" type="text" value={{model.scriptwriter}} required="required"/></span>
-           </div>
-           <div class="illustrator">
-             <label for="illustrator">Illustrator</label>
-             <span class="control"><input id="illustrator" type="text" value={{model.illustrator}} /></span>
-           </div>
-           <div class="publisher">
-             <label for="publisher">Publisher</label>
-             <span class="control"><input id="publisher" type="text" value={{model.publisher}} /></span>
-           </div>
+ 
+         <div class="comic-description">
+           <label class="comic-label" for="scriptwriter">Scriptwriter</label>
+           <input id="scriptwriter" type="text" value={{model.scriptwriter}} required="required"/>
+           <label class="comic-label" for="illustrator">Illustrator</label>
+           <input id="illustrator" type="text" value={{model.illustrator}} />
+           <label class="comic-label" for="publisher">Publisher</label>
+           <input id="publisher" type="text" value={{model.publisher}} />
          </div>
        </form>
      </div>
@@ -1211,7 +1205,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
      > ```html
      > {{!-- app/templates/comic.hbs --}}
      >
-     > <div class="selected-comic">
+     > <div class="comic">
      >   {{outlet}}
      > </div>
      > ```
@@ -1219,7 +1213,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
      > ```html
      > {{!-- app/templates/comic/edit.hbs --}}
      >
-     > <div class="selected-comic">
+     > <div class="comic">
      >   <form>
      >     <!-- cf. ci-dessus. -->
      >   </div>
@@ -1229,17 +1223,18 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
      > ```html
      > {{!-- app/templates/comic/index.hbs --}}
      >
-     > <div class="selected-comic">
-     >   <h3>{{model.title}}</h3>
-     >   <dl>
-     >     <dt>scriptwriter</dt>
-     >     <dd>{{model.scriptwriter}} </dd>
-     >     <dt>illustrator</dt>
-     >     <dd>{{model.illustrator}}</dd>
-     >     <dt>publisher</dt>
-     >     <dd>{{model.publisher}}</dd>
-     >   </dl>
-     > </div>
+     > <div class="comic">
+     >    <h3 class="comic-title">{{model.title}}</h3>
+     >
+     >    <dl class="comic-description">
+     >      <dt class="comic-label">scriptwriter</dt>
+     >      <dd class="comic-value">{{model.scriptwriter}} </dd>
+     >      <dt class="comic-label">illustrator</dt>
+     >      <dd class="comic-value">{{model.illustrator}}</dd>
+     >      <dt class="comic-label">publisher</dt>
+     >      <dd class="comic-value">{{model.publisher}}</dd>
+     >    </dl>
+     >  </div>
      > ```
 
      > On a donc remplacé le contenu du template ``comic.hbs`` par un ``outlet`` pour accueillir les routes filles.
@@ -1255,29 +1250,25 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    > ```html
    > {{!-- app/templates/comic/edit.hbs --}}
    >
-   > <div class="selected-comic">
+   > <div class="comic">
    >   <form>
-   >     <div class="buttons">
-   >       <button type="submit" class="btn-submit"></button>
-   >       <button type="reset" class="btn-cancel"></button>
+   >     <div class="comic-header">
+   >       <div class="comic-title">
+   >         {{input id="title" type="text" value=model.title}}
+   >       </div>
+   >       <div class="buttons">
+   >         <button type="submit" {{action 'save'}} class="btn-submit"></button>
+   >         <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
+   >       </div>
    >     </div>
-   >     <div class="title">
-   >       {{input id="title" type="text" value=model.title}}
-   >     </div>
-   >
-   >     <div class="description">
-   >       <div class="scriptwriter">
-   >         <label for="scriptwriter">Scriptwriter</label>
-   >         <span class="control">{{input id="scriptwriter" type="text" value=model.scriptwriter required="required"}}</span>
-   >       </div>
-   >       <div class="illustrator">
-   >         <label for="illustrator">Illustrator</label>
-   >         <span class="control">{{input id="illustrator" type="text" value=model.illustrator}}</span>
-   >       </div>
-   >       <div class="publisher">
-   >         <label for="publisher">Publisher</label>
-   >         <span class="control">{{input id="publisher" type="text" value=model.publisher}}</span>
-   >       </div>
+   >  
+   >     <div class="comic-description">
+   >       <label class="comic-label" for="scriptwriter">Scriptwriter</label>
+   >       {{input id="scriptwriter" type="text" class="comic-value" value=model.scriptwriter required="required"}}
+   >       <label class="comic-label" for="illustrator">Illustrator</label>
+   >       {{input id="illustrator" type="text" class="comic-value" value=model.illustrator}}
+   >       <label class="comic-label" for="publisher">Publisher</label>
+   >       {{input id="publisher" type="text" class="comic-value" value=model.publisher}}
    >     </div>
    >   </form>
    > </div>
@@ -1288,24 +1279,30 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
 1. Modifier l'affichage du comic pour ajouter un lien vers la page d'édition à droite du titre
    * Utiliser la forme *inline* du *helper* ``link-to``
    * Le lien est vide et doit porter la classe ``btn-edit``
-   * Encapsuler le lien dans une div de classe ``buttons`` en haut du template :
+   * Encapsuler le lien dans une div de classe ``buttons``
+   * Encapsuler titre et boutons dans une class ``comic-header`` comme pour le template ``edit``
 
    **Test** : *Les modifications doivent permettre de rendre le test [02 - Routing - 07 - Should link to edit route](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L147) passant.*
 
    ```html
-   <div class="buttons">
-     {{!-- compléter ici --}}
+   <div class="comic-header">
+     <h3 ...>
+     <div class="buttons">
+       {{!-- compléter ici --}}
+     </div>
    </div>
    ```
 
    > ```html
    > {{!-- app/templates/comic/index.hbs --}}
    >
-   > <div class="selected-comic">
-   >   <div class="buttons">
-   >     {{link-to "" 'comic.edit' model class="btn-edit"}}
+   > <div class="comic">
+   >   <div class="comic-header">
+   >     <h3 class="comic-title">{{model.title}}</h3>
+   >     <div class="buttons">
+   >       {{link-to "" 'comic.edit' model class="btn-edit"}}
+   >     </div>
    >   </div>
-   >   <h3>{{model.title}}</h3>
    >
    >   ...
    >
@@ -1347,29 +1344,25 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    > ```html
    > {{!-- app/templates/comics/create.hbs --}}
    >
-   > <div class="selected-comic">
+   > <div class="comic">
    >   <form>
-   >     <div class="buttons">
-   >       <button type="submit" class="btn-submit"></button>
-   >       <button type="reset" class="btn-cancel"></button>
+   >     <div class="comic-header">
+   >       <div class="comic-title">
+   >         {{input id="title" type="text" value=model.title}}
+   >       </div>
+   >       <div class="buttons">
+   >         <button type="submit" {{action 'save'}} class="btn-submit"></button>
+   >         <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
+   >       </div>
    >     </div>
-   >     <div class="title">
-   >       {{input id="title" type="text" value=model.title}}
-   >     </div>
-   >
-   >     <div class="description">
-   >       <div class="scriptwriter">
-   >         <label for="scriptwriter">Scriptwriter</label>
-   >         <span class="control">{{input id="scriptwriter" type="text" value=model.scriptwriter required="required"}}</span>
-   >       </div>
-   >       <div class="illustrator">
-   >         <label for="illustrator">Illustrator</label>
-   >         <span class="control">{{input id="illustrator" type="text" value=model.illustrator}}</span>
-   >       </div>
-   >       <div class="publisher">
-   >         <label for="publisher">Publisher</label>
-   >         <span class="control">{{input id="publisher" type="text" value=model.publisher}}</span>
-   >       </div>
+   >  
+   >     <div class="comic-description">
+   >       <label class="comic-label" for="scriptwriter">Scriptwriter</label>
+   >       {{input id="scriptwriter" type="text" class="comic-value" value=model.scriptwriter required="required"}}
+   >       <label class="comic-label" for="illustrator">Illustrator</label>
+   >       {{input id="illustrator" type="text" class="comic-value" value=model.illustrator}}
+   >       <label class="comic-label" for="publisher">Publisher</label>
+   >       {{input id="publisher" type="text" class="comic-value" value=model.publisher}}
    >     </div>
    >   </form>
    > </div>
@@ -1401,17 +1394,14 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    > ```html
    > {{!-- app/templates/comics.hbs --}}
    >
-   > <div class="row">
-   >   <div class="comics">
-   >     <h2>Comics list</h2>
-   >     <ul...>
-   >     {{link-to '' 'comics.create' class="add-comic"}}
-   >   </div>
-   >
-   >   {{outlet}}
+   > <div class="comics">
+   >   <h2 class="comics-title">Comics list</h2>
+   >   <ul...>
+   >   {{link-to '' 'comics.create' class="add-comic"}}
    > </div>
+   >
+   > {{outlet}}
    > ```
-
 
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}

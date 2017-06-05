@@ -190,7 +190,8 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    ...
    ```
 1. Installer l'addon [ember-bootstrap](http://www.ember-bootstrap.com).
-   Cet addon permet d'intégrer le framework CSS [Twitter Bootstrap](https://getbootstrap.com) et fournit des composants [Ember][ember] compatibles prêts à l'emploi:
+   Cet addon permet d'intégrer le framework CSS [Twitter Bootstrap](https://getbootstrap.com) et fournit des composants [Ember][ember] compatibles prêts à l'emploi.
+   Comme nous souhaitons utiliser Bootstrap 4, il faut ensuite le déclarer explicitement :
 
    ```console
    $ ember install ember-bootstrap
@@ -202,6 +203,14 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    Yarn: Installed bootstrap@^3.3.7
    Added ember-bootstrap configuration to ember-cli-build.js
    Installed addon package.
+
+   $ ember generate ember-bootstrap --bootstrap-version=4
+     uninstall package bootstrap-sass
+     install package bootstrap
+   Yarn: Installed bootstrap@next
+   Yarn: Uninstalled bootstrap-sass
+   Added import statement to app/styles/app.scss
+   Added ember-bootstrap configuration to ember-cli-build.js
    ```
 
    On constate que le fichier `package.json` a été mis à jour :
@@ -212,7 +221,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    ...
    
      "devDependencies": {
-       "bootstrap": "^3.3.7",
+       "bootstrap": "next",
        "broccoli-asset-rev": "^2.4.5",
        "ember-ajax": "^3.0.0",
        "ember-bootstrap": "^1.0.0-alpha.12",
@@ -222,7 +231,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    ```
 
    Le fichier de configuration `ember-cli-build.js` a également été mis à jour pour ajouter la configuration par défaut d'import des assets [Bootstrap](http://getbootstrap.com).
-   Dans notre cas, nous utilisons Sass et ne voulons donc pas importer les CSS mais nous souhaitons utiliser les icônes :
+   Dans notre cas, nous utilisons Sass et ne voulons donc pas importer les CSS et Bootstrap 4 ne fournit plus d'icônes :
 
    ```javascript
    // ember-cli-build.js
@@ -230,12 +239,33 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    module.exports = function(defaults) {
    var app = new EmberApp(defaults, {
      'ember-bootstrap': {
-       'bootstrapVersion': 3,
-       'importBootstrapFont': true,
+       'bootstrapVersion': 4,
+       'importBootstrapFont': false,
        'importBootstrapCSS': false
      }
    });
    ...
+   ```
+
+1. Afin de bénéficier d'un jeu d'icônes complet, nous allons également installer l'addon [ember-font-awesome](https://github.com/martndemus/ember-font-awesome) :
+
+   ```console
+   ember install ember-font-awesome
+   Yarn: Installed ember-font-awesome
+   Installed addon package.
+   ```
+
+   Enfin, de manière à pouvoir utiliser [Fontawesome](http://fontawesome.io) dans nos fichiers Sass, nous devons effectuer la modification suivante :
+
+   ```javascript
+   // ember-cli-build.js
+
+   var app = new EmberApp(defaults, {
+     'ember-bootstrap': {...},
+     'ember-font-awesome': {
+       useScss: true
+     }
+   });
    ```
     
 1. De manière à bénéficier de styles adaptés aux futurs exercices, copier le contenu de [ce fichier](https://raw.githubusercontent.com/bmeurant/ember-training/master/app/styles/app.scss) 

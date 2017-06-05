@@ -185,20 +185,22 @@ Dans le cas précis il effectue un simple affichage
    > ```html
    > {{!-- app/templates/comic/index.hbs --}}
    > ... 
-   > <h3>{{model.title}}</h3>
+   > <h3 class="comic-title">{{model.title}}</h3>
    > {{image-cover}}
-   > <dl>
+   > <dl class="comic-description">
    > ...
    > ```
    >
    > ```html
    > {{!-- app/templates/comic/edit.hbs --}}
    > ... 
-   > <div class="title">
+   > <div class="comic-title">
    >   {{input id="title" type="text" value=model.title}}
    > </div>
+   >
    > {{image-cover name=model.slug}}
-   > <div class="description">
+   >
+   > <div class="comic-description">
    > ...
    > ```
 
@@ -206,14 +208,14 @@ Dans le cas précis il effectue un simple affichage
    * Modifier le template ``app/templates/comic/index.hbs`` pour ajouter les passage d'un paramètre au composant lui permettant d'accéder à l'identifiant (`slug`) du comic.
    * Modifier le template du composant pour remplacer *"default"* par la valeur de ce slug
    
-   **Test** : Ces modifications doivent permettre de rendre passant le test [renders image-cover](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/image-cover-test.js#L8)
+   **Test** : Ces modifications doivent permettre de rendre passant le test [image-cover - renders image-cover](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/image-cover-test.js#L8)
    
    > ```html
    > {{!-- app/templates/comic/index.hbs --}}
    > ... 
-   > <h3>{{model.title}}</h3>
+   > <h3 class="comic-title">{{model.title}}</h3>
    > {{image-cover name=model.slug}}
-   > <dl>
+   > <dl class="comic-description">
    > ...
    > ```
    > 

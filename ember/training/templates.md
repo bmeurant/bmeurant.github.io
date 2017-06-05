@@ -62,15 +62,17 @@ Retenons pour le moment qu'il s'agit du template principal de l'application dans
 
    ```html
    {{!-- /app/templates/application.hbs --}}
-   <div class="container">
-   
+   <div class="application">
+
      <div class="page-header">
        <h1 id="title">Comic books library</h1>
      </div>
-    
-     {{outlet}}
-   
-   </div>
+
+     <div class="main">
+       {{outlet}}
+     </div>
+
+  </div>
    ```  
    
    On constate que l'application est mise à jour et rechargée à la volée par [Ember CLI](http://www.ember-cli.com/) et à l'exécution préalable de la commande ``ember server``.
@@ -120,17 +122,15 @@ L'intérêt consiste à injecter dans ce template des valeurs et expressions dyn
    ```html
    {{!-- /app/templates/application.hbs --}}
    
-   <div class="container">
+   <div class="application">
    
-     <div class="page-header">
+     <div class="header">
        <h1 id="title">Comic books library</h1>
      </div>
    
-     <div class="row">
+     <div class="main">
        <span class="comics">{{model.title}}</span>
      </div>
-   
-     {{outlet}}
    
    </div>
    ```
@@ -303,7 +303,8 @@ cf [Ember documentation](http://guides.emberjs.com/2.13.0/templates/writing-help
 
 1. **Parcourir et afficher une liste** : Nous allons avoir plusieurs comics, transformer l'affichage du model seul par celui d'une liste complète de comics (un seul élément pour le moment).
 
-   **Style** : encapsuler la liste dans une ``<div class="comics">``
+   **Style** : encapsuler la liste dans une ``<div class="comics">``.
+   La liste elle-même doit porter la classe ``comics-list`` et chaque élément de la liste la classe ``comics-list-item``.
    
    **Test** : *Les modifications doivent permettre de rendre le test [01 - Templates - 01 - Should display comics](https://github.com/bmeurant/ember-training/blob/master/tests/acceptance/01-templates-test.js#L34) passant.*
      
@@ -317,11 +318,11 @@ cf [Ember documentation](http://guides.emberjs.com/2.13.0/templates/writing-help
    > ```html
    > {{!-- app/templates/application.hbs --}}
    > ...
-   > <div class="row">
+   > <div class="main">
    >   <div class="comics">
-   >     <ul>
+   >     <ul class="comics-list">
    >       {{#each model as |comic|}}
-   >         <li>{{comic.title}}</li>
+   >         <li class="comics-list-item">{{comic.title}}</li>
    >       {{/each}}
    >     </ul>
    >   </div>
@@ -374,9 +375,9 @@ cf [Ember documentation](http://guides.emberjs.com/2.13.0/templates/writing-help
     > ```html
     > {{!-- app/templates/application.hbs --}}
     > ...
-    > <ul>
+    > <ul class="comics-list">
     >   {{#each model as |comic|}}
-    >     <li>{{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}</li>
+    >     <li class="comics-list-item">{{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}</li>
     >   {{/each}}
     > </ul>
     > ...
@@ -408,9 +409,9 @@ cf [Ember documentation](http://guides.emberjs.com/2.13.0/templates/writing-help
     > ```html
     > {{!-- app/templates/application.hbs --}}
     > ...
-    > <ul>
+    > <ul class="comics-list">
     >   {{#each model as |comic|}}
-    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
     >       {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
     >     </li>
     >   {{/each}}
@@ -429,9 +430,9 @@ cf [Ember documentation](http://guides.emberjs.com/2.13.0/templates/writing-help
     > ```html
     > {{!-- app/templates/application.hbs --}}
     > ...
-    > <ul>
+    > <ul class="comics-list">
     >   {{#each model as |comic|}} 
-    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
+    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
     >       {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
     >     </li>
     >   {{else}}

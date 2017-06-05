@@ -168,6 +168,7 @@ actions: {
    > ```html
    > {{!-- app/templates/comic/edit.hbs --}}
    > <form>
+   >     ...
    >     <div class="buttons">
    >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
    >       <button type="reset" class="btn-cancel"></button>
@@ -212,6 +213,7 @@ actions: {
     > ```html
     > {{!-- app/templates/comic/edit.hbs --}}
     > <form>
+    >     ...
     >     <div class="buttons">
     >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
     >       <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
@@ -677,7 +679,8 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
    * On remarque l'utilisation de la méthode [Ember.computed.filter](http://emberjs.com/api/classes/Ember.computed.html#method_filter) qui permet de filtrer facilement une collection et de la méthode [Ember.computed.sort](http://emberjs.com/api/classes/Ember.computed.html#method_sort) qui permet, elle, de faciliter le tri.
      Cette dernière s'appuie également sur une propriété calculée définissant les caractéristiques du tri (propriété, ordre). Ici ``['title:asc']`` ou ``['title:desc']``.
    * Modifier le template ``app/templates/comics.hbs`` en se basant sur le modèle proposé plus bas.
-   * Ajouter avant la liste de comics un ``input`` permettant de modifier la valeur de ``filter`` ainsi qu'un bouton permettant de déclencher l'action ``sort``. Ce bouton doit     porter les classes css ``sort sort-asc`` ou ``sort sort-desc`` en fonction de la valeur de ``sortAsc``.
+   * Ajouter avant la liste de comics un ``input`` permettant de modifier la valeur de ``filter`` ainsi qu'un bouton permettant de déclencher l'action ``sort``.
+     Ce bouton doit porter les classes css ``btn-sort sort-asc`` ou ``btn-sort sort-desc`` en fonction de la valeur de ``sortAsc``.
    * Modifier la collection parcourue par le ``{{#each}}`` de façon à utiliser la liste triée.
    * Enfin, modifier le span de classe ``comics-number`` afin d'afficher, en temps réel, le nombre de comics triés (ne pas modifier le contrôleur).
    
@@ -708,23 +711,23 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
    ```
    
    ```html
-   <div class="row">
-     <div class="comics">
-       <h2>Comics list</h2>
-   
+   <div class="comics">
+     <h2 class="comics-title">Comics list</h2>
+ 
+     <div class="comics-filter">
        {{input type=text value=... class="filter"}}
        <button ??? class="???"></button>
-   
-       <ul>
-         {{#each ??? as |comic|...}}
-       </ul>
-       {{link-to '' 'comics.create' class="add-comic"}}
-   
-       <span class="comics-number">Number of comics: ???</span>
-     </div>
-   
-     {{outlet}}
+    </div>
+ 
+     <ul class="comics-list">
+       {{#each ??? as |comic|...}}
+     </ul>
+     {{link-to '' 'comics.create' class="add-comic"}}
+ 
+     <span class="comics-number">Number of comics: ???</span>
    </div>
+ 
+   {{outlet}}
    ```
    
    **Tests** : Les modifications doivent permettre de rendre passants les tests [03 - Controller - 13 - Should filter](https://github.com/bmeurant/ember-training/blob/controllers-tests/tests/acceptance/03-controller-test.js#L368), [03 - Controller - 14 - Should sort](https://github.com/bmeurant/ember-training/blob/controllers-tests/tests/acceptance/03-controller-test.js#L93) ainsi que l'ensemble des [tests unitaires du controller comics](https://github.com/bmeurant/ember-training/blob/controllers-tests/tests/unit/controllers/comics-test.js)
