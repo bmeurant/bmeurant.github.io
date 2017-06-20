@@ -593,7 +593,7 @@ place du texte précédent.
     > ```html
     > {{!-- app/templates/comics/comic.hbs --}}
     >
-    > <div class="selected-comic">
+    > <div class="comic">
     >   <h3 class="comic-title">{{model.title}}</h3>
     >   <dl class="comic-description">
     >     <dt class="comic-label">scriptwriter</dt>
