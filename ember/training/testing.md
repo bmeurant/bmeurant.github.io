@@ -43,19 +43,20 @@ On cherche ici à vérifier que le processus de sauvegarde fonctionne correcteme
 test("03 - Controller - 01 - Should save on edit submit", function (assert) {
   assert.expect(4);
 
-  visit('/comics/akira/edit').then(function () {
-    let $selectedComic = find(".selected-comic");
+  visit('/comics/akira/edit');
+  andThen(() => {
+    let $selectedComic = find(".comic");
     assert.equal($selectedComic.length, 1, "Current selected comics zone is displayed");
 
     let $form = $selectedComic.find("form");
     assert.equal($form.length, 1, "Comic form exists");
 
     let newTitle = "new value";
-    fillIn(".selected-comic form #title", newTitle);
-    click(".selected-comic form .btn-submit");
-    andThen(function() {
+    fillIn(".comic form #title", newTitle);
+    click(".comic form .btn-submit");
+    andThen(() => {
       assert.equal(currentRouteName(), 'comic.index', "Route name is correct");
-      assert.ok(find(".selected-comic h3").text().indexOf(newTitle) >= 0, "Title modified");
+      assert.ok(find(".comic .comic-title").text().indexOf(newTitle) >= 0, "Title modified");
     });
   });
 });
@@ -131,6 +132,8 @@ moduleFor('controller:comics', 'Unit | Controller | comics', {
 
 De plus amples détails sont données sur les tests unitaire dans la [documentation officielle](https://guides.emberjs.com/v2.10.0/testing/unit-testing-basics/).
 
+{% raw %}
+
 ## Tests d'intégration
 
 Les tests d'intégration sont définis dans ``tests/integration``.
@@ -173,6 +176,8 @@ moduleForComponent('fav-btn', 'Integration | Component | fav btn', {
   integration: true
 });
 ```
+
+{% endraw %}
 
 ## Configuration
 

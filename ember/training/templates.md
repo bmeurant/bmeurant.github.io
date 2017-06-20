@@ -73,7 +73,7 @@ Retenons pour le moment qu'il s'agit du template principal de l'application dans
      </div>
 
   </div>
-   ```  
+  ```  
    
    On constate que l'application est mise à jour et rechargée à la volée par [Ember CLI](http://www.ember-cli.com/) et à l'exécution préalable de la commande ``ember server``.
    Via cette commande, en effet, l'application est lancée et, lors de toute modification d'un fichier source, [Ember CLI](http://www.ember-cli.com/) se charge d'exécuter l'*asset pipeline* et de recharger l'application.
