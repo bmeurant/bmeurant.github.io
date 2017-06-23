@@ -732,7 +732,7 @@ let user = this.store.createRecord('user', {
   lastName: 'Underwood'
 });
 
-user.save(); // -> POST /users/:id
+user.save(); // -> POST /users/
 
 let user = this.store.findRecord('user', 1).then((user) => {
   user.set('lastName', 'New Last Name');
