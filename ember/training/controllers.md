@@ -267,7 +267,7 @@ actions: {
    > 
    > export default Ember.Object.extend({
    >   slug: function() {
-   >     let title = this.get('title') || 'new';
+   >     const title = this.get('title') || 'new';
    >     return title.dasherize();
    >   }.property('title'),
    >   title: '',
@@ -692,7 +692,7 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
      sortAsc: true,
    
      filteredComics: Ember.computed.filter(..., function (model) {
-       let title = model.get('title');
+       const title = model.get('title');
        return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
      }).property(???, ???, ???),
    
@@ -743,7 +743,7 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
    >   sortAsc: true,
    > 
    >   filteredComics: Ember.computed.filter('model', function (model) {
-   >     let title = model.get('title');
+   >     const title = model.get('title');
    >     return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
    >   }).property('filter', 'model.[]', 'model.@each.title'),
    > 

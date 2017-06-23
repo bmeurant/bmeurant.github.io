@@ -710,7 +710,7 @@ export default Ember.Component.extend({
    >   ...
    >   actions: {
    >     favorize () {
-   >       let model = this.modelFor(this.routeName);
+   >       const model = this.modelFor(this.routeName);
    >       Ember.Logger.debug(model.get('slug'), '- favorite:', model.get('isFavorite'));
    >     }
    >   }
@@ -778,7 +778,7 @@ export default Ember.Component.extend({
    >   ...
    >   actions: {
    >     onFavorize () {
-   >       let model = this.modelFor(this.routeName);
+   >       const model = this.modelFor(this.routeName);
    >       Ember.Logger.debug(model.get('slug'), '- favorite:', model.get('isFavorite'));
    >     }
    >   }
