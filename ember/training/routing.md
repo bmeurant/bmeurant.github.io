@@ -141,7 +141,7 @@ L'organisation des routes au sein du routeur et leur imbrication président donc
     * Déplacer le contenu de la route ``application.js`` dans la route ``comics.js``
     * Déplacer le contenu de la ``<div class="main">`` (non incluse) du template ``application.hbs`` dans le tempate ``comics.hbs``
     * Ajouter un sous-titre ``Comics list`` de classe ``comics-title`` juste après l'ouverture de la ``<div class="comics">``
-    * Ajouter un paragraph ayant pour identifiant ``no-selected-comic`` juste après la fermeture de la ``<div class="comics">`` contenant le texte "Please select on comic book for detailled information."
+    * Ajouter un paragraphe ayant pour identifiant ``no-selected-comic`` juste après la fermeture de la ``<div class="comics">`` contenant le texte "Please select on comic book for detailled information."
 
     **Tests** : Les modifications doivent permettre de rendre les tests suivants passants : [02 - Routing - 01 - Should display second level title](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L60)
     et [02 - Routing - 02 - Should display text on comics/](https://github.com/bmeurant/ember-training/blob/routing-tests/tests/acceptance/02-routing-test.js#L75)
