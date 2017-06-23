@@ -875,9 +875,7 @@ Les plus fréquents sont ``didInsertElement``, ``willDestroyElement`` et moins f
    > 
    >   didInsertElement() {
    >     this._super(...arguments);
-   >     this.$().on('error', () => {
-   >       return this.onError();
-   >     });
+   >     this.$().on('error', () => this.onError());
    >   },
    > 
    >   willDestroyElement(){
