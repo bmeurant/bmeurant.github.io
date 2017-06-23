@@ -322,21 +322,21 @@ return this.store.findRecord('user', 1).then(user => {
    >
    > import Ember from 'ember';
    > 
-   > let blackSad = {
+   > const blackSad = {
    >   title: 'Blacksad',
    >   scriptwriter: 'Juan Diaz Canales',
    >   illustrator: 'Juanjo Guarnido',
    >   publisher: 'Dargaud'
    > };
    > 
-   > let calvinAndHobbes = {
+   > const calvinAndHobbes = {
    >   title: 'Calvin and Hobbes',
    >   scriptwriter: 'Bill Watterson',
    >   illustrator: 'Bill Watterson',
    >   publisher: 'Andrews McMeel Publishing'
    > };
    > 
-   > let akira = {
+   > const akira = {
    >   title: 'Akira',
    >   scriptwriter: 'Katsuhiro Otomo',
    >   illustrator: 'Katsuhiro Otomo',
@@ -559,7 +559,7 @@ export default Model.extend({
    > ```javascript
    > // mirage/fixtures/comics.js
    > 
-   > let blackSad = {
+   > const blackSad = {
    >   id: 1,
    >   title: 'Blacksad',
    >   scriptwriter: 'Juan Diaz Canales',
@@ -567,7 +567,7 @@ export default Model.extend({
    >   publisher: 'Dargaud'
    > };
    > 
-   > let calvinAndHobbes = {
+   > const calvinAndHobbes = {
    >   id: 2,
    >   title: 'Calvin and Hobbes',
    >   scriptwriter: 'Bill Watterson',
@@ -575,7 +575,7 @@ export default Model.extend({
    >   publisher: 'Andrews McMeel Publishing'
    > };
    > 
-   > let akira = {
+   > const akira = {
    >   id: 3,
    >   title: 'Akira',
    >   scriptwriter: 'Katsuhiro Otomo',
@@ -623,7 +623,7 @@ export default Model.extend({
    > 
    > export default Ember.Route.extend({
    >   model (params) {
-   >     let askedModel = this.store.queryRecord('comic', {slug: params.comic_slug});
+   >     const askedModel = this.store.queryRecord('comic', {slug: params.comic_slug});
    > 
    >     ...
    >   },
@@ -639,10 +639,10 @@ export default Model.extend({
      export default function() {
      
        this.get('/comics', ({comics}, request) => {
-         let slug = request.queryParams.slug;
+         const slug = request.queryParams.slug;
        
          if (slug) {
-           let found = comics.all().filter(({title}) => title.dasherize() === slug).models[0];
+           const found = comics.all().filter(({title}) => title.dasherize() === slug).models[0];
            if (found) {
              return found;
            } else {
@@ -715,7 +715,7 @@ export default Model.extend({
 La modification d'une instance de modèle [Ember Data][ember-data] n'implique, en elle même, aucune opération particulière puisqu'il suffit d'utiliser les *setters* de l'object de manière tout à fait classique.
 
 ```javascript
-let user = this.store.findRecord('user', 1).then((user) => {
+const user = this.store.findRecord('user', 1).then((user) => {
   user.set('lastName', 'New Last Name');
 });
 ```
@@ -802,7 +802,7 @@ Parmis les principaux
 Ainsi le code suivant : 
 
 ```javascript
-let comic = this.store.createRecord('comic');
+const comic = this.store.createRecord('comic');
 console.log("1 - new ? - "+ comic.get('isNew'));
 console.log("1 - dirty ? - "+ comic.get('hasDirtyAttributes'));
 console.log("1 - deleted ? - "+ comic.get('isDeleted'));
@@ -1112,8 +1112,8 @@ Ainsi, une relation peut être :
 * initialisée à la création : 
 
   ```javascript
-  let parent = this.store.createRecord('parent', {title: "parent1"});
-  let child = this.store.createRecord('child', {
+  const parent = this.store.createRecord('parent', {title: "parent1"});
+  const child = this.store.createRecord('child', {
     title: "child1",
     parent: parent
   });
@@ -1122,9 +1122,9 @@ Ainsi, une relation peut être :
   ou
   
   ```javascript
-  let child1 = this.store.createRecord('child', {title: "child1"});
-  let child2 = this.store.createRecord('child', {title: "child2"});
-  let parent = this.store.createRecord('parent', {
+  const child1 = this.store.createRecord('child', {title: "child1"});
+  const child2 = this.store.createRecord('child', {title: "child2"});
+  const parent = this.store.createRecord('parent', {
     title: "parent1",
     children: [child1, child2]
   });
@@ -1133,17 +1133,17 @@ Ainsi, une relation peut être :
 * modifiée : 
 
   ```javascript
-  let parent = this.store.createRecord('parent', {title: "parent1"});
-  let child = this.store.createRecord('child', {title: "child1"});
+  const parent = this.store.createRecord('parent', {title: "parent1"});
+  const child = this.store.createRecord('child', {title: "child1"});
   child.set('parent', parent);
   ```
   
   ou
   
   ```javascript
-  let child1 = this.store.createRecord('child', {title: "child1"});
-  let child2 = this.store.createRecord('child', {title: "child2"});
-  let parent = this.store.createRecord('parent', {title: "parent1"});
+  const child1 = this.store.createRecord('child', {title: "child1"});
+  const child2 = this.store.createRecord('child', {title: "child2"});
+  const parent = this.store.createRecord('parent', {title: "parent1"});
   parent.get('children').pushObject(child1);
   parent.get('children').pushObject(child2);
   ```

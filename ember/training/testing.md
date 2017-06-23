@@ -45,13 +45,13 @@ test("03 - Controller - 01 - Should save on edit submit", function (assert) {
 
   visit('/comics/akira/edit');
   andThen(() => {
-    let $selectedComic = find(".comic");
+    const $selectedComic = find(".comic");
     assert.equal($selectedComic.length, 1, "Current selected comics zone is displayed");
 
-    let $form = $selectedComic.find("form");
+    const $form = $selectedComic.find("form");
     assert.equal($form.length, 1, "Comic form exists");
 
-    let newTitle = "new value";
+    const newTitle = "new value";
     fillIn(".comic form #title", newTitle);
     click(".comic form .btn-submit");
     andThen(() => {
@@ -286,7 +286,7 @@ Nous allons les adapter pour le faire passer de nouveau (sauf les tests d'accept
          },
      
          normalizeArrayResponse(store, primaryModelClass, hash, id, requestType) {
-           let newHash = {};
+           const newHash = {};
            newHash[primaryModelClass.modelName] = hash;
            return this._super(store, primaryModelClass, newHash, id, requestType);
          }

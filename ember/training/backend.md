@@ -361,7 +361,7 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      > export default DS.RESTSerializer.extend({
      > 
      >   normalizeArrayResponse(store, primaryModelClass, hash, id, requestType) {
-     >     let newHash = {};
+     >     const newHash = {};
      >     newHash[primaryModelClass.modelName] = hash;
      >     return this._super(store, primaryModelClass, newHash, id, requestType);
      >   }
@@ -382,7 +382,7 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
    >   },
    >
    >   normalizeSingleResponse(store, primaryModelClass, hash, id, requestType) {
-   >     let newHash = {};
+   >     const newHash = {};
    >     newHash[primaryModelClass.modelName] = hash;
    >     return this._super(store, primaryModelClass, newHash, id, requestType);
    >   }

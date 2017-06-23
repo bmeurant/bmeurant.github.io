@@ -355,7 +355,7 @@ Cet objet permet d'agir sur la transaction en cours et notamment d'annuler la tr
      > import Ember from 'ember';
      >  import Comic from 'ember-training/models/comic';
      >
-     > let blackSad = Comic.create({
+     > const blackSad = Comic.create({
      >   slug: 'blacksad',
      >   title: 'Blacksad',
      >   scriptwriter: 'Juan Diaz Canales',
@@ -363,7 +363,7 @@ Cet objet permet d'agir sur la transaction en cours et notamment d'annuler la tr
      >   publisher: 'Dargaud'
      > });
      >
-     > let calvinAndHobbes = Comic.create({
+     > const calvinAndHobbes = Comic.create({
      >   slug: 'calvin-and-hobbes',
      >   title: 'Calvin and Hobbes',
      >   scriptwriter: 'Bill Watterson',
@@ -371,7 +371,7 @@ Cet objet permet d'agir sur la transaction en cours et notamment d'annuler la tr
      >   publisher: 'Andrews McMeel Publishing'
      > });
      >
-     > let akira = Comic.create({
+     > const akira = Comic.create({
      >   slug: 'akira',
      >   title: 'Akira',
      >   scriptwriter: 'Katsuhiro Ôtomo',
@@ -379,7 +379,7 @@ Cet objet permet d'agir sur la transaction en cours et notamment d'annuler la tr
      >   publisher: 'Epic Comics'
      > });
      >
-     > let comics = [blackSad, calvinAndHobbes, akira];
+     > const comics = [blackSad, calvinAndHobbes, akira];
      >
      > export default Ember.Route.extend({
      >   model() {
@@ -924,7 +924,7 @@ Ils proposent une implémentation par défaut vide, bien entendu.
     >   // app/routes/comics/comic.js
     >   ...
     >   model (params) {
-    >     let askedModel = this.modelFor('comics').findBy('slug', params.comic_slug);
+    >     const askedModel = this.modelFor('comics').findBy('slug', params.comic_slug);
     >
     >     if (askedModel === undefined) {
     >       throw new Error("No comic found with slug: " + params.comic_slug);
@@ -1376,7 +1376,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    >
    > export default Ember.Route.extend({
    >   model () {
-   >     let newComic = Comic.create({'slug': 'new'});
+   >     const newComic = Comic.create({'slug': 'new'});
    >     this.modelFor('comics').pushObject(newComic);
    >     return newComic;
    >   }
