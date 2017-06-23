@@ -246,7 +246,7 @@ Si l'on souhaite effectuer des opérations complémentaires sur un objet au reto
 sa méthode ``then()``.
 
 ```javascript
-this.store.findRecord('user', 1).then((user) => {
+this.store.findRecord('user', 1).then(user => {
   // anything using user
 });
 ```
@@ -715,7 +715,7 @@ export default Model.extend({
 La modification d'une instance de modèle [Ember Data][ember-data] n'implique, en elle même, aucune opération particulière puisqu'il suffit d'utiliser les *setters* de l'object de manière tout à fait classique.
 
 ```javascript
-const user = this.store.findRecord('user', 1).then((user) => {
+const user = this.store.findRecord('user', 1).then(user => {
   user.set('lastName', 'New Last Name');
 });
 ```
@@ -734,7 +734,7 @@ let user = this.store.createRecord('user', {
 
 user.save(); // -> POST /users/
 
-let user = this.store.findRecord('user', 1).then((user) => {
+let user = this.store.findRecord('user', 1).then(user => {
   user.set('lastName', 'New Last Name');
   
   user.save(); // -> PUT /users/1
