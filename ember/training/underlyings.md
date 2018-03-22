@@ -52,7 +52,7 @@ Pour cela, il faut en premier lieu disposer de l'objet [Ember][ember] lui-même.
    La réponse doit être : 
    
    ```console
-   Object {__loader: Object, imports: Window, lookup: Window, exports: Window, isNamespace: true…}
+   Object { __loader: {…}, isNamespace: true, toString: Ember.toString(), A: A(), getOwner: getOwner(), setOwner: setOwner(), generateGuid: generateGuid(), GUID_KEY: "__ember1521711735088", guidFor: guidFor(), inspect: inspect(), … }
    ```
 
    On constate, en développant cet objet, qu'il contient l'ensemble des objets et fonctions du framework.
@@ -74,7 +74,7 @@ Pour définir et utiliser un nouvel objet [Ember][ember], il est nécessaire d'�
 
    > ```javascript
    > > Book = Ember.Object.extend({
-   >     logTitle: function(title) {
+   >     logTitle(title) {
    >       console.log(title);
    >     }
    >   });
@@ -101,7 +101,7 @@ On souhaite désormais initialiser l'objet à sa création avec un titre et affi
 
    > ```javascript
    > > Book = Ember.Object.extend({
-   >     logTitle: function() {
+   >     logTitle() {
    >       console.log(this.title);
    >     }
    >   });
@@ -123,10 +123,10 @@ On souhaite désormais initialiser l'objet à sa création avec un titre et affi
 
    > ```javascript
    > > Book = Ember.Object.extend({
-   >     init: function() {
+   >     init() {
    >       this.logTitle();
    >     },
-   >     logTitle: function() {
+   >     logTitle() {
    >       console.log(this.title);
    >     }
    >   });
@@ -168,7 +168,7 @@ Les méthodes de la classe mère peuvent être accédées via l'appel de la mét
    > ```javascript
    > > Book = Ember.Object.extend({
    >     ...
-   >     logType: function() {
+   >     logType() {
    >       console.log("Book");
    >     }
    >   });
@@ -188,8 +188,7 @@ Les méthodes de la classe mère peuvent être accédées via l'appel de la mét
 
    > ```javascript
    > >  Comic = Book.extend({
-   >      ...
-   >      logType: function() {
+   >      logType() {
    >        console.log("Comic");
    >      }
    >    });
@@ -211,7 +210,7 @@ Les méthodes de la classe mère peuvent être accédées via l'appel de la mét
    > ```javascript
    > > Commic = Book.extend({
    >     ...
-   >     logType: function() {
+   >     logType() {
    >       this._super();
    >       console.log("Comic");
    >     }
@@ -232,51 +231,6 @@ Pourtant, tout ``Ember.Object`` expose des accesseurs qu'il est nécessaire d'ut
 
 <div class="work">
     {% capture m %}
-
-1. En se basant sur le code de la classe ``Book`` créée précédemment et sur l'instance one, effectuer les opérations suivantes :
-
-   ```javascript
-   > one.title;
-   > one.get("title");
-   > one.title = "new title";
-   > one.set("title", "new title");
-   > one.get("title");
-   ```
-
-   > Les résultats sont les suivants :
-   >
-   > ```javascript
-   > > one.title;
-   > "My Title"
-   >
-   > > one.get("title");
-   > "My Title"
-   >
-   > > one.title = "new title";
-   > Uncaught EmberError { ..., message: "Assertion Failed: You must use Ember.set()" ... }
-   >
-   > > one.set("title", "new title");
-   > Class { ... }
-   >
-   > > one.get("title");
-   > "new title"
-   > ```
-    
-  {% endcapture %}{{ m | markdownify }}
-</div>
-
-Lorsqu'on essaie de faire une affectation directe sur une propriété d'un ``Ember.Object``, une exception explicite est levée nous obligeant à appeler le setter ``Ember.set()``.
-
-La raison est qu'[Ember][ember] met en place un certain nombre de mécanismes que nous explorerons par la suite.
-Parmi ces mécanismes, les ``computed properties``, les ``observers`` ainsi que l'ensemble des mécanismes de binding du template qui permettent au framework de réagir de manière native et transparente aux changements survenant sur différents objets.
-
-Les mécanismes de binding sont, en particulier, au coeur du moteur de rendu d'[Ember][ember].
-Ces mécanismes permettent aux templates html de se mettre automatiquement à jour lors d'un changement sur un objet et cela de manière performante et ciblée, sans avoir à parcourir l'ensemble des objets connus.
-
-L'exemple suivant permet de se faire une idée de ce mécanisme.
-
-<div class="work no-answer">
-    {% capture m %}
     {% raw %}
 
 1. Copier le contenu suivant dans le fichier html créé, juste avant la balise ``</head>``:
@@ -284,19 +238,19 @@ L'exemple suivant permet de se faire une idée de ce mécanisme.
    ```html
    <script>
      Book = Ember.Object.extend({
-       init: function() {
+       init() {
          this.displayTitle();
        },
-       displayTitle: function() {
+       displayTitle() {
          console.log(this.title);
        },
-       logType: function() {
+       logType() {
          console.log("Book");
        }
      });
    
      Comic = Book.extend({
-       logType: function() {
+       logType() {
          this._super();
          console.log("Comic");
        }
@@ -318,11 +272,49 @@ L'exemple suivant permet de se faire une idée de ce mécanisme.
    </script>
    ```
     
-  {% endraw %}
+</div>
+
+1. Effectuer les opérations suivantes sur l'instance one :
+
+   ```javascript
+   > one.title;
+   > one.get("title");
+   > one.title = "new title";
+   > one.set("title", "new title");
+   > one.get("title");
+   ```
+
+   > Les résultats sont les suivants :
+   >
+   > ```javascript
+   > > one.title;
+   > "My Title"
+   >
+   > > one.get("title");
+   > "My Title"
+   >
+   > > one.title = "new title";
+   > Error: Assertion Failed: You must use set() to set the `title` property ...
+   >
+   > > one.set("title", "new title");
+   > "new title"
+   >
+   > > one.get("title");
+   > "new title"
+   > ```
+    
+  {% endraw %}  
   {% endcapture %}{{ m | markdownify }}
 </div>
 
-On remarque alors qu'il suffit de modifier, dans la console, le titre via ``one.set("title", "new title");`` pour que le template soit mis à jour, sans action supplémentaire de notre part !
+On constate qu'`Ember` met à disposition des accesseur pour manipuler les propriétés d'un objet, en lecture ou écriture et que lorsqu’on essaie de faire une affectation directe sur une propriété d’un ``Ember.Object``, une exception explicite est levée nous obligeant à appeler le setter ``set()``
+
+La raison est qu'[Ember][ember] met en place un certain nombre de mécanismes que nous explorerons par la suite et qui ne seront pas correctement déclenchés sans appel aux accesseurs `Ember`.
+Parmi ces mécanismes, les ``computed properties``, les ``observers`` ainsi que l'ensemble des mécanismes de binding du template qui permettent au framework de réagir de manière native et transparente aux changements survenant sur différents objets.
+
+Les mécanismes de binding sont, en particulier, au coeur du moteur de rendu d'[Ember][ember] et permettent aux templates html de se mettre automatiquement à jour lors d'un changement sur un objet et cela de manière performante et ciblée, sans avoir à parcourir l'ensemble des objets connus.
+
+On remarque ainsi qu'il suffit de modifier, dans la console, le titre via ``one.set("title", "new title");`` pour que le template - et la page - soit mis à jour, sans action supplémentaire de notre part !
 
 Ce fonctionnement ainsi que tous les mécanismes d'observation à la base du framework s'appuie sur l'utilisation des getters / setters des ``Ember.Object``.
 Il est donc absolument nécessaire de les utiliser systématiquement.
@@ -358,6 +350,8 @@ Cette méthode permet de définir les classes et instances de manière itérativ
 
 3. Créer une nouvelle instance ``two`` de ``Book`` puis afficher la valeur de ``pages`` sur cette instance.
    Afficher de nouveau la valeur de ``pages`` sur l'instance ``one``.
+   Que constate-t-on sur chacune de ces deux instances ?
+   Pourquoi ?
 
    > ```javascript
    >   > two = Book.create({title: 'two'})
@@ -376,13 +370,12 @@ Cette méthode permet de définir les classes et instances de manière itérativ
    > création d'une instance de cette classe, en mode *lazy*.
    > cf. [cette discussion](https://github.com/emberjs/ember.js/issues/3783)
 
-4. Lors de l'utilisation de ``reopen``, il est possible, tout comme dans le cas d'un héritage, de redéfinir une méthode existante mais également d'utiliser la méthode ``_super(...)``
-   pour appeler la méhode définie avant.
+4. Lors de l'utilisation de ``reopen``, il est possible, tout comme dans le cas d'un héritage, de redéfinir une méthode existante mais également d'utiliser la méthode ``_super(...)`` pour appeler la méhode définie précédement.
    Utiliser ``reopen`` pour redéfinir ``displayTitle`` et afficher une ligne ``Title:`` avant d'afficher le titre.
 
    > ```javascript
    >   > Book.reopen({
-   >       displayTitle: function() {
+   >       displayTitle() {
    >         console.log('Title:');
    >         this._super();
    >      }});
@@ -398,7 +391,7 @@ Cette méthode permet de définir les classes et instances de manière itérativ
 La méthode ``reopen`` permet donc d'ajouter des propriétés et méthodes de classe.
 Cette méthode permet, de manière très pratique, de définir une classe de manière itérative et donc bien plus dynamique.
 Il faut tout de même être conscient que les nouvelles méthodes et propriétés ne sont disponibles dans les instances existantes qu'après la création d'une nouvelle instance.
-De manière générale, il est conseillé d'éviter d'appeler ``reopen`` sur une classe après en avoir créé des instances.
+De manière générale, il est fortement recommandé d'éviter d'appeler ``reopen`` sur une classe après en avoir créé des instances.
 
 ``Ember.Object`` propose également une méthode ``reopenClass`` permettant d'ajouter des variables ou méthodes de classe statiques.
 
@@ -429,7 +422,7 @@ De manière générale, il est conseillé d'éviter d'appeler ``reopen`` sur une
 Les propriétés calculées (``computed properties``) constituent un élément essentiel du modèle objet d'Ember.
 Une propriété calculée permet de définir une propriété sous la forme d'une fonction.
 Cette fonction est exécutée automatiquement lorsque l'on accède à la propriété (via un classique ``get('myProp')``).
-Une propriété calculée est classiquement déclarée comme dépendant d'une ou plusieurs autres propriétés, permettant ainsi à Ember d'effectuer le calcul de la valeur de cette propriété au changement d'une ou plusieurs de ces propriétés.
+Une propriété calculée est classiquement déclarée comme dépendant d'une ou plusieurs autres propriétés, permettant ainsi à Ember d'effectuer le calcul de la valeur de cette propriété au changement d'une ou plusieurs de ces propriétés dont il dépend.
 
 <div class="work">
     {% capture m %}
@@ -453,7 +446,7 @@ Une propriété calculée est classiquement déclarée comme dépendant d'une ou
    >
    > > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
    > five
-   > Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
+   > Object { title: "five", writer: "5 writer", drawer: "5 drawer", _super: ROOT(), … }
    >
    > > five.get('authors');
    > computed property calculated
@@ -566,11 +559,11 @@ d'entre elles.
    > ```javascript
    > > Comic.reopen({
    >     authors: function() {
-   >     	 console.log('computed property calculated');
-   >     	 return this.get('writer') + ' and ' + this.get('drawer');
-   >   	 }.property('writer', 'drawer'),
+   >       console.log('computed property calculated');
+   >       return this.get('writer') + ' and ' + this.get('drawer');
+   >     }.property('writer', 'drawer'),
    >     summary: function() {
-   >    	 return this.get('title') + ' by ' + this.get('authors');
+   >       return this.get('title') + ' by ' + this.get('authors');
    >     }.property('title', 'authors')
    >   });
    >
@@ -604,6 +597,9 @@ Cela se fait en passant à ``Ember.computed`` un objet javascript contenant à l
    L'objectif est de permettre la séquence suivante :
 
    ```javascript
+   > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
+   Object { title: "five", writer: "5 writer", drawer: "5 drawer", _super: ROOT(), … }
+
    > five.set('authors', 'Véronique and Davina');
    "Véronique and Davina"
    
@@ -617,13 +613,13 @@ Cela se fait en passant à ``Ember.computed`` un objet javascript contenant à l
    > ```javascript
    > Comic.reopen({
    >   authors: Ember.computed('writer', 'drawer', {
-   > 	  get: function(key) {
+   >     get(key) {
    >       console.log('computed property calculated');
    >       return this.get('writer') + ' and ' + this.get('drawer');
    >     },
-   >     set: function(key, value) {
+   >     set(key, value) {
    >       console.log('computed property modified');
-   >       var  authors = value.split(/ and /);
+   >       const authors = value.split(/ and /);
    >       this.set('writer', authors[0]);
    >       this.set('drawer', authors[1]);
    >       return value;
@@ -674,29 +670,36 @@ Cela est possible au travers de la notation ``myCollection.@each.myProperty`` ou
 
    > ```javascript
    > > Collection.reopen({
-   >     numberOfPublished: function() {
+   >     numberOfPublished() {
    >       console.log("compute numberOfPublished");
-   >   	return this.get('books').filterBy('isPublished', true).length;
+   >       return this.get('books').filterBy('isPublished', true).length;
    >     }.property('books.@each.isPublished')
    >   });
    >
    > > newCollection = Collection.create({books: [one, two, three]});
+   > Object { books: […], … }
    >
    > > newCollection.get('numberOfPublished');
    > compute numberOfPublished
    > 1
+   >
    > > one.set('isPublished', true);
    > true
+   >
    > > newCollection.get('numberOfPublished');
    > compute numberOfPublished
    > 2
+   >
    > > newCollection.get('books').removeAt(0);
-   > [Class, Class]
+   > Array [ {…}, {…} ]
+   >
    > > newCollection.get('numberOfPublished');
    > compute numberOfPublished
    > 1
+   >
    > > two.set('writer', 'new writer');
    > "new writer"
+   >
    > > newCollection.get('numberOfPublished');
    > 1
    > ```
@@ -718,21 +721,28 @@ propriété ``isPublished`` (``books.[]``).
    >   });
    > 
    > > newCollection = Collection.create({books: [one, two, three]});
+   > Object { books: […], … }
    > 
    > > newCollection.get('numberOfPublished');
    > compute numberOfPublished
    > 2
+   >
    > > three.set('isPublished', true);
    > true
+   >
    > > newCollection.get('numberOfPublished');
    > 2
+   >
    > > newCollection.get('books').removeAt(0);
-   > [Class, Class]
+   > Array [ {…}, {…} ]
+   >
    > > newCollection.get('numberOfPublished');
    > compute numberOfPublished
    > 2
+   >
    > > newCollection.get('books').removeAt(0);
-   > [Class]
+   > Array [ {…} ]
+   >
    > > newCollection.get('numberOfPublished');
    > compute numberOfPublished
    > 1
@@ -748,6 +758,34 @@ soit recalculée à la fois lors de la modification d'un livre existant et lors 
    > 	     return this.get('books').filterBy('isPublished', true).length;
    >     }.property('books.[]', 'books.@each.isPublished')
    >   });
+   >
+   > > newCollection = Collection.create({books: [one, two, three]});
+   > Object { books: […], … }
+   >
+   > > newCollection.get('numberOfPublished');
+   > compute numberOfPublished
+   > 3
+   >
+   > > three.set('isPublished', false);
+   > false
+   > 
+   > > newCollection.get('numberOfPublished');
+   > compute numberOfPublished
+   > 2
+   >
+   > > newCollection.get('books').removeAt(0);
+   > Array [ {…}, {…} ]
+   >
+   > > newCollection.get('numberOfPublished');
+   > compute numberOfPublished
+   > 1
+   >
+   > > newCollection.get('books').pushObject(one);
+   > Object { title: Getter & Setter, isPublished: Getter & Setter, … }
+   >
+   > > newCollection.get('numberOfPublished');
+   > compute numberOfPublished
+   > 2
    > ```
     
   {% endcapture %}{{ m | markdownify }}
@@ -771,7 +809,7 @@ Des observeurs [Ember][ember] peuvent également être déclarés sur toute prop
    >   });
    >  
    > > six = Comic.create({title:'six', writer: '6 writer', drawer: '6 drawer'});
-   > Class {title: "six", writer: "6 writer", drawer: "6 drawer", __ember1444061327029: null, __nextSuper: undefined…}
+   > Object { title: "six", writer: "6 writer", drawer: "6 drawer", … }
    >  
    > > six.get('authors');
    > computed property calculated
@@ -833,7 +871,7 @@ Pour reprendre l'exemple de la [doc officielle](http://guides.emberjs.com/v2.13.
 {% raw %}
 
 ```js
-var User = Ember.Object.extend({
+const User = Ember.Object.extend({
   firstName: null,
   lastName: null,
   fullName: function() {

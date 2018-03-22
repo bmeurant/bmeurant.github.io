@@ -29,11 +29,44 @@ Ces conventions de nommage prennent la forme d'une structure d'application norma
 
 -> [doc officielle](https://ember-cli.com/user-guide/#naming-conventions).
 
+## Modularité
+
+La modularité du framework repose d'abord sur les conventions de nommage et les Modules ES6 et, depuis sa version 2.16, sur une nouvelle API.
+`Ember` a en effet été découpé en modules qu'il est désormais possible d'importer individuellement sans nécessiter l'import de l'ensemble du namespace `Ember` comme cela était le cas auparavant.
+
+On passe donc de cette syntaxe :
+
+```javascript
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  session: Ember.inject.service(),
+  title: 'The Curious Case'
+});
+```
+
+à celle-ci :
+
+```javascript
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+
+export default Component.extend({
+  session: service(),
+  title: 'The Curious Case'
+});
+```
+
+Cette API permettent une modularisation très fine du framework en offrant la possibilité de n'importer que le strict nécessaire.
+Outre l'apport en termes de lisibilité, l'ambition est - à court terme - de permettre la construction du builds plus légers en n'embarquant que les modules du framework nécessaire à notre application.
+
+-> [Ember Modules API](https://emberjs.com/blog/2017/10/11/ember-2-16-released.html)
+
 ## Application
 
-La figure suivante, extraite de la [Documentation officielle](http://guides.emberjs.com/v2.13.0/getting-started/core-concepts/), montre une vue générale du fonctionnement d'une application [Ember][ember] et des différents objets impliqués :
+La figure suivante, extraite de la [Documentation officielle](http://guides.emberjs.com/v3.0.0/getting-started/core-concepts/), montre une vue générale du fonctionnement d'une application [Ember][ember] et des différents objets impliqués :
 
-![Application Ember](http://guides.emberjs.com/v2.13.0/images/ember-core-concepts/ember-core-concepts.png)
+![Application Ember](http://guides.emberjs.com/v3.0.0/images/ember-core-concepts/ember-core-concepts.png)
 
 ## Routeur
 
@@ -67,16 +100,16 @@ La récupération du modèle ainsi que l'association entre un (ou plusieurs) mod
 ```javascript
 // app/routes/books.js
 
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
   model: function () {
     return this.store.findAll('book');
   }
 });
 ```
 
--> [doc officielle](http://guides.emberjs.com/v2.13.0/routing/).
+-> [doc officielle](http://guides.emberjs.com/v3.0.0/routing/).
 
 
 ## Templates
@@ -108,7 +141,7 @@ Tout élément de modèle injecté dans un template sera **automatiquement mis �
 Évidemment, seul cet élément sera rafraîchi et non le template entier.
 Ce *binding*, qu'il soit unidirectionnel ou bidirectionnel est au coeur du fonctionnement d'[Ember][ember].
 
--> [doc officielle](http://guides.emberjs.com/v2.13.0/templates/handlebars-basics/).
+-> [doc officielle](http://guides.emberjs.com/v3.0.0/templates/handlebars-basics/).
 
 
 ## Modèles
@@ -135,7 +168,7 @@ export default DS.Model.extend({
 Cependant, l'ensemble des mécanismes décrits plus bas (les *bindings* notamment) peuvent parfaitement fonctionner en s'appuyant directement sur le modèle objet d'ember et la 
 classe ``Ember.Object`` [en détail](http://eviltrout.com/2013/03/23/ember-without-data.html).
 
--> [doc officielle](http://guides.emberjs.com/v2.13.0/models/).
+-> [doc officielle](http://guides.emberjs.com/v3.0.0/models/).
 
 ## Contrôleurs
 
@@ -151,9 +184,9 @@ Le contrôleur est par exemple responsable du traitement des actions effectuées
 ```js
 // app/controllers/books.js
 
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   actions: {
 
     // appelé lors du clic sur le bouton
@@ -164,7 +197,7 @@ export default Ember.Controller.extend({
 });
 ```
 
--> [doc officielle](http://guides.emberjs.com/v2.13.0/controllers/).
+-> [doc officielle](http://guides.emberjs.com/v3.0.0/controllers/).
 
 **Note**: Les contrôleurs [Ember][ember] sont appelés à disparaître progressivement au profit de l'utilisation de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md).
 Ce qui explique l'absence des contrôleurs sur la figure ci-dessus.
@@ -178,7 +211,7 @@ Avec la version 2, celle-ci s'est encore renforcée avec la disparition des *vue
 Les composants [Ember][ember] s'articulent autour d'une partie template et/ou d'une partie logique.
 Dans les prochaines versions à venir, l'apparition de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md) devrait rendre l'utilisation de contrôleurs seuls obsolète.
 
--> [doc officielle](https://guides.emberjs.com/v2.13.0/components/defining-a-component/).
+-> [doc officielle](https://guides.emberjs.com/v3.0.0/components/defining-a-component/).
 
 
 ## Génération d'objets
