@@ -103,11 +103,11 @@ L'intérêt consiste à injecter dans ce template des valeurs et expressions dyn
    ```javascript
    // app/routes/application.js
    
-   import Ember from 'ember';
+   import Route from '@ember/routing/route';
    
-   export default Ember.Route.extend({
+   export default Route.extend({
    
-     model: function() {
+     model() {
        // WARN : SHOULD NOT BE DONE : We should not affect anything to window but 
        // for the exercice, we want to access to comic from console today
        window.comic = {title: "Blacksad"};
@@ -137,8 +137,9 @@ L'intérêt consiste à injecter dans ce template des valeurs et expressions dyn
    
    On constate que notre application affiche désormais le nom du comic que nous avons créé et injecté dans le template
 
-1. Ouvrir la console javascript et modifier le titre du comic.
-   Quels sont les deux constats majeurs que l'on peut effectuer ?
+1. Ouvrir la console JavaScript et modifier le titre du comic.
+   Pour ce faire, essayez de modifier directement la propriété, puis utilisez le setter de l'objet (`comic.set()`) et enfin, utiliser la fonction [`Ember.set()`](https://emberjs.com/api/ember/3.0/functions/@ember%2Fobject/set).
+   Quels sont les constats majeurs que l'on peut effectuer ?
 
    > ```javascript
    > > comic
@@ -147,16 +148,20 @@ L'intérêt consiste à injecter dans ce template des valeurs et expressions dyn
    > > comic.title = "new title"
    > Uncaught EmberError {description: undefined, fileName: undefined, lineNumber: undefined, message: "Assertion Failed: You must use Ember.set() to set … `title` property (of [object Object]) to `test`.", name: "Error"…}
    >
+   > > comic.set("title", "new title");
+   > TypeError: comic.set is not a function
+   >
    > > Ember.set(comic, 'title', 'new title');
    > "new title"
    > ```
    
    > On constate les choses suivantes : 
    >
-   > 1. L'objet 'comic' créé a été enrichi par Ember.
+   > 1. L'objet 'comic' est désormais géré par Ember.
    > De ce fait, on ne doit plus et on ne peut plus manipuler directement ses propriétés sans accesseurs.
-   > cf [Modèle objet](../object-model)
-   > 2. En utilisant les outils proposés par le modèle objet d'[Ember](http://emberjs.com), on constate que le template est automatiquement mis à jour lorsque l'on modifie l'objet.
+   > cf. [Modèle objet](../object-model)
+   > 2. L'object comic n'est cependant pas une instance d'`EmberObject` et le prototype n'a pas été enrichi, ne permettant pas de manipuler les accesseurs directement depuis l'objet.
+   > 3. En utilisant la fonction `Ember.set`, on constate que le template est automatiquement mis à jour lorsque l'on modifie l'objet.
    > C'est ce que l'on appelle le **binding**.
 
   {% endraw %}
@@ -312,6 +317,8 @@ cf [Ember documentation](http://guides.emberjs.com/2.13.0/templates/writing-help
    > // app/routes/application.js
    > ...
    > window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes"}];
+   > 
+   > return comics;
    > ...
    > ```
    >  
@@ -344,10 +351,10 @@ cf [Ember documentation](http://guides.emberjs.com/2.13.0/templates/writing-help
     > 3
     > 
     > > comics.pushObject({title: "Akira"})
-    > Object {title: "Akira"}
+    > Object { title: "Akira" }
     > 
     > > comics
-    > [Object, Object, Object, Object]
+    > Array [ {…}, {…}, {…}, {…} ]
     > ```
     > 
     > * Dans le premier cas, en utilisant la méthode native `push`, le template n'a pas été mis à jour alors que l'objet a bien été ajouté (on a maintenant 2 éléments).

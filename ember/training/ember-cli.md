@@ -45,20 +45,20 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 <div class="work no-answer">
     {% capture m %}
 
-1. Installer Node : [ici](https://nodejs.org/en/)
+1. Installer Node (< 8) : [ici](https://nodejs.org/en/)
  
    ```console
    $ node -v
-   v7.10.0
+   v7.10.1
    $ npm -v
-   4.6.1
+   4.2.0
    ```
     
 1. Installer Yarn : [ici](https://yarnpkg.com/lang/en/docs/install/)
 
    ```console
-   $ yarn --version
-   0.24.5
+   $ yarn -v
+   1.5.1
    ```
 
 1. Puis [Ember CLI](http://www.ember-cli.com/) :
@@ -66,8 +66,8 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ yarn global add ember-cli
    $ ember -v
-   version: 2.13.2
-   node: 7.10.0
+   ember-cli: 3.0.0
+   node: 7.10.1
    ```
    
 1. Vérifier la version de npm.
@@ -75,14 +75,13 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    ```console
    $ npm -v
-   4.6.1
+   4.2.0
    ```
 
 1. Créer une nouvelle application ``ember-training`` via [Ember CLI](http://www.ember-cli.com/) et la ligne de commande `ember` :
 
    ```console
    $ ember new ember-training --yarn
-   version: 2.13.2
    installing app
      create .editorconfig
      ...
@@ -96,9 +95,14 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ cd ember-training
    $ ember serve
-   version: 2.13.2
-   Livereload server on http://localhost:49152
+   Build successful (13466ms)
    Serving on http://localhost:4200/
+
+   Slowest Nodes (totalTime => 5% )              | Total (avg)         
+   ----------------------------------------------+---------------------
+   Babel (20)                                    | 10731ms (536 ms)    
+   Concat (8)                                    | 1116ms (139 ms)     
+   Rollup (1)                                    | 727ms
    ```
 
 1. Ouvrir le navigateur à [cette adresse](http://localhost:4200) et constater que la page ci-dessous est affichée :
@@ -107,8 +111,8 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    Dans le cadre d'un projet, cet addon est à désinstaller pour supprimer cette page d'aide : `yarn remove ember-welcome-page` )
 
-1. Ouvrir le fichier `/app/templates/application.hbs`, supprimer le composant `{{welcome-page}}` et ajouter un titre:
    {% raw %}
+1. Ouvrir le fichier `/app/templates/application.hbs`, supprimer le composant `{{welcome-page}}` et ajouter un titre:
    ```html
    <h2 id="title">Welcome to Ember</h2>
    
@@ -120,9 +124,9 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    ```console
    DEBUG: -------------------------------
-   DEBUG: Ember      : 2.13.2
-   DEBUG: Ember Data : 2.13.1
-   DEBUG: jQuery     : 3.2.1
+   DEBUG: Ember      : 3.0.0
+   DEBUG: Ember Data : 3.0.2
+   DEBUG: jQuery     : 3.3.1
    DEBUG: -------------------------------
    ``` 
 
@@ -184,13 +188,13 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    
      "devDependencies": {
        ...
-       "ember-cli-sass": "^6.1.3",
+       "ember-cli-sass": "^7.1.7",
        ...
      }
    ...
    ```
 1. Installer l'addon [ember-bootstrap](http://www.ember-bootstrap.com).
-   Cet addon permet d'intégrer le framework CSS [Twitter Bootstrap](https://getbootstrap.com) et fournit des composants [Ember][ember] compatibles prêts à l'emploi.
+   Cet addon permet d'intégrer le framework CSS [Twitter Bootstrap](https://getbootstrap.com) et fournit des composants Ember compatibles prêts à l'emploi.
    Comme nous souhaitons utiliser Bootstrap 4, il faut ensuite le déclarer explicitement :
 
    ```console
@@ -207,7 +211,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    $ ember generate ember-bootstrap --bootstrap-version=4
      uninstall package bootstrap-sass
      install package bootstrap
-   Yarn: Installed bootstrap@next
+   Yarn: Installed bootstrap@^4.0.0
    Yarn: Uninstalled bootstrap-sass
    Added import statement to app/styles/app.scss
    Added ember-bootstrap configuration to ember-cli-build.js
@@ -221,10 +225,10 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    ...
    
      "devDependencies": {
-       "bootstrap": "next",
+       "bootstrap": "^4.0.0",
        "broccoli-asset-rev": "^2.4.5",
        "ember-ajax": "^3.0.0",
-       "ember-bootstrap": "^1.0.0-alpha.12",
+       "ember-bootstrap": "^1.2.1",
        ...
      }
    ...
@@ -237,14 +241,15 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    // ember-cli-build.js
 
    module.exports = function(defaults) {
-   var app = new EmberApp(defaults, {
-     'ember-bootstrap': {
-       'bootstrapVersion': 4,
-       'importBootstrapFont': false,
-       'importBootstrapCSS': false
-     }
-   });
+     let app = new EmberApp(defaults, {
+      'ember-bootstrap': {
+        'bootstrapVersion': 4,
+        'importBootstrapFont': false,
+        'importBootstrapCSS': false
+      }
+    });
    ...
+   };
    ```
 
 1. Afin de bénéficier d'un jeu d'icônes complet, nous allons également installer l'addon [ember-font-awesome](https://github.com/martndemus/ember-font-awesome) :
