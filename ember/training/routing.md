@@ -27,11 +27,12 @@ Si l'on examine le routeur de notre application, tel que créé par [Ember CLI][
 ```javascript
 // app/router.js
 
-import Ember from 'ember';
+import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 
-const Router = Ember.Router.extend({
-  location: config.locationType
+const Router = EmberRouter.extend({
+  location: config.locationType,
+  rootURL: config.rootURL
 });
 
 Router.map(function() {
@@ -60,14 +61,13 @@ On souhaite désormais créer une nouvelle route pour l'affichage et la manipula
    ```console
    $ ember generate route comics
 
-   version: 2.13.2
    installing route
-     identical app\routes\comics.js
-     identical app\templates\comics.hbs
+     create app/routes/comics.js
+     create app/templates/comics.hbs
    updating router
      add route comics
    installing route-test
-     identical tests\unit\routes\comics-test.js
+     create tests/unit/routes/comics-test.js
    ```
 
    On remarque que plusieurs éléments ont été générés / modifiés :
@@ -82,7 +82,9 @@ On souhaite désormais créer une nouvelle route pour l'affichage et la manipula
    * une nouvelle route ``app/routes/comics.js`` vide.
 
      ```javascript
-     export default Ember.Route.extend({
+     import Route from '@ember/routing/route';
+
+     export default Route.extend({
      });
      ```
    * un nouveau template ``app/templates/comics.hbs`` qui ne contient qu'un ``{{outlet}}``.
@@ -95,16 +97,16 @@ On souhaite désormais créer une nouvelle route pour l'affichage et la manipula
      Celui-ci ne contient qu'une simple assertion permettant de vérifier l'existence de la route.
 
      ```javascript
-     import { moduleFor, test } from 'ember-qunit';
+     import { module, test } from 'qunit';
+     import { setupTest } from 'ember-qunit';
 
-     moduleFor('route:comics', 'Unit | Route | comics', {
-       // Specify the other units that are required for this test.
-       // needs: ['controller:foo']
-     });
+     module('Unit | Route | comics', function(hooks) {
+       setupTest(hooks);
 
-     test('it exists', function(assert) {
-       var route = this.subject();
-       assert.ok(route);
+       test('it exists', function(assert) {
+         let route = this.owner.lookup('route:comics');
+         assert.ok(route);
+       });
      });
      ```
 
@@ -183,20 +185,26 @@ L'organisation des routes au sein du routeur et leur imbrication président donc
     >
     > ```javascript
     > // app/routes/application.js
-    > export default Ember.Route.extend({
+    >
+    > import Route from '@ember/routing/route';
+    >
+    > export default Route.extend({
     > });
     > ```
     >
     > ```javascript
     > // app/routes/comics.js
-    > export default Ember.Route.extend({
     >
-    >   model: function () {
-    >     // WARN : SHOULD NOT BE DONE : We should not affect anything to windows but
-    >     // for the exercice, we want to access to comics from console today
-    >     window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes", scriptwriter: "Bill Watterson"}];
+    > import Route from '@ember/routing/route';
     >
-    >     return window.comics;
+    > export default Route.extend({
+    >
+    >   model() {
+    >     // WARN : SHOULD NOT BE DONE : We should not affect anything to window but 
+    >     // for the exercice, we want to access to comic from console today
+    >     window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes", scriptwriter:"Bill Watterson"}];
+    >
+    >     return comics;
     >   }
     > });
     > ```
@@ -305,10 +313,11 @@ Cet objet permet d'agir sur la transaction en cours et notamment d'annuler la tr
    * Définir les propriétés ``slug``, ``title``, ``scriptwriter``, ``illustrator``, ``publisher``
 
      > ```javascript
-     > // app/models/comics
-     > import Ember from 'ember';
+     > // app/models/comic.js
      >
-     > export default Ember.Object.extend({
+     > import EmberObject from '@ember/object';
+     >
+     > export default EmberObject.extend({
      >   slug: '',
      >   title: '',
      >   scriptwriter: '',
@@ -352,8 +361,9 @@ Cet objet permet d'agir sur la transaction en cours et notamment d'annuler la tr
 
      > ```javascript
      > // app/routes/comics
-     > import Ember from 'ember';
-     >  import Comic from 'ember-training/models/comic';
+     >
+     > import Route from '@ember/routing/route';
+     > import Comic from 'ember-training/models/comic';
      >
      > const blackSad = Comic.create({
      >   slug: 'blacksad',
@@ -381,7 +391,7 @@ Cet objet permet d'agir sur la transaction en cours et notamment d'annuler la tr
      >
      > const comics = [blackSad, calvinAndHobbes, akira];
      >
-     > export default Ember.Route.extend({
+     > export default Route.extend({
      >   model() {
      >     return comics;
      >   }
@@ -437,7 +447,6 @@ Par convention, les éléments constitutifs des routes filles (template, route, 
     > ```console
     > $ ember generate route comics/comic
     >
-    > version: 2.13.2
     > installing route
     >   create app\routes\comics\comic.js
     >   create app\templates\comics\comic.hbs
@@ -509,7 +518,7 @@ On récupère ensuite la valeur de ce paramètre dans le *hook* ``model()`` évo
 ```javascript
 // app/routes/book.js
 
-export default Ember.Route.extend({
+export default Route.extend({
   model(params) {
     return findModelById('book', params.book_id);
   }
@@ -609,33 +618,37 @@ place du texte précédent.
     > ```javascript
     > // app/routes/comics/comic.js
     >
-    > import Ember from 'ember';
+    > import Route from '@ember/routing/route';
     >
-    > export default Ember.Route.extend({
+    > export default Route.extend({
     >   model (params) {
     >     return this.modelFor('comics').findBy('slug', params.comic_slug);
     >   }
     > });
     > ```
 
-1. Mettre un point d'arrêt dans la méthode ``model`` de ``comics.comic`` et constater les choses suivantes :
+1. Mettre un point d'arrêt dans la méthode ``model`` de ``comics.comic`` et constater les choses suivantes, en activant la route ``comics.comic`` :
     * l'utilisation de ``this.get('model')`` ne renvoie pas le modèle mais la fonction ``model()``
     * l'utilisation de ``this.modelFor('comics')`` renvoie l'objet model.
 
       ```console
       $ this.get('model')
-        (params, transition) {
-            var match, name, sawParams, value;
-            var queryParams = _emberMetalProperty_get.get(this, '_qp.map');
-
-            for (var prop in params) {
-              if (prop === 'q…
+      ƒ model(params) {
+        return this.modelFor('comics').findBy('slug', params.comic_slug);
+      }
 
       $ this.modelFor('comics')
-        Class {_content: Array[3], _didInitArrayProxy: true, _prevContent: Array[3], _prevArrangedContent: Array[3], __ember1447938213166: null…}
+      (3) [Class, Class, Class]
 
       $ this.modelFor(this.routeName)
-        Class {_content: Array[3], _didInitArrayProxy: true, _prevContent: Array[3], _prevArrangedContent: Array[3], __ember1447938213166: null…}
+      undefined
+      ```
+    * puisqu'on est actuellement dans la définition du modèle de la route ``comics.comic`` celui-ci est encore ``undefined``.
+      Si l'on enregistrait dans ``window`` une variable self avec le ``this`` courant et que l'on y accédait après la résolution du modèle, on aurait le résultat suivant :
+
+      ```console
+      $ self.modelFor(self.routeName)
+      Class {slug: "blacksad", …}
       ```
 
   {% endraw %}
@@ -765,7 +778,7 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
    > ```html
    > {{!-- app/templates/comics.hbs --}}
    > ...
-   > <ul>
+   > <ul class="comics-list">
    >   {{#each model as |comic|}}
    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
    >       {{#link-to "comics.comic" comic.slug}}
@@ -782,7 +795,7 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
    > ```javascript
    > // app/routes/comics/comic.js
    >
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    >   model (params) {
    >     console.log('passed in comic model');
    >     return this.modelFor('comics').findBy('slug', params.comic_slug);
@@ -819,7 +832,7 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
    > ```javascript
    > // app/routes/comics/comic.js
    >
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    >   model (params) {
    >     console.log('passed in comic model');
    >     return this.modelFor('comic').findBy('slug', params.comic_slug);
@@ -954,7 +967,7 @@ Ils proposent une implémentation par défaut vide, bien entendu.
     > ```
     >
     > ```html
-    > {{!-- app/templates/error.hbs --}}
+    > {{!-- app/templates/comics/error.hbs --}}
     > <p id="error">
     >   Comic error: {{model}}
     > </p>
@@ -1084,11 +1097,9 @@ Ceci tout en conservant les URLs existantes ainsi que l'imbrication des routes e
    > ...
    >
    > moduleFor('route:comic', 'Unit | Route | comic', {
-   >   beforeEach() {
-   >     this.subject().modelFor = function () {
-   >       return COMICS;
-   >     };
-   >   }
+   >   ...
+   >   let route = this.owner.lookup('route:comic');
+   >   ...
    > });
    >
    > ...
@@ -1202,12 +1213,22 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
      >  |   |- error.hbs
      > ```
 
+     > ```javascript
+     > // app/router.js
+     >
+     > Router.map(function() {
+     >   this.route('comics', function() {
+     >     this.route('comic', {path: '/:comic_slug', resetNamespace: true}, function() {
+     >       this.route('edit');
+     >     });
+     >   });
+     > });
+     > ```
+     
      > ```html
      > {{!-- app/templates/comic.hbs --}}
      >
-     > <div class="comic">
-     >   {{outlet}}
-     > </div>
+     > {{outlet}}
      > ```
 
      > ```html
@@ -1216,7 +1237,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
      > <div class="comic">
      >   <form>
      >     <!-- cf. ci-dessus. -->
-     >   </div>
+     >   </form>
      > </div>
      > ```
 
@@ -1224,17 +1245,17 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
      > {{!-- app/templates/comic/index.hbs --}}
      >
      > <div class="comic">
-     >    <h3 class="comic-title">{{model.title}}</h3>
+     >   <h3 class="comic-title">{{model.title}}</h3>
      >
-     >    <dl class="comic-description">
-     >      <dt class="comic-label">scriptwriter</dt>
-     >      <dd class="comic-value">{{model.scriptwriter}} </dd>
-     >      <dt class="comic-label">illustrator</dt>
-     >      <dd class="comic-value">{{model.illustrator}}</dd>
-     >      <dt class="comic-label">publisher</dt>
-     >      <dd class="comic-value">{{model.publisher}}</dd>
-     >    </dl>
-     >  </div>
+     >   <dl class="comic-description">
+     >     <dt class="comic-label">scriptwriter</dt>
+     >     <dd class="comic-value">{{model.scriptwriter}} </dd>
+     >     <dt class="comic-label">illustrator</dt>
+     >     <dd class="comic-value">{{model.illustrator}}</dd>
+     >     <dt class="comic-label">publisher</dt>
+     >     <dd class="comic-value">{{model.publisher}}</dd>
+     >   </dl>
+     > </div>
      > ```
 
      > On a donc remplacé le contenu du template ``comic.hbs`` par un ``outlet`` pour accueillir les routes filles.
@@ -1303,10 +1324,9 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    >       {{link-to "" 'comic.edit' model class="btn-edit"}}
    >     </div>
    >   </div>
-   >
-   >   ...
-   >
    > </div>
+   >
+   > ...
    > ```
 
 1. Créer la route ``comics.create`` fille de la route ``comics`` accessible à l'URL ``comics/create``
@@ -1371,10 +1391,10 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    > ```javascript
    > // app/routes/comics/create.js
    >
-   > import Ember from 'ember';
+   > import Route from '@ember/routing/route';
    > import Comic from 'ember-training/models/comic';
-   >
-   > export default Ember.Route.extend({
+   > 
+   > export default Route.extend({
    >   model () {
    >     const newComic = Comic.create({'slug': 'new'});
    >     this.modelFor('comics').pushObject(newComic);
@@ -1382,6 +1402,19 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    >   }
    > });
    > ```
+
+   > ```javascript
+   > // app/router.js
+   > 
+   > Router.map(function() {
+   >   this.route('comics', function() {
+   >     this.route('comic', {path: '/:comic_slug', resetNamespace: true}, function() {
+   >       this.route('edit');
+   >     });
+   >     this.route('create');
+   >   });
+   > });
+   >```
 
    On remarque ici aussi le *binding* ainsi que le fait qu'une fois ajouté à la liste, le nouveau comic apparait bien dans la liste à gauche.
 
@@ -1434,7 +1467,7 @@ Cette méthode ne doit pas être utilisée de manière courante mais peut être 
     > ```javascript
     > // app/routes/comics/create.js
     >
-    > export default Ember.Route.extend({
+    > export default Route.extend({
     >   templateName: 'comic/edit',
     >   model () {...}
     > });
@@ -1504,9 +1537,9 @@ La méthode ``transitionTo`` est courament utilisée avec comme seul paramètre 
    > ```javascript
    > //app/routes/index.js
    >
-   > import Ember from 'ember';
+   > import Route from '@ember/routing/route';
    >
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    >   beforeModel() {
    >     this.transitionTo('comics');
    >   }
