@@ -180,9 +180,9 @@ actions: {
    > ```javascript
    > // app/routes/comic/edit.js
    >
-   > import Ember from 'ember';
+   > import Route from '@ember/routing/route';
    > 
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    >   actions: {
    >     save () {
    >       this.transitionTo('comic');
@@ -225,10 +225,10 @@ actions: {
     > ```javascript
     > // app/routes/comic/edit.js
     > 
-    > import Ember from 'ember';
+    > import Route from '@ember/routing/route';
     > import Comic from 'ember-training/models/comic';
     > 
-    > export default Ember.Route.extend({
+    > export default Route.extend({
     >   afterModel (model) {
     >     this.set('initialModel', Comic.create(model));
     >   },
@@ -263,13 +263,14 @@ actions: {
    > ```javascript
    > // app/models/comic.js
    > 
-   > import Ember from 'ember';
+   > import EmberObject, { computed } from '@ember/object';
    > 
-   > export default Ember.Object.extend({
-   >   slug: function() {
+   > export default EmberObject.extend({
+   >   slug: computed('title', function() {
    >     const title = this.get('title') || 'new';
    >     return title.dasherize();
-   >   }.property('title'),
+   >   }),
+   >
    >   title: '',
    >   scriptwriter: '',
    >   illustrator: '',
@@ -282,10 +283,10 @@ actions: {
    > ```javascript
    > // app/routes/comics/create.js
    > 
-   > import Ember from 'ember';
+   > import Route from '@ember/routing/route';
    > import Comic from 'ember-training/models/comic';
    > 
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    >   templateName: 'comic/edit',
    >
    >   model () {...},
@@ -471,9 +472,9 @@ Le traitement de ces actions se fait de la même manière que les actions vues p
    > ```javascript
    > // app/controllers/comic/edit.js
    > 
-   > import Ember from 'ember';
+   > import Controller from '@ember/controller';
    > 
-   > export default Ember.Controller.extend({
+   > export default Controller.extend({
    > 
    >   actions: {
    >     save() {
@@ -542,13 +543,13 @@ appelée systématiquement lorsque la route ou le modèle change qui permet de l
     > ```javascript
     > // app/routes/comic/edit.js
     > 
-    >   afterModel (model) { ... },
+    > afterModel (model) { ... },
     > 
-    >   resetController (controller) {
-    >     controller.set('hasUserSavedOrCancel', false);
-    >   },
+    > resetController (controller) {
+    >   controller.set('hasUserSavedOrCancel', false);
+    > },
     > 
-    >   resetComic () { ... },
+    > resetComic () { ... },
     >   
     > ```
   
@@ -619,7 +620,7 @@ Noter également que le contrôleur en question doit impérativement avoir été
     [03 - Controller - 12 - Should abort create after confirm false](https://github.com/bmeurant/ember-training/blob/controllers-tests/tests/acceptance/03-controller-test.js#L337)
     
     > ```javascript
-    >   export default Ember.Route.extend({
+    >   export default Route.extend({
     >     templateName: 'comic/edit',
     >     controllerName: 'comic/edit',
     >   
@@ -685,22 +686,24 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
    * Enfin, modifier le span de classe ``comics-number`` afin d'afficher, en temps réel, le nombre de comics triés (ne pas modifier le contrôleur).
    
    ```javascript
-   import Ember from 'ember';
+   import Controller from '@ember/controller';
+   import { computed } from '@ember/object';
+   import { filter, sort } from '@ember/object/computed';
    
-   export default Ember.Controller.extend({
+   export default Controller.extend({
      filter: "",
      sortAsc: true,
    
-     filteredComics: Ember.computed.filter(..., function (model) {
+     filteredComics: filter(..., function (model) {
        const title = model.get('title');
        return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
      }).property(???, ???, ???),
    
-     sortDefinition: function () {
-       return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')];
-     }.property(???),
+     sortDefinition: computed(???, function () {
+       return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')]; 
+     }),
    
-     sortedComics: Ember.computed.sort(???, 'sortDefinition'),
+     sortedComics: sort(???, 'sortDefinition'),
    
      actions: {
        sort () {
@@ -736,22 +739,24 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
    > ```javascript
    > // app/controllers/comics.js
    >
-   > import Ember from 'ember';
+   > import Controller from '@ember/controller';
+   > import { computed } from '@ember/object';
+   > import { filter, sort } from '@ember/object/computed';
    > 
-   > export default Ember.Controller.extend({
+   > export default Controller.extend({
    >   filter: "",
    >   sortAsc: true,
    > 
-   >   filteredComics: Ember.computed.filter('model', function (model) {
+   >   filteredComics: filter('model', function (model) {
    >     const title = model.get('title');
    >     return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
    >   }).property('filter', 'model.[]', 'model.@each.title'),
    > 
-   >   sortDefinition: function () {
-   >     return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')];
-   >   }.property('sortAsc'),
+   >   sortDefinition: computed('sortAsc', function () {
+   >     return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')]; 
+   >   }),
    > 
-   >   sortedComics: Ember.computed.sort('filteredComics', 'sortDefinition'),
+   >   sortedComics: sort('filteredComics', 'sortDefinition'),
    > 
    >   actions: {
    >     sort () {
@@ -764,31 +769,31 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
    > ```html
    > {{!-- app/templates/comics.hbs --}}
    >
-   > <div class="row">
-   >   <div class="comics">
-   >     <h2>Comics list</h2>
+   > <div class="comics">
+   >   <h2 class="comics-title">Comics list</h2>
    > 
+   >   <div class="comics-filter">
    >     {{input type=text value=filter class="filter"}}
-   >     <button {{action "sort"}} class="sort {{if sortAsc 'sort-asc' 'sort-desc'}}"></button>
-   > 
-   >     <ul>
-   >       {{#each sortedComics as |comic|}}
-   >         <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}}">
-   >           {{#link-to "comic" comic}}
-   >             {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
-   >           {{/link-to}}
-   >         </li>
-   >       {{else}}
-   >         Sorry, no comic found
-   >       {{/each}}
-   >     </ul>
-   >     {{link-to '' 'comics.create' class="add-comic"}}
-   > 
-   >     <span class="comics-number">Number of comics: {{sortedComics.length}}</span>
+   >     <button {{action "sort"}} class="btn-sort {{if sortAsc 'sort-asc' 'sort-desc'}}"></button>
    >   </div>
    > 
-   >   {{outlet}}
+   >   <ul class="comics-list">
+   >     {{#each sortedComics as |comic|}}
+   >       <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
+   >       {{#link-to "comic" comic}}
+   >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
+   >       {{/link-to}}
+   >     </li>
+   >     {{else}}
+   >       Sorry, no comic found
+   >     {{/each}}
+   >   </ul>
+   >   {{link-to '' 'comics.create' class="add-comic"}}
+   > 
+   >   <span class="comics-number">Number of comics: {{sortedComics.length}}</span>
    > </div>
+   > 
+   > {{outlet}}
    > ```
   
   {% endraw %}
