@@ -1174,8 +1174,8 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
              <input id="title" type="text" value={{model.title}} />
            </div>
            <div class="buttons">
-             <button type="submit" {{action 'save'}} class="btn-submit"></button>
-             <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
+             <button type="submit" class="btn-submit"></button>
+             <button type="reset" class="btn-cancel"></button>
            </div>
          </div>
  

@@ -15,7 +15,7 @@ Il est donc nécessaire, en premier lieu, de copier ce ou ces fichiers de test d
 * [fav-btn-test.js](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/fav-btn-test.js) dans ``tests/integration/components``.
 * [image-cover-test.js](https://github.com/bmeurant/ember-training/blob/components-tests/tests/integration/components/image-cover-test.js) dans ``tests/integration/components``.
 
-## Componsants
+## Composants
 
 Les composants [Ember][ember] constituent une part importante de la structure du framework.
 [Ember][ember] revendique en effet depuis toujours une approche composants ainsi que la volonté de converger vers les [Web components](http://w3c.github.io/webcomponents/) et les [Custom elements](http://w3c.github.io/webcomponents/spec/custom/) en particulier.
@@ -185,7 +185,7 @@ Dans le cas précis il effectue un simple affichage
    > ```html
    > {{!-- app/templates/comic/index.hbs --}}
    > ... 
-   > <h3 class="comic-title">{{model.title}}</h3>
+   > <div class="comic-header">...</h3>
    > {{image-cover}}
    > <dl class="comic-description">
    > ...
@@ -194,9 +194,7 @@ Dans le cas précis il effectue un simple affichage
    > ```html
    > {{!-- app/templates/comic/edit.hbs --}}
    > ... 
-   > <div class="comic-title">
-   >   {{input id="title" type="text" value=model.title}}
-   > </div>
+   > <div class="comic-header">...</h3>
    >
    > {{image-cover name=model.slug}}
    >
@@ -213,7 +211,7 @@ Dans le cas précis il effectue un simple affichage
    > ```html
    > {{!-- app/templates/comic/index.hbs --}}
    > ... 
-   > <h3 class="comic-title">{{model.title}}</h3>
+   > <div class="comic-header">...</h3>
    > {{image-cover name=model.slug}}
    > <dl class="comic-description">
    > ...
@@ -255,7 +253,7 @@ Il est facilement possible de modifier ce comportement grâce à la propriété 
 Cette propriété attend une chaîne de caractère contenant le type de l'élément : 
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'li'
 });
 ```
@@ -272,7 +270,7 @@ De la même manière il est possible de spécifier le ou les noms de classe(s) a
 Cette propriété attend soit une chaîne de caractère avec le nom de la classe unique à ajouter au composant soit un tableau de chaînes de caractères dans le cas de classes multiples : 
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['btn', 'success']
 });
 ```
@@ -288,7 +286,7 @@ Cela s'effectue grâce à la propriété ``classNameBindings``.
 La présence d'une classe sur le composant dépend ainsi de la valeur de la propriété booléenne associée sur le format ``<prop>:<classIfTrue>:<classIfFalse>``.
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   classNameBindings: 'isSuccess:success:error',
   isSuccess: true
 });
@@ -309,7 +307,7 @@ Celle-ci fonctionne comme la précédente et autorise également la présence d'
 Elle permet de positionner l'attribut spécifié à la valeur de la propriété de même nom.
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   attributeBindings: 'name',
   name: "username"
 });
@@ -318,7 +316,7 @@ export default Ember.Component.extend({
 Il est également possible de spécifier explicitement le nom de la propriété : 
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   attributeBindings: 'userName:name',
   userName: "username"
 });
@@ -362,7 +360,7 @@ Ainsi, si un composant est invoqué de la manière suivante :
 Il peut parfaitement déclarer le binding suivant :
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   classNameBindings: 'selected'
 });
 ```
@@ -373,7 +371,7 @@ Il est cependant nécessaire de rappeler explicitement que les propriétés pass
 Ainsi, la syntaxe suivante (où `user` est passé au composant par le parent) n'affichera jamais l'attribut ``name`` qui restera toujours ``null`` :
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   attributeBindings: 'userName:name',
   userName: user.get('fullName')
 });
@@ -384,7 +382,7 @@ Il est donc nécessaire d'utiliser une **computed property**.
 Dans ce cas, dès que la propriété dynamique ``userName`` passée par le parent changera de valeur, l'attribut ``name`` sera automatiquement mis à jour : 
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   attributeBindings: 'userName:name',
   userName: function () {
       return this.get('user.fullName');
@@ -410,15 +408,16 @@ Ces mécanismes permettent donc de propager naturellement aux composants, via le
    > ```javascript
    > // app/components/image-cover.js
    > 
-   > import Ember from 'ember';
+   > import Component from '@ember/component';
+   > import { computed } from '@ember/object';
    > 
-   > export default Ember.Component.extend({
+   > export default Component.extend({
    >   tagName: 'img',
    >   classNames: 'cover',
    >   attributeBindings: 'src',
-   >   src: function () {
+   >   src: computed('name', function () {
    >     return `/assets/images/comics/covers/${this.get('name')}.jpg`;
-   >   }.property('name')
+   >   })
    > });
    > ```
    >
@@ -444,7 +443,7 @@ L'évènement n'est pas consommmé et continue à être propagé au sein de l'ar
 Il est possible de stopper cette propagation en renvoyant `false`.
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   click(event) {
       // do whatever you want
       ...
@@ -469,7 +468,7 @@ Ainsi le code suivant ajoute un gestionnaire pour l'évènement ``paste`` et sup
 Le label associé à l'évènement correspond au nom du gestionnaire qui sera invoqué lors de la survenue de l'évènement : 
 
 ```javascript
-export default Ember.Application.extend({
+export default Application.extend({
   customEvents: {
       // add support for the paste event
       paste : 'paste',
@@ -483,7 +482,7 @@ export default Ember.Application.extend({
 Ainsi, chaque composant pourra déclarer un gestionnaire  ``paste`` de cette manière : 
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   paste() {
       // ...
   }
@@ -518,7 +517,7 @@ export default Ember.Component.extend({
    > 
    > import Ember from 'ember';
    > 
-   > export default Ember.Component.extend({
+   > export default Component.extend({
    >   tagName: 'span',
    >   classNames: 'btn-fav',
    >   classNameBindings: 'selected',
@@ -566,7 +565,7 @@ Sans paramètre, c'est le nom par défaut "action" qui est pris.
 Tous les paramètres suivants seront vu comme des paramètres, le contexte d'exécution de l'action est remonté en même temps que le nom de l'action.
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   ...
 
   click() {
@@ -614,7 +613,7 @@ Ainsi la définition s'effectue de la manière suivante :
 ... et l'exécution : 
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   ...
 
   click() {
@@ -647,7 +646,7 @@ Par exemple :
 ```
 
 ```javascript
-export default Ember.Component.extend({
+export default Component.extend({
   mouseOver() {
     this.get('action')();
   },
@@ -666,11 +665,8 @@ export default Ember.Component.extend({
 1. Modifier le composant ``fav-btn`` de manière à propager une action en fin de méthode ``click()``
    * le gestionnaire d'action doit simplement permettre de *logger*, dans la route, le message suivant : ``<comic.slug> - favorite: <comic.isFavorite>``
    * cette action doit être exécutée aussi bien en consultation qu'en édition 
-   * les deux typologies d'actions définies plus haut peuvent être indifférement utilisées
-   * utiliser impérativement [Ember.Logger.debug](http://emberjs.com/api/classes/Ember.Logger.html#method_debug) pour cette opération
-    
-     La classe ``Ember.Logger`` offre une simple surcoûche à l'objet natif ``console`` permettant de s'abstraire d'éventuelles problématiques et API non standard, propre à chaque navigateur.
-     En l'occurence, l'utilisation de cette classe nous permet également d'intercepter la fonction de log pour des besoins de tests.
+   * les deux typologies d'actions définies plus haut peuvent être utilisées mais les closure actions sont à priliégier sauf en cas de besoin de bubbling
+   * utiliser impérativement [console.debug] pour cette opération
    
    **Test** : Ces modifications doivent rendre passant les tests [04 - Components - 01 - Should log on index](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L73) et [04 - Components - 02 - Should log on edit](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L98)
    
@@ -678,13 +674,14 @@ export default Ember.Component.extend({
    >
    > ```javascript
    > // app/components/btn-fav.js
-   > export default Ember.Component.extend({
+   > export default Component.extend({
    >   tagName: 'span',
    >   classNames: 'btn-fav',
    >   classNameBindings: 'selected',
    > 
    >   click() {
    >     this.toggleProperty('selected');
+   >     // eslint-disable-next-line ember/closure-actions
    >     this.sendAction();
    >   }
    > });
@@ -706,12 +703,14 @@ export default Ember.Component.extend({
    >
    > ```javascript
    > // app/routes/comic.js
-   > export default Ember.Route.extend({
+   >
+   > export default Route.extend({
    >   ...
    >   actions: {
    >     favorize () {
    >       const model = this.modelFor(this.routeName);
-   >       Ember.Logger.debug(model.get('slug'), '- favorite:', model.get('isFavorite'));
+   >       // eslint-disable-next-line no-console
+   >       console.debug(model.get('slug'), '- favorite:', model.get('isFavorite'));
    >     }
    >   }
    > });
@@ -721,7 +720,8 @@ export default Ember.Component.extend({
    >
    > ```javascript
    > // app/components/btn-fav.js
-   > export default Ember.Component.extend({
+   >
+   > export default Component.extend({
    >   tagName: 'span',
    >   classNames: 'btn-fav',
    >   classNameBindings: 'selected',
@@ -749,7 +749,8 @@ export default Ember.Component.extend({
    >
    > ```javascript
    > // app/controllers/comic/index.js
-   > export default Ember.Controller.extend({
+   >
+   > export default Controller.extend({
    > 
    >   actions: {
    >     favorize() {
@@ -761,7 +762,8 @@ export default Ember.Component.extend({
    >
    > ```javascript
    > // app/controllers/comic/edit.js
-   > export default Ember.Controller.extend({
+   >
+   > export default Controller.extend({
    > 
    >   actions: {
    >     ...
@@ -774,12 +776,13 @@ export default Ember.Component.extend({
    >
    > ```javascript
    > // app/routes/comic.js
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    >   ...
    >   actions: {
    >     onFavorize () {
    >       const model = this.modelFor(this.routeName);
-   >       Ember.Logger.debug(model.get('slug'), '- favorite:', model.get('isFavorite'));
+   >       // eslint-disable-next-line no-console
+   >       console.debug(model.get('slug'), '- favorite:', model.get('isFavorite'));
    >     }
    >   }
    > });
@@ -859,9 +862,7 @@ Les plus fréquents sont ``didInsertElement``, ``willDestroyElement`` et moins f
    
    > ```javascript
    > //app/components/image-cover.js
-   > import Ember from 'ember';
-   > 
-   > export default Ember.Component.extend({
+   > export default Component.extend({
    >   tagName: 'img',
    >   classNames: 'cover',
    >   attributeBindings: 'src',
@@ -894,4 +895,3 @@ Les plus fréquents sont ``didInsertElement``, ``willDestroyElement`` et moins f
 
 
 [ember]: http://emberjs.com/
-
