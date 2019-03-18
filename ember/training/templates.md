@@ -112,7 +112,7 @@ L'intérêt consiste à injecter dans ce template des valeurs et expressions dyn
        // for the exercice, we want to access to comic from console today
        window.comic = {title: "Blacksad"};
    
-       return comic;
+       return window.comic;
      }
    });
    ```
@@ -318,7 +318,7 @@ cf [Ember documentation](http://guides.emberjs.com/v3.4.0/templates/writing-help
    > ...
    > window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes"}];
    > 
-   > return comics;
+   > return window.comics;
    > ...
    > ```
    >  
@@ -418,7 +418,7 @@ cf [Ember documentation](http://guides.emberjs.com/v3.4.0/templates/writing-help
     > ...
     > <ul class="comics-list">
     >   {{#each model as |comic|}}
-    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
+    >     <li class="{{if comic.scriptwriter "comic-with-scriptwriter" "comic-without-scriptwriter"}} comics-list-item">
     >       {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
     >     </li>
     >   {{/each}}
@@ -439,7 +439,7 @@ cf [Ember documentation](http://guides.emberjs.com/v3.4.0/templates/writing-help
     > ...
     > <ul class="comics-list">
     >   {{#each model as |comic|}} 
-    >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
+    >     <li class="{{if comic.scriptwriter "comic-with-scriptwriter" "comic-without-scriptwriter"}} comics-list-item">
     >       {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
     >     </li>
     >   {{else}}

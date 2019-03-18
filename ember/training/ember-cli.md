@@ -124,8 +124,8 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    ```console
    DEBUG: -------------------------------
-   DEBUG: Ember      : 3.0.0
-   DEBUG: Ember Data : 3.0.2
+   DEBUG: Ember      : 3.4.0
+   DEBUG: Ember Data : 3.4.0
    DEBUG: jQuery     : 3.3.1
    DEBUG: -------------------------------
    ``` 
@@ -187,7 +187,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    
      "devDependencies": {
        ...
-       "ember-cli-sass": "^7.1.7",
+       "ember-cli-sass": "^10.0.0",
        ...
      }
    ...
@@ -257,6 +257,12 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    ember install ember-font-awesome
    Yarn: Installed ember-font-awesome
    Installed addon package.
+   
+   yarn add @fortawesome/ember-fontawesome
+   yarn add @fortawesome/free-regular-svg-icons
+   yarn add @fortawesome/free-solid-svg-icons
+   yarn add @fortawesome/fontawesome-free
+   yarn add node-sass-tilde-importer
    ```
 
    Enfin, de manière à pouvoir utiliser [Fontawesome](http://fontawesome.io) dans nos fichiers Sass, nous devons effectuer la modification suivante :
