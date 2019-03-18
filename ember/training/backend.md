@@ -349,7 +349,7 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      }
      ```
      
-1. Fournir un *serializer* personnalisé pour permettre à [Ember Data](https://guides.emberjs.com/v2.13.0/models/) de comprendre la réponse du serveur lors de l'accès à ``http://localhost:4200/comics``
+1. Fournir un *serializer* personnalisé pour permettre à [Ember Data](https://guides.emberjs.com/v3.4.0/models/) de comprendre la réponse du serveur lors de l'accès à ``http://localhost:4200/comics``
    * Trouver la méthode ``normalize*`` qui convient et l'étendre pour encapsuler le résultat dans un hash correspondant au type requêté.
    * Cette méthode doit fonctionner pour tous les modèles (pas seulement pour ``comics``)
    
@@ -408,9 +408,9 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
    
 1. On souhaite désormais récupérer les albums embarqués lorsque l'on récupère un comic
    * Pour cela, il est nécessaire de passer le paramètre de requête ``_embed=albums`` au serveur. Soit ``http://localhost:3000/comics?slug=blacksad&_embed=albums``
-   * Configurer l'application pour faire en sorte qu'[Ember Data](https://guides.emberjs.com/v2.13.0/models/) ajoute ce paramètre à la requête, dans le cas spécifique du model `comic`.
+   * Configurer l'application pour faire en sorte qu'[Ember Data](https://guides.emberjs.com/v3.4.0/models/) ajoute ce paramètre à la requête, dans le cas spécifique du model `comic`.
    * Attention à étendre les bons objets de manière à continuer à bénéficier des personnalisations précédentes
-   * Configurer l'application pour qu'[Ember Data](https://guides.emberjs.com/v2.13.0/models/) récupère les albums comme des relations embarquées du modèle ``comic``
+   * Configurer l'application pour qu'[Ember Data](https://guides.emberjs.com/v3.4.0/models/) récupère les albums comme des relations embarquées du modèle ``comic``
    * Attention ! On souhaite récupérer les albums embarqués mais n'envoyer au serveur des identifiants lors d'une modification.
      En effet, dans le cas contraire, les albums seraient définitivement enregistrés dans le json du comic lui-même, ce que l'on ne souhaite pas.
    
@@ -451,7 +451,7 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
    On constate que les albums ne sont plus chargés.
    En effet, on a indiqué grâce à la méthode ``urlForQueryRecord`` que l'on souhaitait les embarquer lors d'une requête unitaire.
    Or, lorsqu'on passe par la route ``comics``, on utilise la méthode ``findAll``.
-   Lorsque l'on sélectionne ensuite un comic, [Ember Data](https://guides.emberjs.com/v2.13.0/models/) détecte que l'on a déjà chargé le modèle, n'éxécute pas le *hook* ``model`` ni
+   Lorsque l'on sélectionne ensuite un comic, [Ember Data](https://guides.emberjs.com/v3.4.0/models/) détecte que l'on a déjà chargé le modèle, n'éxécute pas le *hook* ``model`` ni
    la méthode ``queryRecord``.
    Or la méthode ``findAll`` n'appelle pas la méthode serveur qui embarque les albums.
     
@@ -472,7 +472,7 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
      > });
      > ```
 
-  1. Enfin, un dernier warning doit apparaître dû au fait que la méthode [Ember Data](https://guides.emberjs.com/v2.13.0/models/) `queryRecord` attend un objet en réponse et non un tableau d'un seul élément, comme renvoyé par la nouvelle API.
+  1. Enfin, un dernier warning doit apparaître dû au fait que la méthode [Ember Data](https://guides.emberjs.com/v3.4.0/models/) `queryRecord` attend un objet en réponse et non un tableau d'un seul élément, comme renvoyé par la nouvelle API.
 
      On pourrait aisément modifier le hook `model` de la route `comic` pour traiter "manuellement ce cas" :
 
@@ -520,6 +520,6 @@ Pour la liste complète des propriétés / méthodes des adapters, se référer 
 </div>
 
 [ember]: http://emberjs.com/
-[ember-data]: https://guides.emberjs.com/v2.13.0/models/
+[ember-data]: https://guides.emberjs.com/v3.4.0/models/
 [ember-mirage]: http://www.ember-cli-mirage.com/
 [json-server]: https://github.com/typicode/json-server

@@ -53,8 +53,8 @@ L'application va interagir principalement avec trois types d'objets principaux :
 Les deux schémas ci-dessous illustrent les principes de fonctionnement exprimés plus haut s'agissant des requêtes et réponses entre une application et un serveur.
 
 <p class="text-center">
-    <img src="https://guides.emberjs.com/v2.10.0/images/guides/models/finding-unloaded-record-step1-diagram.png" alt="Ember Data Request"/>
-    <img src="https://guides.emberjs.com/v2.10.0/images/guides/models/finding-unloaded-record-step2-diagram.png" alt="Ember Data Response"/>
+    <img src="https://guides.emberjs.com/images/guides/models/finding-unloaded-record-step1-diagram.png" alt="Ember Data Request"/>
+    <img src="https://guides.emberjs.com/images/guides/models/finding-unloaded-record-step2-diagram.png" alt="Ember Data Response"/>
 </p>
 
 ## Modèles

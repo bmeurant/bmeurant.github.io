@@ -45,20 +45,20 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 <div class="work no-answer">
     {% capture m %}
 
-1. Installer Node (< 8) : [ici](https://nodejs.org/en/)
+1. Installer Node : [ici](https://nodejs.org/en/)
  
    ```console
    $ node -v
-   v7.10.1
+   v10.13.0
    $ npm -v
-   4.2.0
+   v6.9.0
    ```
     
 1. Installer Yarn : [ici](https://yarnpkg.com/lang/en/docs/install/)
 
    ```console
    $ yarn -v
-   1.5.1
+   1.7.0
    ```
 
 1. Puis [Ember CLI](http://www.ember-cli.com/) :
@@ -66,8 +66,8 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```console
    $ yarn global add ember-cli
    $ ember -v
-   ember-cli: 3.0.0
-   node: 7.10.1
+   ember-cli: 3.4.0
+   node: 10.13.0
    ```
    
 1. Vérifier la version de npm.
@@ -106,7 +106,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
    ```
 
 1. Ouvrir le navigateur à [cette adresse](http://localhost:4200) et constater que la page ci-dessous est affichée :
-   ![Ember Welcome Page](/images/ember-welcome-page.png)
+   ![Ember Welcome Page](https://guides.emberjs.com/images/ember-cli/default-welcome-page.png)
    Cette page est le résultat de l'addon `ember-welcome-page` qui délivre une page d'accueil statique stylisée...
 
    Dans le cadre d'un projet, cet addon est à désinstaller pour supprimer cette page d'aide : `yarn remove ember-welcome-page` )
@@ -134,7 +134,6 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 ou [Firefox](https://addons.mozilla.org/fr/firefox/addon/ember-inspector/)
 
 On dispose donc désormais d'un template d'application opérationel.
-La structure complète du projet créée est décrite dans la [documentation](folder-layout).
 
   {% endcapture %}{{ m | markdownify }}
 </div>
