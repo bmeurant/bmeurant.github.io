@@ -40,25 +40,21 @@ L'exemple ci-dessous reprend l'un des tests d'acceptance de l'application exempl
 On cherche ici à vérifier que le processus de sauvegarde fonctionne correctement une fois que l'utilisateur a modifié un comic et cliqué sur ``submit`` :
 
 ```javascript
-test("03 - Controller - 01 - Should save on edit submit", function (assert) {
+test("03 - Controller - 01 - Should save on edit submit", async function (assert) {
   assert.expect(4);
 
-  visit('/comics/akira/edit');
-  andThen(() => {
-    const $selectedComic = find(".comic");
-    assert.equal($selectedComic.length, 1, "Current selected comics zone is displayed");
+  await visit('/comics/akira/edit');
+  const $selectedComic = find(".comic");
+  assert.equal($selectedComic.length, 1, "Current selected comics zone is displayed");
 
-    const $form = $selectedComic.find("form");
-    assert.equal($form.length, 1, "Comic form exists");
+  const $form = $selectedComic.querySelector("form");
+  assert.equal($form.length, 1, "Comic form exists");
 
-    const newTitle = "new value";
-    fillIn(".comic form #title", newTitle);
-    click(".comic form .btn-submit");
-    andThen(() => {
-      assert.equal(currentRouteName(), 'comic.index', "Route name is correct");
-      assert.ok(find(".comic .comic-title").text().indexOf(newTitle) >= 0, "Title modified");
-    });
-  });
+  const newTitle = "new value";
+  await fillIn(".comic form #title", newTitle);
+  await click(".comic form .btn-submit");
+  assert.equal(currentRouteName(), 'comic.index', "Route name is correct");
+  assert.ok(find(".comic .comic-title").text().indexOf(newTitle) >= 0, "Title modified");
 });
 ```
 
@@ -73,19 +69,28 @@ Ces opérations sont grandement facilitées par les *helpers* proposés par [Emb
 L'utilisation de ces fonction est rendu possible par l'utilisation du *helper* [Ember][ember] ``moduleForAcceptance`` en lieu et place d'un module standard [Qunit](http://qunitjs.com/) :
 
 ```javascript
-import moduleForAcceptance from '../helpers/module-for-acceptance';
+import { module } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('03 - Controller Acceptance Tests', {
-  beforeEach() {
+module('03 - Controller Acceptance Tests', function(hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function() {
     ...
-  }
+  });
+
+  hooks.afterEach(function() {
+    ...
+  });
+
+  ...
 });
 ```
 
 Ce module se charge en effet d'initialiser complètement l'application [Ember][ember] et de la démarrer ainsi que de la nettoyer complètement à la fin du test.
 Des *hooks* d'extension sont proposés afin de permettre l'ajout d'opérations d'initialisation / destruction personnalisées (via ``beforeEach`` et ``afterEach``).
 
-De plus amples détails sont données sur les tests d'acceptance et les *helpers* proposés dans la [documentation officielle](https://guides.emberjs.com/v2.10.0/testing/acceptance/).
+De plus amples détails sont données sur les tests d'acceptance et les *helpers* proposés dans la [documentation officielle](https://guides.emberjs.com/v3.4.0/testing/acceptance/).
 
 ## Tests unitaires
 
@@ -95,12 +100,12 @@ Comme partout ailleurs, les tests unitaires permettent de valider finement le fo
 Dans le cas spécifique d'objets [Ember][ember] ils permettent également de contrôler le calcul des propriétés calculées et le déclenchement des *observers*.
 
 L'exemple ci-dessous reprend l'un des tests unitaire de l'application exemple.
-Le test en question cherche à vérifier le comportement des fonctions de filtre do contrôleur ``comics`` lorsque la veleur de filtre est mise à jour.
+Le test en question cherche à vérifier le comportement des fonctions de filtre du contrôleur ``comics`` lorsque la valeur de filtre est mise à jour.
 On teste ici uniquement le comportement interne du contrôleur et le calcul des propriétés calculées notamment :
 
 ```javascript
 test('should correctly compute filteredComics on filter update', function(assert) {
-  const controller = this.subject();
+  const controller = this.owner.lookup('controller:comics');
   const model = [Ember.Object.create({title: "Akira"}), Ember.Object.create({title: "Blacksad"})];
   controller.set('model', model);
   controller.set('filter', "");
@@ -117,20 +122,21 @@ test('should correctly compute filteredComics on filter update', function(assert
 });
 ```
 
-[Ember][ember] apporte également son aide ici, notamment via la function ``this.subject()`` qui permet de récupérer une instance de l'élément que l'on souhaite tester parfaitement initialisée.
+[Ember][ember] apporte également son aide ici, notamment via la function ``this.owner.lookup(args)`` qui permet de récupérer une instance d'un élément que l'on souhaite tester parfaitement initialisée.
 Ici le contrôleur ``comics``.
-Ces tâches d'itnitialisation et de destruction sont prises en charge notamment par le *helpers* [Ember][ember] ``moduleFor`` utilisé à la place d'un module standard [Qunit](http://qunitjs.com/) :
+Ces tâches d'initialisation et de destruction sont prises en charge notamment par le module standard [Qunit](http://qunitjs.com/) :
 
 ```javascript
-import Ember from "ember";
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('controller:comics', 'Unit | Controller | comics', {
-  unit: true;
+module('Unit | Controller | comics', function(hooks) {
+  setupTest(hooks);
+  ...  
 });
 ```
 
-De plus amples détails sont données sur les tests unitaire dans la [documentation officielle](https://guides.emberjs.com/v2.10.0/testing/unit-testing-basics/).
+De plus amples détails sont données sur les tests unitaire dans la [documentation officielle](https://guides.emberjs.com/v3.4.0/testing/unit-testing-basics/).
 
 {% raw %}
 
@@ -141,39 +147,47 @@ Les tests d'intégration sont définis dans ``tests/integration``.
 A mi chemin entre les tests d'acceptance et les tests unitaires, les tests d'intégrations permettent de valider le comportement d'un élement au sein d'un environnement d'exécution simplifié.
 Ils sont principalement utilisés pour tester l'affichage et le comportement des composants.
 Y compris en termes d'évènements, d'actions, etc.
-A ce titre il ne peux s'agir de tests unitaires mais ils n'ont pas non plus besoin de l'exécution de l'appliaction dans sa totalité.
+A ce titre il ne peut s'agir de tests unitaires mais ils n'ont pas non plus besoin de l'exécution de l'application dans sa totalité.
 
 L'exemple ci-dessous reprend l'un des tests unitaire de l'application exemple.
 Ce test effectue lui-même le rendu du composant et vérifie qu'il est correct.
 Puis il modifie l'une des valeurs du modèle et vérifie que le composant se met correctement à jour :
 
 ```javascript
-test('update fav-btn after external change', function(assert) {
+test('update fav-btn after external change', async function(assert) {
 
   akira.set('isFavorite', false);
   this.set('model', akira);
 
-  this.render(hbs`{{fav-btn selected=model.isFavorite}}`);
+  await this.render(hbs`{{fav-btn selected=model.isFavorite}}`);
 
   assert.equal(this.$().find('.btn-fav.selected').length, 0);
 
-  Ember.run(() => {
-    akira.set('isFavorite', true);
-  });
+  akira.set('isFavorite', true);
 
   assert.equal(this.$().find('.btn-fav.selected').length, 1);
 });
 ```
 
-On note l'utilisation nécessaire de ``Ember.run()``.
+On note l'utilisation nécessaire de ``async``.
 En effet, puisqu'il s'agit d'un test d'intégration, les différentes opérations sont effectuées en dehors de la *runloop* [Ember][ember].
 Il est donc nécessaire d'invoquer explicitement ``run`` de manière à rendre le changement de valeur du modèle effectif.
 
-L'utilisation la plus courante des etsts d'intégration concerne les composants et passe par l'utilisation du *helper* ``moduleForComponent`` : 
+L'utilisation la plus courante des tests d'intégration concerne les composants et passe par l'utilisation du *helper* ``module`` : 
 
 ```javascript
-moduleForComponent('fav-btn', 'Integration | Component | fav btn', {
-  integration: true
+import { module } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+
+module('Integration | Component | fav btn', function(hooks) {
+  setupRenderingTest(hooks);
+  hooks.beforeEach(function() {
+    ...
+  });
+
+  hooks.afterEach(function() {
+    ...
+  });
 });
 ```
 
@@ -195,7 +209,7 @@ Si une valeur particulière de la configuration est nécessaire, il est égaleme
 
 ```javascript
 import DS from 'ember-data';
-import config from '../config/environment';
+import config from 'ember-testing/config/environment';
 
 export default DS.RESTAdapter.extend({
   host: config.host,
@@ -207,15 +221,15 @@ Ces usages sont principalment utilisés pour adapter les comportement des adapte
 
 La documentation d'[Ember][ember] propose de nombreux éléments complémentaires utilises à la rédaction de tests spécifiques pour :
 
-* les [routes](https://guides.emberjs.com/v2.10.0/testing/testing-routes/)
-* les [contrôleurs](https://guides.emberjs.com/v2.10.0/testing/testing-controllers/)
-* les [composants](https://guides.emberjs.com/v2.10.0/testing/testing-components/)
-* les [modèles](https://guides.emberjs.com/v2.10.0/testing/testing-models/)
+* les [routes](https://guides.emberjs.com/v3.4.0/testing/testing-routes/)
+* les [contrôleurs](https://guides.emberjs.com/v3.4.0/testing/testing-controllers/)
+* les [composants](https://guides.emberjs.com/v3.4.0/testing/testing-components/)
+* les [modèles](https://guides.emberjs.com/v3.4.0/testing/testing-models/)
 
 <div class="work answer">
   {% capture m %}
   
-Depuis l'ajout d'[Ember Data](https://guides.emberjs.com/v2.10.0/models/), les tests ne passent plus, conséquence des nombreux changements effectués.
+Depuis l'ajout d'[Ember Data](https://guides.emberjs.com/v3.4.0/models/), les tests ne passent plus, conséquence des nombreux changements effectués.
 Nous allons les adapter pour le faire passer de nouveau (sauf les tests d'acceptance des templates qui peuvent être supprimés)
     
 1. En premier lieu, nous devons configurer notre adapter pour qu'il s'adapte aussi bien à l'environement de développement qu'à celui de test
@@ -236,7 +250,7 @@ Nous allons les adapter pour le faire passer de nouveau (sauf les tests d'accept
     
      ```javascript
      import DS from 'ember-data';
-     import config from '../config/environment';
+     import config from 'ember-testing/config/environment';
      
      export default DS.RESTAdapter.extend({
        host: config.host,
@@ -248,7 +262,7 @@ Nous allons les adapter pour le faire passer de nouveau (sauf les tests d'accept
    Seule la valeur pour l'environement de développement étant définie, les tests se baseront sur la valeur par défaut ``http://localhost:4200``.
    Il aurait été aussi également possible de configurer spécifiquement mirage pour intercepter les requêtes à ``http://localhost:3000``.
    
-1. Nous devons ensuite configurer les ``Serializers``
+2. Nous devons ensuite configurer les ``Serializers``
    * En premier lieu, on change le *serializer* de mirage en ``RestSerializer`` pour rester plus proche du fonctionnement en développement.
    
      ```javascript
@@ -260,41 +274,8 @@ Nous allons les adapter pour le faire passer de nouveau (sauf les tests d'accept
      });
      ```
      
-   * On adapte ensuite celui de l'application afin que les modifications effectuées ne soient pas appliquées lors de tests : 
-   
-     ```javascript
-     // app/serializers/application.js
-     
-     import Ember from 'ember';
-     import DS from 'ember-data';
-     
-     export default Ember.testing ? DS.RESTSerializer : DS.RESTSerializer.extend({
-         serializeIntoHash(hash, typeClass, snapshot, options) {
-           Ember.assign(hash, this.serialize(snapshot, options));
-         },
-     
-         normalizeSingleResponse(store, primaryModelClass, hash, id, requestType) {
-           let newHash = {};
-     
-           if (!hash[primaryModelClass.modelName]) {
-             newHash[primaryModelClass.modelName] = hash;
-           } else {
-             newHash = hash;
-           }
-     
-           return this._super(store, primaryModelClass, newHash, id, requestType);
-         },
-     
-         normalizeArrayResponse(store, primaryModelClass, hash, id, requestType) {
-           const newHash = {};
-           newHash[primaryModelClass.modelName] = hash;
-           return this._super(store, primaryModelClass, newHash, id, requestType);
-         }
-     });
-     ```
-     
-1. Modifier enfin les tests de manière à les corriger.
-   Le test ``tests/unit/routes/comic-test`` peut être supprimé pusique nous délégons toute la logique à [Ember Data](https://guides.emberjs.com/v2.10.0/models/)
+3. Modifier enfin les tests de manière à les corriger.
+   Le test ``tests/unit/routes/comic-test`` peut être supprimé pusique nous délégons toute la logique à [Ember Data](https://guides.emberjs.com/v3.4.0/models/)
    
    > L'ensemble des tests corrigés peut être trouvé sur le [repo github](https://github.com/bmeurant/ember-training/blob/controllers-tests/tests).
   
@@ -302,6 +283,6 @@ Nous allons les adapter pour le faire passer de nouveau (sauf les tests d'accept
 </div>
 
 [ember]: http://emberjs.com/
-[ember-data]: https://guides.emberjs.com/v2.10.0/models/
+[ember-data]: https://guides.emberjs.com/v3.4.0/models/
 [ember-mirage]: http://www.ember-cli-mirage.com/
 [json-server]: https://github.com/typicode/json-server
