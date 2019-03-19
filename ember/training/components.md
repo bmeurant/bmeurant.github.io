@@ -22,7 +22,7 @@ Les composants [Ember][ember] constituent une part importante de la structure du
 
 [Ember][ember] permet ainsi de définir - sous la forme de composants - des éléments évolués offrant une réutilisation maximales à la fois de structures d'affichage et de structures 
 logiques au sein d'une application.
-Voire, via le packaging de ces composants au sein d'[addons](https://guides.emberjs.com/v2.13.0/addons-and-dependencies/managing-dependencies/#toc_addons), au sein de plusieurs applications [Ember][ember].
+Voire, via le packaging de ces composants au sein d'[addons](https://guides.emberjs.com/v3.4.0/addons-and-dependencies/managing-dependencies/#toc_addons), au sein de plusieurs applications [Ember][ember].
 
 Le futures versions d'[Ember][ember] doivent même voir la notion de contrôleur totalement remplacée par l'utilisation de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md).
 
@@ -435,7 +435,7 @@ Ces mécanismes permettent donc de propager naturellement aux composants, via le
 Une autre forme évidente d'interaction consiste à demander à un composant de réagir à différents évènements DOM le concernant (c'est à dire intervenant sur la portion d'arbre DOM qu'il gère).
 
 Cela se fait simplement en déclarant dans le composant une fonction du même nom que l'évènement auquel on souhaite que le composant réagisse.
-La liste des évènements gérés nativement est disponible dans la [documentation officielle](https://guides.emberjs.com/v2.13.0/components/handling-events/#toc_event-names).
+La liste des évènements gérés nativement est disponible dans la [documentation officielle](https://guides.emberjs.com/v3.4.0/components/handling-events/#toc_event-names).
 
 Un paramètre est passé automatiquement à la function.
 Il contient l'évènement d'origine afin de permettre la récupération d'informations complémentaires (data, origine, etc.).

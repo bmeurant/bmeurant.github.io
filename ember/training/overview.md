@@ -64,9 +64,9 @@ Outre l'apport en termes de lisibilité, l'ambition est - à court terme - de pe
 
 ## Application
 
-La figure suivante, extraite de la [Documentation officielle](http://guides.emberjs.com/v3.0.0/getting-started/core-concepts/), montre une vue générale du fonctionnement d'une application [Ember][ember] et des différents objets impliqués :
+La figure suivante, extraite de la [Documentation officielle](http://guides.emberjs.com/v3.4.0/getting-started/core-concepts/), montre une vue générale du fonctionnement d'une application [Ember][ember] et des différents objets impliqués :
 
-![Application Ember](http://guides.emberjs.com/v3.0.0/images/ember-core-concepts/ember-core-concepts.png)
+![Application Ember](https://guides.emberjs.com/images/ember-core-concepts/ember-core-concepts.png)
 
 ## Routeur
 
@@ -109,7 +109,7 @@ export default Route.extend({
 });
 ```
 
--> [doc officielle](http://guides.emberjs.com/v3.0.0/routing/).
+-> [doc officielle](http://guides.emberjs.com/v3.4.0/routing/).
 
 
 ## Templates
@@ -141,7 +141,7 @@ Tout élément de modèle injecté dans un template sera **automatiquement mis �
 Évidemment, seul cet élément sera rafraîchi et non le template entier.
 Ce *binding*, qu'il soit unidirectionnel ou bidirectionnel est au coeur du fonctionnement d'[Ember][ember].
 
--> [doc officielle](http://guides.emberjs.com/v3.0.0/templates/handlebars-basics/).
+-> [doc officielle](http://guides.emberjs.com/v3.4.0/templates/handlebars-basics/).
 
 
 ## Modèles
@@ -168,7 +168,7 @@ export default DS.Model.extend({
 Cependant, l'ensemble des mécanismes décrits plus bas (les *bindings* notamment) peuvent parfaitement fonctionner en s'appuyant directement sur le modèle objet d'ember et la 
 classe ``Ember.Object`` [en détail](http://eviltrout.com/2013/03/23/ember-without-data.html).
 
--> [doc officielle](http://guides.emberjs.com/v3.0.0/models/).
+-> [doc officielle](http://guides.emberjs.com/v3.4.0/models/).
 
 ## Contrôleurs
 
@@ -197,7 +197,7 @@ export default Controller.extend({
 });
 ```
 
--> [doc officielle](http://guides.emberjs.com/v3.0.0/controllers/).
+-> [doc officielle](http://guides.emberjs.com/v3.4.0/controllers/).
 
 **Note**: Les contrôleurs [Ember][ember] sont appelés à disparaître progressivement au profit de l'utilisation de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md).
 Ce qui explique l'absence des contrôleurs sur la figure ci-dessus.
@@ -211,7 +211,7 @@ Avec la version 2, celle-ci s'est encore renforcée avec la disparition des *vue
 Les composants [Ember][ember] s'articulent autour d'une partie template et/ou d'une partie logique.
 Dans les prochaines versions à venir, l'apparition de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md) devrait rendre l'utilisation de contrôleurs seuls obsolète.
 
--> [doc officielle](https://guides.emberjs.com/v3.0.0/components/defining-a-component/).
+-> [doc officielle](https://guides.emberjs.com/v3.4.0/components/defining-a-component/).
 
 
 ## Génération d'objets

@@ -15,7 +15,7 @@ Le développement d'[Ember Data][ember-data] est piloté par les mêmes équipes
 Cela garantit une compatibilité totale et une intégration fine de cette librairie au sein d'[ember].
 Néanmoins, son utilisation, si elle est conseillée dans la plupart des cas, n'est en aucun cas obligatoire et il est parfaitement possible de développer une application [Ember][ember] sans utiliser [Ember Data][ember-data].
 
-Communiquer avec un serveur sans utiliser [Ember Data][ember-data] nécessite de s'appuyer sur des outils beaucoup plus bas niveau tels que les [fonctions ajax de jQuery](http://api.jquery.com/category/ajax/).
+Communiquer avec un serveur sans utiliser [Ember Data][ember-data] nécessite de s'appuyer sur des outils beaucoup plus bas niveau tels que les [fonctions fetch](https://www.npmjs.com/package/whatwg-fetch).
 Dans ce cas, il ser nécessaire de gérer par nous même ces appels, les formats, le retours et éventuelles erreurs ainsi que les différents états des modèles, leur validation, etc.
 La manipulation des promesses nécessaires à la gestion de ces requêtes asynchrone est également à notre charge.
 
@@ -53,8 +53,8 @@ L'application va interagir principalement avec trois types d'objets principaux :
 Les deux schémas ci-dessous illustrent les principes de fonctionnement exprimés plus haut s'agissant des requêtes et réponses entre une application et un serveur.
 
 <p class="text-center">
-    <img src="https://guides.emberjs.com/v2.10.0/images/guides/models/finding-unloaded-record-step1-diagram.png" alt="Ember Data Request"/>
-    <img src="https://guides.emberjs.com/v2.10.0/images/guides/models/finding-unloaded-record-step2-diagram.png" alt="Ember Data Response"/>
+    <img src="https://guides.emberjs.com/images/guides/models/finding-unloaded-record-step1-diagram.png" alt="Ember Data Request"/>
+    <img src="https://guides.emberjs.com/images/guides/models/finding-unloaded-record-step2-diagram.png" alt="Ember Data Response"/>
 </p>
 
 ## Modèles
@@ -68,7 +68,7 @@ Cette classe permet de déclarer la structure du modèle : ses attributs ainsi q
 
 ### Attributs
 
-Les attributs sont déclérés comme des propriété de l'objet en utilisant [DS.attr()](http://emberjs.com/api/data/classes/DS.html#method_attr) :
+Les attributs sont déclarés comme des propriété de l'objet en utilisant [DS.attr()](http://emberjs.com/api/data/classes/DS.html#method_attr) :
 
 ```javascript
 import DS from 'ember-data';
@@ -85,20 +85,21 @@ Tout comme n'importe quelle propriété [Ember][ember], un attribut [Ember Data]
 
 ```javascript
 import DS from 'ember-data';
+import { computed } from '@ember/object';
 
 export default DS.Model.extend({
   scriptwriter: DS.attr(),
   illustrator: DS.attr(),
   
-  authors: function() {
+  authors: computed('scriptwriter', 'illustrator', function() {
     return `${this.get('scriptwriter')} and ${this.get('illustrator')}`;
-  }.property('scriptwriter', 'illustrator')
+  })
 });
 ```
 
 ### "Types" (*Transforms*)
 
-Lors de la déclaration d'un attribut, un "type" optinnel peut être précisé à l'aide des [Transformers](http://emberjs.com/api/data/classes/DS.Transform.html) dont l'identifiant est passé en paramètre de la fonction ``DS.attr()``.
+Lors de la déclaration d'un attribut, un "type" optionnel peut être précisé à l'aide des [Transformers](http://emberjs.com/api/data/classes/DS.Transform.html) dont l'identifiant est passé en paramètre de la fonction ``DS.attr()``.
 Les valeurs ``string``, ``boolean``, ``number`` et ``date`` sont gérées nativement.
 
 ```javascript
@@ -148,8 +149,12 @@ this.store.createRecord('user', {
 Lors de la récupération de données depuis le serveur, la création et l'enregistrement dans le store est effectuée automatiquement par [Ember Data][ember-data].
 
 A noter qu'il est également possible, dans certains cas particuliers (pré-chargement, endpoints complexes, atc.), d'alimenter les store à l'aide des méthodes [push](http://emberjs.com/api/data/classes/DS.Store.html#method_push) ou [pushPayload](http://emberjs.com/api/data/classes/DS.Store.html#method_pushPayload).
-Ces méthodes permettent en effet de charger les store à parit de données JSON obtenues par ailleurs.
-cf. [documentation](https://guides.emberjs.com/v2.10.0/models/pushing-records-into-the-store/)
+Ces méthodes permettent en effet de charger les store à partir de données JSON obtenues par ailleurs.
+cf. [documentation](https://guides.emberjs.com/v3.4.0/models/pushing-records-into-the-store/)
+
+```javascript
+  this.store.push(this.store.normalize('comics', comicsFetchFromSomewhere));
+```
 
 ## Accès au store et injection
 
@@ -160,15 +165,14 @@ Il est donc possible d'accéder au store (``this.store``) depuis chaque route / 
 
 Ceci est rendu possible grâce aux **mécanismes d'injection de dépendance** d'[Ember][ember], et notamment aux *initializers* et aux *registrers*.
 Nous ne détaillerons pas d'avantage ces mécanismes ici mais il est important de remarquer leur existance et leur utilisation fréquente.
-En effet, il est tout à fait courant que les *addons* [Ember][ember] s'appuie sur ces principes pour mettre à disposition des fonctions ou opérations à 
-l'ensemble des objets d'une application ou à une sous partie.
+En effet, il est tout à fait courant que les *addons* [Ember][ember] s'appuie sur ces principes pour mettre à disposition des fonctions ou opérations à l'ensemble des objets d'une application ou à une sous partie.
 La mise à disposition de services métiers ou techniques transversaux est notamment grandement facilité par ces outils.
 
-cf. [documentation](https://guides.emberjs.com/v2.10.0/applications/dependency-injection/)
+cf. [documentation](https://guides.emberjs.com/v3.4.0/applications/dependency-injection/)
 
 ## Récupération & Recherche
 
-Lorsque l'on utilise [Ember Data][ember-data], le store constitue donc le point d'accés unique permettant de rechercher et de retrouver des objets (*records*) depuis le serveur.
+Lorsque l'on utilise [Ember Data][ember-data], le store constitue donc le point d'accès unique permettant de rechercher et de retrouver des objets (*records*) depuis le serveur.
 Le store embarque une gestion de cache avancée qui lui permet, selon les cas, d'interroger son cache local ou de transmettre la requête au serveur.
 Ainsi, lorsque l'application demande le chargement d'un objet ou d'un ensemble d'objets, le store déterminera au cas par cas si il doit intérroger l'API distante ou se contenter de retourner les objets disponibles dans le store local.
 
@@ -286,11 +290,12 @@ return this.store.findRecord('user', 1).then(user => {
    > // app/models/comic.js
    >
    > import DS from 'ember-data';
-   > 
+   > import { computed } from '@ember/object';
+   >
    > export default DS.Model.extend({
-   >   slug: function () {
+   >   slug: computed('title', function() {
    >     return this.get('title').dasherize();
-   >   }.property('title'),
+   >   }),
    >   
    >   title: DS.attr('string'),
    >   scriptwriter: DS.attr('string'),
@@ -308,19 +313,19 @@ return this.store.findRecord('user', 1).then(user => {
    > Uncaught Error: You should not call `create` on a model. Instead, call `store.createRecord` with the attributes you would like to set.
    ```
    
-   En effet, comme évoqué plus haut, le ``store`` doit impérativement être utilisé pour créer les objets [Ember Data](https://guides.emberjs.com/v2.10.0/models/) via la méthode    ``createRecord``.
+   En effet, comme évoqué plus haut, le ``store`` doit impérativement être utilisé pour créer les objets [Ember Data](https://guides.emberjs.com/v3.4.0/models/) via la méthode    ``createRecord``.
    Ainsi les appels à ``Comic.create(...)`` de la route ``app/routes/comics.js`` génèrent ces erreurs.
    
-1. Modifier la route ``app/routes/comics.js`` pour supprimer les appels à ``Comic.create(...)`` et utiliser la méthode ``createRecord`` du store
+2. Modifier la route ``app/routes/comics.js`` pour supprimer les appels à ``Comic.create(...)`` et utiliser la méthode ``createRecord`` du store
    à la place
    * utiliser le hook ``init`` pour la création des objets
-   * modifier le hook ``model`` pour renvoyer la liste des objets [Ember Data](https://guides.emberjs.com/v2.10.0/models/) en utilisant la méthode ``findAll`` du store.
+   * modifier le hook ``model`` pour renvoyer la liste des objets [Ember Data](https://guides.emberjs.com/v3.4.0/models/) en utilisant la méthode ``findAll`` du store.
      Que constate-t-on ?
    
    > ```javascript
    > // app/routes/comics.js
    >
-   > import Ember from 'ember';
+   > import Route from '@ember/routing/route';
    > 
    > const blackSad = {
    >   title: 'Blacksad',
@@ -343,7 +348,7 @@ return this.store.findRecord('user', 1).then(user => {
    >   publisher: 'Epic Comics'
    > };
    > 
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    >   init() {
    >     this._super(...arguments);
    >     this.store.createRecord('comic', akira);
@@ -370,11 +375,11 @@ return this.store.findRecord('user', 1).then(user => {
    > ```javascript
    > // app/routes/comic.js
    >
-   > import Ember from 'ember';
+   > import Route from '@ember/routing/route';
    > 
    > ...
    > 
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    >   init() {
    >     ...
    >   },
@@ -453,13 +458,13 @@ Les routes peuvent ainsi être :
 Par défaut, les routes non définies explicitement conduisent à des erreurs mais l'utilisation de ``this.passthrough()`` dans le fichier de configuration permet de damander à [Ember CLI Mirage][ember-mirage] d'effectuer plutôt un appel réel vers le serveur.
 Ce mécanisme permet la mise à disposition de mocks partiels, en développement notamment.
 
-Pour plus de précision se reporter à la [documentation](http://www.ember-cli-mirage.com/docs/v0.2.x/defining-routes/).
+Pour plus de précision se reporter à la [documentation](http://www.ember-cli-mirage.com/versions/v0.4.x/defining-routes/).
 
 ### Factories & Fixtures
 
 L'un des composants clefs d'[Ember CLI Mirage][ember-mirage] est sa **base de données locale**.
 En effet, les requêtes simulées (et déclarées via les routes) peuvent renvoyer directement des données mais également - et de manière plus intéressante - s'appuyer sur une base de données locale alimentée par des mécanismes tels que les **fixtures** et les **factories**.
-Cela s'effectue en développement via un **scénario** définit dans ``mirage/scenarios/default.js`` et en tests via des configurations équivalentes dans chaque test.
+Cela s'effectue en développement via un **scénario** défini dans ``mirage/scenarios/default.js`` et en tests via des configurations équivalentes dans chaque test.
 
 * Les **factories** constituent un outil très puissant permettant de générer aléatoirement un ensemble de données de test en fonction de différents critères : suite numérique, random, liste prédéfinie, etc.
   Les **factories** sont définies dans ``mirage/factories``.
@@ -470,7 +475,7 @@ Cela s'effectue en développement via un **scénario** définit dans ``mirage/sc
   server.createList('contact', 10);
   ```
   
-  cf. [documentation](http://www.ember-cli-mirage.com/docs/v0.2.x/seeding-your-database/#defining-factories)
+  cf. [documentation](http://www.ember-cli-mirage.com/versions/v0.4.x/seeding-your-database/#defining-factories)
 
 * Les **fixtures** permettent de fournir un ensemble de données statiques (et non générés dynamiquement comme les factories) sous la forme de données au format JSON.
   Les **fixtures** sont définies dans ``mirage/fixtures``.
@@ -481,7 +486,7 @@ Cela s'effectue en développement via un **scénario** définit dans ``mirage/sc
   server.loadFixtures();
   ```
   
-  cf. [documentation](http://www.ember-cli-mirage.com/docs/v0.2.x/seeding-your-database/#fixtures)
+  cf. [documentation](http://www.ember-cli-mirage.com/versions/v0.4.x/seeding-your-database/#fixtures)
 
 Ces deux mécanismes peuvent être combinés.
 Ils contribuent à peupler une base locale ``db`` qui est ensuite requêtée automatiquement par [Ember CLI Mirage][ember-mirage] pour retrouver les données et peut également être manipulée à la main lors de la définition de nos propres implémentations.
@@ -530,21 +535,7 @@ export default Model.extend({
    >   create \\mirage\config.js\
    >   create \\mirage\scenarios\default.js
    >   create \\mirage\serializers\application.js
-   >   install bower packages pretender, Faker
-   >   not-cached https://github.com/trek/pretender.git#~1.1.0
-   >   cached https://github.com/Marak/Faker.js.git#3.1.0
-   >   resolved https://github.com/trek/pretender.git#1.1.0
-   >   not-cached https://github.com/trek/FakeXMLHttpRequest.git#^1.3.0
-   >   resolved https://github.com/trek/FakeXMLHttpRequest.git#1.4.0
-   >   conflict Unable to find suitable version for pretender
-   >     1) pretender ~0.12.0
-   >     2) pretender ~1.1.0
-   > ? Answer 2
-   >   conflict Unable to find suitable version for FakeXMLHttpRequest
-   >     1) FakeXMLHttpRequest ~3.0.1
-   >     2) FakeXMLHttpRequest ~3.1.0
-   > ? Answer 2
-   > Installed browser packages via Bower.
+   > ...
    > Installed addon package.
    > ```
    >
@@ -604,24 +595,24 @@ export default Model.extend({
    > ```javascript
    > // app/routes/comics.js
    >
-   > import Ember from 'ember';
+   > import Route from '@ember/routing/route';
    > 
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    >   model () {
    >     return this.store.findAll('comic');
    >   }
    > });
    > ```
    
-1. Récupérer un ``comic`` par son *slug*
+2. Récupérer un ``comic`` par son *slug*
    * Modifier la route ``app/routes/comic.js`` pour effectuer une requête paramétrée sur le store plutôt qu'un ``this.modelFor(...).findBy(...)`` afin de récupérer un comic par son *slug*
    
    > ```javascript
    > // app/routes/comic.js
    >
-   > import Ember from 'ember';
+   > import Route from '@ember/routing/route';
    > 
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    >   model (params) {
    >     const askedModel = this.store.queryRecord('comic', {slug: params.comic_slug});
    > 
@@ -660,9 +651,9 @@ export default Model.extend({
    
    > Lorsque l'on vient de la route ``/comics``, le model complet est passé à la route ``/comics/{slug}`` via le ``linkTo``.
    > Dans ce cas [Ember](http://emberjs.com/) n'exécute pas le hook ``model``puisqu'il en dispose déjà.
-   > Dans le cas d'un chargement initial, au contraire, le modèle n'est pas disponible et [Ember](http://emberjs.com/) exécute le hook, entraînant une requête de la part d'[Ember Data](https://guides.emberjs.com/v2.10.0/models/).
+   > Dans le cas d'un chargement initial, au contraire, le modèle n'est pas disponible et [Ember](http://emberjs.com/) exécute le hook, entraînant une requête de la part d'[Ember Data](https://guides.emberjs.com/v3.4.0/models/).
    
-1. Rétablir la gestion des erreurs
+3. Rétablir la gestion des erreurs
 
    La gestion d'erreur actuelle de la route ``comics.index`` est désormais inopérante.
    En effet, elle se base sur un retour supposé immédiat de ``queryRecord`` contenant le model.
@@ -927,7 +918,7 @@ Il ne faut cependant pas confondre cette récupérations d'erreurs de validation
   
 1. On peut désormais simplifier grandement les opérations concernant la création et l'édition d'un comic.
    Modifier les routes ``comic.edit`` et ``comic.create`` dans ce sens.
-   * La gestion de l'état de sauvegarde (``hasUserSavedOrCancel``) peut disparaître au profit d'appels à ``save`` et de gestions d'états  [Ember Data](https://guides.emberjs.com/v2.10.0/models/)
+   * La gestion de l'état de sauvegarde (``hasUserSavedOrCancel``) peut disparaître au profit d'appels à ``save`` et de gestions d'états  [Ember Data](https://guides.emberjs.com/v3.4.0/models/)
    * De la même manière, la réinitialisation (``reset``) peut être avantageusement remplacée par un ``rollbackAttributes``.
    * Le modèle peut être accédé via ``this.get('controller.model')``
    
@@ -935,11 +926,12 @@ Il ne faut cependant pas confondre cette récupérations d'erreurs de validation
    > // app/models/comic.js
    >
    > import DS from 'ember-data';
-   > 
+   > import { computed } from '@ember/object';
+   >
    > export default DS.Model.extend({
-   >   slug: function () {
+   >   slug: computed('title', function() {
    >     return this.get('title').dasherize();
-   >   }.property('title'),
+   >   }),
    > 
    >   title: DS.attr('string', {defaultValue: 'new'}),
    >   scriptwriter: DS.attr('string'),
@@ -967,9 +959,9 @@ Il ne faut cependant pas confondre cette récupérations d'erreurs de validation
    > ```javascript
    > // app/routes/comic/edit.js
    >
-   > import Ember from 'ember';
+   > import Route from '@ember/routing/route';
    > 
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    > 
    >   actions: {
    >     save () {
@@ -997,9 +989,9 @@ Il ne faut cependant pas confondre cette récupérations d'erreurs de validation
    > ```javascript
    > // app/routes/comics/create.js
    >
-   > import Ember from 'ember';
+   > import Route from '@ember/routing/route';
    > 
-   > export default Ember.Route.extend({
+   > export default Route.extend({
    >   templateName: 'comic/edit',
    >   controllerName: 'comic/edit',
    > 
@@ -1040,7 +1032,7 @@ Il ne faut cependant pas confondre cette récupérations d'erreurs de validation
 
 ### Types de relations
 
-[Ember Data][ember-data] permet également d'adresser la problématique de définition et de gestion des relatiosn entre différents modèles.
+[Ember Data][ember-data] permet également d'adresser la problématique de définition et de gestion des relations entre différents modèles.
 Ces relations se définissent à l'aide des notations ``DS.belongsTo()`` et ``DS.hasMany()``. Ces deux notations permettent de définir tout type de relation : 
  
  * *One to One* :
@@ -1336,8 +1328,8 @@ Ces requêtes ne sont effectuées que lorsque l'on accède effectivement (progra
      > }
      > ```
      
-1. L'affichage des albums se fait désormais correctement mais l'affichage des dates laisse à désirer.
-   On va donc créer un transformateur personnalisé comme évoqué plus haut (cf. [documentation](https://guides.emberjs.com/v2.10.0/models/defining-models/#toc_custom-transforms))
+2. L'affichage des albums se fait désormais correctement mais l'affichage des dates laisse à désirer.
+   On va donc créer un transformateur personnalisé comme évoqué plus haut (cf. [documentation](https://guides.emberjs.com/v3.4.0/models/defining-models/#toc_custom-transforms))
    pour gérer une date de forme ``Mois Année``.
    * Installer [ember-moment](https://www.npmjs.com/package/ember-moment) qui permet d'utiliser la librairie de gestion de date ``moment``
    
@@ -1381,5 +1373,5 @@ Ces requêtes ne sont effectuées que lorsque l'on accède effectivement (progra
 </div>
 
 [ember]: http://emberjs.com/
-[ember-data]: https://guides.emberjs.com/v2.10.0/models/
+[ember-data]: https://guides.emberjs.com/v3.4.0/models/
 [ember-mirage]: http://www.ember-cli-mirage.com/
