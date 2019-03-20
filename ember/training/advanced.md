@@ -99,6 +99,46 @@ export default class ApplicationRoute extends Route {
   {% endcapture %}{{ m | markdownify }}
 </div>
 
+
+L'un des changements majeurs entre les objets **EmberObject** classiques et les classes ES vient des champs de classes et de leurs utilisations. En utilisant **EmberObject.extend**, les propriétés de l'objet sont mises directement dans le **prototype** de la classe. Cela veut dire que les champs de la classe sont liées à l'état du prototype et non à l'état de l'instance.
+
+Ainsi:
+```javascript
+import Object from '@ember/object';
+
+const Book = Object.extend({
+  titre: 'titre par default'
+});
+const harryPotter = Book.create({ titre: "Harry Potter et le Prisonnier d'Azkaban" });
+console.log(harryPotter.get('titre')); // 'Harry Potter et le Prisonnier d'Azkaban'
+```
+
+```javascript
+import Object from '@ember/object';
+
+class Book extends Object{
+  titre = 'titre par default';
+}
+const harryPotter = Book.create({ titre: "Harry Potter et le Prisonnier d'Azkaban" });
+console.log(harryPotter.get('titre')); // 'titre par défaut'
+```
+
+En initialisant les propriétées de classe dans les **constructeurs**, il est possible de les surchager.
+
+```javascript
+import Object from '@ember/object';
+
+class Book extends Object{
+    constructor() {
+        this.super();
+        this.titre = 'titre par default'
+    }
+}
+const spiderMan = Book.create({ titre: "Spider-Man - Renew Your Vows" });
+console.log(spiderMan.get('titre')); // 'Spider-Man - Renew Your Vows'
+```
+
+
 ### Decorators (et ember-decorators)
 
 Les **decorators** sont un système d'annotations meta-langage permettant de définir des propriétés de propriété. Son comportement peut se rapprocher des annotations en Java ou des attributs standardisés en C++.
@@ -112,9 +152,9 @@ Nous allons voir comment les utiliser efficacement au sein d'une application Emb
 <div class="work no-answer">
   {% capture m %}
 
-1. Mettre en place le plugin ember-decorators.
-    * Installer le plugin via `ember install ember-decorators`
- 
+Mettre en place le plugin ember-decorators.
+* Installer le plugin via `ember install ember-decorators`
+
     ```console
     ➜  ember-training git:(addDecorators) ember install ember-decorators
         Yarn: Installed ember-decorators
@@ -127,55 +167,97 @@ Nous allons voir comment les utiliser efficacement au sein d'une application Emb
         Installed addon package.
     ```
 
-    * Lors du lancement de Ember, il est possible que ce dernier refuse de compiler parce que la version de **ember-cli-babel** est trop basse:
-    ```console
-    Build Error (broccoli-persistent-filter:Babel > [Babel: ember-training])
-
-    ember-training/models/comic.js: Unexpected token (5:4)
-
-    3 | 
-    4 | export default class ComicModel extends Model {        
-    > 5 |     @attr('string', { defaultValue: 'new' }) title;
-        |     ^
-    ```
-
-    
-    En effet, certaines options de **ember-decorators** necessitent une version plus récente du plugin de transpilation.
-    
-    Une mise à jour à l'aide de **yarn** permet de résoudre ce problème:
+* Lors du lancement de Ember, il est possible que ce dernier refuse de compiler parce que la version de **ember-cli-babel** est trop basse:
 
     ```console
-        ➜  ember-training git:(addDecorators) ✗ yarn upgrade ember-cli-babel@^7.0.0
+        Build Error (broccoli-persistent-filter:Babel > [Babel: ember-training])
+
+        ember-training/models/comic.js: Unexpected token (5:4)
+          3 | 
+          4 | export default class ComicModel extends Model {        
+        > 5 |     @attr('string', { defaultValue: 'new' }) title;
+            |     ^
     ```
 
-    * Configurer son IDE pour accepter les **decorators**. Il s'agit généralement d'un fichier de configuration de compiler permettant d'accepter des features experimentales.
-        Pour Visual Studio Code, la configuration se fait à l'aide d'un fichier **jsconfig.json**
-        ```json
-            {"compilerOptions":{"target":"es6","experimentalDecorators":true},"exclude":["node_modules","bower_components","tmp","vendor",".git","dist"]}
-        ```   
-    1. Convertir le model `comic` en classe native avec decorators.
+
+En effet, certaines options de **ember-decorators** necessitent une version plus récente du plugin de transpilation.
+
+Une mise à jour à l'aide de **yarn** permet de résoudre ce problème:
+
+```console
+➜  ember-training git:(addDecorators) yarn upgrade ember-cli-babel@^7.0.0
+```
+
+* Configurer son IDE pour accepter les **decorators**. Il s'agit généralement d'un fichier de configuration de compiler permettant d'accepter des features experimentales.
+
+Pour Visual Studio Code, la configuration se fait à l'aide d'un fichier **jsconfig.json**
+
+```json
+    {"compilerOptions":{"target":"es6","experimentalDecorators":true},"exclude":["node_modules","bower_components","tmp","vendor",".git","dist"]}
+```   
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
+
+<div class="work no-answer">
+  {% capture m %}
+1. En utilisant les *decorators** proposées par (ember-decorators)[ember-decorators], il est possible de convertir le model `comic` en classe native.
+Les **decorators** nécessaires sont à importer depuis:
+
 ```javascript
-    import DS from 'ember-data';
-    import { attr, hasMany } from '@ember-decorators/data'; 
-    import { computed } from '@ember-decorators/object';
+import { attr, hasMany } from '@ember-decorators/data'; 
+import { computed } from '@ember-decorators/object';
+```
 
-    const { Model } = DS;
 
-    export default class ComicModel extends Model {        
-        @attr('string', { defaultValue: 'new' }) title;
-        @attr('string') scriptwriter;
-        @attr('string') illustrator;
-        @attr('string') publisher;
-        @attr('boolean', { defaultValue: false }) isFavorite;
-        @hasMany('album') albums;
+```javascript
+import DS from 'ember-data';
+import { attr, hasMany } from '@ember-decorators/data'; 
+import { computed } from '@ember-decorators/object';
 
-        @computed('title')
-        get slug() {
-            const title = this.get('title') || 'new';
-            return title.dasherize();
-        }
+const { Model } = DS;
+
+export default class ComicModel extends Model {        
+    @attr('string', { defaultValue: 'new' }) title;
+    @attr('string') scriptwriter;
+    @attr('string') illustrator;
+    @attr('string') publisher;
+    @attr('boolean', { defaultValue: false }) isFavorite;
+    @hasMany('album') albums;
+
+    @computed('title')
+    get slug() {
+        const title = this.get('title') || 'new';
+        return title.dasherize();
+    }
+}
+```
+  {% endcapture %}{{ m | markdownify }}
+</div>
+
+
+Pour le développement de composants, **ember-decorators** propose les outils **@ember-decorators/argument**. Ces derniers permettent de mettre en place des verifications et des validations sur les arguments à passer aux composants. Cela va du type de paramètre, son obligation ou non, ou son côté immutable.
+
+<div class="work no-answer">
+  {% capture m %}
+1. Installer `@ember-decorators/argument`
+1. Créer le pendant JavaScript du composant **comic-album** qui vérifie la bonne utilisation du composant.
+
+```javascript
+    import Component from '@ember/component';
+    import { argument } from '@ember-decorators/argument';
+    import { required } from '@ember-decorators/argument/validation';
+    import { Any } from '@ember-decorators/argument/types';
+    import { type } from '@ember-decorators/argument/type';
+
+    export default class ComicAlbumComponent extends Component {
+        @argument
+        @required
+        @type(Any) 
+        model;
     }
 ```
+
 
   {% endcapture %}{{ m | markdownify }}
 </div>
