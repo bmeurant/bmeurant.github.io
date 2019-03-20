@@ -2,7 +2,7 @@
 layout: ember-training
 title: Formation Ember - Backend
 permalink:  ember/training/backend/
-prev: ember/training/ember-data
+prev: ember/training/advanced
 next: ember/training/testing
 ---
 
