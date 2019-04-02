@@ -169,7 +169,7 @@ L'organisation des routes au sein du routeur et leur imbrication président donc
     >   <h2 class="comics-title">Comics list</h2>
     >   <ul class="comics-list">
     >     {{#each model as |comic|}}
-    >       <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item"> 
+    >       <li class="{{if comic.scriptwriter "comic-with-scriptwriter" "comic-without-scriptwriter"}} comics-list-item"> 
     >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
     >       </li>
     >     {{else}}
@@ -204,7 +204,7 @@ L'organisation des routes au sein du routeur et leur imbrication président donc
     >     // for the exercice, we want to access to comic from console today
     >     window.comics = [{title: "Blacksad"}, {title: "Calvin and Hobbes", scriptwriter:"Bill Watterson"}];
     >
-    >     return comics;
+    >     return window.comics;
     >   }
     > });
     > ```
@@ -780,7 +780,7 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
    > ...
    > <ul class="comics-list">
    >   {{#each model as |comic|}}
-   >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
+   >     <li class="{{if comic.scriptwriter "comic-with-scriptwriter" "comic-without-scriptwriter"}} comics-list-item">
    >       {{#link-to "comics.comic" comic.slug}}
    >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
    >       {{/link-to}}
@@ -815,9 +815,9 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
    > ```html
    > {{!-- app/templates/comics.hbs --}}
    > ...
-   > <ul>
+   > <ul class="comics-list">
    >   {{#each model as |comic|}}
-   >     <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
+   >     <li class="{{if comic.scriptwriter "comic-with-scriptwriter" "comic-without-scriptwriter"}} comics-list-item">
    >       {{#link-to "comics.comic" comic}}
    >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
    >       {{/link-to}}
@@ -835,7 +835,7 @@ Un certain nombre de comportements sont apportés par l'utilisation de ce *helpe
    > export default Route.extend({
    >   model (params) {
    >     console.log('passed in comic model');
-   >     return this.modelFor('comic').findBy('slug', params.comic_slug);
+   >     return this.modelFor('comics').findBy('slug', params.comic_slug);
    >   },
    >   serialize: function(model) {
    >     return {
@@ -1082,7 +1082,7 @@ Ceci tout en conservant les URLs existantes ainsi que l'imbrication des routes e
    >
    > ...
    >
-   > <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
+   > <li class="{{if comic.scriptwriter "comic-with-scriptwriter" "comic-without-scriptwriter"}} comics-list-item">
    >   {{#link-to "comic" comic}}
    >     {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
    >   {{/link-to}}
@@ -1430,7 +1430,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    > <div class="comics">
    >   <h2 class="comics-title">Comics list</h2>
    >   <ul...>
-   >   {{link-to '' 'comics.create' class="add-comic"}}
+   >   {{link-to "" "comics.create" class="add-comic"}}
    > </div>
    >
    > {{outlet}}
