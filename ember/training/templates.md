@@ -146,7 +146,7 @@ L'intérêt consiste à injecter dans ce template des valeurs et expressions dyn
    > Object {__ember_meta__: Meta}
    > 
    > > comic.title = "new title"
-   > Uncaught EmberError {description: undefined, fileName: undefined, lineNumber: undefined, message: "Assertion Failed: You must use Ember.set() to set … `title` property (of [object Object]) to `test`.", name: "Error"…}
+   > Uncaught Error: Assertion Failed: You must use set() to set the `title` property (of [object Object]) to `new title`
    >
    > > comic.set("title", "new title");
    > TypeError: comic.set is not a function
@@ -202,12 +202,14 @@ Depuis [Ember][ember] 2.0, le *binding* est unidirectionnel par défaut lorsque 
 ```html
 {{!-- one-way binding --}}
 <input type="text" value={{comic.title}} />
+<my-component value={{comic.title}} /> => ancienne facon de faire
+<MyComponent value={{comic.title}} /> => nouvelle facon de faire
 ```
 
 Le *binding* bidirectionnel est possible si l'on utilise l'ancienne notation *accolades* (`{{`) : 
 
 ```html
-{{!-- two-way binding --}}
+{{!-- two-way binding --}} => ancienne facon de faire
 {{input type="text" value=comic.title}}
 ```
 
@@ -216,7 +218,8 @@ Dans les versions à venir (lorsque le support des *angle bracket components* ou
 
 ```html
 {{!-- two-way binding (future syntax) --}}
-<my-component value={{mut comic.title}} />
+<my-component value={{mut comic.title}} /> => ancienne facon de faire
+<MyComponent @value={{comic.title}} /> => nouvelle facon de faire
 ```
 
 Nous aurons l'occasion de constater et d'expérimenter ces comportements dans les sections suivantes et ne nous y attardons donc pas d'avantage ici.
@@ -279,10 +282,12 @@ On retiendra les *helpers* [Handlebars][handlebars] principaux :
 * scope : ``with``
 * log : ``log``
 
-La liste complète des *helpers* [Handlebars][handlebars] natifs est accessible dans la [documentation](http://handlebarsjs.com/builtin_helpers.html).
+La liste complète des *helpers* [Handlebars][handlebars] natifs est accessible dans la [documentation](https://handlebarsjs.com/guide/#built-in-helpers).
 
 [Ember][ember] ajoute à cela un certain nombre de *helpers* spécifiques à la construction d'applications [Ember][ember] en facilitant la manipulation d'objets [Ember][ember].
 Il peut s'agir, selon les cas, de nouveaux *helpers* ou d'enrichissements portant sur des *helpers* [Handlebars][handlebars] existant.
+
+On peut également  utiliser une librairie externe : https://github.com/jmurphyau/ember-truth-helpers, qui appporte des helpers commun (gte, lt, ...)
 
 
 On retiendra les *helpers* [Ember][ember] principaux :
@@ -295,10 +300,10 @@ On retiendra les *helpers* [Ember][ember] principaux :
 * instantiation & rendering : ``component``, ``render``, ``partial``
 * développement : ``debugger``
 
-La liste complète des *helpers* [Ember][ember] est accessible dans la [documentation](https://guides.emberjs.com/v3.4.0/templates/built-in-helpers/).
+La liste complète des *helpers* [Ember][ember] est accessible dans la [documentation](https://guides.emberjs.com/v3.12.0/templates/built-in-helpers/).
 
 [Ember][ember] et [Handlebars][handlebars] facilitent enfin la création et la contribution de nouveaux *helpers* via la fonction ``registerHelper`` d'[Handlebars](http://handlebarsjs.com/#helpers), la commande ``ember generate helper helper-name`` ou la contribution directe dans le dossier ``app/helpers``.
-cf [Ember documentation](http://guides.emberjs.com/v3.4.0/templates/writing-helpers/) & [Ember CLI documentation](http://www.ember-cli.com/user-guide/#resolving-handlebars-helpers) sur le sujet (attention au `-` obligatoire dans le nom pour [Ember CLI][ember-cli]).
+cf [Ember documentation](https://guides.emberjs.com/v3.12.0/templates/writing-helpers/) & [Ember CLI documentation](http://www.ember-cli.com/user-guide/#resolving-handlebars-helpers) sur le sujet (attention au `-` obligatoire dans le nom pour [Ember CLI][ember-cli]).
 
 {% endraw %}
 
@@ -357,14 +362,14 @@ cf [Ember documentation](http://guides.emberjs.com/v3.4.0/templates/writing-help
     > Array [ {…}, {…}, {…}, {…} ]
     > ```
     > 
-    > * Dans le premier cas, en utilisant la méthode native `push`, le template n'a pas été mis à jour alors que l'objet a bien été ajouté (on a maintenant 2 éléments).
+    > * Dans le premier cas, en utilisant la méthode native `push`, le template n'a pas été mis à jour alors que l'objet a bien été ajouté (on a maintenant 3 éléments).
     > * Dans le second cas, en utilisant la méthode [Ember](http://emberjs.com) `pushObject`, le template a été correctement mis à jour avec le nouvel objet.
     >   On constate d'ailleurs que l'élément ajouté précédemment apparaît également.
     >   
     > Cela s'explique par le fait que la méthode `pushObject` proposée par [Ember](http://emberjs.com) génère des évènements permettant de connaitre et de réagir aux changements.
     > On dit qu'elle est compatible *KVO* - *Key-Value Observing*).
     > Cette méthode est mise à disposition par [Ember](http://emberjs.com) alors même que nous utilisons un objet `array` natif et non pas un objet [Ember](http://emberjs.com) parce que ce dernier enrichit le prototype de certains objets de manière transparente (note : ce comportement peut être désactivé).
-    > cf. [documentation](https://guides.emberjs.com/v3.4.0/configuring-ember/disabling-prototype-extensions/)
+    > cf. [documentation](https://guides.emberjs.com/v3.12.0/configuring-ember/disabling-prototype-extensions/)
 
 1. Modifier l'application pour afficher les auteurs des comics.
     * Dans la route, modifier la collection `comics` pour ajouter l'auteur au second comic

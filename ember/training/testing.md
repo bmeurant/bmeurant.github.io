@@ -18,7 +18,7 @@ L'outillage d'[Ember][ember] en matières de tests s'appuie sur le framework [Qu
 Au sein d'une application [Ember][ember], les tests prennent place dans le répertoire ``tests`` et peuvent être lancés via la commande
 
 ```console
-ember test [--server]
+ember test [--server] [--test-port 4200]
 ```
 
 La commande simple lance l'ensemble des tests une fois.
@@ -91,7 +91,7 @@ module('03 - Controller Acceptance Tests', function(hooks) {
 Ce module se charge en effet d'initialiser complètement l'application [Ember][ember] et de la démarrer ainsi que de la nettoyer complètement à la fin du test.
 Des *hooks* d'extension sont proposés afin de permettre l'ajout d'opérations d'initialisation / destruction personnalisées (via ``beforeEach`` et ``afterEach``).
 
-De plus amples détails sont données sur les tests d'acceptance et les *helpers* proposés dans la [documentation officielle](https://guides.emberjs.com/v3.4.0/testing/acceptance/).
+De plus amples détails sont données sur les tests d'acceptance et les *helpers* proposés dans la [documentation officielle](https://guides.emberjs.com/v3.12.0/testing/acceptance/).
 
 ## Tests unitaires
 
@@ -137,7 +137,7 @@ module('Unit | Controller | comics', function(hooks) {
 });
 ```
 
-De plus amples détails sont données sur les tests unitaire dans la [documentation officielle](https://guides.emberjs.com/v3.4.0/testing/unit-testing-basics/).
+De plus amples détails sont données sur les tests unitaire dans la [documentation officielle](https://guides.emberjs.com/v3.12.0/testing/unit-testing-basics/).
 
 {% raw %}
 
@@ -210,7 +210,7 @@ Si une valeur particulière de la configuration est nécessaire, il est égaleme
 
 ```javascript
 import DS from 'ember-data';
-import config from 'ember-testing/config/environment';
+import config from 'ember-training/config/environment';
 
 export default DS.RESTAdapter.extend({
   host: config.host,
@@ -222,15 +222,15 @@ Ces usages sont principalment utilisés pour adapter les comportement des adapte
 
 La documentation d'[Ember][ember] propose de nombreux éléments complémentaires utilises à la rédaction de tests spécifiques pour :
 
-* les [routes](https://guides.emberjs.com/v3.4.0/testing/testing-routes/)
-* les [contrôleurs](https://guides.emberjs.com/v3.4.0/testing/testing-controllers/)
-* les [composants](https://guides.emberjs.com/v3.4.0/testing/testing-components/)
-* les [modèles](https://guides.emberjs.com/v3.4.0/testing/testing-models/)
+* les [routes](https://guides.emberjs.com/v3.12.0/testing/testing-routes/)
+* les [contrôleurs](https://guides.emberjs.com/v3.12.0/testing/testing-controllers/)
+* les [composants](https://guides.emberjs.com/v3.12.0/testing/testing-components/)
+* les [modèles](https://guides.emberjs.com/v3.12.0/testing/testing-models/)
 
 <div class="work answer">
   {% capture m %}
   
-Depuis l'ajout d'[Ember Data](https://guides.emberjs.com/v3.4.0/models/), les tests ne passent plus, conséquence des nombreux changements effectués.
+Depuis l'ajout d'[Ember Data][ember-data], les tests ne passent plus, conséquence des nombreux changements effectués.
 Nous allons les adapter pour le faire passer de nouveau (sauf les tests d'acceptance des templates qui peuvent être supprimés)
     
 1. En premier lieu, nous devons configurer notre adapter pour qu'il s'adapte aussi bien à l'environement de développement qu'à celui de test
@@ -251,7 +251,7 @@ Nous allons les adapter pour le faire passer de nouveau (sauf les tests d'accept
     
      ```javascript
      import DS from 'ember-data';
-     import config from 'ember-testing/config/environment';
+     import config from 'ember-training/config/environment';
      
      export default DS.RESTAdapter.extend({
        host: config.host,
@@ -276,7 +276,7 @@ Nous allons les adapter pour le faire passer de nouveau (sauf les tests d'accept
      ```
      
 3. Modifier enfin les tests de manière à les corriger.
-   Le test ``tests/unit/routes/comic-test`` peut être supprimé pusique nous délégons toute la logique à [Ember Data](https://guides.emberjs.com/v3.4.0/models/)
+   Le test ``tests/unit/routes/comic-test`` peut être supprimé pusique nous délégons toute la logique à [Ember Data][ember-data]
    
    > L'ensemble des tests corrigés peut être trouvé sur le [repo github](https://github.com/bmeurant/ember-training/blob/controllers-tests/tests).
   
@@ -284,6 +284,6 @@ Nous allons les adapter pour le faire passer de nouveau (sauf les tests d'accept
 </div>
 
 [ember]: http://emberjs.com/
-[ember-data]: https://guides.emberjs.com/v3.4.0/models/
+[ember-data]: https://guides.emberjs.com/v3.12.0/models/
 [ember-mirage]: http://www.ember-cli-mirage.com/
 [json-server]: https://github.com/typicode/json-server

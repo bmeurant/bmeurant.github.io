@@ -272,8 +272,6 @@ Pourtant, tout ``Ember.Object`` expose des accesseurs qu'il est nécessaire d'ut
    </script>
    ```
     
-</div>
-
 1. Effectuer les opérations suivantes sur l'instance one :
 
    ```javascript
@@ -469,43 +467,6 @@ Une propriété calculée est classiquement déclarée comme dépendant d'une ou
    > On constate qu'une propriété calculée est bien différente d'une fonction en ce sens qu'Ember calcule sa valeur en fonction du contexte dont elle dépend.
    > Cette valeur n'est ensuite recalculée que si ce contexte est modifié.
    > Dans le cas contraire, Ember se contente de renvoyer la précédente valeur mise en cache, d'où l'absence de log dans ce cas.
-        
-1. Utiliser une autre syntaxe pour la déclaration de cette propriété calculée et vérifier que les deux notations sont strictement équivalentes.
-
-   > ```javascript
-   > > Comic.reopen({
-   >     writer: null,
-   >     drawer: null,
-   >     authors: function() {
-   >       console.log('computed property calculated');
-   >       return this.get('writer') + ' and ' + this.get('drawer');
-   >     }.property('writer', 'drawer')
-   >   });
-   >
-   > > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
-   > five
-   > Class {title: "five", writer: "5 writer", drawer: "5 drawer", __ember1439469290671: null, __nextSuper: undefined…}
-   >
-   > > five.get('authors');
-   > computed property calculated
-   > "5 writer and 5 drawer"
-   >
-   > > five.get('authors');
-   > "5 writer and 5 drawer"
-   >
-   > > five.set('writer', 'new writer');
-   > "new writer"
-   >
-   > > five.get('authors');
-   > computed property calculated
-   > "new writer and 5 drawer"
-   >
-   > > five.get('authors');
-   > "new writer and 5 drawer"
-   > ```
-   > 
-   > Les deux syntaxes sont strictement équivalentes.
-   > Il est cependant conseillé d'utiliser la première version qui n'utilise pas la réécriture du prototype de ``function`` (cf. [documentation](http://emberjs.com/guides/configuring-ember/disabling-prototype-extensions/)) 
 
 1. Modifier la déclaration de la propriété calculée ``authors`` en supprimant la dépendance aux deux propriétés ``writer`` et ``drawer``.
    Réexécuter ensuite la série d'opérations précédente.
@@ -515,10 +476,10 @@ Une propriété calculée est classiquement déclarée comme dépendant d'une ou
    >  > Comic.reopen({
    >      writer: null,
    >      drawer: null,
-   >      authors: function() {
+   >      authors: Ember.computed(function() {
    >        console.log('computed property calculated');
    >        return this.get('writer') + ' and ' + this.get('drawer');
-   >      }.property()
+   >      })
    >    });
    >
    >  > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
@@ -558,13 +519,13 @@ d'entre elles.
 
    > ```javascript
    > > Comic.reopen({
-   >     authors: function() {
+   >     authors: Ember.computed('writer', 'drawer', function() {
    >       console.log('computed property calculated');
    >       return this.get('writer') + ' and ' + this.get('drawer');
-   >     }.property('writer', 'drawer'),
-   >     summary: function() {
+   >     }),
+   >     summary: Ember.computed('title', 'authors', function() {
    >       return this.get('title') + ' by ' + this.get('authors');
-   >     }.property('title', 'authors')
+   >     })
    >   });
    >
    > > five = Comic.create({title:'five', writer: '5 writer', drawer: '5 drawer'});
@@ -578,7 +539,7 @@ d'entre elles.
    > > five.set('writer', 'new writer');
    > "new writer"
    >
-   > > five.get('authors');
+   > > five.get('summary');
    > "five by new writer and 5 drawer"
    > ```
     
@@ -670,10 +631,10 @@ Cela est possible au travers de la notation ``myCollection.@each.myProperty`` ou
 
    > ```javascript
    > > Collection.reopen({
-   >     numberOfPublished() {
+   >     numberOfPublished: Ember.computed('books.@each.isPublished', function() {
    >       console.log("compute numberOfPublished");
    >       return this.get('books').filterBy('isPublished', true).length;
-   >     }.property('books.@each.isPublished')
+   >     })
    >   });
    >
    > > newCollection = Collection.create({books: [one, two, three]});
@@ -714,10 +675,10 @@ propriété ``isPublished`` (``books.[]``).
    
    > ```javascript
    > > Collection.reopen({
-   >     numberOfPublished: function() {
+   >     numberOfPublished: Ember.computed('books.[]', function() {
    >       console.log("compute numberOfPublished");
-   > 	     return this.get('books').filterBy('isPublished', true).length;
-   >     }.property('books.[]')
+   >       return this.get('books').filterBy('isPublished', true).length;
+   >     })
    >   });
    > 
    > > newCollection = Collection.create({books: [one, two, three]});
@@ -753,10 +714,10 @@ soit recalculée à la fois lors de la modification d'un livre existant et lors 
     
    > ```javascript
    > > Collection.reopen({
-   >     numberOfPublished: function() {
+   >     numberOfPublished: Ember.computed('books.[]', 'books.@each.isPublished', function() {
    >       console.log("compute numberOfPublished");
-   > 	     return this.get('books').filterBy('isPublished', true).length;
-   >     }.property('books.[]', 'books.@each.isPublished')
+   >       return this.get('books').filterBy('isPublished', true).length;
+   >     })
    >   });
    >
    > > newCollection = Collection.create({books: [one, two, three]});
@@ -823,13 +784,13 @@ Des observeurs [Ember][ember] peuvent également être déclarés sur toute prop
   {% endcapture %}{{ m | markdownify }}
 </div>
     
-La documentation est très complète sur le sujet et il n'est nul besoin de la paraphraser ici, je vous invite donc à vous y reporter [ici](http://guides.emberjs.com/v3.4.0/object-model/observers/).
+La documentation est très complète sur le sujet et il n'est nul besoin de la paraphraser ici, je vous invite donc à vous y reporter [ici](https://guides.emberjs.com/v3.12.0/object-model/observers/).
 Cependant, pour résumer, il est bon de noter les points suivants : 
 
 * Les observeurs sont exécutés de manière **synchrône** comme on a pu le constater.
   Le déclenchement a eu lieu immédiatement après la modification de la propriété, avant même le calcul de la propriété calculée qui en dépend.
 * Cela signifie que plusieurs modifications déclencheront plusieurs fois les observeurs de manière non optimisée.
-  Si l'on souhaite maîtriser d'avantage ces déclenchements, il est nécessaire de faire appel à la méthode ``Ember.run.once`` comme expliqué dans la [documentation](http://guides.emberjs.com/v3.4.0/object-model/observers/)
+  Si l'on souhaite maîtriser d'avantage ces déclenchements, il est nécessaire de faire appel à la méthode ``Ember.run.once`` comme expliqué dans la [documentation](https://guides.emberjs.com/v3.12.0/object-model/observers/)
   
 Les observeurs permettent donc de déclencher des traitements (et non de recalculer des propriétés) lors du changement d'une propriété.
 Ils sont en particulier très utiles lorsque l'on souhaite déclencher un traitement après que le *binding* ait été effectué.
@@ -840,7 +801,7 @@ Ember gère ses collections et énumérations (et nous propose de gérer les nô
 Cette API s'appuie sur les opérations de l'API javascript standard (``array``).
 Cette API permet de gérer toutes les collections d'objets via une interface normalisée et commune et nous permet donc d'utiliser et de proposer des structures de données complètement nouvelles sans impact sur le reste de notre application.
 
-Cette API est décrite de manière succinte [ici](http://guides.emberjs.com/v3.4.0/object-model/enumerables/) et exhaustive [ici](http://emberjs.com/api/classes/Ember.Enumerable.html).
+Cette API est décrite de manière succinte [ici](https://guides.emberjs.com/v3.12.0/object-model/enumerables/) et exhaustive [ici](http://emberjs.com/api/classes/Ember.Enumerable.html).
 
 
 ## *RunLoop*
@@ -866,7 +827,7 @@ Les queues sont :
 C'est ce mécanisme qui permet, en quelque sorte, d'empiler les calculs de propriétés calculées lorsque les propriétés
 *observées* sont modifiées et surtout c'est grâce à ce mécanisme que le rendu n'est effectué qu'une seule fois lors de la modification d'un modèle.
 
-Pour reprendre l'exemple de la [doc officielle](http://guides.emberjs.com/v3.4.0/applications/run-loop/), si l'on a l'objet suivant :
+Pour reprendre l'exemple de la [doc officielle](https://guides.emberjs.com/v3.12.0/applications/run-loop/), si l'on a l'objet suivant :
 
 {% raw %}
 
@@ -892,7 +853,7 @@ Et le template :
 Sans la *RunLoop*, on exécuterait le rendu deux fois si l'on modifie successivement `firstname` puis `lastname`.
 La *RunLoop* met tout ça (et plein d'autres choses) en queue et n'effectue le rendu qu'une seule et unique fois, lorsque nécessaire.
 
-our aller plus loin, se référer à la [documentation officielle](http://guides.emberjs.com/v3.4.0/applications/run-loop) et à cette 
+our aller plus loin, se référer à la [documentation officielle](https://guides.emberjs.com/v3.12.0/applications/run-loop/) et à cette 
 [présentation d'Eric Bryn](http://talks.erikbryn.com/backburner.js-and-the-ember-run-loop).
 
 [ember]: http://emberjs.com

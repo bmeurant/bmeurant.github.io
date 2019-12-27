@@ -262,8 +262,48 @@ Pour le développement de composants, **ember-decorators** propose les outils **
   {% endcapture %}{{ m | markdownify }}
 </div>
 
+
+### Ember Data et appel sur une nested url
+
+Dans Ember Data nous avons vu comment appeler les méthodes CRUD, nous pouvons également l'utiliser pour une sous url. Dans notre cas sur la partie mettre en favoris.
+Nous pouvons ainsi éviter de faire un appel ajax custom.
+
+Pour cela il nous faut créer une méthode dans l'adapter :
+
+```javascript
+    // app/adapters/comic.js
+    favorize(model) {
+      const url = this.buildURL(model._internalModel.modelName, model.id) + "/favorize";
+      return this.ajax(url, 'PATCH');
+    }
+```
+
+Ensuite on ajoute une méthode dans le modèle comme suit :
+
+```javascript
+    // app/models/comic.js
+    favorize() {
+      const adapter = this.store.adapterFor('comic');
+      return adapter.favorize(this);
+    }
+```
+
+lors de l'appel dans la route nous pouvons appeler donc directement cette nouvelle méthode :
+
+```javascript
+    // app/routes/comic.js
+      actions: {
+        onFavorize () {
+          const model = this.modelFor(this.routeName);
+          // eslint-disable-next-line no-console
+          console.debug(model.get('slug'), '- favorite:', model.get('isFavorite'));
+    	  model.favorize();
+        }
+      }
+```
+
 [ember]: http://emberjs.com/
-[ember-data]: https://guides.emberjs.com/v3.4.0/models/
+[ember-data]: https://guides.emberjs.com/v3.12.0/models/
 [ember-decorators]: https://github.com/ember-decorators/ember-decorators
 [ember-rfc]: https://github.com/emberjs/rfcs/
 [ember-rfc-0408]: https://github.com/emberjs/rfcs/blob/master/text/0408-decorators.md

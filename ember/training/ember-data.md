@@ -59,7 +59,7 @@ Les deux schémas ci-dessous illustrent les principes de fonctionnement exprimé
 
 ## Modèles
 
-La définition d'un objet modèle [Ember Data][ember-data] se fait en étendant la classe [DS.Model](http://emberjs.com/api/data/classes/DS.Model.html).
+La définition d'un objet modèle [Ember Data][ember-data] se fait en étendant la classe [DS.Model](https://guides.emberjs.com/v3.12.0/models/defining-models/).
 La définition de cette nouvelle classe se fait dans un fichier js dans ``app/models``.
 Le nom du fichier déterminera le type du modèle que l'on est en train de définir.
 Ainsi, la définition de ``app/models/user.js`` rendra disponible le type ``user``.
@@ -68,7 +68,7 @@ Cette classe permet de déclarer la structure du modèle : ses attributs ainsi q
 
 ### Attributs
 
-Les attributs sont déclarés comme des propriété de l'objet en utilisant [DS.attr()](http://emberjs.com/api/data/classes/DS.html#method_attr) :
+Les attributs sont déclarés comme des propriété de l'objet en utilisant [DS.attr()](https://api.emberjs.com/ember-data/3.12/functions/@ember-data%2Fmodel/attr) :
 
 ```javascript
 import DS from 'ember-data';
@@ -99,7 +99,7 @@ export default DS.Model.extend({
 
 ### "Types" (*Transforms*)
 
-Lors de la déclaration d'un attribut, un "type" optionnel peut être précisé à l'aide des [Transformers](http://emberjs.com/api/data/classes/DS.Transform.html) dont l'identifiant est passé en paramètre de la fonction ``DS.attr()``.
+Lors de la déclaration d'un attribut, un "type" optionnel peut être précisé à l'aide des [Transformers](https://guides.emberjs.com/v3.12.0/models/defining-models/#toc_custom-transforms) dont l'identifiant est passé en paramètre de la fonction ``DS.attr()``.
 Les valeurs ``string``, ``boolean``, ``number`` et ``date`` sont gérées nativement.
 
 ```javascript
@@ -115,7 +115,7 @@ export default DS.Model.extend({
 ```
 
 Il est également possible de définir des *transformers* personnalisés (ex : ``timestamp``) via la définition de nouveaux 
-[Transformers](http://emberjs.com/api/data/classes/DS.Transform.html).
+[Transformers](https://guides.emberjs.com/v3.12.0/models/defining-models/#toc_custom-transforms).
 
 ### Valeurs par défaut
 
@@ -136,7 +136,7 @@ export default DS.Model.extend({
 ## Création
 
 Une fois les modèles définis, il est possible d'en créer des instances.
-Celles-ci doivent être créées exclusivement dans le store à l'aide de la méthode [createRecord()](http://emberjs.com/api/data/classes/DS.Store.html#method_createRecord).
+Celles-ci doivent être créées exclusivement dans le store à l'aide de la méthode [createRecord()](https://guides.emberjs.com/v3.12.0/models/creating-updating-and-deleting-records/#toc_persisting-records).
 Il n'est pas possible de créer une instance d'un objet [Ember Data][ember-data] en dehors du store :
 
 ```javascript
@@ -148,9 +148,9 @@ this.store.createRecord('user', {
 
 Lors de la récupération de données depuis le serveur, la création et l'enregistrement dans le store est effectuée automatiquement par [Ember Data][ember-data].
 
-A noter qu'il est également possible, dans certains cas particuliers (pré-chargement, endpoints complexes, atc.), d'alimenter les store à l'aide des méthodes [push](http://emberjs.com/api/data/classes/DS.Store.html#method_push) ou [pushPayload](http://emberjs.com/api/data/classes/DS.Store.html#method_pushPayload).
+A noter qu'il est également possible, dans certains cas particuliers (pré-chargement, endpoints complexes, atc.), d'alimenter les store à l'aide des méthodes [push] ou [pushPayload].
 Ces méthodes permettent en effet de charger les store à partir de données JSON obtenues par ailleurs.
-cf. [documentation](https://guides.emberjs.com/v3.4.0/models/pushing-records-into-the-store/)
+cf. [documentation](https://guides.emberjs.com/v3.12.0/models/pushing-records-into-the-store/)
 
 ```javascript
   this.store.push(this.store.normalize('comics', comicsFetchFromSomewhere));
@@ -182,45 +182,45 @@ Il existe trois grandes familles de requêtes :
 
 Les méthodes ``find`` permettent de retrouver des objets localement si ils sont disponible ou en interrogeant l'API distante, dans le cas contraire.
 
-Il est possible de rechercher tous les objets d'un type ([``findAll``](http://emberjs.com/api/data/classes/DS.Store.html#method_findAll)) :
+Il est possible de rechercher tous les objets d'un type ([``findAll``](https://guides.emberjs.com/v3.12.0/models/finding-records/)) :
 
 ```javascript
 this.store.findAll('user');
 ```
 
-Ou bien une instance en particulier à partir de son identifiant ([``findRecord``](http://emberjs.com/api/data/classes/DS.Store.html#method_findRecord)) : 
+Ou bien une instance en particulier à partir de son identifiant ([``findRecord``](https://guides.emberjs.com/v3.12.0/models/finding-records/)) : 
 
 ```javascript
 this.store.findRecord('user', 1);
 ```
 
-Ces fonctions retournent un [``PromiseArray``](http://emberjs.com/api/data/classes/DS.PromiseArray) dans le cas d'une collection ou une simple *Promise* dans le cas d'un objet seul.
-Ces promesses seront résolues respectivement en un [``RecordArray``](http://emberjs.com/api/data/classes/DS.RecordArray.html) et un *record* du type demandé au retour de la requête.
+Ces fonctions retournent un [``DS.PromiseArray``] dans le cas d'une collection ou une simple *Promise* dans le cas d'un objet seul.
+Ces promesses seront résolues respectivement en un [``DS.RecordArray``] et un *record* du type demandé au retour de la requête.
 
 ### Méthodes ``peek*``
 
 Les méthodes ``peek`` sont très similaires aux ``find`` à ceci près qu'elles ne travaillent que localement et ne déclenchent jamais de requêtes vers le serveur.
 Elles permettent donc d'interroger uniquement les objets déjà chargés dans le store.
 
-Il est possible de rechercher tous les objets d'un type ([``peekAll``](http://emberjs.com/api/data/classes/DS.Store.html#method_peekAll)) :
+Il est possible de rechercher tous les objets d'un type ([``peekAll``](https://guides.emberjs.com/v3.12.0/models/finding-records/)) :
 
 ```javascript
  this.store.peekAll('user');
 ```
 
-Ou bien une instance en particulier à partir de son identifiant ([``peekRecord``](http://emberjs.com/api/data/classes/DS.Store.html#method_peekRecord)) : 
+Ou bien une instance en particulier à partir de son identifiant ([``peekRecord``](https://guides.emberjs.com/v3.12.0/models/finding-records/)) : 
 
 ```javascript
 this.store.peekRecord('user', 1);
 ```
 
-Ces fonctions retournent directement un [``RecordArray``](http://emberjs.com/api/data/classes/DS.RecordArray.html) ou un *record* du type demandé.
+Ces fonctions retournent directement un [``RecordArray``] ou un *record* du type demandé.
 
 ### Méthodes ``query*``
 
 Les méthodes ``query``, quant à elles, permettent de préciser des critères de recherche complexes via les options qui seront passées en paramètres de requête.
 
-On peut les utiliser pour rechercher un ensemble d'objets ([``query``](http://emberjs.com/api/data/classes/DS.Store.html#method_query)) :
+On peut les utiliser pour rechercher un ensemble d'objets ([``query``](https://guides.emberjs.com/v3.12.0/models/finding-records/)) :
 
 ```javascript
 // /api/v1/user?filter[age]=20
@@ -233,7 +233,7 @@ this.store.query('user', {page: 1});
 this.store.query('user', {ids: [1, 2]});
 ```
 
-Ou un objet seul ([``queryRecord``](http://emberjs.com/api/data/classes/DS.Store.html#method_queryRecord)) :
+Ou un objet seul ([``queryRecord``](https://guides.emberjs.com/v3.12.0/models/finding-records/)) :
 
 ```javascript
 // /api/v1/user?filter[login]=funderwood
@@ -243,8 +243,8 @@ this.store.queryRecord('user', {filter: {login: "funderwood"}});
 ### Asynchronicité (promesses)
 
 Ces méthodes effectuent des requêtes serveur et retournent donc des  promesses.
-En l'occurence, un [``PromiseArray``](http://emberjs.com/api/data/classes/DS.PromiseArray) dans le cas d'une collection ou une simple *Promise* dans le cas d'un objet seul.
-Ces promesses seront résolues respectivement en un [``RecordArray``](http://emberjs.com/api/data/classes/DS.RecordArray.html) et un *record* du type demandé au retour de la requête ou rejetée en cas d'erreur.
+En l'occurence, un [``PromiseArray``] dans le cas d'une collection ou une simple *Promise* dans le cas d'un objet seul.
+Ces promesses seront résolues respectivement en un [``RecordArray``] et un *record* du type demandé au retour de la requête ou rejetée en cas d'erreur.
 
 Si l'on souhaite effectuer des opérations complémentaires sur un objet au retour du serveur, il est donc impératif d'attendre la résolution de la promesse en implémentatnt le traitement dans 
 sa méthode ``then()``.
@@ -313,13 +313,13 @@ return this.store.findRecord('user', 1).then(user => {
    > Uncaught Error: You should not call `create` on a model. Instead, call `store.createRecord` with the attributes you would like to set.
    ```
    
-   En effet, comme évoqué plus haut, le ``store`` doit impérativement être utilisé pour créer les objets [Ember Data](https://guides.emberjs.com/v3.4.0/models/) via la méthode    ``createRecord``.
+   En effet, comme évoqué plus haut, le ``store`` doit impérativement être utilisé pour créer les objets [Ember Data](https://guides.emberjs.com/v3.12.0/models/) via la méthode    ``createRecord``.
    Ainsi les appels à ``Comic.create(...)`` de la route ``app/routes/comics.js`` génèrent ces erreurs.
    
 2. Modifier la route ``app/routes/comics.js`` pour supprimer les appels à ``Comic.create(...)`` et utiliser la méthode ``createRecord`` du store
    à la place
    * utiliser le hook ``init`` pour la création des objets
-   * modifier le hook ``model`` pour renvoyer la liste des objets [Ember Data](https://guides.emberjs.com/v3.4.0/models/) en utilisant la méthode ``findAll`` du store.
+   * modifier le hook ``model`` pour renvoyer la liste des objets [Ember Data](https://guides.emberjs.com/v3.12.0/models/) en utilisant la méthode ``findAll`` du store.
      Que constate-t-on ?
    
    > ```javascript
@@ -419,7 +419,7 @@ Le site [Ember addons](https://www.emberaddons.com) rencense l'ensemble des **ad
 [Ember CLI Mirage][ember-mirage] est l'un de ces addons et, comme tel, peut être installé de la manière suivante : 
 
 ```console
-ember install ember-cli-mirage
+ember install ember-cli-mirage@1.1.4
 ```
 
 On installe la beta car celle-ci apporte des améiliorations indispensables, notament dans la gestion des relations.
@@ -458,7 +458,7 @@ Les routes peuvent ainsi être :
 Par défaut, les routes non définies explicitement conduisent à des erreurs mais l'utilisation de ``this.passthrough()`` dans le fichier de configuration permet de damander à [Ember CLI Mirage][ember-mirage] d'effectuer plutôt un appel réel vers le serveur.
 Ce mécanisme permet la mise à disposition de mocks partiels, en développement notamment.
 
-Pour plus de précision se reporter à la [documentation](http://www.ember-cli-mirage.com/versions/v0.4.x/defining-routes/).
+Pour plus de précision se reporter à la [documentation](https://www.ember-cli-mirage.com/docs/getting-started/what-is-mirage).
 
 ### Factories & Fixtures
 
@@ -475,7 +475,7 @@ Cela s'effectue en développement via un **scénario** défini dans ``mirage/sce
   server.createList('contact', 10);
   ```
   
-  cf. [documentation](http://www.ember-cli-mirage.com/versions/v0.4.x/seeding-your-database/#defining-factories)
+  cf. [documentation](https://www.ember-cli-mirage.com/docs/data-layer/factories)
 
 * Les **fixtures** permettent de fournir un ensemble de données statiques (et non générés dynamiquement comme les factories) sous la forme de données au format JSON.
   Les **fixtures** sont définies dans ``mirage/fixtures``.
@@ -486,7 +486,7 @@ Cela s'effectue en développement via un **scénario** défini dans ``mirage/sce
   server.loadFixtures();
   ```
   
-  cf. [documentation](http://www.ember-cli-mirage.com/versions/v0.4.x/seeding-your-database/#fixtures)
+  cf. [documentation](https://www.ember-cli-mirage.com/docs/data-layer/fixtures)
 
 Ces deux mécanismes peuvent être combinés.
 Ils contribuent à peupler une base locale ``db`` qui est ensuite requêtée automatiquement par [Ember CLI Mirage][ember-mirage] pour retrouver les données et peut également être manipulée à la main lors de la définition de nos propres implémentations.
@@ -504,6 +504,8 @@ export default Model;
 ```
 
 Comme on l'expérimentera plus tard, ils permettent en outre de gérer la définition des relations exposées par l'API [Ember CLI Mirage][ember-mirage].
+
+Cette partie est optionnel depuis la version 3, avec l'ajout de l'option discoverEmberDataModels qui est vraie par défaut et reprend donc les propriétés du model Ember Data.
 
 ```javascript
 //mirage/models/user.js
@@ -539,6 +541,13 @@ export default Model.extend({
    > Installed addon package.
    > ```
    >
+   > ```javascript
+   >   Ajouter dans l'environement de dev
+   >   ENV['ember-cli-mirage'] = {
+   >     enabled: true
+   >   };
+   > ```       
+   > 
    > ```javascript
    > // mirage/config.js
    >
@@ -651,7 +660,7 @@ export default Model.extend({
    
    > Lorsque l'on vient de la route ``/comics``, le model complet est passé à la route ``/comics/{slug}`` via le ``linkTo``.
    > Dans ce cas [Ember](http://emberjs.com/) n'exécute pas le hook ``model``puisqu'il en dispose déjà.
-   > Dans le cas d'un chargement initial, au contraire, le modèle n'est pas disponible et [Ember](http://emberjs.com/) exécute le hook, entraînant une requête de la part d'[Ember Data](https://guides.emberjs.com/v3.4.0/models/).
+   > Dans le cas d'un chargement initial, au contraire, le modèle n'est pas disponible et [Ember](http://emberjs.com/) exécute le hook, entraînant une requête de la part d'[Ember Data](https://guides.emberjs.com/v3.12.0/models/).
    
 3. Rétablir la gestion des erreurs
 
@@ -714,7 +723,7 @@ const user = this.store.findRecord('user', 1).then(user => {
 ## Sauvegarde
 
 Une fois l'instance de modèle [Ember Data][ember-data] créée et/ou modifiée, [Ember Data][ember-data] permet de persister ces changement sur le serveur.
-A la différence de la création ou des recherches, la sauvegarde d'une instance de modèle s'effectue directement depuis l'instance, via l'invocation de la méthode [save()](http://emberjs.com/api/data/classes/DS.Model.html#method_save).
+A la différence de la création ou des recherches, la sauvegarde d'une instance de modèle s'effectue directement depuis l'instance, via l'invocation de la méthode [save()](https://api.emberjs.com/ember-data/3.12/classes/Model/methods/save?anchor=save).
 Une requête est alors envoyée au serveur de manière à effectuer cette mise à jour :
 
 ```javascript
@@ -754,7 +763,7 @@ console.log("sent");
 
 La suppression d'une instance peut s'effectuer de trois manières différentes : 
 
-* Soit via la méthode du modèle [deleteRecord()](http://emberjs.com/api/data/classes/DS.Model.html#method_deleteRecord).
+* Soit via la méthode du modèle [deleteRecord()](https://api.emberjs.com/ember-data/3.12/classes/Model/methods/rollbackAttributes?anchor=deleteRecord).
   Celle-ci se contente de placer l'objet dans un état (cf. ci-dessous) pariculier.
   L'objet est alors vu comme supprimé du store (et ne sera plus accessible) mais la requête de suppression ne sera envoyée au serveur que lors d'un ``save``.
   
@@ -763,7 +772,7 @@ La suppression d'une instance peut s'effectuer de trois manières différentes :
   user.save(); // -> DELETE /users/:id
   ```
   
-* Soit via la méthode du modèle [destroyRecord()](http://emberjs.com/api/data/classes/DS.Model.html#method_destroyRecord).
+* Soit via la méthode du modèle [destroyRecord()](https://api.emberjs.com/ember-data/3.12/classes/Model/methods/rollbackAttributes?anchor=destroyRecord).
   Celle-ci effectue la requête de suppression au serveur immédiatement.
   Tout comme la méthode ``save``, elle est asynchrone.
   
@@ -771,7 +780,7 @@ La suppression d'une instance peut s'effectuer de trois manières différentes :
   user.destroyRecord(); // -> DELETE /users/:id
   ```
   
-* Soit via la méthode du store [deleteRecord()](http://emberjs.com/api/data/classes/DS.Store.html#method_deleteRecord) qui effectue également la requête immédiatement;
+* Soit via la méthode du store [deleteRecord()](https://api.emberjs.com/ember-data/3.12/classes/Model/methods/rollbackAttributes?anchor=deleteRecord) qui effectue également la requête immédiatement;
 
   ```javascript
   this.store.deleteRecord(user); // -> DELETE /users/:id
@@ -783,10 +792,10 @@ La suppression d'une instance peut s'effectuer de trois manières différentes :
 Il existe un grand nombre d'états différents.
 Parmis les principaux
 
-* [isNew](http://emberjs.com/api/data/classes/DS.Model.html#property_isNew) : positionné à la création de l'instance
-* [hasDirtyAttributes](http://emberjs.com/api/data/classes/DS.Model.html#property_hasDirtyAttributes) : positionné lorsque l'objet a été modifié depuis son chargement.
+* [isNew](https://api.emberjs.com/ember-data/3.12/classes/Model/properties/isNew?anchor=isNew) : positionné à la création de l'instance
+* [hasDirtyAttributes](https://api.emberjs.com/ember-data/3.12/classes/Model/properties/hasDirtyAttributes?anchor=hasDirtyAttributes) : positionné lorsque l'objet a été modifié depuis son chargement.
   Remis à ``false`` suite à un ``save``.
-* [isDeleted](http://emberjs.com/api/data/classes/DS.Model.html#property_isDeleted) : positionné lorsqu'un objet a été marqué pour suppression
+* [isDeleted](https://api.emberjs.com/ember-data/3.12/classes/Model/properties/isDeleted?anchor=isDeleted) : positionné lorsqu'un objet a été marqué pour suppression
 
 [Ember Data][ember-data] s'appuie ensuite sur ces états pour déterminer les actions à effectuer sur les objets et notamment le type des requêtes à envoyer au serveur (``POST``, ``PATCH``, ``PUT``, ``DELETE``).
 
@@ -872,9 +881,9 @@ Successful request: DELETE /comics/4
 ### Annulation des modifications
 
 L'état ``hasDirtyAttributes`` permet également d'effectuer d'annuler un ensemble de modifications effectuées sur un objet et de le remettre dans son état initial.
-Cette annulation s'effectue via la méthode [http://emberjs.com/api/data/classes/DS.Model.html#method_rollbackAttributes](http://emberjs.com/api/data/classes/DS.Model.html#method_rollbackAttributes).
+Cette annulation s'effectue via la méthode [rollbackAttributes](https://api.emberjs.com/ember-data/3.12/classes/Model/methods/rollbackAttributes?anchor=rollbackAttributes).
 
-La méthode [changedAttributes()](http://emberjs.com/api/data/classes/DS.Model.html#method_changedAttributes) permet, en complément, d'obtenir la liste des modifications effectuées.
+La méthode [changedAttributes()](https://api.emberjs.com/ember-data/3.12/classes/Model/methods/changedAttributes?anchor=changedAttributes) permet, en complément, d'obtenir la liste des modifications effectuées.
 
 Ainsi le code suivant : 
 
@@ -900,12 +909,12 @@ EmptyObject {}
 
 ### Validations
 
-On remarque également que les modèles [Ember Data][ember-data] gèrent un état [isValid](http://emberjs.com/api/data/classes/DS.Model.html#property_isValid).
+On remarque également que les modèles [Ember Data][ember-data] gèrent un état [isValid](https://api.emberjs.com/ember-data/3.12/classes/Model/properties/isValid?anchor=isValid).
 Celui ci est positionné lors de la réception d'erreurs de validation depuis le serveur.
 [Ember Data][ember-data] ne fournir en effet pas de gestion native de validation.
 En fonction des normes respectées, les adapters sont en revanche capables de récupérer les erreurs en provenance du serveur.
 La présence d'erreurs de validation dans la réponse du serveur aura alors pour effet de positionner l'état de l'objet à ``isValid=false``.
-La liste des erreurs pourra ensuite être accédée via la propriété [errors](http://emberjs.com/api/data/classes/DS.Model.html#property_errors) : ``user.get('errors')``.
+La liste des erreurs pourra ensuite être accédée via la propriété [errors](https://api.emberjs.com/ember-data/3.12/classes/Model/properties/errors?anchor=errors) : ``user.get('errors')``.
 
 Il ne faut cependant pas confondre cette récupérations d'erreurs de validations côté serveur avec une gestion de la validation des modèles côté client (dans un formulaire, par exemple).
 [Ember Data][ember-data] ne fournit pas d'outillage à ce niveau là mais l'on peut se tourner vers l'addon [Ember CP Validations](http://offirgolan.github.io/ember-cp-validations/docs/modules/Home.html) qui en fournit une implémentation complète et de qualité, comprenant l'internationalisation.
@@ -918,7 +927,7 @@ Il ne faut cependant pas confondre cette récupérations d'erreurs de validation
   
 1. On peut désormais simplifier grandement les opérations concernant la création et l'édition d'un comic.
    Modifier les routes ``comic.edit`` et ``comic.create`` dans ce sens.
-   * La gestion de l'état de sauvegarde (``hasUserSavedOrCancel``) peut disparaître au profit d'appels à ``save`` et de gestions d'états  [Ember Data](https://guides.emberjs.com/v3.4.0/models/)
+   * La gestion de l'état de sauvegarde (``hasUserSavedOrCancel``) peut disparaître au profit d'appels à ``save`` et de gestions d'états  [Ember Data](https://guides.emberjs.com/v3.12.0/models/)
    * De la même manière, la réinitialisation (``reset``) peut être avantageusement remplacée par un ``rollbackAttributes``.
    * Le modèle peut être accédé via ``this.get('controller.model')``
    
@@ -1184,15 +1193,16 @@ Ces requêtes ne sont effectuées que lorsque l'on accède effectivement (progra
      ```javascript
      // app/models/album.js
      import DS from 'ember-data';
+     import { computed } from '@ember/object';
      
      export default DS.Model.extend({
        title: DS.attr('string'),
        publicationDate     : DS.attr('date'),
        number              : DS.attr('number'),
        coverName           : DS.attr('string', {defaultValue: 'default.jpg'}),
-       coverUrl: function() {
+       coverUrl: computed('coverName', function() {
          return '/assets/images/albums/covers/' + this.get('coverName');
-       }.property('coverName')
+       })
      });
      ```
    
@@ -1251,19 +1261,42 @@ Ces requêtes ne sont effectuées que lorsque l'on accède effectivement (progra
        comicId: 1
      }];
      ```  
-   
+     
+     ```javascript
+      // mirage/fixtures/comics
+      ...
+       const blackSad = {
+         id: 1,
+         title: 'Blacksad',
+         scriptwriter: 'Juan Diaz Canales',
+         illustrator: 'Juanjo Guarnido',
+         publisher: 'Dargaud',
+         albumIds: [1, 2, 3, 4, 5]
+       };
+      ```  
+     ```javascript
+      // mirage/serializers/application
+      export default JSONAPISerializer.extend({
+        alwaysIncludeLinkageData: true,
+      });
+      ```  
+
+
+  
    * Modifier le modèle ``comic`` pour ajouter une relation One to Many ``albums`` vers le modèle ``album``
    
      > ```javascript
      > // app/models/comic.js
      >
+     > import { computed } from '@ember/object';
      > import DS from 'ember-data';
      > 
      > export default DS.Model.extend({
-     >   slug: function () {
-     >     return this.get('title').dasherize();
-     >   }.property('title'),
-     > 
+     >   slug: computed('title', function() {
+     >     const title = this.get('title') || 'new';
+     >     return title.dasherize();
+     >   }),
+     >   
      >   title: DS.attr('string', {defaultValue: 'new'}),
      >   scriptwriter: DS.attr('string'),
      >   illustrator: DS.attr('string'),
@@ -1329,12 +1362,12 @@ Ces requêtes ne sont effectuées que lorsque l'on accède effectivement (progra
      > ```
      
 2. L'affichage des albums se fait désormais correctement mais l'affichage des dates laisse à désirer.
-   On va donc créer un transformateur personnalisé comme évoqué plus haut (cf. [documentation](https://guides.emberjs.com/v3.4.0/models/defining-models/#toc_custom-transforms))
+   On va donc créer un transformateur personnalisé comme évoqué plus haut (cf. [documentation](https://guides.emberjs.com/v3.12.0/models/defining-models/#toc_custom-transforms))
    pour gérer une date de forme ``Mois Année``.
    * Installer [ember-moment](https://www.npmjs.com/package/ember-moment) qui permet d'utiliser la librairie de gestion de date ``moment``
    
      > ```console
-     > ember install ember-moment
+     > ember install ember-moment@8.0.0
      > ```
      
    * Créer un nouveau transformateur ``app/transforms/pub-date.js`` : 
@@ -1373,5 +1406,5 @@ Ces requêtes ne sont effectuées que lorsque l'on accède effectivement (progra
 </div>
 
 [ember]: http://emberjs.com/
-[ember-data]: https://guides.emberjs.com/v3.4.0/models/
+[ember-data]: https://guides.emberjs.com/v3.12.0/models/
 [ember-mirage]: http://www.ember-cli-mirage.com/
