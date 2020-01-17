@@ -28,7 +28,7 @@ Les futurs versions d'[Ember][ember] verront disparaître les contrôleurs au pr
 La route définit donc, comme vu au chapitre précédent, une méthode ``model`` permettant de retrouver le modèle.
 Le contrôleur stocke, quant à lui, dans une propriété ``model`` le résultat de cette méthode pour l'exposer au template.
 
-L'initialisation de la propriété ``model`` du contrôleur à partir du résultat de la méthode ``model`` de la route, après résolution des éventuelles promesses par [Ember][ember], s'effectue de manière totalement automatique via la méthode [setupController](http://emberjs.com/api/classes/Ember.Route.html#method_setupController) de la route.
+L'initialisation de la propriété ``model`` du contrôleur à partir du résultat de la méthode ``model`` de la route, après résolution des éventuelles promesses par [Ember][ember], s'effectue de manière totalement automatique via la méthode [setupController](https://api.emberjs.com/ember/3.12/classes/Route/methods/setupController?anchor=setupController) de la route.
 ``setupController`` est appelée lorsque la route ou le modèle change, après le *hook* ``afterModel`` et peut donc être surchargée de manière à provisionner, dans le contrôleur associé à la route, des éléments de contexte supplémentaires dépendant de la route courante et de ses éventuels segments dynamiques : 
 
 ```javascript
@@ -40,13 +40,13 @@ setupController: function (controller, model) {
 
 L'accès au(x) contrôleur(s) au sein d'une route peut s'effectuer de différentes manières :
 
-* via l'accès direct à la propriété [controller](http://emberjs.com/api/classes/Ember.Route.html#property_controller) définie et provisionnée par [Ember][ember] au sein de la route :
+* via l'accès direct à la propriété [controller](https://api.emberjs.com/ember/3.12/classes/Route/properties/controller?anchor=controller) définie et provisionnée par [Ember][ember] au sein de la route :
 
   ```javascript
   this.get('controller');
   ```
   
-* via l'utilisation de la méthode [controllerFor()](http://emberjs.com/api/classes/Ember.Route.html#method_controllerFor) qui, comme la méthode [modelFor](http://emberjs.com/api/classes/Ember.Route.html#method_modelFor) pour le modèle, permet d'accéder au contrôleur associé à une route donnée :
+* via l'utilisation de la méthode [controllerFor()](https://api.emberjs.com/ember/3.12/classes/Route/methods/controllerFor?anchor=controllerFor) qui, comme la méthode [modelFor](https://api.emberjs.com/ember/3.12/classes/Route/methods/modelFor?anchor=modelFor) pour le modèle, permet d'accéder au contrôleur associé à une route donnée :
 
   ```javascript
   this.controllerFor('mere.fille');
@@ -170,7 +170,7 @@ actions: {
    > <form>
    >     ...
    >     <div class="buttons">
-   >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
+   >       <button type="submit" {{action "save"}} class="btn-submit"></button>
    >       <button type="reset" class="btn-cancel"></button>
    >     </div>
    >     ...
@@ -215,8 +215,8 @@ actions: {
     > <form>
     >     ...
     >     <div class="buttons">
-    >       <button type="submit" {{action 'save'}} class="btn-submit"></button>
-    >       <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
+    >       <button type="submit" {{action "save"}} class="btn-submit"></button>
+    >       <button type="reset" {{action "cancel"}} class="btn-cancel"></button>
     >     </div>
     >     ...
     > </form>
@@ -253,8 +253,8 @@ actions: {
 1. Intercepter et traiter les actions 'save' et 'cancel' pour la route `comics.create`
    * Rediriger vers la route ``comic.index`` du nouveau comic suite à validation.
    * Nettoyer la liste de comics et rediriger vers la route ``comics`` suite à annulation.
-     Utiliser pour cela la fonction [removeObject()](http://emberjs.com/api/classes/Ember.MutableArray.html#method_removeObject) de ``Ember.MutableArray``.
-   * Transformer la propriété ``slug`` d'un ``Comic`` en **computed propety** de manière à ce que le *slug* corresponde à la valeur du titre transformée grâce à la fonction [dasherize()](http://emberjs.com/api/classes/Ember.String.html#method_dasherize) et qu'il soit mis à jour à chaque modification du titre.
+     Utiliser pour cela la fonction [removeObject()](https://api.emberjs.com/ember/3.12/classes/MutableArray/methods/removeObject?anchor=removeObject) de ``Ember.MutableArray``.
+   * Transformer la propriété ``slug`` d'un ``Comic`` en **computed propety** de manière à ce que le *slug* corresponde à la valeur du titre transformée grâce à la fonction [dasherize()](https://api.emberjs.com/ember/3.15/classes/String/methods/dasherize?anchor=dasherize) et qu'il soit mis à jour à chaque modification du titre.
      Supprimer l'affectation de la valeur par défaut `new` à la propriété `slug` lors de la création du comic dans la route `create`.
     Attention cependant à bien conserver, dans la nouvelle propriété calculée, l'affectation de la valeur par défaut dans le cas ou `title` n'est pas défini.
      
@@ -303,7 +303,7 @@ actions: {
    > });
    > ```
    > 
-   > On note le passage du model à la route ``comic`` lors de la transition suite au ``save`` puisque celui-ci vient d'être créé et était inconnu.
+   > On note le passage du model à la route ``comic`` lors de la transition suite au ``save`` puisque celui-ci vient d'être créé et était inconnu. Attention on remarque dans la console l'apparition de ligne deprecated, lié à la surcharge de la propriété calculé slug dans la route comics. Pour palier à ce problème il faut supprimer l'initialisation de la propriété slug qui sera traitée de manière automatique. On à également des lignes dépréciées pour la partie test, en effet il faut changer l'initialisation des comic via EmberObject et passer directement par le model Ember.
       
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}
@@ -316,15 +316,15 @@ actions: {
 Lorsque l'on déclare une action, il est également possible de préciser explicitement le type d'évènement DOM que l'on souhaite lier à l'action de la manière suivante : 
 
 ```html
-<div {{action 'save' "value" on 'doubleClick'}}>confirm</div>
-<button {{action 'save' model.id on 'mouseUp'}}>confirm</button>
-{{input enter=(action 'save' model.id) value="confirm"}}
+<div {{action "save" "value" on "doubleClick"}}>confirm</div>
+<button {{action "save" model.id on "mouseUp"}}>confirm</button>
+{{input enter=(action "save" model.id) value="confirm"}}
 <input type="text" value="confirm" onclick={{action 'save' model}} />
 ```
 
 * Les éléments html standards peuvent manipuler tout type d'évènement natif.
-* Les {{action ... on ... }} peuvent gérer les évènements [décrits ici](http://emberjs.com/api/classes/Ember.View.html#toc_event-names).
-* Les évènements gérés par le *helper*``{{input}}`` sont listés dans la [documentation](http://emberjs.com/api/classes/Ember.Templates.helpers.html#toc_actions).
+* Les {{action ... on ... }} peuvent gérer les évènements.
+* Les évènements gérés par le *helper*``{{input}}`` sont listés dans la [documentation](http://api.emberjs.com/ember/3.12/classes/Ember.Templates.helpers/methods/action?anchor=action).
 
 On remarque au passage, concernant l'utilisation du *helper* ``{{input}}``, l'utilisation d'une **sous-expression** [Handlebars][handlebars] via la notation ``{{input ... (action ...)}}``.
 Cette notation permet l'imbrication d'expressions au sein des *helpers*.
@@ -338,9 +338,9 @@ Il s'agit des ``element space actions`` d'un côté dont le fonctionnement s'app
   Elles interviennent lors de l'utilisation des syntaxes standard telles que :
   
   ```html
-  <div {{action 'save' model}}>confirm</div>
-  <div {{action 'save' model on 'mouseUp'}}>confirm</div>
-  {{input enter='save' value="confirm"}}
+  <div {{action "save" model}}>confirm</div>
+  <div {{action "save" model on "mouseUp"}}>confirm</div>
+  {{input enter="save" value="confirm"}}
   ```
   
   Ces actions peuvent être indifféremment intercéptées dans un contrôleur, un composant ou une route.
@@ -349,8 +349,8 @@ Il s'agit des ``element space actions`` d'un côté dont le fonctionnement s'app
   Elles interviennent lors de l'utilisation des syntaxes imbriquées ou précisant les évènements DOM telles que :
   
   ```html
-  {{input enter=(action 'save' model.id) value="confirm"}}
-  <input type="text" value="confirm" onclick={{action 'save' model}} />
+  {{input enter=(action "save" model.id) value="confirm"}}
+  <input type="text" value="confirm" onclick={{action "save" model}} />
   ```
   
   Entre le template et le contrôleur / composant, ces actions ne se propagent pas via *bubling* et doivent impérativement être interceptées **dans un contrôleur ou un composant** et, éventuellement, propagées explicitement.
@@ -362,13 +362,13 @@ Pour d'avantage de détails, se reporter à cette [RFC](https://github.com/mixon
 
 ### Propagation explicite des actions
 
-Les composants, contrôleurs et routes permettent donc de définir et de propager explicitement des actions via la méthode [send(actionName, context)](http://emberjs.com/api/classes/Ember.Controller.html#method_send) dont ils héritent tous via le [mixin Ember.ActionHandler](http://emberjs.com/api/classes/Ember.ActionHandler.html).
+Les composants, contrôleurs et routes permettent donc de définir et de propager explicitement des actions via la méthode [send(actionName, context)](https://api.emberjs.com/ember/3.12/classes/Controller/methods/send?anchor=send).
 
 Cette méthode permet de propager une action de nom ``actionName`` associée éventuellement à un ``context`` (objet, litéral, fonction, etc.) selon les mécanismes standards de *bubbling* décrits [plus haut](#bubbling).
 La recherche commence au sein même de l'objet courant et se propage en l'absence de gestionnaire local.
 
 ```javascript
-this.send('save', model);
+this.send("save", model);
 ```
 
 Dans le cas des **closure actions**, c'est cette méthode qu'il est nécessaire d'utiliser pour permettre, si nécessaire, la propagation de l'action et de son contexte depuis le contrôleur ou le composant vers la route.
@@ -379,7 +379,7 @@ L'action ainsi créée suit alors les règles de propagation et de bubbling stan
 [Ember][ember] fournit un certain nombre d'actions natives propagées automatiquement et interceptables au sein des routes.
 Le traitement de ces actions se fait de la même manière que les actions vues précédement définies dans les templates, au sein du *hash* ``actions`` :
 
-* [error](http://emberjs.com/api/classes/Ember.Route.html#event_error) : Une action ``error`` est levée lorsqu'une promesse est rejetée au sein de l'un des *hooks* de la route (échec dans la récupération du modèle, etc.).
+* [error](https://api.emberjs.com/ember/3.12/classes/Route/events/error?anchor=error) : Une action ``error`` est levée lorsqu'une promesse est rejetée au sein de l'un des *hooks* de la route (échec dans la récupération du modèle, etc.).
   La levée ainsi que la propagation de cette action via le *bubbling* permet la gestion de l'erreur à n'importe quel niveau de la hiérarchie de route.
    
   ```javascript
@@ -392,7 +392,7 @@ Le traitement de ces actions se fait de la même manière que les actions vues p
   }
   ```
 
-* [loading](http://emberjs.com/api/classes/Ember.Route.html#event_loading) : Une action ``loading`` est levée lorsque l'un des *hooks* de la route retourne une promesse non encore résolue.
+* [loading](https://api.emberjs.com/ember/3.12/classes/Route/events/loading?anchor=loading) : Une action ``loading`` est levée lorsque l'un des *hooks* de la route retourne une promesse non encore résolue.
 
   ```javascript
   actions: {
@@ -404,7 +404,7 @@ Le traitement de ces actions se fait de la même manière que les actions vues p
   }
   ```
 
-* [didTransition](http://emberjs.com/api/classes/Ember.Route.html#event_didTransition) : Une action ``didTransition`` est levée lorsque la transition s'est effectuée complètement, c'est à dire après l'exécution des *hooks* d'entrée (``beforeModel``, ``model``, ``afterModel``, ``setupController``).
+* [didTransition](https://api.emberjs.com/ember/3.12/classes/Route/events/didTransition?anchor=didTransition) : Une action ``didTransition`` est levée lorsque la transition s'est effectuée complètement, c'est à dire après l'exécution des *hooks* d'entrée (``beforeModel``, ``model``, ``afterModel``, ``setupController``).
   Cette action est courament utilisée pour des opération de *tracking* (visites, etc.).
  
   ```javascript
@@ -413,7 +413,7 @@ Le traitement de ces actions se fait de la même manière que les actions vues p
   }
   ``` 
 
-* [willTransition](http://emberjs.com/api/classes/Ember.Route.html#event_willTransition) : Une action ``willTransition`` est levée lorsqu'une tentative de transition est effectuée depuis cette route.
+* [willTransition](https://api.emberjs.com/ember/3.12/classes/Route/events/willTransition?anchor=willTransition) : Une action ``willTransition`` est levée lorsqu'une tentative de transition est effectuée depuis cette route.
 
   ```javascript
   actions: {
@@ -527,7 +527,7 @@ Il est donc nécessaire de s'assurer, à chaque accès à la route, que l'état 
 
 Dans notre cas, la propriété ``hasUserSavedOrCancel`` a été conservée à ``true`` laissant penser à ``willTransition`` qu'une action utilisateur avait été effectuée.
 
-Comme on l'a évoqué dans le chapitre précédent, les routes [Ember][ember] disposent d'une méthode [resetController](http://emberjs.com/api/classes/Ember.Route.html#method_resetController)
+Comme on l'a évoqué dans le chapitre précédent, les routes [Ember][ember] disposent d'une méthode [resetController](https://api.emberjs.com/ember/3.12/classes/Route/methods/resetController?anchor=resetController)
 appelée systématiquement lorsque la route ou le modèle change qui permet de laisser, en partant, le contrôleur dans un état stable, prêt pour une utilisation ultérieure.
     
 
@@ -591,7 +591,7 @@ On a utilisé jusqu'à présent les controllers implicites d'[Ember][ember] ou i
 
 Dans certains cas, cependant, il peut être utile de spécifier explicitement le contrôleur que l'on souhaite associer à la route de manière à réutiliser un contrôleur existant.
 
-Cela s'effectue grâce à la propriété [controllerName](http://emberjs.com/api/classes/Ember.Route.html#property_controllerName) de la route :
+Cela s'effectue grâce à la propriété [controllerName](https://api.emberjs.com/ember/3.12/classes/Route/properties/controllerName?anchor=controllerName) de la route :
 
 ```javascript
 export default Ember.Route.extend({
@@ -599,7 +599,7 @@ export default Ember.Route.extend({
 });
 ```
 
-**NB** : On peut également utiliser la méthode [this.controllerFor('another/route')](http://emberjs.com/api/classes/Ember.Route.html#method_controllerFor) de manière à récupérer le controller d'une autre route et l'affecter explicitement à la route courante dans le *hook* [setupController](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
+**NB** : On peut également utiliser la méthode [this.controllerFor('another/route')](https://api.emberjs.com/ember/3.12/classes/Route/methods/controllerFor?anchor=controllerFor) de manière à récupérer le controller d'une autre route et l'affecter explicitement à la route courante dans le *hook* [setupController](https://api.emberjs.com/ember/3.12/classes/Route/methods/setupController?anchor=setupController).
 Cependant cette méthode est moins élégante et peut générer des effets de bord.
 Elle n'est pas à privilégier.
 Noter également que le contrôleur en question doit impérativement avoir été créé (notamment parce que la route correspondante est active).
@@ -672,12 +672,12 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
 1. Nous allons maintenant ajouter un champ permettant de filtrer la liste les comics ainsi qu'un bouton de tri permettant de trier les comics dans un ordre croissant ou décroissant.
    * Créer le contrôleur ``app/controllers/comics.js`` en se basant sur le modèle proposé plus bas.
    * Implémenter le corps de l'action ``sort`` de manière à inverser la valeur de la propriété ``sortAsc``.
-     Indice : utiliser pour cela une méthode de [Ember.Controller](http://emberjs.com/api/classes/Ember.Controller.html) qui permet d'inverser la valeur d'une propriété booléenne.
+     Indice : utiliser pour cela une méthode de [Controller](https://api.emberjs.com/ember/3.12/classes/Controller) qui permet d'inverser la valeur d'une propriété booléenne.
    * Compléter la propriété ``filteredComics`` afin que celle-ci se base sur la collection récupérée initialement.
    * Compléter la liste des propriétés observées par la propriété calculée ``filteredComics`` de manière à ce que celle-ci soit recalculée à chaque fois que la propriété ``filter`` change, chaque fois que l'on ajoute ou supprime un comic dans la liste et enfin lorsque l'on modifie le titre de n'importe quel comic.
    * Compléter la propriété observée par ``sortDefinition`` de manière à ce que celle-ci soit recalculée chaque fois que la direction du tri est modifiée.
    * Compléter la propriété ``sortedComics`` afin que celle-ci se base sur la collection filtrée (``filteredComics``).
-   * On remarque l'utilisation de la méthode [Ember.computed.filter](http://emberjs.com/api/classes/Ember.computed.html#method_filter) qui permet de filtrer facilement une collection et de la méthode [Ember.computed.sort](http://emberjs.com/api/classes/Ember.computed.html#method_sort) qui permet, elle, de faciliter le tri.
+   * On remarque l'utilisation de la méthode [Ember.computed.filter](https://api.emberjs.com/ember/3.12/functions/@ember%2Fobject%2Fcomputed/filter) qui permet de filtrer facilement une collection et de la méthode [Ember.computed.sort](https://api.emberjs.com/ember/3.12/functions/@ember%2Fobject%2Fcomputed/sort) qui permet, elle, de faciliter le tri.
      Cette dernière s'appuie également sur une propriété calculée définissant les caractéristiques du tri (propriété, ordre). Ici ``['title:asc']`` ou ``['title:desc']``.
    * Modifier le template ``app/templates/comics.hbs`` en se basant sur le modèle proposé plus bas.
    * Ajouter avant la liste de comics un ``input`` permettant de modifier la valeur de ``filter`` ainsi qu'un bouton permettant de déclencher l'action ``sort``.
@@ -694,10 +694,10 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
      filter: "",
      sortAsc: true,
    
-     filteredComics: filter(..., function (model) {
+     filteredComics: filter(..., [???], function (model) {
        const title = model.get('title');
        return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
-     }).property(???, ???, ???),
+     }),
    
      sortDefinition: computed(???, function () {
        return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')]; 
@@ -747,10 +747,10 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
    >   filter: "",
    >   sortAsc: true,
    > 
-   >   filteredComics: filter('model', function (model) {
+   >   filteredComics: filter('model', ['filter', 'model.[]', 'model.@each.title'], function (model) {
    >     const title = model.get('title');
    >     return !title || title.toLowerCase().match(new RegExp(this.get('filter').toLowerCase()));
-   >   }).property('filter', 'model.[]', 'model.@each.title'),
+   >   }),
    > 
    >   sortDefinition: computed('sortAsc', function () {
    >     return ["title:" + (this.get('sortAsc') ? 'asc' : 'desc')]; 
@@ -773,13 +773,13 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
    >   <h2 class="comics-title">Comics list</h2>
    > 
    >   <div class="comics-filter">
-   >     {{input type=text value=filter class="filter"}}
-   >     <button {{action "sort"}} class="btn-sort {{if sortAsc 'sort-asc' 'sort-desc'}}"></button>
+   >     <Input type="text" @value={{filter}} class="filter"/>
+   >     <button {{action "sort"}} class="btn-sort {{if sortAsc "sort-asc" "sort-desc"}}"></button>
    >   </div>
    > 
    >   <ul class="comics-list">
    >     {{#each sortedComics as |comic|}}
-   >       <li class="{{if comic.scriptwriter 'comic-with-scriptwriter' 'comic-without-scriptwriter'}} comics-list-item">
+   >       <li class="{{if comic.scriptwriter "comic-with-scriptwriter" "comic-without-scriptwriter"}} comics-list-item">
    >       {{#link-to "comic" comic}}
    >         {{comic.title}} by {{if comic.scriptwriter comic.scriptwriter "unknown scriptwriter"}}
    >       {{/link-to}}
@@ -788,13 +788,15 @@ L'utilisation de [propriétés calculées](../underlyings/#propri%C3%A9t%C3%A9s-
    >       Sorry, no comic found
    >     {{/each}}
    >   </ul>
-   >   {{link-to '' 'comics.create' class="add-comic"}}
+   >   {{link-to "" "comics.create" class="add-comic"}}
    > 
    >   <span class="comics-number">Number of comics: {{sortedComics.length}}</span>
    > </div>
    > 
    > {{outlet}}
    > ```
+   
+  Il faut également changer le test Controller - 07 - Should cancel edit after confirm true qui devient non passant, car le tri est inversé. il faut donc remplacer await click(".comics .comics-list > .comics-list-item:first-child > a"); par await click(".comics .comics-list > .comics-list-item:last-child > a");
   
   {% endraw %}
   {% endcapture %}{{ m | markdownify }}

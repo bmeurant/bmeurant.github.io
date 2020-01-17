@@ -44,7 +44,7 @@ export default Router;
 Il n'y a pas grand chose à dire sur cet élément pour le moment.
 Tout juste peut-on noter la récupération, depuis le système de gestion et de configuration des environnements d'[Ember][ember],
 d'un paramètre permettant de déterminer la manière dont seront construites ou résolues les URLs de notre application.
-Se reporter à la [documentation](http://emberjs.com/api/classes/Ember.Location.html) pour plus de détails.
+Se reporter à la [documentation](https://api.emberjs.com/ember/3.12/classes/Location) pour plus de détails.
 
 Le fait que le routeur soit vide ne signifie pas pour autant qu'aucune route n'existe.
 Nous avons d'ailleurs pu constater que la route ``application`` (``/``) existait et était personnalisable.
@@ -120,7 +120,7 @@ On souhaite désormais créer une nouvelle route pour l'affichage et la manipula
 
 Le routeur se contente donc de déclarer l'existence d'une route - et donc d'une URL.
 La logique de cette route et son comportement se trouvent implémentés au sein d'une instance de
-``Ember.Route``.
+``Route``.
 Par convention, celle-ci doit se trouver dans un fichier de même nom que celui définit dans le routeur (ici ``comics``) dans le répértoire ``app/routes``.
 A noter que dans le cas de [Routes imbriquées](#routes-imbriquees), l'arborescence de ce répertoire suit l'imbrication déclarée dans le routeur.
 
@@ -226,30 +226,30 @@ Router.map(function() {
 
 ## Cycle de vie d'une route & Hooks
 
-Les routes [Ember][ember] étendent la classe `Ember.Route` et mettent à disposition un certain nombre de *hooks* relatifs au cycle de vie de la route.
+Les routes [Ember][ember] étendent la classe `Route` et mettent à disposition un certain nombre de *hooks* relatifs au cycle de vie de la route.
 Ces *hooks* sont des méthodes de la classe mère, vides ou non, qui sont automatiquement appelées par [Ember][ember].
 Cet appel se fait dans un ordre bien spécifique :
 
-1. [beforeModel(transition)](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel) : opérations préalables à la récupération du modèle (redirections éventuelles, etc.).
-1. [model(params, transition)](http://emberjs.com/api/classes/Ember.Route.html#method_model) : récupération du modèle.
-1. [afterModel(resolvedModel, transition)](http://emberjs.com/api/classes/Ember.Route.html#method_afterModel) : opérations nécessitant la récupération préalable du modèle (redirections éventuelles, etc.).
-1. [activate()](http://emberjs.com/api/classes/Ember.Route.html#method_activate) : opérations d'activations (collectes statistiques, etc.).
+1. [beforeModel(transition)](https://api.emberjs.com/ember/3.12/classes/Route/methods/beforeModel?anchor=beforeModel) : opérations préalables à la récupération du modèle (redirections éventuelles, etc.).
+1. [model(params, transition)](https://api.emberjs.com/ember/3.12/classes/Route/methods/model?anchor=model) : récupération du modèle.
+1. [afterModel(resolvedModel, transition)](https://api.emberjs.com/ember/3.12/classes/Route/methods/afterModel?anchor=afterModel) : opérations nécessitant la récupération préalable du modèle (redirections éventuelles, etc.).
+1. [activate()](https://api.emberjs.com/ember/3.12/classes/Route/methods/activate?anchor=activate) : opérations d'activations (collectes statistiques, etc.).
    Exécuté lorsqu'on entre dans la route mais pas lorsque seul le modèle change.
-1. [setupController(controller, model)](http://emberjs.com/api/classes/Ember.Route.html#method_setupController) : configuration du controller (contexte, etc.).
+1. [setupController(controller, model)](https://api.emberjs.com/ember/3.12/classes/Route/methods/setupController?anchor=setupController) : configuration du controller (contexte, etc.).
    Exécuté au changement de route ou de modèle.
-1. [renderTemplate(controller, model)](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate) : opérations de rendu du template associé à la route courante.
+1. [renderTemplate(controller, model)](https://api.emberjs.com/ember/3.12/classes/Route/methods/renderTemplate?anchor=renderTemplate) : opérations de rendu du template associé à la route courante.
    Exécuté au changement de route ou de modèle.
-1. [resetController()](http://emberjs.com/api/classes/Ember.Route.html#method_resetController) : réinitialisation du controller.
+1. [resetController()](https://api.emberjs.com/ember/3.12/classes/Route/methods/resetController?anchor=resetController) : réinitialisation du controller.
    Exécuté au changement de route ou de modèle.
-1. [deactivate()](http://emberjs.com/api/classes/Ember.Route.html#method_deactivate) : opérations de désactivation (collectes statistiques, etc.).
+1. [deactivate()](https://api.emberjs.com/ember/3.12/classes/Route/methods/deactivate?anchor=deactivatee) : opérations de désactivation (collectes statistiques, etc.).
    Exécuté lorsqu'on quitte la route mais pas lorsque seul le modèle change.
 
 ## Définition du modèle
 
 L'une des responsabilité principales d'une route consiste donc à assurer la récupération et la gestion d'un modèle (*model*).
 Au sens général un modèle est un objet métier contenant des propriétés.
-En [Ember][ember], il peut s'agir d'objets javascript natifs ou d'instances de classes héritant de `Ember.Object`.
-Cependant, comme on a pu le constater [auparavant](../templates/#bindings), dans le cas où l'on fournit un objet javascript natif à [Ember][ember], celui-ci le transforme automatiquement en sous-classe d'`Ember.Object` de manière à être capable d'écouter les changements survenus sur ce modèle.
+En [Ember][ember], il peut s'agir d'objets javascript natifs ou d'instances de classes héritant de `EmberObject`.
+Cependant, comme on a pu le constater [auparavant](../templates/#bindings), dans le cas où l'on fournit un objet javascript natif à [Ember][ember], celui-ci le transforme automatiquement en sous-classe d'`EmberObject` de manière à être capable d'écouter les changements survenus sur ce modèle.
 Principalement pour pouvoir être capable de mettre à jour les template via les *bindings*.
 
 [Ember][ember] propose également une librairie, [Ember Data](https://github.com/emberjs/data), permettant de gérer les modèles, leurs propriétés ainsi que leurs relations de manière très poussée.
@@ -309,7 +309,7 @@ Cet objet permet d'agir sur la transaction en cours et notamment d'annuler la tr
   {% capture m %}
   {% raw %}
 
-1. Créer dans ``app/models/comic.js`` une classe ``Comic`` étendant ``Ember.Object``
+1. Créer dans ``app/models/comic.js`` une classe ``Comic`` étendant ``EmberObject``
    * Définir les propriétés ``slug``, ``title``, ``scriptwriter``, ``illustrator``, ``publisher``
 
      > ```javascript
@@ -440,7 +440,7 @@ Par convention, les éléments constitutifs des routes filles (template, route, 
   {% raw %}
 
 1. Créer une route ``comic``, fille de la route ``comics``.
-    * Utiliser la ligne de commande [Ember CLI](http://ember-cli.com) ``generate route comics/comic`` pour générer la route
+    * Utiliser la ligne de commande [Ember CLI](http://ember-cli.com) ``ember generate route comics/comic`` pour générer la route
     * La nouvelle route doit afficher un texte *"Comic selected !"* dans une div de classe ``comic`` à droite de la liste de comics
     * Ne pas oublier l' ``{{outlet}}`` dans la route mère
 
@@ -476,6 +476,7 @@ Par convention, les éléments constitutifs des routes filles (template, route, 
     > </p>
     >
     > {{outlet}}
+    > 
     > ```
     >
     > ```html
@@ -533,7 +534,7 @@ La notation ``<name>_<prop>`` constitue également une convention permettant à 
 ## Accès au modèle
 
 En plus des *hooks* appelés durant le cycle de vie de la route et permettant de définir le modèle attaché à cette route, il existe une méthode permettant de récupérer l'objet modèle créé depuis une route parente.
-C'est la méthode [modelFor](http://emberjs.com/api/classes/Ember.Route.html#method_modelFor).
+C'est la méthode [modelFor](https://api.emberjs.com/ember/3.12/classes/Route/methods/modelFor?anchor=modelFor).
 
 Chaque route peut donc, via cette méthode, récupérer le modèle associé à la route parente dont le nom est passé en paramètre de cette méthode (et pas seulement au modèle de la route
 courante, donc).
@@ -545,7 +546,7 @@ courante, donc).
   this.modelFor('mere.fille');
 ```
 
-Le modèle de la route courante peut donc être récupéré en utilisant cette méthode avec le nom de la route courante ou en utilisant la propriété [this.routeName](http://emberjs.com/api/classes/Ember.Route.html#property_routeName) qui contient le nom de la route courante.
+Le modèle de la route courante peut donc être récupéré en utilisant cette méthode avec le nom de la route courante ou en utilisant la propriété [this.routeName](https://api.emberjs.com/ember/3.12/classes/Route/properties/routeName?anchor=routeName) qui contient le nom de la route courante.
 Cette dernière, notation, plus évolutive, est à privilégier lorsque l'on souhaite accéder au modèle de la route courante.
 
 ```javascript
@@ -568,7 +569,7 @@ place du texte précédent.
     * La nouvelle route doit répondre à l'URL ``/comics/<slug>`` ou ``slug`` correspond à la propriété ``slug`` du modèle ``comic``
     * Comme nous ne disposons pour l'instant pas de ``store`` nous permettant de disposer d'un référentiel partagé de nos modèles, utiliser la méthode ``modelFor`` pour récupérer le modèle de la route mère ``/comics``.
     * La route doit récupérer la valeur du paramètre ``slug`` et renvoyer le modèle correspondant.
-      Utiliser la fonction Ember [findBy](http://emberjs.com/api/classes/Ember.Array.html#method_findBy)
+      Utiliser la fonction Ember [findBy](https://api.emberjs.com/ember/3.12/classes/EmberArray/methods/findBy?anchor=findBy)
     * Le template doit être modifié pour afficher le détail d'un comic :
 
       ```html
@@ -1274,22 +1275,22 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    > <div class="comic">
    >   <form>
    >     <div class="comic-header">
-   >       <div class="comic-title">
-   >         {{input id="title" type="text" value=model.title}}
-   >       </div>
-   >       <div class="buttons">
-   >         <button type="submit" {{action 'save'}} class="btn-submit"></button>
-   >         <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
-   >       </div>
+   >         <div class="comic-title">
+   >             <Input id="title" type="text" @value={{model.title}} />
+   >         </div>
+   >         <div class="buttons">
+   >             <button type="submit" class="btn-submit"></button>
+   >             <button type="reset" class="btn-cancel"></button>
+   >         </div>
    >     </div>
-   >  
+   > 
    >     <div class="comic-description">
-   >       <label class="comic-label" for="scriptwriter">Scriptwriter</label>
-   >       {{input id="scriptwriter" type="text" class="comic-value" value=model.scriptwriter required="required"}}
-   >       <label class="comic-label" for="illustrator">Illustrator</label>
-   >       {{input id="illustrator" type="text" class="comic-value" value=model.illustrator}}
-   >       <label class="comic-label" for="publisher">Publisher</label>
-   >       {{input id="publisher" type="text" class="comic-value" value=model.publisher}}
+   >         <label class="comic-label" for="scriptwriter">Scriptwriter</label>
+   >         <Input id="scriptwriter" type="text" @value={{model.scriptwriter}} required="required"/>
+   >         <label class="comic-label" for="illustrator">Illustrator</label>
+   >         <Input id="illustrator" type="text" @value={{model.illustrator}} />
+   >         <label class="comic-label" for="publisher">Publisher</label>
+   >         <Input id="publisher" type="text" @value={{model.publisher}} />
    >     </div>
    >   </form>
    > </div>
@@ -1321,7 +1322,7 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    >   <div class="comic-header">
    >     <h3 class="comic-title">{{model.title}}</h3>
    >     <div class="buttons">
-   >       {{link-to "" 'comic.edit' model class="btn-edit"}}
+   >       {{link-to "" "comic.edit" model class="btn-edit"}}
    >     </div>
    >   </div>
    > </div>
@@ -1368,21 +1369,21 @@ Cette opération se poursuit jusqu'à résolution complète de la route et donc 
    >   <form>
    >     <div class="comic-header">
    >       <div class="comic-title">
-   >         {{input id="title" type="text" value=model.title}}
+   >         <Input id="title" type="text" @value={{model.title}} />
    >       </div>
    >       <div class="buttons">
-   >         <button type="submit" {{action 'save'}} class="btn-submit"></button>
-   >         <button type="reset" {{action 'cancel'}} class="btn-cancel"></button>
+   >         <button type="submit" {{action "save"}} class="btn-submit"></button>
+   >         <button type="reset" {{action "cancel"}} class="btn-cancel"></button>
    >       </div>
    >     </div>
-   >  
+   > 
    >     <div class="comic-description">
    >       <label class="comic-label" for="scriptwriter">Scriptwriter</label>
-   >       {{input id="scriptwriter" type="text" class="comic-value" value=model.scriptwriter required="required"}}
+   >       <Input id="scriptwriter" type="text" @value={{model.scriptwriter}} required="required"/>
    >       <label class="comic-label" for="illustrator">Illustrator</label>
-   >       {{input id="illustrator" type="text" class="comic-value" value=model.illustrator}}
+   >       <Input id="illustrator" type="text" @value={{model.illustrator}} />
    >       <label class="comic-label" for="publisher">Publisher</label>
-   >       {{input id="publisher" type="text" class="comic-value" value=model.publisher}}
+   >       <Input id="publisher" type="text" @value={{model.publisher}} />
    >     </div>
    >   </form>
    > </div>
@@ -1449,11 +1450,11 @@ Par convention, la route sait exactement quel template elle doit rendre en fonct
 Ainsi, dans la grande majorité des cas, l'opération d'association de la route avec le template est parfaitement transparente pour le développeur qui n'a besoin de rien spécifier.
 Dans certains cas, il peut être cependant utile / nécessaire de spécifier explicitement le template que la route doit rendre et auquel elle doit associer le contexte courant.
 
-Cela s'effectue grâce à la propriété [templateName](http://emberjs.com/api/classes/Ember.Route.html#property_templateName) qui permet de spécifier explicitement un nom de template (noter l'utilisation du ``/`` pour qualifier le template).
+Cela s'effectue grâce à la propriété [templateName](https://api.emberjs.com/ember/3.12/classes/Route/properties/routeName?anchor=routeName) qui permet de spécifier explicitement un nom de template (noter l'utilisation du ``/`` pour qualifier le template).
 
-Il existe également une méthode [renderTemplate](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate) automatiquement créée, qui doit être surchargée de manière à personnaliser les opérations de rendu.
+Il existe également une méthode [renderTemplate](https://api.emberjs.com/ember/3.12/classes/Route/methods/renderTemplate?anchor=renderTemplate) automatiquement créée, qui doit être surchargée de manière à personnaliser les opérations de rendu.
 Cette méthode est appelée avec les objets contrôleur et modèle connus par la route.
-Par défaut, cette méthode effectue un simple appel à la méthode [render](http://emberjs.com/api/classes/Ember.Route.html#method_render).
+Par défaut, cette méthode effectue un simple appel à la méthode [render](https://api.emberjs.com/ember/3.12/classes/Route/methods/render?anchor=render).
 Cette méthode ne doit pas être utilisée de manière courante mais peut être utile dans le cas d'``outlets`` multiples ou de modèles multiples, par exemple.
 
 <div class="work">
@@ -1503,7 +1504,7 @@ Cette méthode ne doit pas être utilisée de manière courante mais peut être 
 ## Transitions & Redirections
 
 On a vu que l'on pouvait changer de route via l'utilisation de ``link-to``.
-Il est également possible d'effectuer la même opération depuis une route grâce à la méthode [transitionTo](http://emberjs.com/api/classes/Ember.Route.html#method_transitionTo) ou depuis un contrôleur via [transitionToRoute](http://emberjs.com/api/classes/Ember.Controller.html#method_transitionToRoute).
+Il est également possible d'effectuer la même opération depuis une route grâce à la méthode [transitionTo](https://api.emberjs.com/ember/3.12/classes/Route/methods/transitionTo?anchor=transitionTo) ou depuis un contrôleur via [transitionToRoute](https://api.emberjs.com/ember/3.12/classes/Controller/methods/transitionToRoute?anchor=transitionToRoute).
 
 Dans une route, ces changements de route via ``transitionTo`` peuvent s'effectuer :
 

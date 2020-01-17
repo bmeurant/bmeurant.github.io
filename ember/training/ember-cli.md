@@ -49,25 +49,25 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
  
    ```console
    $ node -v
-   v10.13.0
+   v12.13.1
    $ npm -v
-   v6.9.0
+   v6.12.1
    ```
     
 1. Installer Yarn : [ici](https://yarnpkg.com/lang/en/docs/install/)
 
    ```console
    $ yarn -v
-   1.7.0
+   1.21.1
    ```
 
 1. Puis [Ember CLI](http://www.ember-cli.com/) :
 
    ```console
-   $ yarn global add ember-cli
+   $ npm -g install ember-cli@3.12.1
    $ ember -v
-   ember-cli: 3.4.0
-   node: 10.13.0
+   ember-cli: 3.12.1
+   node: 12.13.1
    ```
    
 1. Vérifier la version de npm.
@@ -75,7 +75,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 
    ```console
    $ npm -v
-   4.2.0
+   6.12.1
    ```
 
 1. Créer une nouvelle application ``ember-training`` via [Ember CLI](http://www.ember-cli.com/) et la ligne de commande `ember` :
@@ -123,11 +123,7 @@ Pour le reste, se reporter à la [doc officielle][ember-cli].
 1. Relancer le serveur puis ouvrir le navigateur à [cette adresse](http://localhost:4200/) et constater que l'application est lancée en ouvrant la console :
 
    ```console
-   DEBUG: -------------------------------
-   DEBUG: Ember      : 3.4.0
-   DEBUG: Ember Data : 3.4.0
-   DEBUG: jQuery     : 3.3.1
-   DEBUG: -------------------------------
+    Build successful (33420ms) - Serving on http://localhost:4200/
    ``` 
 
 1. On en profite enfin pour installer le plugin de développement pour [Chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
@@ -147,7 +143,7 @@ Il s'agit d'un outil de build complet comprenant :
   cf. [Tests](http://www.ember-cli.com/user-guide/#testing)
 * La translation des conventions de nommage [Ember][ember] en structure de fichiers.
   cf. [Naming conventions](http://www.ember-cli.com/user-guide/#naming-conventions)
-* La gestion des dépendances et librairies via ``Bower`` et ``Broccoli``.
+* La gestion des dépendances et librairies via ``Npm`` et ``Broccoli``.
   cf [Managing dependencies](http://www.ember-cli.com/user-guide/#managing-dependencies)
 * La gestion des environnements.
   cf. [Environnements](http://www.ember-cli.com/user-guide/#Environments)
@@ -172,7 +168,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    Ce plugin permet d'intégrer la précompilation sass dans [Ember CLI](http://www.ember-cli.com/) :
 
    ```console
-   $ ember install ember-cli-sass
+   $ ember install ember-cli-sass@10.0.1
 
    Yarn: Installed ember-cli-sass
    Installed addon package.
@@ -187,7 +183,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    
      "devDependencies": {
        ...
-       "ember-cli-sass": "^10.0.0",
+       "ember-cli-sass": "10.0.1",
        ...
      }
    ...
@@ -197,7 +193,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    Comme nous souhaitons utiliser Bootstrap 4, il faut ensuite le déclarer explicitement :
 
    ```console
-   $ ember install ember-bootstrap
+   $ ember install ember-bootstrap@3.1.0
    
    Yarn: Installed ember-bootstrap
    installing ember-bootstrap
@@ -206,14 +202,6 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    Yarn: Installed bootstrap@^3.3.7
    Added ember-bootstrap configuration to ember-cli-build.js
    Installed addon package.
-
-   $ ember generate ember-bootstrap --bootstrap-version=4
-     uninstall package bootstrap-sass
-     install package bootstrap
-   Yarn: Installed bootstrap@^4.0.0
-   Yarn: Uninstalled bootstrap-sass
-   Added import statement to app/styles/app.scss
-   Added ember-bootstrap configuration to ember-cli-build.js
    ```
 
    On constate que le fichier `package.json` a été mis à jour :
@@ -222,12 +210,11 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    // package.json
    
    ...
-   
      "devDependencies": {
-       "bootstrap": "^4.0.0",
-       "broccoli-asset-rev": "^2.4.5",
-       "ember-ajax": "^3.0.0",
-       "ember-bootstrap": "^1.2.1",
+        "bootstrap": "^4.3.1",
+        "broccoli-asset-rev": "^3.0.0",
+        "ember-ajax": "^5.0.0",
+        "ember-bootstrap": "3.1.0",
        ...
      }
    ...
@@ -253,6 +240,8 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
 
 1. Afin de bénéficier d'un jeu d'icônes complet, nous allons également installer l'addon [ember-font-awesome](https://github.com/martndemus/ember-font-awesome) :
 
+    ember install ember-font-awesome@4.0.0-rc.3
+
    ```console
    ember install ember-font-awesome
    Yarn: Installed ember-font-awesome
@@ -262,7 +251,7 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    yarn add @fortawesome/free-regular-svg-icons
    yarn add @fortawesome/free-solid-svg-icons
    yarn add @fortawesome/fontawesome-free
-   yarn add node-sass-tilde-importer
+   yarn add node-sass-tilde-importer@1.0.2
    ```
 
    Enfin, de manière à pouvoir utiliser [Fontawesome](http://fontawesome.io) dans nos fichiers Sass, nous devons effectuer la modification suivante :
@@ -272,9 +261,12 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
 
    var app = new EmberApp(defaults, {
      'ember-bootstrap': {...},
-     'ember-font-awesome': {
-       useScss: true
-     }
+      sassOptions: {
+        importer: tildeImporter,
+          includePaths: [
+          'node_modules/@fortawesome/fontawesome-free/scss'
+        ]
+      }
    });
    ```
     
@@ -282,6 +274,10 @@ le framework CSS [Bootstrap](http://getbootstrap.com/) et le préprocesseur [Sas
    dans le fichier ``app/styles/app.scss``.
     
   {% endcapture %}{{ m | markdownify }}
+  
+  Penser à charger les assets statiques depuis le site dans le répertoire public, afin de bénéficier des images et font.
+  
+  [ces dossiers]https://github.com/bmeurant/ember-training/tree/master/public
 </div>
 
 [ember]: http://emberjs.com

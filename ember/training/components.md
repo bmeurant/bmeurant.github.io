@@ -22,7 +22,7 @@ Les composants [Ember][ember] constituent une part importante de la structure du
 
 [Ember][ember] permet ainsi de définir - sous la forme de composants - des éléments évolués offrant une réutilisation maximales à la fois de structures d'affichage et de structures 
 logiques au sein d'une application.
-Voire, via le packaging de ces composants au sein d'[addons](https://guides.emberjs.com/v3.4.0/addons-and-dependencies/managing-dependencies/#toc_addons), au sein de plusieurs applications [Ember][ember].
+Voire, via le packaging de ces composants au sein d'[addons](https://guides.emberjs.com/v3.12.0/addons-and-dependencies/#toc_addons), au sein de plusieurs applications [Ember][ember].
 
 Le futures versions d'[Ember][ember] doivent même voir la notion de contrôleur totalement remplacée par l'utilisation de [composants routables](https://github.com/ef4/rfcs/blob/routeable-components/active/0000-routeable-components.md).
 
@@ -31,11 +31,11 @@ Le futures versions d'[Ember][ember] doivent même voir la notion de contrôleur
 Un composant [Ember][ember] se définit par les éléments suivants :
 
 * un template dans ``app/templates/components/my-component.hbs`` définissant le template spécifique du composant si il existe
-* une sous classe de [Ember.Components](http://emberjs.com/api/classes/Ember.Component.html) dans ``app/components/my-component.js`` qui permet d'implémenter l'intégralité de la logique propre du composant
+* une sous classe de [Components](https://api.emberjs.com/ember/3.12/classes/Component) dans ``app/components/my-component.js`` qui permet d'implémenter l'intégralité de la logique propre du composant
 
 Comme à son habitude, [Ember][ember] ne nécessite pas que ces deux éléments soient explicitement déclarés si ce n'est pas nécessaire.
 Ainsi il est possible qu'un composant soit pleinement définit par son template (aucune logique spécifique) ou par son fichier js (aucun rendu spécifique).
-Dans ce cas, l'élément manquant est généré de manière transparente par [Ember][ember] sous la forme, respectivement, d'un object vide héritant d'[Ember.Components](http://emberjs.com/api/classes/Ember.Component.html) ou d'un template vide.
+Dans ce cas, l'élément manquant est généré de manière transparente par [Ember][ember] sous la forme, respectivement, d'un object vide héritant d'[Components](https://api.emberjs.com/ember/3.12/classes/Componentl) ou d'un template vide.
 
 A noter qu'[Ember][ember] fournit des outils permettant d'effectuer des tests d'intégration sur nos composants (en plus d'éventuels tests unitaires standards dans le cas de composants
 implémentant une logique propre complexe).
@@ -51,7 +51,7 @@ Ainsi ``my-component`` est valide, ``myComponent`` ou ``mycomponent`` ne le sont
 
 {% raw %}
 
-Une fois créé, un composant s'utilise de la même manière qu'un [helper](./templates/#helpers) via la notation ``{{ ... }}``.
+Une fois créé, un composant s'utilise de la même manière qu'un helper via la notation ``< ... > ou  {{ ...  }}``.
 
 Il peut s'agir : 
 
@@ -61,7 +61,7 @@ Il peut s'agir :
   Ainsi un composant invoqué de cette manière :
  
   ```html 
-  {{user-name class="admin" user=model}}
+  <UserName class="admin" @user={{model}}>
   ```
   
   avec le template suivant :
@@ -99,11 +99,11 @@ Il peut s'agir :
   Ainsi un composant invoqué de cette manière :
 
   ```html
-  {{#full-article class="article" title="model.title"}}
+  <FullArticle class="article" title={{model.title}}>
     {{#each model.paragraphs as |paragraph|}}
       <p>{{paragraph}}</p>
     {{/each}}
-  {{/full-article}}
+  </FullArticle>
   ```
   
   avec le template suivant :
@@ -148,7 +148,13 @@ Ce passage de propriétés se fait tout naturellement selon la syntaxe habituell
 Ainsi la déclaration suivante : 
 
 ```html
-{{custom-user title='My title' user=model}}
+{{custom-user title='My title' user=model}}  => ancienne facon de faire
+```
+
+ou via la syntax angle bracket : 
+
+```html
+<CustomUser title='My title' @user={{model}}/>
 ```
 
 permet la manipulation suivante dans le template du composant : 
@@ -186,7 +192,7 @@ Dans le cas précis il effectue un simple affichage
    > {{!-- app/templates/comic/index.hbs --}}
    > ... 
    > <div class="comic-header">...</h3>
-   > {{image-cover}}
+   > {{image-cover name=model.slug}}
    > <dl class="comic-description">
    > ...
    > ```
@@ -243,7 +249,7 @@ Dans le cas précis il effectue un simple affichage
 
 ## Personalisation du rendu d'un composant
 
-Le rendu des composants [Ember][ember] peut être très largement personalisé en créant une sous classe de [Ember.Components](http://emberjs.com/api/classes/Ember.Component.html) dans ``app/components``.
+Le rendu des composants [Ember][ember] peut être très largement personalisé en créant une sous classe de [Components](https://api.emberjs.com/ember/3.12/classes/Component) dans ``app/components``.
 Il est alors possible de configurer différentes choses : 
  
 ### Elément HTML
@@ -347,14 +353,14 @@ Suivant le principe DDAU (Data Down Actions Up), les principales formes d'intera
 Les composants suivent les principes de communication standard d'[Ember][ember] et cette forme de communication *descendante* s'appuie sur la manipulation de propriétés dynamiques *bindées*.
 En effet, de manière générale, [Ember][ember] n'utilise pas de mécanismes de type *bus d'évènement* ou de *broadcasting* à proprement parler pour communiquer.
 A la place, un *état* est partagé entre les différents composants sous la forme de **propriétés dynamiques**.
-Ces propriétés sont ainsi passées par les parents aux enfants sous la forme de paramètres classiques (``name=value``) comme vu plus haut.
+Ces propriétés sont ainsi passées par les parents aux enfants sous la forme de paramètres classiques (``name=value`` ou pour la partie angle bracket ``@name={{value}}``) comme vu plus haut.
 Tout évènement de changement de valeur de cette propriété sera ainsi disponible pour les composants enfants qui souhaitent l'écouter, leur permettant ainsi de réagir à ce changement en adaptant leur comportement et/ou leur rendu.
 
 Les binding de classes ou d'attributs peuvent faire directement référence à ces propriétés passées au composant.
 Ainsi, si un composant est invoqué de la manière suivante : 
  
 ```html
-{{my-component selected=true}}
+{{MyComponent selected=true}}
 ```
 
 Il peut parfaitement déclarer le binding suivant :
@@ -384,9 +390,9 @@ Dans ce cas, dès que la propriété dynamique ``userName`` passée par le paren
 ```javascript
 export default Component.extend({
   attributeBindings: 'userName:name',
-  userName: function () {
+  userName: computed('user.fullName', function() {
       return this.get('user.fullName');
-  }.property('user.fullName')
+  }
 });
 ```
 
@@ -435,7 +441,7 @@ Ces mécanismes permettent donc de propager naturellement aux composants, via le
 Une autre forme évidente d'interaction consiste à demander à un composant de réagir à différents évènements DOM le concernant (c'est à dire intervenant sur la portion d'arbre DOM qu'il gère).
 
 Cela se fait simplement en déclarant dans le composant une fonction du même nom que l'évènement auquel on souhaite que le composant réagisse.
-La liste des évènements gérés nativement est disponible dans la [documentation officielle](https://guides.emberjs.com/v3.4.0/components/handling-events/#toc_event-names).
+La liste des évènements gérés nativement est disponible dans la [documentation officielle](https://guides.emberjs.com/v3.12.0/components/handling-events/#toc_event-names).
 
 Un paramètre est passé automatiquement à la function.
 Il contient l'évènement d'origine afin de permettre la récupération d'informations complémentaires (data, origine, etc.).
@@ -515,7 +521,7 @@ export default Component.extend({
    > ```javascript
    > // app/components/fav-btn.js
    > 
-   > import Ember from 'ember';
+   > import Component from '@ember/component';
    > 
    > export default Component.extend({
    >   tagName: 'span',
@@ -634,9 +640,6 @@ cancel() {
 ```
 
 Les deux formes coexistent et sont partiellement compatibles mais il semble que la seconde soit celle qui doive perdurer.
-Cependant le statut n'est pas clair aujourd'hui et la seconde forme, si elle parait plus riche, puisque l'action est disponible à tout instant, introduit des contraintes supplémentaires telles que la nécessité absolue de les définir au plus bas niveau et de gérer manuellement une éventuelle propagation.
-Toutes les questions n'ont donc pas encore été adressées à ce sujet.
-Il est donc possible d'utiliser la forme qui nous convient le mieux.
 
 A noter qu'il est possible de mixer certaines notations même si ce n'est pas l'option la plus lisible et donc pas celle à privilégier.
 Par exemple :
@@ -666,7 +669,7 @@ export default Component.extend({
    * le gestionnaire d'action doit simplement permettre de *logger*, dans la route, le message suivant : ``<comic.slug> - favorite: <comic.isFavorite>``
    * cette action doit être exécutée aussi bien en consultation qu'en édition 
    * les deux typologies d'actions définies plus haut peuvent être utilisées mais les closure actions sont à priliégier sauf en cas de besoin de bubbling
-   * utiliser impérativement [console.debug] pour cette opération
+   * utiliser impérativement [console.log] pour cette opération
    
    **Test** : Ces modifications doivent rendre passant les tests [04 - Components - 01 - Should log on index](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L73) et [04 - Components - 02 - Should log on edit](https://github.com/bmeurant/ember-training/blob/components-tests/tests/acceptance/04-components-test.js#L98)
    
@@ -710,7 +713,7 @@ export default Component.extend({
    >     favorize () {
    >       const model = this.modelFor(this.routeName);
    >       // eslint-disable-next-line no-console
-   >       console.debug(model.get('slug'), '- favorite:', model.get('isFavorite'));
+   >       console.log(model.get('slug'), '- favorite:', model.get('isFavorite'));
    >     }
    >   }
    > });
@@ -728,7 +731,7 @@ export default Component.extend({
    > 
    >   click() {
    >     this.toggleProperty('selected');
-   >     this.get('action')();
+   >     this.get('favorize')();
    >   }
    > });
    > ```
@@ -736,14 +739,14 @@ export default Component.extend({
    > ```html
    > {{!-- app/templates/comic/index.hbs --}}
    > ...
-   > {{fav-btn selected=model.isFavorite action=(action "favorize")}}
+   > {{fav-btn selected=model.isFavorite favorize=(action "favorize")}}
    > ...
    > ```
    >
    > ```html
    > {{!-- app/templates/comic/edit.hbs --}}
    > ...
-   > {{fav-btn selected=model.isFavorite action=(action "favorize")}}
+   > {{fav-btn selected=model.isFavorite favorize=(action "favorize")}}
    > ...
    > ```
    >
@@ -782,7 +785,7 @@ export default Component.extend({
    >     onFavorize () {
    >       const model = this.modelFor(this.routeName);
    >       // eslint-disable-next-line no-console
-   >       console.debug(model.get('slug'), '- favorite:', model.get('isFavorite'));
+   >       console.log(model.get('slug'), '- favorite:', model.get('isFavorite'));
    >     }
    >   }
    > });
@@ -802,8 +805,8 @@ Ces méthodes sont autant de *hook* qu'il est possible d'étendre pour enrichir 
 Lorsque l'on souhaite surcharger l'une de ces méthodes pour y greffer nos opérations, il est généralement nécessaire d'appeler la méthode originale même si toutes ces méthodes n'ont pas nécessairement d'implémentation par défaut :
  
 ```javascript
-didInsertElement() {
-  this._super(...arguments);
+didInsertElement(args) {
+  this._super(args);
   ...
 }
 ```
@@ -818,7 +821,7 @@ Les cycles de vie liés au rendu initial et aux rendus ultérieurs (mises à jou
 1. ``willRender`` : Appelé à chaque fois que le template va être rendu, quelqu'en soit la raison.
    Mais avant le rendu lui même.
 1. ``didInsertElement`` : Appelé aprés le rendu (initial uniquement), une fois que le template a été totalement rendu et inséré dans le DOM.
-   A ce moment, le composant est accessible via la notation ``this.$()``.
+   A ce moment, le composant est accessible via la notation ``$()``.
    Ce *hook* est trés fréquemment exploité pour interagir avec des éléments issus de librairies third-party qui nécessitent d'être insérées dans le DOM avant d'être manipulés (datePicker, etc.)
 1. ``didRender`` : Appelé après l'ensemble des opérations de rendu et de mise à jour du DOM.
 
@@ -866,26 +869,31 @@ Les plus fréquents sont ``didInsertElement``, ``willDestroyElement`` et moins f
    >   tagName: 'img',
    >   classNames: 'cover',
    >   attributeBindings: 'src',
-   >   src: function () {
-   >     return this.getImagePath(this.get('name'));
-   >   }.property('name'),
-   > 
-   >   getImagePath(name) {
-   >     return `/assets/images/comics/covers/${name}.jpg`;
-   >   },
-   > 
-   >   didInsertElement() {
-   >     this._super(...arguments);
-   >     this.$().on('error', () => this.onError());
-   >   },
-   > 
-   >   willDestroyElement(){
-   >     this.$().off('error');
-   >   },
-   > 
-   >   onError() {
-   >     this.$().attr('src', this.getImagePath('default'));
-   >   }
+   >     src: computed('name', function () {
+   >       return this.getImagePath(this.get('name'));
+   >     }),
+   >     currentNode: computed('elementId', function() {
+   >       return $('#' + this.get('elementId'));
+   >     }),
+   >   
+   >     getImagePath(name) {
+   >       return `/assets/images/comics/covers/${name}.jpg`;
+   >     },
+   >   
+   >     didInsertElement(...args) {
+   >       this._super(...args);
+   >       this.get('currentNode').on('error', () => {
+   >         return this.onError();
+   >       });
+   >     },
+   >   
+   >     willDestroyElement(){
+   >       this.get('currentNode').off('error');
+   >     },
+   >   
+   >     onError() {
+   >       this.get('currentNode').attr('src', this.getImagePath('default'));
+   >     }
    > });
    > ```
    
