@@ -9,7 +9,7 @@
   "license": "Creative Commons",
   "devDependencies": {
     "grunt": "~0.4.2",
-    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-watch": "~1.1.0",
     "grunt-sass": "1.1.0",
     "node-sass": "3.4.1"
   }
