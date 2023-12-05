@@ -1,13 +1,394 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
-  </body>
+<head>
+    <title>Baptiste Meurant</title>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+    <meta name="title" content="Baptiste Meurant">
+    <meta name="description" content="Software architect, developer, Technical Director at Worldline">
+    <meta name="author" content="Baptiste Meurant <baptiste.meurant@gmail.com>">
+    <meta name="url" content="https://bmeurant.github.io">
+
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/cv.css"/>
+    <link rel="icon" type="image/png" href="http://www.gravatar.com/avatar/c28e672be1580d9cb3dc6f7dc7f370c4.png">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/23.7.7/i18next.min.js"></script>
+
+    <script>
+        function updateContent() {
+          const elements = document.getElementsByClassName("i18nelement");
+          for (let i = 0; i < elements.length; i++) {
+            const element = elements[i];
+            const k = element.getAttribute("data-i18n");
+            element.innerHTML = i18next.t(k);
+          }
+        }
+        
+        async function i18Loader() {
+          const langs = ["en", "fr"];
+          const jsons = await Promise.all(
+            langs.map((l) => fetch("/locales/" + l + ".json").then((r) => r.json()))
+          );
+          const res = langs.reduce((acc, l, idx) => {
+            acc[l] = { translation: jsons[idx] };
+            return acc;
+          }, {});
+          await i18next.init({
+            lng: "en",
+            debug: true,
+            resources: res
+          });
+          updateContent();
+          i18next.on("languageChanged", () => {
+            updateContent();
+          });
+
+          const langSelectors = document.querySelectorAll('.langSelector');
+
+          langSelectors.forEach(langSelector => {
+            langSelector.addEventListener('click', (e) => {
+                i18next.changeLanguage(e.target.name);
+            });
+          });
+        }
+        
+        i18Loader();
+    </script>
+</head>
+
+<body>
+<section class="profile-summary">
+    <article>
+
+        <div class="lang">
+            <button class="langSelector" name="fr">French</button>
+            <button class="langSelector" name="en">English</button>
+        </div>
+
+        <h1 class="name">Baptiste Meurant</h1>
+
+        <p data-i18n="description" class="i18nelement description">description</p>
+        
+        <ul class="social">
+            <li><a href="https://twitter.com/bmeurant" title="@bmeurant on Twitter"
+                   target="new"><i class="fa fa-fw fa-twitter"></i></a></li>
+            <li><a href="https://github.com/bmeurant" title="@bmeurant on GitHub"
+                   target="new"><i class="fa fa-fw fa-github"></i></a></li>
+            <li><a href="http://stackoverflow.com/users/3047496/bmeurant"
+                   title="bmeurant on Stackoverflow"
+                   target="new"><i class="fa fa-fw fa-stack-overflow"></i></a></li>
+            <li><a href="https://medium.com/@bmeurant" title="@bmeurant on Medium"
+                   target="new"><i class="fa fa-fw fa-medium"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/baptistemeurant"
+                   title="Baptiste Meurant on LinkedIn" target="new"><i
+                    class="fa fa-fw fa-linkedin-square"></i></a>
+            </li>
+        </ul>
+        <!--nav>
+            <p class="scroll"><i class="fa fa-fw fa-caret-down"></i>&nbsp;<i><b>Scroll</b> or <b>select</b> a
+                section
+                below
+                to learn more about me.</i>&nbsp;<i class="fa fa-fw fa-caret-down"></i></p>
+            <ul>
+                <li><a href="#about"><i class="fa fa-5x fa-fw fa-user"></i><br/>About me</a></li>
+                <li><a href="#expertise"><i class="fa fa-5x fa-fw fa-code"></i><br/>Expertise</a></li>
+                <li><a href="#experience"><i class="fa fa-5x fa-fw fa-suitcase"></i><br/>Experience</a></li>
+                <li><a href="#education"><i class="fa fa-5x fa-fw fa-graduation-cap"></i><br/>Education</a></li>
+            </ul>
+        </nav-->
+    </article>
+</section>
+
+<!--div id="about" class="about">
+    <section>
+        <aside>
+            <h2>About me</h2>
+            <div class="profile-photo">
+                <img
+                 src="http://www.gravatar.com/avatar/c28e672be1580d9cb3dc6f7dc7f370c4.png?size=150"/>
+            </div>
+            <div class="details">
+                <ul>
+                    <li><i class="fa fa-fw fa-birthday-cake"></i>36 years old</li>
+                    <li><i class="fa fa-fw fa-cogs"></i>10 years XP</li>
+                    <li><i class="fa fa-fw fa-map-marker"></i>Lyon, France</li>
+                </ul>
+            </div>
+        </aside>
+        <article>
+            <p>Experienced <b>full-stack developer</b> in Javascript, Java and platform architect. <b>Passionate about
+                technology</b>, I try to be a <b>pragmatic professional</b>. Open source convinced, strong supporter of IoC, loose coupling, light containers,
+                Single Page Applications oriented designs, REST architectures ... I do promote these principles and good practices
+                inside and outside my company. 
+
+            <p>I strongly believe in <b>software craftsmanship</b> principles and, in my professional life, I don't like
+                anything more than working with <b>motivated and passionate people</b>. I like <b>learning</b> from
+                people, <b>teaching</b> them and <b>debate</b> with my peers about technologies, designs, architectures,
+                ...</p>
+
+            <p>I worked for international companies, mainly on large projects of several teams - as developer, technical expert and
+                architect. I used to <b>promote, setup and support</b> newest and
+                <b>best suited technologies</b> for these projects. I help people <b>working, learning and improving</b>
+                themselves. I try to bring more <b>efficiency, productivity, pleasure and pride</b> to people I work with.</p>
+
+        </article>
+        <article class="works">
+            <h3>Things I do</h3>
+            <ul class="work">
+                <li class="code">All my <strong>open source activities</strong> & experimentations can be found on my <a href="https://github.com/bmeurant?tab=activity">Github profile</a>. It includes many contributions to emberjs community, addons, tools and core projects.</li>
+                <li class="training">I write and maintain a complete <a href="http://baptiste.meurant.io/ember/training/">emberjs training</a> (in french). Its goal is to provide an in-depth introduction to emberjs through its various parts. It can be followed as an autonomous tutorial but also to serve as a tool for presential training.</li>
+                <li class="code">I write and maintain an <strong>emberjs addon <a href="https://github.com/bmeurant/ember-array-contains-helper">ember-array-contains-helper</a></strong>. This addon offers a new helper to test the presence of an object inside an array, in a context of logicless templating. </li>
+                <li class="code">I modestly contributed to <strong>emberjs core</strong> (see <a href="https://github.com/emberjs/ember.js/pull/13553">here</a>) and <strong>ecosystem</strong></li>
+            </ul>
+        </article>
+        <article class="works past">
+            <h3>Things I have done</h3>
+            <ul class="work">
+                <li class="writing">I made the <a href="https://www.infoq.com/fr/articles/ember-en-entreprise">translation of an article about emberjs in enterprise on InfoQ</a></li>
+                <li class="writing">I made an occasional contribution to the <strong>french translation of <a href="https://git-scm.com/book/en/v2">Git probook v2</a></strong>. See <a href="https://github.com/progit/progit2-fr">Github repository</a></li>
+                <li class="training">I wrote series of <strong>tutorials about emberjs</strong> (in french), <a href="http://putaindecode.io/fr/articles/js/ember/">here</a>, <a href="http://putaindecode.io/fr/articles/js/ember/premiere-app/1/">here</a> and <a href="http://putaindecode.io/fr/articles/js/ember/premiere-app/2/">here</a>. These are a step by step and practical introduction to this framework.</li>
+            </ul>
+            <ul class="work">
+                <li class="code">I used to be a core contributor & leader of <a href="http://resthub.org">RESTHub project</a>, open source stack & boilerplate based on Spring, Backbone, Hibernate. Project is not maintained anymore.</li>
+                <li class="training">I designed & wrote <strong>RESTHub tutorials</strong> for both <a href="http://resthub.org/docs/spring/tutorial/">backend</a> and <a href="http://resthub.org/docs/backbone/tutorial/">frontend</a></li>
+            </ul>
+            <ul class="work">
+                <li class="training">Long time ago, I wrote some <a href="http://baptiste-meurant.developpez.com/">Spring, Tapestry & Hibernate tutorials</a> (in french) to introduce these tools and teach people how to use and integrate them together. These tutorials have been translated by the Apache Tapestry team (see <a href="https://wiki.apache.org/tapestry/Tapstry5First_project_with_Tapestry5,_Spring_and_Hibernate"> here</a>)</li>
+            </ul>
+        </article>
+    </section>
+</div>
+
+<div id="expertise" class="expertise">
+    <section>
+        <aside>
+            <h2>Expertise</h2>
+
+            <p class="details"><i class="fa fa-fw fa-thumbs-up"></i>Main skills I'm proud of</p>
+        </aside>
+        <article>
+            <div class="skills">
+                <div class="skills-col">
+                    <div class="skills-cat back-end">
+                        <h3>Back-end</h3>
+
+                        <div class="skill">
+                            <span style="width: 95%">Java</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 75%;">JEE</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 90%;">Spring Framework</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 60%;">Spring Portfolio</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 75%;">Maven</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 90%;">JPA & Hibernate</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 80%;">Databases & SQL</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 50%;">NoSQL</span>
+                        </div>
+                    </div>
+                    <div class="skills-cat architecture">
+                        <h3>Architecture & Methodology</h3>
+
+                        <div class="skill">
+                            <span style="width: 75%;">REST & lightweight SOA</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 60%;">Microservices</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 75%;">Single Page Applications</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 90%;">Test Driven Development</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 75%;">Git</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-col">
+                    <div class="skills-cat front-end">
+                        <h3>Front-end</h3>
+
+                        <div class="skill">
+                            <span style="width: 60%;">Javascript</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 75%;">HTML5</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 60%;">CSS3</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 75%;">Less</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 90%;">Sass</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 80%;">Bootsrap/Fundation</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 75%;">JQuery</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 75%;">Backbone.js</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 90%;">EmberJs&nbsp;</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 15%;">React/Redux&nbsp;(learning)</span>
+                        </div>
+                    </div>
+                    <div class="skills-cat languages">
+                        <h3>Languages</h3>
+
+                        <div class="skill">
+                            <span style="width: 100%;">French</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 75%;">English</span>
+                        </div>
+                        <div class="skill">
+                            <span style="width: 30%;">Spanish</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+</div>
+
+<div id="experience" class="experience">
+    <section>
+        <aside>
+            <h2>Experience</h2>
+        </aside>
+        <article>
+            <div class="exp">
+                <div class="date"><i class="fa fa-fw fa-calendar"></i>  Apr 2010 - Present</div>
+                <div class="details">
+                    <h3>Transversal Software Architect</h3>
+
+                    <div class="company"><a href="http://worldline.com">Worldline by Atos</a></div>
+                    <div class="description">
+                        <p>In charge of software architecture and web platform design. As main architect,
+                            my job is to design, support teams and manage technical quality. </p>
+
+                        <p>Particular focus on: design for extension,
+                            capacity to evolve, easy to maintain, performances, robustness, reliability</p>
+
+                        <p>Promoting craftsmanship, pragmatic innovation, technical excellence.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="exp">
+                <div class="date"><i class="fa fa-fw fa-calendar"></i>Oct 2009 - Present</div>
+                <div class="details">
+                    <h3>Core committer, project leader</h3>
+
+                    <div class="company"><a href="http://resthub.org">RESThub</a></div>
+                    <div class="description">
+                        <p>RESThub is an open source stack based on Spring and Backbone.js designed to build HTML5
+                            applications
+                            easily and efficiently. It provides tooling, libraries and documentation in order to build
+                            modular web applications with client side state, stateless server and REST webservices or
+                            Websocket communication between both.</p>
+                        <p>RESThub project is not maintained anymore. Spring Boot surpassed it in many ways.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="exp">
+                <div class="date"><i class="fa fa-fw fa-calendar"></i>May 2008 - Apr 2010</div>
+                <div class="details">
+                    <h3>Software Architect</h3>
+
+                    <div class="company"><a href="http://worldline.com">Worldline by Atos</a></div>
+                    <div class="description">
+                        <p>In charge of design, architecture and solutions fo web application and services
+                            platforms.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="exp">
+                <div class="date"><i class="fa fa-fw fa-calendar"></i>Jul 2006 - May 2008</div>
+                <div class="details">
+                    <h3>Application Manager</h3>
+
+                    <div class="company"><a href="http://worldline.com">Worldline by Atos</a></div>
+                    <div class="description">
+                        <p>Specifications, Design, Programing, Technical and Functional Support, Production Monitoring
+                            of applications.
+                            Web applications, infrastructures platforms (mailing, etc.)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="exp">
+                <div class="date"><i class="fa fa-fw fa-calendar"></i>Oct 2005 - Jul 2006</div>
+                <div class="details">
+                    <h3>Software engineer</h3>
+
+                    <div class="company"><a href="http://www.orange.com/">France Telecom - Orange</a></div>
+                    <div class="description">
+                        <p>Analysis, software and database design for a new solution for managing commercial offers of
+                            France Telecom Business Services. Partners management.</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+</div>
+
+<div id="education" class="education">
+    <section>
+        <aside>
+            <h2>Education</h2>
+        </aside>
+        <article>
+            <div class="edu">
+                <div class="date"><i class="fa fa-fw fa-calendar"></i>2002 - 2005</div>
+                <div class="details">
+                    <h3>Master of software engineering</h3>
+
+                    <div class="school"><a href="http://www.insa-lyon.fr/">Institut National des Sciences Appliquées,
+                        Lyon</a></div>
+                </div>
+            </div>
+            <div class="edu">
+                <div class="date"><i class="fa fa-fw fa-calendar"></i>2000 - 2002</div>
+                <div class="details">
+                    <h3>Degree of software development, software engineering</h3>
+
+                    <div class="school"><a href="http://iut.univ-amu.fr/sites/site-daix-provence">Institut Universitaire
+                        de Technologie, Aix-en-Provence</a></div>
+                </div>
+            </div>
+            <div class="edu">
+                <div class="date"><i class="fa fa-fw fa-calendar"></i>1998 - 2000</div>
+                <div class="details">
+                    <h3>Preparatory course</h3>
+
+                    <div class="school"><a href="http://www.utc.fr/">Université de Technologie, Compiegne</a></div>
+                </div>
+            </div>
+        </article>
+    </section>
+</div-->
+
+</body>
 </html>
