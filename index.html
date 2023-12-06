@@ -17,52 +17,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/23.7.7/i18next.min.js"></script>
 
-    <script>
-        function updateContent() {
-          const elements = document.getElementsByClassName("i18nelement");
-          for (let i = 0; i < elements.length; i++) {
-            const element = elements[i];
-            const k = element.getAttribute("data-i18n");
-            element.innerHTML = i18next.t(k);
-          }
-        }
-        
-        async function i18Loader() {
-          const langs = ["en", "fr"];
-          const jsons = await Promise.all(
-            langs.map((l) => fetch("/locales/" + l + ".json").then((r) => r.json()))
-          );
-          const res = langs.reduce((acc, l, idx) => {
-            acc[l] = { translation: jsons[idx] };
-            return acc;
-          }, {});
-          await i18next.init({
-            lng: "en",
-            debug: true,
-            resources: res
-          });
-          updateContent();
-          i18next.on("languageChanged", () => {
-            updateContent();
-          });
-
-          const langSelectors = document.querySelectorAll('.langSelector');
-
-          langSelectors.forEach(langSelector => {
-            langSelector.addEventListener('click', (e) => {
-                i18next.changeLanguage(e.target.name);
-            });
-          });
-        }
-        
-        i18Loader();
-    </script>
 </head>
 
 <body>
-<section class="profile-summary">
-    <article>
-
+    <div id="app">
         <div class="lang">
             <button class="langSelector" name="fr">French</button>
             <button class="langSelector" name="en">English</button>
@@ -71,19 +29,19 @@
         <h1 class="name">Baptiste Meurant</h1>
 
         <p data-i18n="description" class="i18nelement description">description</p>
-        
+
         <ul class="social">
             <li><a href="https://twitter.com/bmeurant" title="@bmeurant on Twitter"
-                   target="new"><i class="fa fa-fw fa-twitter"></i></a></li>
+                target="new"><i class="fa fa-fw fa-twitter"></i></a></li>
             <li><a href="https://github.com/bmeurant" title="@bmeurant on GitHub"
-                   target="new"><i class="fa fa-fw fa-github"></i></a></li>
+                target="new"><i class="fa fa-fw fa-github"></i></a></li>
             <li><a href="http://stackoverflow.com/users/3047496/bmeurant"
-                   title="bmeurant on Stackoverflow"
-                   target="new"><i class="fa fa-fw fa-stack-overflow"></i></a></li>
+                title="bmeurant on Stackoverflow"
+                target="new"><i class="fa fa-fw fa-stack-overflow"></i></a></li>
             <li><a href="https://medium.com/@bmeurant" title="@bmeurant on Medium"
-                   target="new"><i class="fa fa-fw fa-medium"></i></a></li>
+                target="new"><i class="fa fa-fw fa-medium"></i></a></li>
             <li><a href="https://www.linkedin.com/in/baptistemeurant"
-                   title="Baptiste Meurant on LinkedIn" target="new"><i
+                title="Baptiste Meurant on LinkedIn" target="new"><i
                     class="fa fa-fw fa-linkedin-square"></i></a>
             </li>
         </ul>
@@ -99,8 +57,8 @@
                 <li><a href="#education"><i class="fa fa-5x fa-fw fa-graduation-cap"></i><br/>Education</a></li>
             </ul>
         </nav-->
-    </article>
-</section>
+    </div>
+    <script type="module" src="/main.js"></script>
 
 <!--div id="about" class="about">
     <section>

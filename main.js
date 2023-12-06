@@ -1,24 +1,52 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import { extractLocale, getLangFromLocale } from './javascript/i18n.js'
+import { langs } from './javascript/langs'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const { urlWithoutLocale, locale } = extractLocale(document.location.pathname);
 
-setupCounter(document.querySelector('#counter'))
+async function i18Loader(lang) {
+  const jsons = await Promise.all(
+    langs.map((l) => fetch("/translations/" + l + ".json").then((r) => r.json()))
+  );
+  const res = langs.reduce((acc, l, idx) => {
+    acc[l] = { translation: jsons[idx] };
+    return acc;
+  }, {});
+  await i18next.init({
+    lng: lang,
+    debug: true,
+    resources: res
+  });
+
+  updateContent();
+  updateUrl(lang);
+  
+  i18next.on("languageChanged", () => {
+    updateContent();
+  });
+
+  function updateContent() {
+    const elements = document.getElementsByClassName("i18nelement");
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
+      const k = element.getAttribute("data-i18n");
+      element.innerHTML = i18next.t(k);
+    }
+  }
+
+  function updateUrl(lang) {
+    window.history.pushState({}, "", `/${lang}`);
+  }
+
+  const langSelectors = document.querySelectorAll('.langSelector');
+
+  langSelectors.forEach(langSelector => {
+    langSelector.addEventListener('click', (e) => {
+      let lang = e.target.name;
+      i18next.changeLanguage(lang);
+      updateUrl(lang);
+    });
+  });
+}
+
+i18Loader(getLangFromLocale(locale));
