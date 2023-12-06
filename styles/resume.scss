@@ -1,0 +1,92 @@
+$light-gray: #666;
+
+:root {
+    font-family: 'Roboto', 'Noto Sans TC', 'Noto Sans SC', 'Noto Sans HK', 'Noto Sans JP', 'Noto Sans', 'PingFang TC', 'Microsoft JhengHei', 'PMingLiU', sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+  
+    color: #213547;
+    background-color: #f8f8f8;
+  
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+.langSelector {
+    background-repeat: no-repeat;
+    background-position-x: left;
+    background-position-y: top;
+
+    &[name='fr'] {
+        background-image: url("images/flag-fr.svg");
+    }
+
+    &[name='en'] {
+        background-image: url("images/flag-en.svg");
+    }
+}
+
+.action {
+    background: none;
+}
+
+#wrapper {
+    padding-top: 32px;
+    padding-bottom: 80px;
+    
+    width: 1140px;
+    margin-right: auto;
+    margin-left: auto;
+
+    #header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: right;
+        margin-bottom: 10px;
+
+        button {
+            height: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #actions {
+            padding-right: 15px;
+            border-right: 2px solid $light-gray;
+
+            & > * {
+                margin-left: 5px;
+            }
+        }
+
+        #langs {
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+
+            & > * {
+                margin: 2px;
+                margin-left: 5px;
+                width: 20px;
+            }
+        }
+
+        i {
+            color: $light-gray;
+            cursor: pointer;
+        }
+    }
+
+    #resume {
+        box-shadow: 0 2px 6px rgba(26,31,28,.08);
+        background-color: #fff;
+        padding: 25px;
+
+        #main-skills {
+            background-color: #91b7a7;
+        }
+    }
+
+}

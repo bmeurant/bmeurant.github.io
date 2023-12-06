@@ -1,4 +1,4 @@
-import './style.css'
+import './styles/resume.scss'
 import { extractLocale, getLangFromLocale } from './javascript/i18n.js'
 import { langs } from './javascript/langs'
 

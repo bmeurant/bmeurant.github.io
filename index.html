@@ -11,52 +11,59 @@
     <meta name="author" content="Baptiste Meurant <baptiste.meurant@gmail.com>">
     <meta name="url" content="https://bmeurant.github.io">
 
-    <link rel="stylesheet" href="css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="css/cv.css"/>
     <link rel="icon" type="image/png" href="http://www.gravatar.com/avatar/c28e672be1580d9cb3dc6f7dc7f370c4.png">
 
+    <script src="https://kit.fontawesome.com/d26f36e1f3.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/23.7.7/i18next.min.js"></script>
+    <style lang="sass"></style>
 
 </head>
 
 <body>
-    <div id="app">
-        <div class="lang">
-            <button class="langSelector" name="fr">French</button>
-            <button class="langSelector" name="en">English</button>
+    <div id="wrapper">
+        <div id="header">
+            <span id="actions">
+                <button class="action"><i class="fa-regular fa-envelope"></i></button>
+                <button class="action"><i class="fa-solid fa-print"></i></button>
+            </span>
+            <span id="langs">
+                <button class="langSelector" name="fr" title="Français"></button>
+                <button class="langSelector" name="en" title="English"></button>
+            </span>
         </div>
+        <div id="resume">
+            <h1 class="name">Baptiste Meurant</h1>
 
-        <h1 class="name">Baptiste Meurant</h1>
+            <p data-i18n="description" class="i18nelement description">description</p>
 
-        <p data-i18n="description" class="i18nelement description">description</p>
-
-        <ul class="social">
-            <li><a href="https://twitter.com/bmeurant" title="@bmeurant on Twitter"
-                target="new"><i class="fa fa-fw fa-twitter"></i></a></li>
-            <li><a href="https://github.com/bmeurant" title="@bmeurant on GitHub"
-                target="new"><i class="fa fa-fw fa-github"></i></a></li>
-            <li><a href="http://stackoverflow.com/users/3047496/bmeurant"
-                title="bmeurant on Stackoverflow"
-                target="new"><i class="fa fa-fw fa-stack-overflow"></i></a></li>
-            <li><a href="https://medium.com/@bmeurant" title="@bmeurant on Medium"
-                target="new"><i class="fa fa-fw fa-medium"></i></a></li>
-            <li><a href="https://www.linkedin.com/in/baptistemeurant"
-                title="Baptiste Meurant on LinkedIn" target="new"><i
-                    class="fa fa-fw fa-linkedin-square"></i></a>
-            </li>
-        </ul>
-        <!--nav>
-            <p class="scroll"><i class="fa fa-fw fa-caret-down"></i>&nbsp;<i><b>Scroll</b> or <b>select</b> a
-                section
-                below
-                to learn more about me.</i>&nbsp;<i class="fa fa-fw fa-caret-down"></i></p>
-            <ul>
-                <li><a href="#about"><i class="fa fa-5x fa-fw fa-user"></i><br/>About me</a></li>
-                <li><a href="#expertise"><i class="fa fa-5x fa-fw fa-code"></i><br/>Expertise</a></li>
-                <li><a href="#experience"><i class="fa fa-5x fa-fw fa-suitcase"></i><br/>Experience</a></li>
-                <li><a href="#education"><i class="fa fa-5x fa-fw fa-graduation-cap"></i><br/>Education</a></li>
+            <ul class="social">
+                <li><a href="https://twitter.com/bmeurant" title="@bmeurant on Twitter"
+                    target="new"><i class="fa fa-fw fa-twitter"></i></a></li>
+                <li><a href="https://github.com/bmeurant" title="@bmeurant on GitHub"
+                    target="new"><i class="fa fa-fw fa-github"></i></a></li>
+                <li><a href="http://stackoverflow.com/users/3047496/bmeurant"
+                    title="bmeurant on Stackoverflow"
+                    target="new"><i class="fa fa-fw fa-stack-overflow"></i></a></li>
+                <li><a href="https://medium.com/@bmeurant" title="@bmeurant on Medium"
+                    target="new"><i class="fa fa-fw fa-medium"></i></a></li>
+                <li><a href="https://www.linkedin.com/in/baptistemeurant"
+                    title="Baptiste Meurant on LinkedIn" target="new"><i
+                        class="fa fa-fw fa-linkedin-square"></i></a>
+                </li>
             </ul>
-        </nav-->
+            <!--nav>
+                <p class="scroll"><i class="fa fa-fw fa-caret-down"></i>&nbsp;<i><b>Scroll</b> or <b>select</b> a
+                    section
+                    below
+                    to learn more about me.</i>&nbsp;<i class="fa fa-fw fa-caret-down"></i></p>
+                <ul>
+                    <li><a href="#about"><i class="fa fa-5x fa-fw fa-user"></i><br/>About me</a></li>
+                    <li><a href="#expertise"><i class="fa fa-5x fa-fw fa-code"></i><br/>Expertise</a></li>
+                    <li><a href="#experience"><i class="fa fa-5x fa-fw fa-suitcase"></i><br/>Experience</a></li>
+                    <li><a href="#education"><i class="fa fa-5x fa-fw fa-graduation-cap"></i><br/>Education</a></li>
+                </ul>
+            </nav-->
+        </div>
     </div>
     <script type="module" src="/main.js"></script>
 
