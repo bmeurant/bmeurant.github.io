@@ -14,7 +14,7 @@ async function i18Loader(lang) {
   }, {});
   await i18next.init({
     lng: lang,
-    debug: true,
+    debug: false,
     resources: res
   });
 
