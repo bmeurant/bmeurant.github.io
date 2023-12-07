@@ -106,14 +106,24 @@ ul.hlist {
 #resume {
     box-shadow: 0 2px 6px $box-color;
     background-color: white;
+    padding-top: 2%;
+    padding-bottom: 5%;
     
     & > * {
-        padding: 5%;
-        padding-bottom: 2.5%;
+        padding: 1% 3%;
     }
 
-    #main-skills {
-        background-color: #91b7a7;
+    h2 {
+        margin: 0;
+        text-decoration: underline;
+        text-decoration-thickness: auto;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 10px;
+    }
+
+    .inverse {
+        color: white;
+        background-color: $emphasize-color;
     }
 }
 
@@ -123,10 +133,6 @@ ul.hlist {
     justify-content: space-between;
     align-items: center;
     gap: 0.7em;
-
-    & > * {
-        padding: 0 10px;
-    }
 }
 
 #identity {
@@ -143,7 +149,8 @@ ul.hlist {
 
     #description {
         font-size: 0.8em;
-        padding-top: 0.8em;
+        padding-top: 2em;
+        margin: 0;
     }
 }
 
@@ -157,7 +164,13 @@ ul.hlist {
     text-align: center;               
 }
 
-#social, #location {
+#contact {
+    .social-link, #contactMe {
+        display: none;
+    }
+}
+
+#contact, #location {
     font-size: 0.8em;
 
     i {
@@ -173,7 +186,7 @@ ul.hlist {
         width: 100%;
     }
 
-    #avatar {
+    #profile {
         order: 1;
         text-align: center;
         width: 100%;
@@ -194,15 +207,15 @@ ul.hlist {
         font-size: 0.7em;
     }
 
-    #social {
-        order: 4;
+    #contact {
+        order: 3;
         width: 100%;
 
         text-align: center;
     }
 
     #identity {
-        order: 5;
+        order: 4;
 
         #name {
             font-size: 1.5em;
@@ -214,20 +227,22 @@ ul.hlist {
             font-size: 1em;
             text-align: center;
         }
+
+        #description {
+            padding-bottom: 3%;
+        }
     }
 }
 
 @media screen and (min-width: 450px) and (max-width: 576px) {
 
-    #social {
+    #contact {
         order : 3;
-        width: 30%;
         font-size: 1em;
     }
 
     #email {
         order: 4;
-        width: 50%;
         font-size: 0.8em;
     }
 
@@ -236,9 +251,16 @@ ul.hlist {
     }
 }
 
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 577px) {
 
-    #avatar {
+    #resume {
+        & > * > * {
+            padding: 10px;
+            padding-top: 0;
+        }
+    }
+
+    #profile {
         order: 1;
         text-align: center;
         width: 100%;
@@ -250,13 +272,14 @@ ul.hlist {
 
         width: 100%; 
         text-align: center;
+        padding:0;
     }
 
     #identity {
         order: 3;
     }
 
-    #social {
+    #contact {
         order: 4;
         font-size: 1em;
     }
@@ -269,7 +292,7 @@ ul.hlist {
 
 @media screen and (min-width: 768px) {
 
-    #social {
+    #contact {
         font-size: 1.2em;
     }
 
@@ -278,7 +301,7 @@ ul.hlist {
     }
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 992px), print {
 
     #identity {
         order: 1;
@@ -299,15 +322,14 @@ ul.hlist {
         }
     }
 
-    #avatar {
+    #profile {
         order: 2;
 
         text-align: right;
     }
 
-    #social {
+    #contact {
         order: 3;
-        width: 30%;
         font-size: 1.2em;
     }
 
@@ -319,24 +341,24 @@ ul.hlist {
     }
 
     #location {
-        order: 5;
+        order: 4;
         font-size: 0.9em;
     }
 
-    #avatar, #location {
+    #profile, #location {
         flex-basis: 13%;
         flex-grow: 0;
         flex-shrink: 0;
     }
 
-    #social, #location { 
+    #contact, #location { 
         i {
             font-size: 1.2em;
         }
     }
   }
 
-  @media screen and (min-width: 1200px) {
+@media screen and (min-width: 1200px) {
     #wrapper {
         width: 1140px;
     }
@@ -344,5 +366,87 @@ ul.hlist {
     #identity {
         width: 81%;
     }
+
+    #location {
+        padding: 10px;
+    }
+}
+
+@media print, screen and (min-width: 1600px) {
+
+    :root {
+        background-color: white;
+        -webkit-print-color-adjust:exact !important;
+        print-color-adjust:exact !important;
+    }
+    
+    #wrapper{
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    #header {
+        display: none;
+    }
+
+    #resume {
+        box-shadow: none;
+
+        & > * {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    #identity {
+        #name {
+            font-size: 1.7em;
+        }
+        
+        #jobTitle {
+            font-size: 1em;
+        }
+
+        #description {
+            font-size: 0.8em;
+            padding-bottom: 3%;
+        }
+    }
+
+    #contact {
+        font-size: 0.7em;
+        border-top: 2px solid $strong-emphasize-color;
+        padding-bottom: 2%;
+        width: 100%;
+
+        #contactMe {
+            font-size: 1.3em;
+            font-weight: 700;
+            padding-top: 0.5%;
+            padding-bottom: 0.5%;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: left;
+            padding-top: 0.5%;
+            margin-left: 15%;
+
+            li {
+                display: inline-block;
+                width: 50%;
+            }
+        }
+
+        .social-link, #contactMe {
+            display: inline-block;
+        }
+
+    }
+   
 }
 

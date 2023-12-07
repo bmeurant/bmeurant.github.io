@@ -24,7 +24,7 @@
         <div id="header">
             <span id="actions">
                 <button class="action"><i class="fa-solid fa-at"></i></button>
-                <button class="action"><i class="fa-solid fa-print"></i></button>
+                <button class="action" OnClick="javascript:window.print()" title="Print"><i class="fa-solid fa-print"></i></button>
             </span>
             <span id="langs">
                 <button class="langSelector" name="fr" title="Français"></button>
@@ -33,32 +33,39 @@
         </div>
         <div id="resume">
             <div id="summary">
-                <div id="avatar">
+                <div id="profile">
                     <img class="avatar" src="https://1.gravatar.com/avatar/74fc3f4a92da92178c6d9831999c1d5bb0589b60c4d4f0dd81e4a7a1686ccf4c?size=256"/>
+                    <div id="location"><i class="fa-solid fa-location-dot"></i>&nbsp;Lyon, France</div>
                 </div>
                 <div id="identity">
                     <h1 id="name">Baptiste Meurant</h1>
                     <div id="jobTitle" data-i18n="title" class="i18nelement">title</div>
                     <p id="description" data-i18n="description" class="i18nelement">description</p>
                 </div>
-                <ul id="social" class="hlist">
-                    <li><a href="https://github.com/bmeurant" title="@bmeurant on GitHub"
-                        target="new"><i class="fa-brands fa-github"></i></a></li>
-                    <li><a href="https://www.linkedin.com/in/baptistemeurant"
-                        title="Baptiste Meurant on LinkedIn" target="new"><i
-                        class="fa-brands fa-linkedin"></i></a></li>
-                    <li><a href="http://stackoverflow.com/users/3047496/bmeurant"
-                        title="bmeurant on Stackoverflow"
-                        target="new"><i class="fa-brands fa-stack-overflow"></i></a></li>
-                    <li><a href="https://medium.com/@bmeurant" title="@bmeurant on Medium"
-                        target="new"><i class="fa-brands fa-medium"></i></a></li>
-                    <li><a href="https://twitter.com/bmeurant" title="@bmeurant on Twitter"
-                        target="new"><i class="fa-brands fa-x-twitter"></i></a></li>
-                </ul>
-                <div id="email"><a href="mailto:baptiste.meurant@gmail.com">
-                    <i class="fa-solid fa-at"></i>&nbsp;baptiste.meurant@gmail.com</a>
+                <div id="contact">
+                    <span id="contactMe" data-i18n="contact-me" class="i18nelement">Contact Me</span>
+                    <ul class="hlist">
+                        <li class="email"><a href="mailto:baptiste.meurant@gmail.com" title="mail"
+                            target="new"><i class="fa-solid fa-envelope"></i></a><span class="social-link">baptiste.meurant@gmail.com</span></li>
+                        <li class="website"><a href="https://bmeurant.github.io" title="personal website"
+                            target="new"><i class="fa-solid fa-globe"></i></a><span class="social-link">https://bmeurant.github.io</span></li> 
+                        <li class="github"><a href="https://github.com/bmeurant" title="@bmeurant on GitHub"
+                            target="new"><i class="fa-brands fa-github"></i></a><span class="social-link">https://github.com/bmeurant</span></li>
+                        <li class="linkedin"><a href="https://www.linkedin.com/in/baptistemeurant"
+                            title="Baptiste Meurant on LinkedIn" target="new"><i
+                            class="fa-brands fa-linkedin"></i></a><span class="social-link">https://www.linkedin.com/in/baptistemeurant</span></li>
+                        <li class="stackoverflow"><a href="http://stackoverflow.com/users/3047496/bmeurant"
+                            title="bmeurant on Stackoverflow"
+                            target="new"><i class="fa-brands fa-stack-overflow"></i></a><span class="social-link">http://stackoverflow.com/users/3047496/bmeurant</span></li>
+                        <li class="x-twitter"><a href="https://twitter.com/bmeurant" title="@bmeurant on Twitter"
+                            target="new"><i class="fa-brands fa-x-twitter"></i></a><span class="social-link">https://twitter.com/bmeurant</span></li>
+                    </ul>
                 </div>
-                <div id="location"><i class="fa-solid fa-location-dot"></i>&nbsp;Lyon, France</div>
+            </div>
+            <div id="skills" class="inverse">
+                <h2 id="main-skills" data-i18n="main-skills" class="section-title i18nelement">Main skills</h2>
+                <h2 id="main-skills" data-i18n="other-tech-skills" class="section-title i18nelement">Other Tech skills</h2>
+                <h2 id="main-skills" data-i18n="other-skills" class="section-title i18nelement">Other skills</h2>
             </div>
             <!--nav>
                 <p class="scroll"><i class="fa fa-fw fa-caret-down"></i>&nbsp;<i><b>Scroll</b> or <b>select</b> a
