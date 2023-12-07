@@ -2,6 +2,7 @@ $actions-color: #666;
 $box-color: rgba(26,31,28,.08);
 $emphasize-color: #027e80;
 $strong-emphasize-color: #017072;
+$smooth-emphasize-color: #a9d5d6;
 
 :root {
     font-family: 'Roboto', 'Noto Sans TC', 'Noto Sans SC', 'Noto Sans HK', 'Noto Sans JP', 'Noto Sans', 'PingFang TC', 'Microsoft JhengHei', 'PMingLiU', sans-serif;
@@ -15,7 +16,11 @@ $strong-emphasize-color: #017072;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
+}
+
+body {
+    margin: 0;
+}
 
 .langSelector {
     background-repeat: no-repeat;
@@ -35,6 +40,10 @@ $strong-emphasize-color: #017072;
     background: none;
 }
 
+#profile {
+    text-align: center;
+}
+
 .avatar {
     width: 125px;
     border-radius: 50%;
@@ -48,13 +57,13 @@ a {
     }
 }
 
-ul.hlist {
+.list {
     list-style: none;
     margin:0;
     padding:0;
     display: inline-block;
 
-    li {
+    .list-item {
         display: inline-block;
     }
 }
@@ -72,6 +81,7 @@ ul.hlist {
     flex-wrap: wrap;
     justify-content: right;
     margin-bottom: 10px;
+    padding: 0 2%;
 
     button {
         height: 16px;
@@ -106,19 +116,16 @@ ul.hlist {
 #resume {
     box-shadow: 0 2px 6px $box-color;
     background-color: white;
-    padding-top: 2%;
-    padding-bottom: 5%;
-    
+    padding-top: 1%;
+    padding-bottom: 2%;
+  
     & > * {
-        padding: 1% 3%;
+        padding: 0.5em;
+        margin: 2% 0;
     }
 
-    h2 {
-        margin: 0;
-        text-decoration: underline;
-        text-decoration-thickness: auto;
-        text-decoration-thickness: 2px;
-        text-underline-offset: 10px;
+    & > * > * {
+        padding: 0.5em;
     }
 
     .inverse {
@@ -180,6 +187,85 @@ ul.hlist {
     }
 }
 
+#contact {
+    .email, .website {
+        display: none;
+    }
+}
+
+.title {
+    font-size: 1em;
+    font-weight: 700;
+    width: 100%;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 0.5em 0;
+    padding-bottom: 1em;
+
+    &:before {
+        border-top: 2px solid $strong-emphasize-color;
+        content:"";
+        margin: 0 auto; /* this centers the line to the full width specified */
+        position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
+        top: 50%; left: 0; right: 0; bottom: 0;
+        width: 95%;
+        z-index: -1;
+    }
+
+    .label {
+        width: auto;
+        background-color: white;
+        padding-right: 10px;
+    }
+}
+
+.inverse {
+    .title {
+        &:before {
+            border-color: white;
+        }
+        .label {
+            background-color: $emphasize-color;
+        }
+    }
+}
+
+#skills {
+    .list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        //height: 165px;
+        //flex-wrap: wrap;
+        font-size: 0.95em;
+        gap: 8px 20px;
+
+        .list-item {
+           // width: 20%;
+           width: 90%;
+        }
+    }
+
+    .skill-bar-wrapper {
+        width: 100%;
+        background-color: white;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+
+        .skill-bar {
+            background-color: $smooth-emphasize-color;
+            display: block;
+            height: 10px;
+        }
+    }
+
+    .skill-exp {
+        font-size: 0.7em;
+        text-align: right;
+    }
+}
+
 
 @media screen and (max-width: 576px) {
     #wrapper {
@@ -188,7 +274,6 @@ ul.hlist {
 
     #profile {
         order: 1;
-        text-align: center;
         width: 100%;
     }
 
@@ -253,16 +338,8 @@ ul.hlist {
 
 @media screen and (min-width: 577px) {
 
-    #resume {
-        & > * > * {
-            padding: 10px;
-            padding-top: 0;
-        }
-    }
-
     #profile {
         order: 1;
-        text-align: center;
         width: 100%;
     }
 
@@ -288,9 +365,28 @@ ul.hlist {
         order: 5;
         font-size: 0.8em;
     }
+
+    #skills {
+        #main-skills {
+            height: 340px;
+        }
+        .list {
+            flex-wrap: wrap;
+    
+            .list-item {
+               width: 45%;
+            }
+        }
+    }
 }
 
 @media screen and (min-width: 768px) {
+
+    #resume {
+        & > * {
+            margin: 1% 0;
+        }
+    }
 
     #contact {
         font-size: 1.2em;
@@ -302,6 +398,12 @@ ul.hlist {
 }
 
 @media screen and (min-width: 992px), print {
+
+    #resume {
+        & > * {
+            margin: 0;
+        }
+    }
 
     #identity {
         order: 1;
@@ -324,8 +426,6 @@ ul.hlist {
 
     #profile {
         order: 2;
-
-        text-align: right;
     }
 
     #contact {
@@ -346,7 +446,7 @@ ul.hlist {
     }
 
     #profile, #location {
-        flex-basis: 13%;
+        flex-basis: 15%;
         flex-grow: 0;
         flex-shrink: 0;
     }
@@ -354,6 +454,17 @@ ul.hlist {
     #contact, #location { 
         i {
             font-size: 1.2em;
+        }
+    }
+
+    #skills {
+        #main-skills {
+            height: 220px;
+        }
+        .list {   
+            .list-item {
+               width: 30%;
+            }
         }
     }
   }
@@ -368,7 +479,18 @@ ul.hlist {
     }
 
     #location {
-        padding: 10px;
+        padding-top: 0.5em;
+    }
+
+    #skills {
+        #main-skills {
+            height: 165px;
+        }
+        .list {   
+            .list-item {
+               width: 20%;
+            }
+        }
     }
 }
 
@@ -378,6 +500,10 @@ ul.hlist {
         background-color: white;
         -webkit-print-color-adjust:exact !important;
         print-color-adjust:exact !important;
+    }
+
+    a {
+        text-decoration: none;
     }
     
     #wrapper{
@@ -392,11 +518,14 @@ ul.hlist {
 
     #resume {
         box-shadow: none;
-
+        
         & > * {
-            padding-left: 0;
-            padding-right: 0;
+            padding: 0.2% 1%;
         }
+    }
+
+    #profile {
+        width: 100px;
     }
 
     #identity {
@@ -410,43 +539,64 @@ ul.hlist {
 
         #description {
             font-size: 0.8em;
-            padding-bottom: 3%;
         }
     }
 
     #contact {
         font-size: 0.7em;
-        border-top: 2px solid $strong-emphasize-color;
-        padding-bottom: 2%;
         width: 100%;
+        padding-bottom: 2%;
 
-        #contactMe {
-            font-size: 1.3em;
-            font-weight: 700;
-            padding-top: 0.5%;
-            padding-bottom: 0.5%;
-            width: 100%;
-            text-transform: uppercase;
-        }
-
-        ul {
+        .list {
             display: flex;
             flex-wrap: wrap;
             justify-content: left;
             padding-top: 0.5%;
             margin-left: 15%;
 
-            li {
+            .list-item {
                 display: inline-block;
                 width: 50%;
             }
+        }
+
+        i {
+            width: 16px;
+            text-align: center;
         }
 
         .social-link, #contactMe {
             display: inline-block;
         }
 
+        .email, .website {
+            display: inline-block;
+        }
     }
-   
+
+    #skills {
+        #main-skills {
+            height: 125px;
+            text-align: center;
+
+            .list-item {
+                font-size: 0.65em;
+                text-align: left;
+            }
+
+            .skill-name {
+                padding-bottom: 1%;
+            }
+        }
+        .list {   
+            display: block;
+
+            .list-item {
+                display: inline-block;
+                width: 20%;
+                margin: 0 2%;
+            }
+        }
+    }
 }
 
