@@ -23,7 +23,7 @@
     <div id="wrapper">
         <div id="header">
             <span id="actions">
-                <button class="action"><i class="fa-regular fa-envelope"></i></button>
+                <button class="action"><i class="fa-solid fa-at"></i></button>
                 <button class="action"><i class="fa-solid fa-print"></i></button>
             </span>
             <span id="langs">
@@ -32,25 +32,36 @@
             </span>
         </div>
         <div id="resume">
-            <h1 class="name">Baptiste Meurant</h1>
-
-            <p data-i18n="description" class="i18nelement description">description</p>
-
-            <ul class="social">
-                <li><a href="https://twitter.com/bmeurant" title="@bmeurant on Twitter"
-                    target="new"><i class="fa fa-fw fa-twitter"></i></a></li>
-                <li><a href="https://github.com/bmeurant" title="@bmeurant on GitHub"
-                    target="new"><i class="fa fa-fw fa-github"></i></a></li>
-                <li><a href="http://stackoverflow.com/users/3047496/bmeurant"
-                    title="bmeurant on Stackoverflow"
-                    target="new"><i class="fa fa-fw fa-stack-overflow"></i></a></li>
-                <li><a href="https://medium.com/@bmeurant" title="@bmeurant on Medium"
-                    target="new"><i class="fa fa-fw fa-medium"></i></a></li>
-                <li><a href="https://www.linkedin.com/in/baptistemeurant"
-                    title="Baptiste Meurant on LinkedIn" target="new"><i
-                        class="fa fa-fw fa-linkedin-square"></i></a>
-                </li>
-            </ul>
+            <div id="summary">
+                <div id="avatar">
+                    <img class="avatar" src="https://1.gravatar.com/avatar/74fc3f4a92da92178c6d9831999c1d5bb0589b60c4d4f0dd81e4a7a1686ccf4c?size=256"/>
+                </div>
+                <div id="identity">
+                    <h1 id="name">Baptiste Meurant</h1>
+                    <span id="jobTitle" data-i18n="title" class="i18nelement">title</span>
+                    <p id="description" data-i18n="description" class="i18nelement">description</p>
+                </div>
+                <div id="social">
+                    <ul class="hlist">
+                        <li><a href="https://github.com/bmeurant" title="@bmeurant on GitHub"
+                            target="new"><i class="fa-brands fa-github"></i></a></li>
+                        <li><a href="https://www.linkedin.com/in/baptistemeurant"
+                            title="Baptiste Meurant on LinkedIn" target="new"><i
+                            class="fa-brands fa-linkedin"></i></a></li>
+                        <li><a href="http://stackoverflow.com/users/3047496/bmeurant"
+                            title="bmeurant on Stackoverflow"
+                            target="new"><i class="fa-brands fa-stack-overflow"></i></a></li>
+                        <li><a href="https://medium.com/@bmeurant" title="@bmeurant on Medium"
+                            target="new"><i class="fa-brands fa-medium"></i></a></li>
+                        <li><a href="https://twitter.com/bmeurant" title="@bmeurant on Twitter"
+                            target="new"><i class="fa-brands fa-x-twitter"></i></a></li>
+                    </ul>
+                    <span id="email"><a href="mailto:baptiste.meurant@gmail.com">
+                        <i class="fa-solid fa-at"></i>&nbsp;baptiste.meurant@gmail.com</a>
+                    </span>
+                </div>
+                <div id="location"><i class="fa-solid fa-location-dot"></i>&nbsp;Lyon, France</div>
+            </div>
             <!--nav>
                 <p class="scroll"><i class="fa fa-fw fa-caret-down"></i>&nbsp;<i><b>Scroll</b> or <b>select</b> a
                     section
@@ -84,7 +95,7 @@
             </div>
         </aside>
         <article>
-            <p>Experienced <b>full-stack developer</b> in Javascript, Java and platform architect. <b>Passionate about
+            <p>Experienced <b>full-stack developer</b> in Javascript, Java and software architect. <b>Passionate about
                 technology</b>, I try to be a <b>pragmatic professional</b>. Open source convinced, strong supporter of IoC, loose coupling, light containers,
                 Single Page Applications oriented designs, REST architectures ... I do promote these principles and good practices
                 inside and outside my company. 

@@ -1,4 +1,7 @@
-$light-gray: #666;
+$actions-color: #666;
+$box-color: rgba(26,31,28,.08);
+$emphasize-color: #027e80;
+$strong-emphasize-color: #017072;
 
 :root {
     font-family: 'Roboto', 'Noto Sans TC', 'Noto Sans SC', 'Noto Sans HK', 'Noto Sans JP', 'Noto Sans', 'PingFang TC', 'Microsoft JhengHei', 'PMingLiU', sans-serif;
@@ -32,6 +35,30 @@ $light-gray: #666;
     background: none;
 }
 
+.avatar {
+    width: 125px;
+    border-radius: 50%;
+}
+
+a {
+    color: $emphasize-color;
+
+    &:visited {
+        color: $strong-emphasize-color;
+    }
+}
+
+ul.hlist {
+    list-style: none;
+    margin:0;
+    padding:0;
+    display: inline-block;
+
+    li {
+        display: inline-block;
+    }
+}
+
 #wrapper {
     padding-top: 32px;
     padding-bottom: 80px;
@@ -54,11 +81,7 @@ $light-gray: #666;
 
         #actions {
             padding-right: 15px;
-            border-right: 2px solid $light-gray;
-
-            & > * {
-                margin-left: 5px;
-            }
+            border-right: 2px solid $actions-color;
         }
 
         #langs {
@@ -74,15 +97,91 @@ $light-gray: #666;
         }
 
         i {
-            color: $light-gray;
+            color: $actions-color;
             cursor: pointer;
+            font-size: 16px;
         }
     }
 
     #resume {
-        box-shadow: 0 2px 6px rgba(26,31,28,.08);
-        background-color: #fff;
-        padding: 25px;
+        box-shadow: 0 2px 6px $box-color;
+        background-color: white;
+        
+        & > * {
+            padding: 60px;
+            padding-bottom: 25px;
+        }
+
+        #summary {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+
+            & > * {
+                padding: 0 10px;
+            }
+
+            #avatar {
+                order: 2;
+                flex-basis: 0;
+                flex-grow: 1;
+                text-align: right;
+            }
+
+            #identity {
+                flex-grow: 2;
+                order: 1;
+
+                width: 80%;
+
+                #name {
+                    margin: 0;
+                }
+
+                #jobTitle {
+                    font-weight: 500;
+                    color: $emphasize-color;
+                    font-style: normal;
+                    font-size: 18px;
+                }
+            }
+
+            #social {
+                order:3;
+
+                width: 80%;
+
+                #email {
+                    float: right;
+                    font-size: 16px;
+
+                    i {
+                        font-size: 16px;
+                        padding-right: 0;
+                    }
+                }
+            }
+
+            #location {
+                order: 4;
+                flex-basis: 0;
+                flex-grow: 1;
+
+                text-align: center;               
+            }
+
+            #social, #location {
+                font-size: 17px;
+
+                i {
+                    color: $emphasize-color;
+                    font-size: 25px;
+                    padding-right: 10px;
+                }
+            }
+        }
 
         #main-skills {
             background-color: #91b7a7;
