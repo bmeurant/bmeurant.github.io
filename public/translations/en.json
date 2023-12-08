@@ -1,8 +1,25 @@
 {
     "title": "Software <b>developer</b>, <b>Architect</b>, <b>Technical Director</b> at <b><a href='https://twitter.com/WorldlineFrance'>Worldline</a>",
-    "description": "Experienced <b>full-stack developer</b> and software architect. <b>Passionate about technology</b>, I try to be a <b>pragmatic professional</b>. I strongly believe in <b>software craftsmanship</b> principles and, in my professional life, I don't like anything more than working with <b>motivated and passionate people</b>. I like <b>learning</b> from people, <b>teaching and guiding</b> them and <b>debate</b> with my peers about technologies, designs, architectures, ...",
+    "description": "Experienced <b>full-stack developer</b> and software <b>architect</b>. I believe in <b>pragmatism</b> and the principles of <b>software craftsmanship</b>. I like working in a <b>team</b>, with <b>motivated and passionate</b> people. I like <b>learning</b> from people, <b>training</b> and <b>guiding</b> them, <b>discussing</b> technologies, designs, architectures, etc. I try to maintain a <b>balance</b> between development and technical management.",
+    "age-years": "years",
+    "xp-years": "years XP",
     "contact-me": "Contact Me",
-    "skills": "Skills",
+    "main-skills": "Main skills",
+    "skill-java": "Java & ecosystem",
+    "skill-spring": "Spring & ecosystem",
+    "skill-jpa": "JPA & Hibernate",
+    "skill-db": "SQL & Databases",
+    "skill-javascript": "Javascript & ecosystem",
+    "skill-html": "HTML, CSS, Sass",
+    "skill-ember": "ember",
+    "skill-git": "Git",
+    "skill-archi": "Architecture & Methodology",
+    "skill-rest": "REST",
+    "skill-cleancode": "CleanCode",
+    "skill-cloud-devops": "Cloud & DevOps",
     "other-tech-skills": "Other Tech skills",
-    "other-skills": "Other skills"
+    "other-tech-skills-list": "Infrastructure, Agile, Containers, IaC, Automation, NoSQL, Linux, REST, Security, Open Source",
+    "other-skills": "Other skills",
+    "other-skills-list": "Tech lead, Production, PreSales, Budget, Team leading, Teaching & Mentoring, Communication",
+    "skill-exp": "Experience time: __years__ years"
 }

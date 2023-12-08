@@ -1,6 +1,7 @@
 import './styles/resume.scss'
 import { extractLocale, getLangFromLocale } from './javascript/i18n.js'
 import { langs } from './javascript/langs'
+import { getYears } from './javascript/dates.js'
 
 const { urlWithoutLocale, locale } = extractLocale(document.location.pathname);
 
@@ -30,7 +31,15 @@ async function i18Loader(lang) {
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i];
       const k = element.getAttribute("data-i18n");
-      element.innerHTML = i18next.t(k);
+      const options = element.getAttribute("data-i18n-options");
+      const keys = JSON.parse(options);
+      let value = i18next.t(k);
+
+      for (var key in keys) {
+        value = value.replace (`__${key}__`, keys[key]);
+      }
+
+      element.innerHTML = value;
     }
   }
 
@@ -49,4 +58,14 @@ async function i18Loader(lang) {
   });
 }
 
+function updateAge(birthdate) {
+  document.getElementById("ageNum").innerHTML = getYears(birthdate);
+}
+
+function updateXP(birthdate) {
+  document.getElementById("xpNum").innerHTML = getYears(birthdate);
+}
+
 i18Loader(getLangFromLocale(locale));
+updateAge("01/17/1980");
+updateXP("10/01/2005");

@@ -35,7 +35,11 @@
             <div id="summary">
                 <div id="profile">
                     <img class="avatar" src="https://1.gravatar.com/avatar/74fc3f4a92da92178c6d9831999c1d5bb0589b60c4d4f0dd81e4a7a1686ccf4c?size=256"/>
-                    <div id="location"><i class="fa-solid fa-location-dot"></i>&nbsp;Lyon, France</div>
+                    <div id="time">
+                        <div id="age"><i class="fa-solid fa-cake-candles"></i><span id="ageNum">43</span> <span data-i18n="age-years" class="i18nelement">years</span></div>
+                        <div id="xp"><i class="fa-solid fa-stopwatch"></i><span id="xpNum">12</span> <span data-i18n="xp-years" class="i18nelement">years of experience</span></div>
+                        <div id="profileLocation" class="location"><i class="fa-solid fa-location-dot"></i>&nbsp;Lyon, France</div>
+                    </div>
                 </div>
                 <div id="identity">
                     <h1 id="name">Baptiste Meurant</h1>
@@ -61,73 +65,82 @@
                             target="new"><i class="fa-brands fa-x-twitter"></i></a><span class="social-link">https://twitter.com/bmeurant</span></li>
                     </ul>
                 </div>
+                <div id="location" class="location"><i class="fa-solid fa-location-dot"></i>&nbsp;Lyon, France</div>
             </div>
             <div id="skills" class="inverse">
-                <h2 class="title"><span class="label"><i class="fa-solid fa-lightbulb"></i>&nbsp;<span data-i18n="skills" class="i18nelement">Main skills</span></span></h2>
-                <ul id="main-skills" class="list">
-                    <li class="list-item">
-                        <span class="skill-name">Java & ecosystem</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
-                        <div class="skill-exp">Experience time: 18 years</div>
-                    </li>
-                    <li class="list-item">
-                        <span class="skill-name">Spring, SpringBoot</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 90%;"></div></div>
-                        <div class="skill-exp">Experience time: 17 years</div>
-                    </li>
-                    <li class="list-item">
-                        <span class="skill-name">JPA & Hibernate</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 75%;"></div></div>
-                        <div class="skill-exp">Experience time: 17 years</div>
-                    </li>
-                    <li class="list-item">
-                        <span class="skill-name">SQL & Databases</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
-                        <div class="skill-exp">Experience time: 17 years</div>
-                    </li>
-                    <li class="list-item">
-                        <span class="skill-name">JavaScript & ecosystem</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 75%;"></div></div>
-                        <div class="skill-exp">Experience time: 10 years</div>
-                    </li>
-                    <li class="list-item">
-                        <span class="skill-name">HTML, CSS, Sass</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
-                        <div class="skill-exp">Experience time: 15 years</div>
-                    </li>
-                    <li class="list-item">
-                        <span class="skill-name">ember</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
-                        <div class="skill-exp">Experience time: 7 years</div>
-                    </li>
-                    <li class="list-item">
-                        <span class="skill-name">Git</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
-                        <div class="skill-exp">Experience time: 13 years</div>
-                    </li>
-                    <li class="list-item">
-                        <span class="skill-name">Architecture & Methodology</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
-                        <div class="skill-exp">Experience time: 10 years</div>
-                    </li>
-                    <li class="list-item">
-                        <span class="skill-name">REST</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 65%;"></div></div>
-                        <div class="skill-exp">Experience time: 14 years</div>
-                    </li>
-                    <li class="list-item">
-                        <span class="skill-name">TDD, CleanCode</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 65%;"></div></div>
-                        <div class="skill-exp">Experience time: 13 years</div>
-                    </li>
-                    <li class="list-item">
-                        <span class="skill-name">Cloud & DevOps</span>
-                        <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 60%;"></div></div>
-                        <div class="skill-exp">Experience time: 5 years</div>
-                    </li>
-                </ul>
-                <!--div id="otherTechSkills" class="title"><span class="label"><i class="fa-solid fa-gear"></i>&nbsp;<span data-i18n="other-tech-skills" class="i18nelement">Main skills</span></span></div>
-                <div id="otherSkills" class="title"><span class="label"><i class="fa-solid fa-user-gear"></i>&nbsp;<span data-i18n="other-skills" class="i18nelement">Main skills</span></span></div-->
+                <div class="section-full">
+                    <h2 class="title"><span class="label"><i class="fa-solid fa-user-gear"></i>&nbsp;<span data-i18n="main-skills" class="i18nelement">Main skills</span></span></h2>
+                    <ul id="main-skills" class="list">
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-java">Java & ecosystem</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 18}'>Experience time: 18 years</div>
+                        </li>
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-spring">Spring, SpringBoot</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 90%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 17}'>Experience time: 17 years</div>
+                        </li>
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-jpa">JPA & Hibernate</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 75%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 17}'>Experience time: 17 years</div>
+                        </li>
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-db">SQL & Databases</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 17}'>Experience time: 17 years</div>
+                        </li>
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-javascript">JavaScript & ecosystem</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 75%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 10}'>Experience time: 10 years</div>
+                        </li>
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-html">HTML, CSS, Sass</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 15}'>Experience time: 15 years</div>
+                        </li>
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-ember">ember</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 7}'>Experience time: 7 years</div>
+                        </li>
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-git">Git</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 13}'>Experience time: 13 years</div>
+                        </li>
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-archi">Architecture & Methodology</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 12}'>Experience time: 12 years</div>
+                        </li>
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-rest">REST</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 65%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 14}'>Experience time: 14 years</div>
+                        </li>
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-cleancode">TDD, CleanCode</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 65%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 13}'>Experience time: 13 years</div>
+                        </li>
+                        <li class="list-item">
+                            <span class="skill-name i18nelement" data-i18n="skill-cloud-devops">Cloud & DevOps</span>
+                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 60%;"></div></div>
+                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 5}'>Experience time: 5 years</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="section-light">
+                    <h2 id="otherTechSkills" class="title"><span class="label"><i class="fa-solid fa-gear"></i>&nbsp;<span data-i18n="other-tech-skills" class="i18nelement">Main skills</span></span></h2>
+                    <p class="i18nelement" data-i18n="other-tech-skills-list">Infrastructure, Agile, Containers, IaC, Automation, NoSQL, Linux, REST, Security, Open Source</p>
+                </div>
+                <div class="section-light">
+                    <h2 id="otherSkills" class="title"><span class="label"><i class="fa-solid fa-lightbulb"></i>&nbsp;<span data-i18n="other-skills" class="i18nelement">Main skills</span></span></h2>
+                    <p class="i18nelement" data-i18n="other-skills-list">Tech lead, Production, PreSales, Budget, Team leading, Teaching & Mentoring, Communication</p>
+                </div>
             </div>
             <!--nav>
                 <p class="scroll"><i class="fa fa-fw fa-caret-down"></i>&nbsp;<i><b>Scroll</b> or <b>select</b> a
@@ -141,13 +154,6 @@
                     <li><a href="#education"><i class="fa fa-5x fa-fw fa-graduation-cap"></i><br/>Education</a></li>
                 </ul>
             </nav-->
-        </div>
-        <div id="test">
-            <ul class="list">
-                <li class="list-item">
-                    <span class="skill-name">Java & ecosystem</span>
-                    <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 90%;"></div></div></li>
-            </ul>
         </div>
     </div>
     <script type="module" src="/main.js"></script>
@@ -212,99 +218,6 @@
     </section>
 </div>
 
-<div id="expertise" class="expertise">
-    <section>
-        <aside>
-            <h2>Expertise</h2>
-
-            <p class="details"><i class="fa fa-fw fa-thumbs-up"></i>Main skills I'm proud of</p>
-        </aside>
-        <article>
-            <div class="skills">
-                <div class="skills-col">
-                    <div class="skills-cat back-end">
-                        <h3>Back-end</h3>
-
-                        <div class="skill">
-                            <span style="width: 95%">Java</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 75%;">JEE</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 90%;">Spring Framework</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 60%;">Spring Portfolio</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 75%;">Maven</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 90%;">JPA & Hibernate</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 80%;">Databases & SQL</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 50%;">NoSQL</span>
-                        </div>
-                    </div>
-                    <div class="skills-cat architecture">
-                        <h3>Architecture & Methodology</h3>
-
-                        <div class="skill">
-                            <span style="width: 75%;">REST & lightweight SOA</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 60%;">Microservices</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 75%;">Single Page Applications</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 90%;">Test Driven Development</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 75%;">Git</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="skills-col">
-                    <div class="skills-cat front-end">
-                        <h3>Front-end</h3>
-
-                        <div class="skill">
-                            <span style="width: 60%;">Javascript</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 75%;">HTML5</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 60%;">CSS3</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 75%;">Less</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 90%;">Sass</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 80%;">Bootsrap/Fundation</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 75%;">JQuery</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 75%;">Backbone.js</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 90%;">EmberJs&nbsp;</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 15%;">React/Redux&nbsp;(learning)</span>
-                        </div>
-                    </div>
                     <div class="skills-cat languages">
                         <h3>Languages</h3>
 

@@ -125,7 +125,7 @@ a {
     }
 
     & > * > * {
-        padding: 0.5em;
+        padding: 0 0.5em;
     }
 
     .inverse {
@@ -137,7 +137,7 @@ a {
 #summary {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     gap: 0.7em;
 }
@@ -156,29 +156,21 @@ a {
 
     #description {
         font-size: 0.8em;
-        padding-top: 2em;
+        padding-top: 1em;
         margin: 0;
     }
 }
 
-#email {
-    i {
-        padding-right: 0;
-    }
-}
-
-#location {
+.location, #time {
     text-align: center;               
 }
 
-#contact {
-    .social-link, #contactMe {
-        display: none;
-    }
+.location {
+    padding: 0 0.5em;
 }
 
-#contact, #location {
-    font-size: 0.8em;
+#contact, .location, #time {
+    font-size: 1em;
 
     i {
         color: $emphasize-color;
@@ -187,37 +179,83 @@ a {
     }
 }
 
+#time {
+    & > * {
+        display: inline-block;
+    }
+
+    #profileLocation {
+        display: none;
+    }
+
+    > div:first-of-type {
+        margin-right: 1em;
+    }
+}
+
 #contact {
+    .social-link, #contactMe {
+        display: none;
+    }
+
     .email, .website {
         display: none;
     }
 }
 
 .title {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 700;
-    width: 100%;
     text-transform: uppercase;
-    position: relative;
-    z-index: 1;
     margin: 0;
     padding: 0.5em 0;
     padding-bottom: 1em;
-
-    &:before {
-        border-top: 2px solid $strong-emphasize-color;
-        content:"";
-        margin: 0 auto; /* this centers the line to the full width specified */
-        position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
-        top: 50%; left: 0; right: 0; bottom: 0;
-        width: 95%;
-        z-index: -1;
-    }
 
     .label {
         width: auto;
         background-color: white;
         padding-right: 10px;
+
+        i {
+            padding-right: 0.2em;
+            width: 1em;
+        }
+    }
+}
+
+.section-full {
+    .title {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+
+        &:before {
+            border-top: 2px solid $strong-emphasize-color;
+            content:"";
+            margin: 0 auto; /* this centers the line to the full width specified */
+            position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
+            top: 40%; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+        }
+    }
+}
+
+.section-light {
+
+    .title, p {
+        display: inline-block;
+    }
+
+    .title {
+        padding-top: 0;
+        padding-bottom: 0.5em;
+        width: 100%;
+    }
+
+    p {
+        font-size: 0.9em;
+        margin: 0;
+        padding-left: 1.6em;
     }
 }
 
@@ -237,13 +275,10 @@ a {
         display: flex;
         flex-direction: column;
         align-items: center;
-        //height: 165px;
-        //flex-wrap: wrap;
         font-size: 0.95em;
         gap: 8px 20px;
 
         .list-item {
-           // width: 20%;
            width: 90%;
         }
     }
@@ -264,6 +299,10 @@ a {
         font-size: 0.7em;
         text-align: right;
     }
+
+    .section-light {
+        padding-top: 0.5em;
+    }
 }
 
 
@@ -277,26 +316,14 @@ a {
         width: 100%;
     }
 
-    #location {
-        order: 2;
-
-        font-size: 0.7em;
-        width: 100%;     
-    }
-
-    #email {
-        order: 3;
-        width: 100%;
-
-        text-align: center;
-        font-size: 0.7em;
-    }
-
     #contact {
-        order: 3;
-        width: 100%;
+        order: 2;
+    }
 
-        text-align: center;
+    .location {
+        order: 3;
+
+        font-size: 1em;
     }
 
     #identity {
@@ -312,10 +339,6 @@ a {
             font-size: 1em;
             text-align: center;
         }
-
-        #description {
-            padding-bottom: 3%;
-        }
     }
 }
 
@@ -325,56 +348,43 @@ a {
         order : 3;
         font-size: 1em;
     }
-
-    #email {
-        order: 4;
-        font-size: 0.8em;
-    }
-
-    #location {
-        font-size: 0.8em;   
-    }
 }
 
 @media screen and (min-width: 577px) {
+
+    #summary {
+        justify-content: space-between;
+    }
 
     #profile {
         order: 1;
         width: 100%;
     }
 
-    #location {
-        order: 2;
-        font-size: 1em;
-
-        width: 100%; 
-        text-align: center;
-        padding:0;
-    }
-
     #identity {
-        order: 3;
+        order: 2;
     }
 
     #contact {
+        order: 3;
+        font-size: 1.2em;
+    }
+
+    .location {
         order: 4;
         font-size: 1em;
     }
 
-    #email {
-        order: 5;
-        font-size: 0.8em;
-    }
-
     #skills {
         #main-skills {
-            height: 340px;
+            height: 195px;
         }
         .list {
             flex-wrap: wrap;
+            font-size: 0.7em;
     
             .list-item {
-               width: 45%;
+               width: 30%;
             }
         }
     }
@@ -392,16 +402,28 @@ a {
         font-size: 1.2em;
     }
 
-    #email {
-        font-size: 0.9em;
+    #skills .list {
+        font-size: 0.8em;
     }
 }
 
 @media screen and (min-width: 992px), print {
 
+    .section-light {
+        .title {
+            width: 26%;
+            padding: 0;
+        }
+
+        p {
+            padding-left: 0;
+        }
+    }
+
     #resume {
         & > * {
             margin: 0;
+            padding-bottom: 0.5em;
         }
     }
 
@@ -433,25 +455,18 @@ a {
         font-size: 1.2em;
     }
 
-    #email {
-        order: 4;
-        flex: 1;
-        text-align: right;
-        font-size: 0.9em;
-    }
-
-    #location {
+    .location {
         order: 4;
         font-size: 0.9em;
     }
 
-    #profile, #location {
+    #profile, .location {
         flex-basis: 15%;
         flex-grow: 0;
         flex-shrink: 0;
     }
 
-    #contact, #location { 
+    #contact, .location { 
         i {
             font-size: 1.2em;
         }
@@ -459,17 +474,20 @@ a {
 
     #skills {
         #main-skills {
-            height: 220px;
+            height: 175px;
         }
-        .list {   
+        .list {
+            font-size: 1em;
+            
             .list-item {
-               width: 30%;
+               width: 23%;
             }
         }
     }
   }
 
 @media screen and (min-width: 1200px) {
+
     #wrapper {
         width: 1140px;
     }
@@ -478,14 +496,7 @@ a {
         width: 81%;
     }
 
-    #location {
-        padding-top: 0.5em;
-    }
-
     #skills {
-        #main-skills {
-            height: 165px;
-        }
         .list {   
             .list-item {
                width: 20%;
@@ -505,6 +516,26 @@ a {
     a {
         text-decoration: none;
     }
+
+    .section-full {
+        .title {
+            font-size: 0.7em;
+            padding-bottom: 0.5em;
+        }
+    }
+
+    .section-light {
+        padding-top: 0;
+
+        .title {
+            font-size: 0.6em;
+            width: 25%;
+        }
+
+        p {
+            font-size: 0.6em;
+        }
+    }
     
     #wrapper{
         padding: 0;
@@ -520,15 +551,29 @@ a {
         box-shadow: none;
         
         & > * {
-            padding: 0.2% 1%;
+            padding: 0.2em 0.5em;
+        }
+
+        & > * > * {
+            padding: 0;
         }
     }
 
-    #profile {
+    #summary {
+        gap: 0;
+    }
+
+    #avatar {
         width: 100px;
     }
 
+    #time {
+        width: 150px;
+    }
+
     #identity {
+        width: 75%;
+
         #name {
             font-size: 1.7em;
         }
@@ -542,10 +587,25 @@ a {
         }
     }
 
+    .location {
+        display: none;
+    }
+
+    #time {
+        #profileLocation {
+            display: inline-block;
+        }
+    }
+
     #contact {
+        order: 4;
         font-size: 0.7em;
         width: 100%;
-        padding-bottom: 2%;
+        padding-bottom: 1em;
+
+        .title {
+            padding-bottom: 0;
+        }
 
         .list {
             display: flex;
@@ -576,7 +636,7 @@ a {
 
     #skills {
         #main-skills {
-            height: 125px;
+            height: 130px;
             text-align: center;
 
             .list-item {
@@ -588,6 +648,7 @@ a {
                 padding-bottom: 1%;
             }
         }
+
         .list {   
             display: block;
 
@@ -596,6 +657,10 @@ a {
                 width: 20%;
                 margin: 0 2%;
             }
+        }
+
+        .section-light {
+            padding-top: 0;
         }
     }
 }

@@ -1,3 +1,25 @@
 {
-    "title": "<b>Développeur</b>, <b>Architecte</b>, <b>Directeur Technique</b> à <b><a href='https://twitter.com/WorldlineFrance'>Worldline</a>"
+    "title": "<b>Développeur</b>, <b>Architecte</b>, <b>Directeur Technique</b> à <b><a href='https://twitter.com/WorldlineFrance'>Worldline</a>",
+    "description": "<b>Développeur full-stack</b> et <b>architecte</b> logiciel expérimenté. Je crois au <b>pragmatisme</b> et aux principes du <b>software craftsmanship</b>. J'aime travailler en <b>équipe</b>, avec des personnes <b>motivées et passionnées</b>. J'aime <b>apprendre</b> des gens, les <b>former</b> et les <b>guider</b>, <b>débattre</b> des technologies, conceptions, les architectures, ... J'essaie de conserver un <b>équilibre</b> entre le développement et le pilotage technique.",
+    "age-years": "ans",
+    "xp-years": "années d'XP",
+    "contact-me": "Contactez Moi",
+    "main-skills": "Compétences principales",
+    "skill-java": "Java & ecosystème",
+    "skill-spring": "Spring & ecosystème",
+    "skill-jpa": "JPA & Hibernate",
+    "skill-db": "SQL & Bases de données",
+    "skill-javascript": "Javascript & ecosystème",
+    "skill-html": "HTML, CSS, Sass",
+    "skill-ember": "ember",
+    "skill-git": "Git",
+    "skill-archi": "Architecture & Methodologie",
+    "skill-rest": "REST",
+    "skill-cleancode": "CleanCode",
+    "skill-cloud-devops": "Cloud & DevOps",
+    "other-tech-skills": "Autres compétences tech",
+    "other-tech-skills-list": "Infrastructure, Agile, Conteneurs, IaC, Automatisation, NoSQL, Linux, REST, Security, Open Source",
+    "other-skills": "Autres compétences",
+    "other-skills-list": "Tech lead, Production, Avant-vente, Budget, Gestion d'équipe, Formation & Mentorat, Communication",
+    "skill-exp": "Experience : __years__ ans"
 }
