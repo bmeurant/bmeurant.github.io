@@ -19,7 +19,7 @@ $smooth-emphasize-color: #a9d5d6;
 }
 
 body {
-    margin: 0;
+    margin: 0.5em;
 }
 
 .langSelector {
@@ -74,6 +74,9 @@ a {
     
     margin-right: auto;
     margin-left: auto; 
+
+    width: 100%;
+    min-width: 300px;
 }
 
 #header {
@@ -137,21 +140,23 @@ a {
 #summary {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
     align-items: center;
-    gap: 0.7em;
+    gap: 0.5em;
 }
 
 #identity {
-    
     #name {
         margin: 0;
+        font-size: 1.7em;
+        text-align: center;
     }
 
     #jobTitle {
+        padding-top: 1em;
         font-weight: 500;
         color: $emphasize-color;
-        font-style: normal;
+        font-size: 1em;
+        text-align: center;
     }
 
     #description {
@@ -161,31 +166,26 @@ a {
     }
 }
 
-.location, #time {
-    text-align: center;               
-}
-
-.location {
-    padding: 0 0.5em;
+#profile {
+    width: 100%;
 }
 
 #contact, .location, #time {
-    font-size: 1em;
-
     i {
         color: $emphasize-color;
-        font-size: 1em;
         padding-right: 0.2em;
     }
 }
 
+#location, #time {
+    font-size: 1em;
+}
+
 #time {
+    text-align: center;
+
     & > * {
         display: inline-block;
-    }
-
-    #profileLocation {
-        display: none;
     }
 
     > div:first-of-type {
@@ -193,12 +193,19 @@ a {
     }
 }
 
+#location {
+    text-align: center;               
+    padding: 0 0.5em;
+}
+
 #contact {
+    font-size: 1.2em;
+
     .social-link, #contactMe {
         display: none;
     }
 
-    .email, .website {
+    .email, .website, .phone {
         display: none;
     }
 }
@@ -253,7 +260,7 @@ a {
     }
 
     p {
-        font-size: 0.9em;
+        font-size: 0.8em;
         margin: 0;
         padding-left: 1.6em;
     }
@@ -275,7 +282,6 @@ a {
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-size: 0.95em;
         gap: 8px 20px;
 
         .list-item {
@@ -295,6 +301,10 @@ a {
         }
     }
 
+    .skill-name {
+        font-size: 0.8em;
+    }
+
     .skill-exp {
         font-size: 0.7em;
         text-align: right;
@@ -305,83 +315,54 @@ a {
     }
 }
 
-
-@media screen and (max-width: 576px) {
-    #wrapper {
-        width: 100%;
-    }
-
+@media screen and (max-width: 450px) {
     #profile {
         order: 1;
-        width: 100%;
-    }
-
-    #contact {
-        order: 2;
-    }
-
-    .location {
-        order: 3;
-
-        font-size: 1em;
     }
 
     #identity {
-        order: 4;
+        order: 2;
+    }
 
+    #contact {
+        order: 3;
+    }
+}
+
+
+@media screen and (min-width: 451px) {
+
+    #skills {
+        .list {
+            flex-wrap: wrap;
+            height: 350px;
+
+            .list-item {
+                width: 45%;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 650px) {
+
+    #identity { 
         #name {
-            font-size: 1.5em;
-            text-align: center;
+            font-size: 1.9em;
         }
-    
+
         #jobTitle {
-            font-style: normal;
-            font-size: 1em;
-            text-align: center;
+            font-size: 1.2em;
         }
-    }
-}
 
-@media screen and (min-width: 450px) and (max-width: 576px) {
-
-    #contact {
-        order : 3;
-        font-size: 1em;
-    }
-}
-
-@media screen and (min-width: 577px) {
-
-    #summary {
-        justify-content: space-between;
-    }
-
-    #profile {
-        order: 1;
-        width: 100%;
-    }
-
-    #identity {
-        order: 2;
-    }
-
-    #contact {
-        order: 3;
-        font-size: 1.2em;
-    }
-
-    .location {
-        order: 4;
-        font-size: 1em;
+        #description {
+            font-size: 1em;
+        }
     }
 
     #skills {
-        #main-skills {
-            height: 195px;
-        }
         .list {
-            flex-wrap: wrap;
-            font-size: 0.7em;
+            height: 230px;
     
             .list-item {
                width: 30%;
@@ -394,16 +375,59 @@ a {
 
     #resume {
         & > * {
-            margin: 1% 0;
+            margin: 0;
+            padding-bottom: 0.5em;
         }
     }
 
-    #contact {
-        font-size: 1.2em;
+    #identity {
+        order: 1;
+        width: 75%;
+
+        #name {
+            font-size: 2em;
+            text-align: left;
+        }
+
+        #jobTitle {
+            text-align: left;
+        }
     }
 
-    #skills .list {
-        font-size: 0.8em;
+    #profile {
+        order: 2;
+    }
+
+    #time {
+        text-align: left;
+    }
+
+    #contact {
+        order: 3;
+        font-size: 1.4em;
+        padding-top: 0.5em;
+    }
+
+    #profile {
+        flex-basis: 19%;
+    }
+
+    #skills {
+        .list {
+            height: 240px;
+        }
+
+        .skill-name {
+            font-size: 0.9em;
+        }
+
+        .skill-exp {
+            font-size: 0.8em;
+        }
+    }
+
+    .section-light p {
+        font-size: 0.9em;
     }
 }
 
@@ -420,64 +444,13 @@ a {
         }
     }
 
-    #resume {
-        & > * {
-            margin: 0;
-            padding-bottom: 0.5em;
-        }
-    }
-
-    #identity {
-        order: 1;
-        width: 78%;
-
-        #name {
-            font-size: 2em;
-            text-align: left;
-        }
-
-        #jobTitle {
-            font-size: 1.2em;
-            text-align: left;
-        }
-
-        #description {
-            font-size: 1em;
-        }
-    }
-
     #profile {
-        order: 2;
+        flex-basis: 20%;
     }
 
-    #contact {
-        order: 3;
-        font-size: 1.2em;
-    }
-
-    .location {
-        order: 4;
-        font-size: 0.9em;
-    }
-
-    #profile, .location {
-        flex-basis: 15%;
-        flex-grow: 0;
-        flex-shrink: 0;
-    }
-
-    #contact, .location { 
-        i {
-            font-size: 1.2em;
-        }
-    }
-
-    #skills {
-        #main-skills {
-            height: 175px;
-        }
+    #skills {       
         .list {
-            font-size: 1em;
+            height: 180px;
             
             .list-item {
                width: 23%;
@@ -492,16 +465,18 @@ a {
         width: 1140px;
     }
 
+    #resume {
+        & > * {
+            margin-bottom: 0.5em;
+        }
+    }
+
     #identity {
         width: 81%;
     }
 
-    #skills {
-        .list {   
-            .list-item {
-               width: 20%;
-            }
-        }
+    #profile {
+        flex-basis: 15%;
     }
 }
 
@@ -560,48 +535,49 @@ a {
     }
 
     #summary {
-        gap: 0;
-    }
-
-    #avatar {
-        width: 100px;
-    }
-
-    #time {
-        width: 150px;
+        margin-bottom: 0;
+        padding-bottom: 0;
     }
 
     #identity {
-        width: 75%;
+        order: 1;
+        width: 77%;
 
         #name {
             font-size: 1.7em;
+            text-align: left;
+        }
+
+        #time {
+            text-align: left;
+            font-size: 0.7em;
         }
         
         #jobTitle {
             font-size: 1em;
+            text-align: left;
         }
 
         #description {
-            font-size: 0.8em;
+            font-size: 0.7em;
+            padding-bottom: 0.5em;
         }
     }
 
-    .location {
-        display: none;
-    }
+    #profile {
+        order: 2;
+        flex-basis: 15%;
 
-    #time {
-        #profileLocation {
-            display: inline-block;
+        #location {
+            width: 100%;
+            font-size: 0.7em;
         }
     }
 
     #contact {
-        order: 4;
+        order: 3;
         font-size: 0.7em;
         width: 100%;
-        padding-bottom: 1em;
 
         .title {
             padding-bottom: 0;
@@ -611,8 +587,7 @@ a {
             display: flex;
             flex-wrap: wrap;
             justify-content: left;
-            padding-top: 0.5%;
-            margin-left: 15%;
+            margin-left: 20%;
 
             .list-item {
                 display: inline-block;
@@ -629,14 +604,33 @@ a {
             display: inline-block;
         }
 
-        .email, .website {
+        .email, .website, .phone {
             display: inline-block;
+        }
+    }
+
+    #contactMe {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+
+        &::before {
+            border-top: 2px solid #017072;
+            border-top-color: rgb(1, 112, 114);
+            content: "";
+            margin: 0 auto;
+            position: absolute;
+            top: 60%;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
         }
     }
 
     #skills {
         #main-skills {
-            height: 130px;
+            height: 120px;
             text-align: center;
 
             .list-item {
@@ -646,6 +640,11 @@ a {
 
             .skill-name {
                 padding-bottom: 1%;
+                font-size: 0.95em;
+            }
+
+            .skill-exp {
+                font-size: 0.85em;
             }
         }
 
@@ -660,6 +659,11 @@ a {
         }
 
         .section-light {
+
+            .title {
+                font-weight: 700;
+            }
+
             padding-top: 0;
         }
     }
