@@ -215,7 +215,7 @@ a {
     font-weight: 700;
     text-transform: uppercase;
     margin: 0;
-    padding: 0.5em 0;
+    padding: 0;
     padding-bottom: 1em;
 
     .label {
@@ -235,17 +235,32 @@ a {
         position: relative;
         z-index: 1;
         width: 100%;
+        color: $strong-emphasize-color;
 
         &:before {
             border-top: 2px solid $strong-emphasize-color;
             content:"";
             margin: 0 auto; /* this centers the line to the full width specified */
             position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
-            top: 40%; left: 0; right: 0; bottom: 0;
+            top: 30%; left: 0; right: 0; bottom: 0;
             z-index: -1;
         }
     }
 }
+
+.inverse {
+    .title {
+        color: white;
+
+        &:before {
+            border-color: white;
+        }
+        .label {
+            background-color: $emphasize-color;
+        }
+    }
+}
+
 
 .section-light {
 
@@ -263,17 +278,6 @@ a {
         font-size: 0.8em;
         margin: 0;
         padding-left: 1.6em;
-    }
-}
-
-.inverse {
-    .title {
-        &:before {
-            border-color: white;
-        }
-        .label {
-            background-color: $emphasize-color;
-        }
     }
 }
 
@@ -312,6 +316,103 @@ a {
 
     .section-light {
         padding-top: 0.5em;
+    }
+}
+
+.timeline {
+
+    position: relative;
+    padding-left: 2em;
+
+    &::before {
+        content: "";
+        display: inline-block;
+        width: 4px;
+        background: $strong-emphasize-color;
+        position: absolute;
+        left: 46px;
+        top: 22px;
+        height: calc(100% - 10px);
+    }
+
+    list-style: none;
+    margin: 0;
+
+    .timeline-item {
+        display: flex;
+    }
+
+    .timeline-item-logo {
+        color: $strong-emphasize-color;
+        font-size: 2em;
+        padding-right: 0.5em;
+
+        i {
+            background-color: white;
+            position: relative;
+        }
+    }
+
+    .timeline-item-title {
+        margin: 0;
+        font-size: 1.2em;
+    }
+
+    .timeline-item-company {
+        font-size: 0.9em;
+        color: $strong-emphasize-color;
+    }
+
+    .timeline-item-date {
+        float: right;
+        font-size: 0.8em;
+        background-color: $smooth-emphasize-color;
+        padding: 2px 6px;
+        border-radius: 5px;
+        width: 170px;
+    }
+
+    .timeline-item-content-header {
+        & > .timeline-item-date {
+            background-color: $emphasize-color;
+            color: white;
+        }
+    }
+
+    .timeline-item-content-body {
+        margin-top: 0.5em;
+        p {
+            margin: 0;
+        }
+
+        ul {
+            padding-top: 0.2em;
+              padding-bottom: 0.5em;
+        }
+
+        li {
+            list-style: disc;
+            font-size: 0.9em;
+        }
+    }
+
+    .timeline-item-content {
+        padding-bottom: 1em;
+        width: 100%;
+
+        .timeline-item-date, .timeline-item-sub-title {
+            margin-top: 0.5em;
+        }
+
+        .timeline-item-sub-title {
+            display: inline-block;
+            padding-top: 0.5em;
+            margin: 0;
+        }
+
+        .timeline-item-perimeter {
+            font-size: 0.9em;
+        }
     }
 }
 
@@ -377,6 +478,7 @@ a {
         & > * {
             margin: 0;
             padding-bottom: 0.5em;
+            margin-top: 0.5em;
         }
     }
 
@@ -424,6 +526,8 @@ a {
         .skill-exp {
             font-size: 0.8em;
         }
+
+        padding-bottom: 1em;
     }
 
     .section-light p {

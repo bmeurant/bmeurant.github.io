@@ -21,5 +21,12 @@
     "other-tech-skills-list": "Infrastructure, Agile, Containers, IaC, Automation, NoSQL, Linux, REST, Security, Open Source",
     "other-skills": "Other skills",
     "other-skills-list": "Tech lead, Production, PreSales, Budget, Team leading, Teaching & Mentoring, Communication",
-    "skill-exp": "Experience time: __years__ years"
+    "skill-exp": "Experience time: __years__ years",
+    "present": "Present",
+    "jan": "Jan.",
+    "feb": "Feb.",
+    "apr": "Apr.",
+    "dir-tech": "Technical Director",
+    "dir-tech-desc": "My role, and the role of my team, is to support the division's operations. At a strategic level: monitoring, technical transformation, performance improvement (Software Architecture, Technolgies & Frameworks, DevOps,DevOps, Cloud Transformation, Modern Web Applications, etc.). Operational: quality monitoring, performance, production efficiency, steering tools. HR: skills management, training, team support. Communication: sharing skills and expertise. In charge of a team of 12 people.",
+    "dir-tech-min-admin": "Technical Director Ministries & Administrations"
 }
