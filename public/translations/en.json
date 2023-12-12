@@ -29,9 +29,10 @@
     "apr": "Apr.",
     "may": "May",
     "jul": "Jul.",
+    "oct": "Oct.",
     "dec": "Dec.",
     "dir-tech": "Technical Director",
-    "dir-tech-desc": "My role, and the role of my team, is to support the division's operations. <ul><li><b>Strategy</b>: monitoring, technical transformation, performance improvement.</li><li><b>Technical & Operational</b>: quality, performance, production, expertise & support, tooling, technologies (Architecture, Languages, Frameworks, DevOps, Cloud, etc.).</li><li><b>Human</b>: skills management, training, team support.</li><li><b>Communication</b>: sharing skills and expertise.</li></ul>Resource person during pre sales, dev & run, supporting architects, lead developers, teams in building modern and efficient architectures.",
+    "dir-tech-desc": "My role, and the role of my team, is to support the division's operations. <ul><li><b>Strategy</b>: monitoring, technical transformation, performance improvement.</li><li><b>Technical & Operational</b>: quality, performance, production, expertise & support, tooling, technologies (Architecture, Languages, Frameworks, DevOps, Cloud, etc.).</li><li><b>Human</b>: skills management, training, team support.</li><li><b>Communication</b>: sharing skills and expertise, animation & maintenace of the <a href=\"https://blog.worldline.tech\">technical blog</a>.</li></ul>Resource person during pre sales, dev & run, supporting architects, lead developers, teams in building modern and efficient architectures.",
     "division-mts-france": "MTS France division",
     "division-mts-fr": "MTS-FR division",
     "division-min-admin": "Ministries & Administrations division",
@@ -50,5 +51,6 @@
     "master-computer-science": "Master degree, Computer science",
     "dut-computing": "Associate degree, Computing",
     "core-curiculum": "Core Curiculum",
-    "bac": "High school diploma, with high honours"
+    "bac": "High school diploma, with high honours",
+    "projects": "Things I have done"
 }
