@@ -61,8 +61,6 @@ body {
 }
 
 #wrapper {  
-    //padding-top: 2%;
-    //padding-bottom: 80px;
     width: 100%;
 }
 
@@ -114,7 +112,6 @@ body {
   
     & > * {
         padding: 0.5rem;
-        //margin: 0.5rem 0;
     }
 
     & > * > * {
@@ -227,7 +224,6 @@ body {
     .title {
         position: relative;
         z-index: 1;
-        //width: 100%;
         margin-bottom: 0.25rem;
 
         &:before {
@@ -262,7 +258,6 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
-        //gap: 8px 20px;
 
         .list-item {
            width: 95%;
@@ -274,10 +269,8 @@ body {
         margin-top: 0.5rem;
     
         .title {
-            //padding-top: 0;
             margin-bottom: 0.3rem;
             display: inline-block;
-            //width: 100%;
         }
     }
 }
@@ -313,30 +306,27 @@ body {
 
 .timeline {
     position: relative;
-    padding-left: 0.5em;
+    margin: 0;
+    padding-left: 0.5rem;
 
     &::before {
         content: "";
-        display: inline-block;
-        width: 4px;
+        width: 3px;
         background: $strong-emphasize-color;
         position: absolute;
-        left: 15px;
-        top: 15px;
-        height: calc(100% - 10px);
-    }
-
-    list-style: none;
-    margin: 0;
+        left: 16px;
+        top: 16px;
+        height: calc(100% - 20px);
+    }   
 
     .timeline-item {
         display: flex;
-    }
+    }   
 
     .timeline-item-logo {
         color: $strong-emphasize-color;
-        font-size: 1.2em;
-        padding-right: 0.5em;
+        font-size: 1.2rem;
+        padding-right: 0.2rem;
 
         i {
             background-color: white;
@@ -344,76 +334,112 @@ body {
         }
     }
 
-    .timeline-item-title {
-        margin: 0;
-        font-size: 1.2em;
-    }
-
-    .timeline-item-company {
-        font-size: 0.9em;
-        color: $strong-emphasize-color;
-    }
-
-    .timeline-item-perimeter {
-        display: inline-block;
-        padding-bottom: 0.5em;
-    }
-
-    .timeline-item-date {
+    .timeline-item-content {
         display: flex;
-        justify-content: right;
-        margin: 0;
+        flex-wrap: wrap;
+        margin: 0.5rem 0;
         width: 100%;
     }
 
     .timeline-item-date-content {
-        float: right;
-        font-size: 0.6em;
+        display: flex;
+        justify-content: right;
+        width: 100%;
+        align-items: center;
+        margin-bottom: 0.2rem;
+    }
+
+    .timeline-item-date {
+        font-size: 0.6rem;
         padding: 2px 6px;
         border-radius: 5px;
         width: 130px;
 
-        &.main-date {
-            background-color: $emphasize-color;
-            position: relative;
-            color: white;
-            top: -20px;
-        }
+        background-color: $emphasize-color;
+        color: white;
 
-        &.child-date {
-            background-color: $smooth-emphasize-color;
+        i {
+            margin-right: 0.3rem;
         }
     }
 
-    .timeline-item-content-body {
-        margin-top: 0.5em;
-        p {
-            margin: 0;
+    .timeline-item-title {
+        margin: 0;
+        width: 100%;
+        line-height: 1;
+        margin-top: 0.1rem;
+              
+        a {
+            color: black;
         }
+    }
+
+    .timeline-item-company, .timeline-item-location {
+        font-size: 0.8rem;
+        color: $strong-emphasize-color;
+        margin-top: 0.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-item-sub-titles {
+        margin-top: 0.5rem;
+        width: 100%;
+    }
+
+    .timeline-item-sub-title-content {
+        margin-bottom: 0.5rem;
+        display: flex;
+        flex-wrap: wrap;
+
+        .timeline-item-date {
+            background-color: $smooth-emphasize-color;
+            color: black;
+        }
+    }
+
+    .timeline-item-sub-title-desc {
+        width: 100%;
+    }
+
+    .timeline-item-sub-title {
+        margin: 0;
+        margin-top: 0.3rem;
+        line-height: 1;
+        font-size: 0.9rem;
+    }
+
+    .timeline-item-perimeter {
+        font-size: 0.8rem;
+    }
+
+    .timeline-item-content-body {
+        margin-top: 0.5rem;
+        line-height: 1.3;
+        font-size: 0.9rem;
+        width: 100%;
 
         ul {
-            padding-top: 0.2em;
-            padding-bottom: 0.2em;
+            padding: 0.2rem 0 0.2rem 1.5rem;
         }
 
         li {
             list-style: disc;
-            font-size: 0.9em;
+            font-size: 0.8rem;
+        }
+
+        p {
+            margin: 0;
         }
     }
 
-    .timeline-item-content {
-        padding-bottom: 1em;
-        width: 100%;       
+    &.page-break > .timeline-item:first-of-type {
+        margin-top: 0;
     }
+}
 
-    .timeline-item-sub-title {
-        padding-top: 0.5em;
-        margin: 0;
-    }
-
-    .timeline-item-perimeter {
-        font-size: 0.9em;
+#education {
+    .timeline-item-date {
+        width: 70px;
     }
 }
 
@@ -435,11 +461,13 @@ body {
 
 @media screen and (min-width: 451px) {
 
-    #skills {
+    .section-full {
         .title {
             font-size: 0.9rem;
         }
+    }
 
+    #skills {
         .flex-list {
             flex-wrap: wrap;
             height: 261px;
@@ -450,9 +478,21 @@ body {
         }
     }
 
-    .timeline .timeline-item-date-content {
-        font-size: 0.7em;
-        width: 150px;
+    .timeline {
+        .timeline-item-date {
+            font-size: 0.7rem;
+            width: 155px;
+        }
+
+        .timeline-item-logo i {
+            margin-top: 0.6rem;
+        }
+    }
+
+    #education {
+        .timeline-item-date {
+            width: 80px;
+        }
     }
 }
 
@@ -495,35 +535,41 @@ body {
     }
 
     .timeline {
-        .timeline-item-date {
-            float: right;
-            display: block;
-            width: auto;
+        .timeline-item-content {
+            padding-left: 0.2rem;
+        }
+
+        .timeline-item-title, .timeline-item-sub-title {
+            order: 1;
+            width: 70%;
         }
 
         .timeline-item-date-content {
-            font-size: 0.8em;
-            width: 170px;
+            order: 2;
+            width: 30%;
+            align-items: start;
         }
 
-        .timeline-item-sub-title-content.first {
-            .timeline-item-sub-title {
-                margin-top: 1.5em;
-            }
+        .timeline-item-company, .timeline-item-location {
+            order: 3;
         }
 
-        .timeline-item-sub-title {
-            padding-top: 0;
+        .timeline-item-sub-titles {
+            order: 4;
         }
 
-        .timeline-item-perimeter {
-            padding-bottom: 0.9em;
+        .timeline-item-content-body {
+            order: 5;
+        }
+
+        .timeline-item-sub-title-desc {
+            order: 1;
+            width: 70%;
         }
     }
 }
 
 @media screen and (min-width: 768px) {
-
     #resume {
         & > * {
             margin-top: 0.5rem;
@@ -582,10 +628,18 @@ body {
             margin-top: 1rem;
         }
     }
+
+    .timeline {
+        .timeline-item-company, .timeline-item-location {
+            width: 100%;
+        }
+        .timeline-item-perimeter, .timeline-item-content-body li {
+            font-size: 0.85rem;
+        }
+    }
 }
 
 @media screen and (min-width: 992px) {
-
     #resume {
         & > * {
             padding-bottom: 0.5em;
@@ -617,17 +671,29 @@ body {
     }
 
     .timeline {
-
-        .timeline-item-sub-title-content.first {
-            margin-top: 1.45em;
-
-            .timeline-item-sub-title {
-                margin-top: 0;
-            }
+        .timeline-item-sub-title-content {
+            margin-bottom: 0.25rem;
         }
 
         .timeline-item-sub-title {
+            font-size: 1rem;
+            line-height: 1.2;
             display: inline-block;
+            width: auto;
+            margin-top: 0;
+            padding-right: 0.5rem;
+        }
+
+        .timeline-item-date-content {
+            align-items: center;
+        }
+
+        .timeline-item-content-body {
+            font-size: 1rem;
+
+            li {
+                font-size: 0.9rem;
+            }
         }
     }
   }
@@ -636,6 +702,7 @@ body {
 
     #wrapper {
         width: 1140px;
+        margin: auto;
     }
 
     #identity {
@@ -647,12 +714,15 @@ body {
     }
 }
 
-@media print, screen and (min-width: 1600px) {
-
+@media print {
     :root {
         background-color: white;
         -webkit-print-color-adjust:exact !important;
         print-color-adjust:exact !important;
+    }
+
+    .page-break {
+        page-break-before: always;
     }
 
     a {
@@ -669,17 +739,24 @@ body {
         display: none;
     }
 
-    #summary {
-        padding-bottom: 0.2rem;
-    }
-
     #resume {
         box-shadow: none;
         padding-top: 0;
+        padding-bottom: 0;
+
+        & > * {
+            padding: 0.3rem 0.5rem;
+        }
         
         & > * > * {
             padding: 0;
         }
+
+        #summary {
+            padding-bottom: 0.15rem;
+            gap: 0.1rem;
+        }
+    
     }
 
     #identity {
@@ -697,12 +774,14 @@ body {
         }
         
         #jobTitle {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             text-align: left;
+            margin-top: 0.5rem;
         }
 
         #description {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
+            margin: 0.5rem 0 0;
         }
     }
 
@@ -775,7 +854,7 @@ body {
 
         .section-light {
             margin-top: 0;
-            line-height: 0.8;
+            line-height: 0.4;
 
             .title {
                 font-size: 0.6em;
@@ -802,38 +881,92 @@ body {
         }
     }
 
+    #work {
+        margin-top: 0.3rem;
+    }
+
     .timeline {
-        &::before {
-            left: 12px;
+        .timeline-item.no-margin {
+            margin-top: 0;
         }
 
-        font-size: 0.8em;
+        .timeline-item-title, .timeline-item-sub-title {
+            order: 1;
+            width: 75%;
+        }
 
-        .timeline-item-date {
-            display: block;
-            width: auto;
+        .timeline-item-content {
+            margin: 0.3rem 0;
         }
 
         .timeline-item-date-content {
-            font-size: 0.7em;
-            width: 120px;
+            order: 2;
+            align-items: start;
+            width: 25%;
+            margin-bottom: 0;
+        }
+
+        .timeline-item-date {
+            font-size: 0.5rem;
+            width: 110px;
+            padding: 1px 3px;
+            border-radius: 4px;
+        }
+
+        .timeline-item-title {
+            font-size: 0.9rem;
+            line-height: 1;
+            margin-top: 0;
+        }
+        
+        .timeline-item-logo {
+            padding-right: 0.5rem;
+        }
+
+        .timeline-item-company, .timeline-item-location {
+            order: 3;
+            margin-top: 0;
+            font-size: 0.6rem;
+            width: 100%;
+            margin-bottom: 0.2em;
+        }
+
+        .timeline-item-content-body {
+            order: 5;
+            margin-top: 0.2rem;
+            font-size: 0.6rem;
+        }
+
+        .timeline-item-sub-titles {
+            order: 4;
+            margin-top: 0;
+        }
+
+        .timeline-item-sub-title-desc {
+            order: 1;
+            width: 75%;
+            line-height: 1;
+        }
+
+        .timeline-item-sub-title-content {
+            margin-bottom: 0;
         }
 
         .timeline-item-sub-title {
-            display: inline;
-        }
-
-        .timeline-item-sub-title-content.first {
-            margin-top: 1.55em;
-
-            .timeline-item-sub-title {
-                margin-top: 0;
-            }
+            font-size: 0.7rem;
+            width: auto;
+            margin-top: 0;
+            padding-right: 0.5rem;
+            display: inline-block;
         }
 
         .timeline-item-perimeter {
-            padding-bottom: 0.2em;
-          }
+            font-size: 0.6rem;
+        }
+
+        .timeline-item-content-body li {
+            font-size: 0.6rem;
+        }
     }
 }
 
