@@ -21,12 +21,16 @@
     "other-tech-skills-list": "Infrastructure, Agile, Conteneurs, IaC, Automatisation, NoSQL, Linux, REST, Security, Open Source",
     "other-skills": "Autres compétences",
     "other-skills-list": "Tech lead, Production, Avant-vente, Budget, Gestion d'équipe, Formation & Mentorat, Communication",
+    "work-experience":"Expérience",
     "skill-exp": "Experience : __years__ ans",
     "present": "Aujourd'hui",
     "jan": "Janv.",
     "feb": "Fev.",
     "apr": "Avr.",
     "dir-tech": "Directeur Technique",
-    "dir-tech-desc": "Mon rôle et celui de mon équipe est d'accompagner et de soutenir les opérations de la division. <ul><li><b>Stratégie</b> : veille, transformation technique, amélioration de la performance.</li><li><b>Technique & Opérationnel</b> : suivi de la qualité, performance, production, expertise & support aux équipes, outils de pilotage, choix technologiques (Architectures, Languages, Technologies & Frameworks, DevOps, Cloud, Modern Web Applications, etc.).</li><li><b>Humain</b> : gestion des compétences, formations, support aux équipes.</li><li><b>Communication</b> : partage des compétences et des expertises.</li></ul>",
-    "dir-tech-min-admin": "Directeur Technique Ministères & Administrations"
+    "dir-tech-desc": "Mon rôle et celui de mon équipe est d'accompagner et de soutenir les opérations de la division. <ul><li><b>Stratégie</b> : veille, transformation technique, amélioration de la performance.</li><li><b>Technique & Opérationnel</b> : qualité, performance, production, expertise & support, outillage, technologie (Architectures, Languages, Frameworks, DevOps, Cloud, etc.).</li><li><b>Humain</b> : gestion des compétences, formations, support aux équipes.</li><li><b>Communication</b> : partage des compétences et des expertises.</li></ul>",
+    "division-mts-france": "Division MTS France",
+    "division-mts-fr": "Division MTS-FR",
+    "division-min-admin": "Division Ministères & Administrations",
+    "division-numbers": "~__projects__ projets, ~__people__ personnes, __dr__ direct reports"
 }

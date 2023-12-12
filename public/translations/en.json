@@ -21,12 +21,16 @@
     "other-tech-skills-list": "Infrastructure, Agile, Containers, IaC, Automation, NoSQL, Linux, REST, Security, Open Source",
     "other-skills": "Other skills",
     "other-skills-list": "Tech lead, Production, PreSales, Budget, Team leading, Teaching & Mentoring, Communication",
+    "work-experience": "Work experience",
     "skill-exp": "Experience time: __years__ years",
     "present": "Present",
     "jan": "Jan.",
     "feb": "Feb.",
     "apr": "Apr.",
     "dir-tech": "Technical Director",
-    "dir-tech-desc": "My role, and the role of my team, is to support the division's operations. At a strategic level: monitoring, technical transformation, performance improvement (Software Architecture, Technolgies & Frameworks, DevOps,DevOps, Cloud Transformation, Modern Web Applications, etc.). Operational: quality monitoring, performance, production efficiency, steering tools. HR: skills management, training, team support. Communication: sharing skills and expertise. In charge of a team of 12 people.",
-    "dir-tech-min-admin": "Technical Director Ministries & Administrations"
+    "dir-tech-desc": "My role, and the role of my team, is to support the division's operations. <ul><li><b>Strategy</b>: monitoring, technical transformation, performance improvement.</li><li><b>Technical & Operational</b>: quality, performance, production, expertise & support, tooling, technologies (Architecture, Languages, Frameworks, DevOps, Cloud, etc.).</li><li><b>Human</b>: skills management, training, team support.</li><li><b>Communication</b>: sharing skills and expertise.</li></ul>",
+    "division-mts-france": "MTS France division",
+    "division-mts-fr": "MTS-FR division",
+    "division-min-admin": "Ministries & Administrations division",
+    "division-numbers": "~__projects__ projects, ~__people__ people, __dr__ direct reports"
 }

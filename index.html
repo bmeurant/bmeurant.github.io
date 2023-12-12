@@ -48,7 +48,7 @@
                 </div>
                 <div id="contact">
                     <h2 id="contactMe" class="title"><span class="label"><i class="fa-solid fa-circle-user"></i>&nbsp;<span data-i18n="contact-me" class="i18nelement">Contact Me</span></span></h2>
-                    <ul class="list">
+                    <ul class="inline-list flex-list">
                         <li class="email list-item"><a href="mailto:baptiste.meurant@gmail.com" title="mail"
                             target="new"><i class="fa-solid fa-envelope"></i></a><span class="social-link">baptiste.meurant@gmail.com</span></li>
                         <li class="phone list-item"><i class="fa-solid fa-phone"></i><span class="social-link">(+33)6 16 98 52 71</span></li>
@@ -68,7 +68,7 @@
             <div id="skills" class="inverse">
                 <div class="section-full">
                     <h2 class="title"><span class="label"><i class="fa-solid fa-user-gear"></i>&nbsp;<span data-i18n="main-skills" class="i18nelement">Main skills</span></span></h2>
-                    <ul id="main-skills" class="list">
+                    <ul id="main-skills" class="inline-list flex-list">
                         <li class="list-item">
                             <span class="skill-name i18nelement" data-i18n="skill-java">Java & ecosystem</span>
                             <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
@@ -133,11 +133,11 @@
                 </div>
                 <div class="section-light">
                     <h2 id="otherTechSkills" class="title"><span class="label"><i class="fa-solid fa-gear"></i>&nbsp;<span data-i18n="other-tech-skills" class="i18nelement">Main skills</span></span></h2>
-                    <p class="i18nelement" data-i18n="other-tech-skills-list">Infrastructure, Agile, Containers, IaC, Automation, NoSQL, Linux, REST, Security, Open Source</p>
+                    <p class="skill-list i18nelement" data-i18n="other-tech-skills-list">Infrastructure, Agile, Containers, IaC, Automation, NoSQL, Linux, REST, Security, Open Source</p>
                 </div>
                 <div class="section-light">
                     <h2 id="otherSkills" class="title"><span class="label"><i class="fa-solid fa-lightbulb"></i>&nbsp;<span data-i18n="other-skills" class="i18nelement">Main skills</span></span></h2>
-                    <p class="i18nelement" data-i18n="other-skills-list">Tech lead, Production, PreSales, Budget, Team leading, Teaching & Mentoring, Communication</p>
+                    <p class="skill-list i18nelement" data-i18n="other-skills-list">Tech lead, Production, PreSales, Budget, Team leading, Teaching & Mentoring, Communication</p>
                 </div>
             </div>
             <!--nav>
@@ -154,7 +154,9 @@
             </nav-->
             <div id="work">
                 <div class="section-full">
-                    <h2 class="title"><span class="label"><i class="fa-solid fa-briefcase"></i>&nbsp;<span data-i18n="work-experience" class="i18nelement">Work experience</span></span></h2>
+                    <h2 class="title"><span class="label">
+                        <i class="fa-solid fa-briefcase"></i>&nbsp;<span data-i18n="work-experience" class="i18nelement">Work experience</span>
+                    </span></h2>
                     <ul class="timeline">
                         <li class="timeline-item">
                             <div class="timeline-item-logo">
@@ -162,78 +164,51 @@
                             </div>
                             <div class="timeline-item-content">
                                 <div class="timeline-item-content-header">
-                                    <div class="timeline-item-date">
-                                        <i class="fa fa-calendar-check"></i>
-                                        <span class="i18nelement" data-i18n="jan">Jan</span>&nbsp;2017
-                                        &nbsp;-&nbsp;
-                                        <span class="i18nelement" data-i18n="present">Present</span>
-                                    </div>
-                                    <div class="flex-column-title">
+                                    <div class="timeline-column-title">
                                         <h3 class="timeline-item-title i18nelement" data-i18n="dir-tech">Technical Director</h3>
                                         <div class="timeline-item-company">
                                             <i class="fa-solid fa-building"></i>&nbsp;Worldline
                                         </div>
-                                        <div class="timeline-item-date">
-                                            <i class="fa fa-calendar-check"></i>
-                                            <span class="i18nelement" data-i18n="feb">Feb</span>&nbsp;2023
-                                            &nbsp;-&nbsp;
-                                            <span class="i18nelement" data-i18n="present">Present</span>
-                                        </div>
-                                        <div class="timeline-item-sub-title-content">
-                                            <h4 class="timeline-item-sub-title">MTS France division</h4>
-                                            <span class="timeline-item-perimeter">~250 projects, ~1500 people, 12 direct reports</span>
-                                        </div>
-                                        <div class="timeline-item-date">
-                                            <i class="fa fa-calendar-check"></i>
-                                            <span class="i18nelement" data-i18n="apr">Apr</span>&nbsp;2022</span>
-                                            &nbsp;-&nbsp;
-                                            <span class="i18nelement" data-i18n="feb">Feb</span>&nbsp;2023
-                                        </div>
-                                        <div class="timeline-item-sub-title-content">
-                                            <h4 class="timeline-item-sub-title">MTS-FR division</h4>
-                                            <span class="timeline-item-perimeter">~30 projects, ~300 people, 6 direct reports</span>
-                                        </div>
-                                        <div class="timeline-item-date">
+                                        <div class="timeline-item-date-content main-date">
                                             <i class="fa fa-calendar-check"></i>
                                             <span class="i18nelement" data-i18n="jan">Jan</span>&nbsp;2017
                                             &nbsp;-&nbsp;
-                                            <span class="i18nelement" data-i18n="apr">Apr</span>&nbsp;2022</span>
+                                            <span class="i18nelement" data-i18n="present">Present</span>
+                                        </div>
+                                        <div class="timeline-item-sub-title-content first">
+                                            <div class="timeline-item-date">
+                                                <div class="timeline-item-date-content child-date">
+                                                    <i class="fa fa-calendar-check"></i>
+                                                    <span class="i18nelement" data-i18n="feb">Feb</span>&nbsp;2023
+                                                    &nbsp;-&nbsp;
+                                                    <span class="i18nelement" data-i18n="present">Present</span>
+                                                </div>
+                                            </div>
+                                            <h4 class="timeline-item-sub-title i18nelement" data-i18n="division-mts-france">MTS France division</h4>
+                                            <span class="timeline-item-perimeter i18nelement" data-i18n="division-numbers" 
+                                            data-i18n-options='{"projects": 250, "people": 1500, "dr": 12}'>
+                                                ~250 projects, ~1500 people, 12 direct reports
+                                            </span>
                                         </div>
                                         <div class="timeline-item-sub-title-content">
-                                            <h4 class="timeline-item-sub-title">Ministries & Administrations division</h4>
-                                            <span class="timeline-item-perimeter">~20 projects, ~200 people, 3 direct reports</span>
+                                            <div class="timeline-item-date">
+                                                <div class="timeline-item-date-content child-date">
+                                                    <i class="fa fa-calendar-check"></i>
+                                                    <span class="i18nelement" data-i18n="jan">Jan</span>&nbsp;2017
+                                                    &nbsp;-&nbsp;
+                                                    <span class="i18nelement" data-i18n="feb">Feb</span>&nbsp;2023</span>
+                                                </div>
+                                            </div>
+                                            <h4 class="timeline-item-sub-title i18nelement" data-i18n="division-min-admin">Ministries & Administrations division</h4>
+                                            <span class="timeline-item-perimeter i18nelement" data-i18n="division-numbers" 
+                                            data-i18n-options='{"projects": 20, "people": 200, "dr": 3}'>
+                                                ~20 projects, ~200 people, 3 direct reports
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="timeline-item-content-body">
-                                    <p class="i18nelement" data-i18n="dir-tech-desc">My role is to support the division's operations. At a strategic level: monitoring, technical transformation, performance improvement (Software Architecture, Technolgies & Frameworks, DevOps, Cloud Transformation, Modern Web Applications, etc.). Operational: quality monitoring, performance, production efficiency, steering tools. HR: skills management, training, team support. Communication: sharing skills and expertise. In charge of a team of 12 people.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-item-logo">
-                                <i class="fa-regular fa-circle-dot"></i>
-                            </div>
-                            <div class="timeline-item-content">
-                                <div class="timeline-item-content-header">
-                                    <div class="timeline-item-date">
-                                        <i class="fa fa-calendar-check"></i>
-                                        <span class="i18nelement" data-i18n="jan">Janv</span>&nbsp;2017
-                                        &nbsp;-&nbsp;
-                                        <span class="i18nelement" data-i18n="feb">Feb</span>&nbsp;2023
-                                    </div>
-                                    <div class="flex-column-title">
-                                        <h3 class="timeline-item-title">
-                                            <span class="i18nelement" data-i18n="dir-tech-min-admin">Technical Director Ministries & Administrations</span>
-                                        </h3>
-                                        <div class="timeline-item-company">
-                                            <i class="fa-solid fa-building"></i>
-                                            <span>Worldline</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="timeline-item-content-body">
-                                    <p>Leveraged my expertise in UX design to educate and inspire students in the art of user-centered design principles. Conducted user studies, analyzed data, and guided students in applying theoretical knowledge to practical projects, empowering the next generation of UX designers.</p>
+                                    <div id="test" class="i18nelement" data-i18n="dir-tech-desc">My role, and the role of my team, is to support the division's operations.<ul><li><b>Strategy</b>: monitoring, technical transformation, performance improvement.</li><li><b>Operational</b>: quality monitoring, performance, production, expertise & team support, steering tools, technological choices (Architecture, Languages, Technolgies & Frameworks, DevOps, Cloud, Modern Web Applications, etc.).</li><li><b>Human</b>: skills management, training, team support.</li><li><b>Communication</b>: sharing skills and expertise.</li></ul></div>
                                 </div>
                             </div>
                         </li>

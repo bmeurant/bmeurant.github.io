@@ -18,10 +18,6 @@ $smooth-emphasize-color: #a9d5d6;
     -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-    margin: 0.5em;
-}
-
 .langSelector {
     background-repeat: no-repeat;
     background-position-x: left;
@@ -40,15 +36,6 @@ body {
     background: none;
 }
 
-#profile {
-    text-align: center;
-}
-
-.avatar {
-    width: 125px;
-    border-radius: 50%;
-}
-
 a {
     color: $emphasize-color;
 
@@ -57,7 +44,7 @@ a {
     }
 }
 
-.list {
+.inline-list {
     list-style: none;
     margin:0;
     padding:0;
@@ -68,23 +55,25 @@ a {
     }
 }
 
-#wrapper {  
-    padding-top: 2%;
-    padding-bottom: 80px;
-    
-    margin-right: auto;
-    margin-left: auto; 
-
-    width: 100%;
+body {
+    margin: 0.5rem;
     min-width: 300px;
 }
+
+#wrapper {  
+    //padding-top: 2%;
+    //padding-bottom: 80px;
+    width: 100%;
+}
+
+// header
 
 #header {
     display: flex;
     flex-wrap: wrap;
     justify-content: right;
-    margin-bottom: 10px;
-    padding: 0 2%;
+    margin-bottom: 0.5rem;
+    padding: 0 0.5rem;
 
     button {
         height: 16px;
@@ -116,19 +105,20 @@ a {
     }
 }
 
+// resume
+
 #resume {
     box-shadow: 0 2px 6px $box-color;
     background-color: white;
-    padding-top: 1%;
-    padding-bottom: 2%;
+    padding: 0.5rem 0;
   
     & > * {
-        padding: 0.5em;
-        margin: 2% 0;
+        padding: 0.5rem;
+        //margin: 0.5rem 0;
     }
 
     & > * > * {
-        padding: 0 0.5em;
+        padding: 0 0.5rem;
     }
 
     .inverse {
@@ -137,71 +127,73 @@ a {
     }
 }
 
+// summary
+
 #summary {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    gap: 0.5em;
-}
-
-#identity {
-    #name {
-        margin: 0;
-        font-size: 1.7em;
-        text-align: center;
-    }
-
-    #jobTitle {
-        padding-top: 1em;
-        font-weight: 500;
-        color: $emphasize-color;
-        font-size: 1em;
-        text-align: center;
-    }
-
-    #description {
-        font-size: 0.8em;
-        padding-top: 1em;
-        margin: 0;
-    }
+    justify-content: space-between;
+    gap: 0.5rem;
 }
 
 #profile {
     width: 100%;
+    text-align: center;
+
+    .avatar {
+        width: 125px;
+        border-radius: 50%;
+    }
+}
+
+// identity
+
+#identity {
+    text-align: center;
+}
+
+#name {
+    margin: 0;
+    font-size: 1.7rem;
 }
 
 #contact, .location, #time {
     i {
         color: $emphasize-color;
-        padding-right: 0.2em;
+        padding-right: 0.2rem;
     }
 }
 
 #location, #time {
-    font-size: 1em;
+    font-size: 0.9rem;
 }
 
 #time {
-    text-align: center;
-
     & > * {
         display: inline-block;
-    }
-
-    > div:first-of-type {
-        margin-right: 1em;
+        margin: 0 0.25rem;
     }
 }
 
-#location {
-    text-align: center;               
-    padding: 0 0.5em;
+#jobTitle {
+    margin-top: 1rem;
+    font-weight: 700;
+    color: $emphasize-color;
 }
+
+#description {
+    font-size: 0.8rem;
+    margin: 1rem 0 0;
+    text-align: left;
+}
+
+// contact
 
 #contact {
-    font-size: 1.2em;
+    font-size: 1.2rem;
 
-    .social-link, #contactMe {
+    #contactMe, .social-link  {
         display: none;
     }
 
@@ -210,22 +202,23 @@ a {
     }
 }
 
+// sections
+
 .title {
-    font-size: 0.9em;
+    font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
+    color: $strong-emphasize-color;
     margin: 0;
     padding: 0;
-    padding-bottom: 1em;
 
     .label {
-        width: auto;
         background-color: white;
-        padding-right: 10px;
+        padding-right: 0.5rem;
 
         i {
-            padding-right: 0.2em;
-            width: 1em;
+            padding-right: 0.2rem;
+            width: 1rem;
         }
     }
 }
@@ -234,15 +227,15 @@ a {
     .title {
         position: relative;
         z-index: 1;
-        width: 100%;
-        color: $strong-emphasize-color;
+        //width: 100%;
+        margin-bottom: 0.25rem;
 
         &:before {
             border-top: 2px solid $strong-emphasize-color;
             content:"";
             margin: 0 auto; /* this centers the line to the full width specified */
             position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
-            top: 30%; left: 0; right: 0; bottom: 0;
+            top: 43%; left: 0; right: 0; bottom: 0;
             z-index: -1;
         }
     }
@@ -255,74 +248,72 @@ a {
         &:before {
             border-color: white;
         }
+
         .label {
             background-color: $emphasize-color;
         }
     }
 }
 
-
-.section-light {
-
-    .title, p {
-        display: inline-block;
-    }
-
-    .title {
-        padding-top: 0;
-        padding-bottom: 0.5em;
-        width: 100%;
-    }
-
-    p {
-        font-size: 0.8em;
-        margin: 0;
-        padding-left: 1.6em;
-    }
-}
+// skills
 
 #skills {
-    .list {
+    .flex-list {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px 20px;
+        //gap: 8px 20px;
 
         .list-item {
-           width: 90%;
+           width: 95%;
+           line-height: 1.3;
         }
-    }
-
-    .skill-bar-wrapper {
-        width: 100%;
-        background-color: white;
-        box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
-
-        .skill-bar {
-            background-color: $smooth-emphasize-color;
-            display: block;
-            height: 10px;
-        }
-    }
-
-    .skill-name {
-        font-size: 0.8em;
-    }
-
-    .skill-exp {
-        font-size: 0.7em;
-        text-align: right;
     }
 
     .section-light {
-        padding-top: 0.5em;
+        margin-top: 0.5rem;
+    
+        .title {
+            //padding-top: 0;
+            margin-bottom: 0.3rem;
+            display: inline-block;
+            //width: 100%;
+        }
     }
 }
 
-.timeline {
+.skill-name {
+    font-size: 0.8rem;
+}
 
+.skill-bar-wrapper {
+    width: 100%;
+    background-color: white;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+
+    .skill-bar {
+        background-color: $smooth-emphasize-color;
+        height: 0.5rem;
+    }
+}
+
+.skill-exp {
+    font-size: 0.7rem;
+    text-align: right;
+}
+
+.skill-list {
+    font-size: 0.8rem;
+    margin: 0;
+    margin-left: 1.6rem;
+    display: inline-block;
+}
+
+// timeline
+
+.timeline {
     position: relative;
-    padding-left: 2em;
+    padding-left: 0.5em;
 
     &::before {
         content: "";
@@ -330,8 +321,8 @@ a {
         width: 4px;
         background: $strong-emphasize-color;
         position: absolute;
-        left: 46px;
-        top: 22px;
+        left: 15px;
+        top: 15px;
         height: calc(100% - 10px);
     }
 
@@ -344,7 +335,7 @@ a {
 
     .timeline-item-logo {
         color: $strong-emphasize-color;
-        font-size: 2em;
+        font-size: 1.2em;
         padding-right: 0.5em;
 
         i {
@@ -363,19 +354,34 @@ a {
         color: $strong-emphasize-color;
     }
 
-    .timeline-item-date {
-        float: right;
-        font-size: 0.8em;
-        background-color: $smooth-emphasize-color;
-        padding: 2px 6px;
-        border-radius: 5px;
-        width: 170px;
+    .timeline-item-perimeter {
+        display: inline-block;
+        padding-bottom: 0.5em;
     }
 
-    .timeline-item-content-header {
-        & > .timeline-item-date {
+    .timeline-item-date {
+        display: flex;
+        justify-content: right;
+        margin: 0;
+        width: 100%;
+    }
+
+    .timeline-item-date-content {
+        float: right;
+        font-size: 0.6em;
+        padding: 2px 6px;
+        border-radius: 5px;
+        width: 130px;
+
+        &.main-date {
             background-color: $emphasize-color;
+            position: relative;
             color: white;
+            top: -20px;
+        }
+
+        &.child-date {
+            background-color: $smooth-emphasize-color;
         }
     }
 
@@ -387,7 +393,7 @@ a {
 
         ul {
             padding-top: 0.2em;
-              padding-bottom: 0.5em;
+            padding-bottom: 0.2em;
         }
 
         li {
@@ -398,25 +404,21 @@ a {
 
     .timeline-item-content {
         padding-bottom: 1em;
-        width: 100%;
+        width: 100%;       
+    }
 
-        .timeline-item-date, .timeline-item-sub-title {
-            margin-top: 0.5em;
-        }
+    .timeline-item-sub-title {
+        padding-top: 0.5em;
+        margin: 0;
+    }
 
-        .timeline-item-sub-title {
-            display: inline-block;
-            padding-top: 0.5em;
-            margin: 0;
-        }
-
-        .timeline-item-perimeter {
-            font-size: 0.9em;
-        }
+    .timeline-item-perimeter {
+        font-size: 0.9em;
     }
 }
 
 @media screen and (max-width: 450px) {
+
     #profile {
         order: 1;
     }
@@ -434,40 +436,88 @@ a {
 @media screen and (min-width: 451px) {
 
     #skills {
-        .list {
+        .title {
+            font-size: 0.9rem;
+        }
+
+        .flex-list {
             flex-wrap: wrap;
-            height: 350px;
+            height: 261px;
 
             .list-item {
                 width: 45%;
             }
         }
     }
+
+    .timeline .timeline-item-date-content {
+        font-size: 0.7em;
+        width: 150px;
+    }
 }
 
 @media screen and (min-width: 650px) {
 
+    .section-full .title {
+        margin-bottom: 0.5rem;
+    }
+
+    .section-light {
+        line-height: 1.2;
+    }
+
     #identity { 
+        #location, #time, #description {
+            font-size: 1rem;
+          }
+
         #name {
-            font-size: 1.9em;
+            font-size: 1.9rem;
         }
 
         #jobTitle {
-            font-size: 1.2em;
+            font-size: 1.2rem;
         }
 
         #description {
-            font-size: 1em;
+            margin: 1.5rem 0 0.5rem;
         }
     }
 
     #skills {
-        .list {
-            height: 230px;
+        .flex-list {
+            height: 180px;
     
             .list-item {
                width: 30%;
             }
+        }
+    }
+
+    .timeline {
+        .timeline-item-date {
+            float: right;
+            display: block;
+            width: auto;
+        }
+
+        .timeline-item-date-content {
+            font-size: 0.8em;
+            width: 170px;
+        }
+
+        .timeline-item-sub-title-content.first {
+            .timeline-item-sub-title {
+                margin-top: 1.5em;
+            }
+        }
+
+        .timeline-item-sub-title {
+            padding-top: 0;
+        }
+
+        .timeline-item-perimeter {
+            padding-bottom: 0.9em;
         }
     }
 }
@@ -476,9 +526,7 @@ a {
 
     #resume {
         & > * {
-            margin: 0;
-            padding-bottom: 0.5em;
-            margin-top: 0.5em;
+            margin-top: 0.5rem;
         }
     }
 
@@ -498,6 +546,7 @@ a {
 
     #profile {
         order: 2;
+        flex-basis: 19%;
     }
 
     #time {
@@ -506,45 +555,40 @@ a {
 
     #contact {
         order: 3;
-        font-size: 1.4em;
-        padding-top: 0.5em;
-    }
-
-    #profile {
-        flex-basis: 19%;
+        font-size: 1.4rem;
     }
 
     #skills {
-        .list {
-            height: 240px;
+        padding-bottom: 1rem;
+
+        .flex-list {
+            height: 195px;
+
+            .list-item {
+                line-height: 1.4;
+            }
         }
 
-        .skill-name {
-            font-size: 0.9em;
+        .skill-name, .skill-list {
+            font-size: 0.9rem;
         }
 
         .skill-exp {
-            font-size: 0.8em;
+            font-size: 0.8rem;
         }
 
-        padding-bottom: 1em;
-    }
-
-    .section-light p {
-        font-size: 0.9em;
+        .section-light {
+            line-height: 1.2;
+            margin-top: 1rem;
+        }
     }
 }
 
-@media screen and (min-width: 992px), print {
+@media screen and (min-width: 992px) {
 
-    .section-light {
-        .title {
-            width: 26%;
-            padding: 0;
-        }
-
-        p {
-            padding-left: 0;
+    #resume {
+        & > * {
+            padding-bottom: 0.5em;
         }
     }
 
@@ -553,12 +597,37 @@ a {
     }
 
     #skills {       
-        .list {
-            height: 180px;
+        .flex-list {
+            height: 146px;
             
             .list-item {
                width: 23%;
             }
+        }
+
+        .section-light {
+            .title {
+                width: 26%;
+            }
+    
+            .skill-list {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .timeline {
+
+        .timeline-item-sub-title-content.first {
+            margin-top: 1.45em;
+
+            .timeline-item-sub-title {
+                margin-top: 0;
+            }
+        }
+
+        .timeline-item-sub-title {
+            display: inline-block;
         }
     }
   }
@@ -567,12 +636,6 @@ a {
 
     #wrapper {
         width: 1140px;
-    }
-
-    #resume {
-        & > * {
-            margin-bottom: 0.5em;
-        }
     }
 
     #identity {
@@ -599,48 +662,24 @@ a {
     .section-full {
         .title {
             font-size: 0.7em;
-            padding-bottom: 0.5em;
         }
-    }
-
-    .section-light {
-        padding-top: 0;
-
-        .title {
-            font-size: 0.6em;
-            width: 25%;
-        }
-
-        p {
-            font-size: 0.6em;
-        }
-    }
-    
-    #wrapper{
-        padding: 0;
-        margin: 0;
-        width: 100%;
     }
 
     #header {
         display: none;
     }
 
+    #summary {
+        padding-bottom: 0.2rem;
+    }
+
     #resume {
         box-shadow: none;
+        padding-top: 0;
         
-        & > * {
-            padding: 0.2em 0.5em;
-        }
-
         & > * > * {
             padding: 0;
         }
-    }
-
-    #summary {
-        margin-bottom: 0;
-        padding-bottom: 0;
     }
 
     #identity {
@@ -648,23 +687,22 @@ a {
         width: 77%;
 
         #name {
-            font-size: 1.7em;
+            font-size: 1.7rem;
             text-align: left;
         }
 
         #time {
             text-align: left;
-            font-size: 0.7em;
+            font-size: 0.8rem;
         }
         
         #jobTitle {
-            font-size: 1em;
+            font-size: 1.1rem;
             text-align: left;
         }
 
         #description {
-            font-size: 0.7em;
-            padding-bottom: 0.5em;
+            font-size: 0.8rem;
         }
     }
 
@@ -674,28 +712,27 @@ a {
 
         #location {
             width: 100%;
-            font-size: 0.7em;
+            font-size: 0.7rem;
         }
     }
 
     #contact {
         order: 3;
-        font-size: 0.7em;
-        width: 100%;
+        font-size: 0.7rem;
+        margin: 0.25rem 0;
 
         .title {
-            padding-bottom: 0;
+            font-size: 0.7rem;
         }
 
-        .list {
+        .flex-list {
             display: flex;
             flex-wrap: wrap;
-            justify-content: left;
-            margin-left: 20%;
+            justify-content: right;
 
             .list-item {
                 display: inline-block;
-                width: 50%;
+                width: 27%;
             }
         }
 
@@ -719,12 +756,11 @@ a {
         width: 100%;
 
         &::before {
-            border-top: 2px solid #017072;
-            border-top-color: rgb(1, 112, 114);
+            border-top: 2px solid $strong-emphasize-color;
             content: "";
             margin: 0 auto;
             position: absolute;
-            top: 60%;
+            top: 47%;
             left: 0;
             right: 0;
             bottom: 0;
@@ -733,43 +769,71 @@ a {
     }
 
     #skills {
-        #main-skills {
-            height: 120px;
-            text-align: center;
-
-            .list-item {
-                font-size: 0.65em;
-                text-align: left;
-            }
-
-            .skill-name {
-                padding-bottom: 1%;
-                font-size: 0.95em;
-            }
-
-            .skill-exp {
-                font-size: 0.85em;
-            }
-        }
-
-        .list {   
-            display: block;
-
-            .list-item {
-                display: inline-block;
-                width: 20%;
-                margin: 0 2%;
-            }
+        .skill-name, .skill-exp {
+            font-size: 0.6rem;
         }
 
         .section-light {
+            margin-top: 0;
+            line-height: 0.8;
 
             .title {
-                font-weight: 700;
+                font-size: 0.6em;
+                width: 25%;
             }
-
-            padding-top: 0;
         }
+
+        .skill-list {
+            margin-left: 0;
+            font-size: 0.6em;
+        }
+
+        .flex-list {
+            height: 115px;
+            text-align: center;
+            display: block;
+
+            .list-item {
+                font-size: 0.65rem;
+                text-align: left;
+                width: 22%;
+                margin: 0 0.5rem;
+            }
+        }
+    }
+
+    .timeline {
+        &::before {
+            left: 12px;
+        }
+
+        font-size: 0.8em;
+
+        .timeline-item-date {
+            display: block;
+            width: auto;
+        }
+
+        .timeline-item-date-content {
+            font-size: 0.7em;
+            width: 120px;
+        }
+
+        .timeline-item-sub-title {
+            display: inline;
+        }
+
+        .timeline-item-sub-title-content.first {
+            margin-top: 1.55em;
+
+            .timeline-item-sub-title {
+                margin-top: 0;
+            }
+        }
+
+        .timeline-item-perimeter {
+            padding-bottom: 0.2em;
+          }
     }
 }
 
