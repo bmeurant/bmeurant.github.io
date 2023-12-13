@@ -64,5 +64,12 @@
     "translations": "Traductions techniques",
     "translations-desc": "Contribution à la <strong>traduction française de <a href=\"https://github.com/progit/progit2-fr/commits?author=bmeurant\">Git probook v2</a></strong>.<br>Traduction d'un article à propos<a href=\"https://www.infoq.com/fr/articles/ember-en-entreprise\"> ember en enterprise sur InfoQ</a>",
     "articles": "Articles & Tutoriels",
-    "articles-desc": "<a href=\"http://baptiste-meurant.developpez.com/\">Tutoriels Spring, Tapestry & Hibernate</a>, <a href=\"https://cwiki.apache.org/confluence/display/TAPESTRY5/Tapstry5First+project+with+Tapestry5%2C+Spring+and+Hibernate\">traduits en anglais</a> par l'équipe Tapestry, <a href=\"http://putaindecode.io/fr/articles/js/ember/\"><strong>articles à propos d'ember</strong></a> et des <a href=\"https://medium.com/@bmeurant/enhance-your-ember-apps-with-fastboot-b693f1a66793\">SPAs</a>. Contributions diverses au <a href=\"https://blog.worldline.tech/authors/#baptiste-meurant\">blog technique Worldline</a>"
+    "articles-desc": "<a href=\"http://baptiste-meurant.developpez.com/\">Tutoriels Spring, Tapestry & Hibernate</a>, <a href=\"https://cwiki.apache.org/confluence/display/TAPESTRY5/Tapstry5First+project+with+Tapestry5%2C+Spring+and+Hibernate\">traduits en anglais</a> par l'équipe Tapestry, <a href=\"http://putaindecode.io/fr/articles/js/ember/\"><strong>articles à propos d'ember</strong></a> et des <a href=\"https://medium.com/@bmeurant/enhance-your-ember-apps-with-fastboot-b693f1a66793\">SPAs</a>. Contributions diverses au <a href=\"https://blog.worldline.tech/authors/#baptiste-meurant\">blog technique Worldline</a>",
+    "french": "Français",
+    "english": "Anglais",
+    "spanish": "Espagnol",
+    "lvl-mother-tongue": "Langue maternelle",
+    "lvl-proficient-c1": "Professionnel (C1)",
+    "lvl-intermediate": "Intermédiaire",
+    "lvl-learning": "En apprentissage"
 }
