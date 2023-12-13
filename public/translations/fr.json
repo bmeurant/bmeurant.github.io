@@ -52,5 +52,17 @@
     "dut-computing": "DUT, informatique",
     "core-curiculum": "Tronc commun",
     "bac": "Baccalauréat, mention Bien",
-    "projects": "Réalisations et projets"
+    "projects": "Réalisations et projets",
+    "resthub": "Contributeur, leader <a href=\"https://github.com/resthub\">RESTHub</a>",
+    "resthub-desc": "Une stack OpenSource pour construire des applications Web modernes avec Spring, Backbone, Hibernate. Le projet est abandonné.",
+    "ember-training": "Formation Ember",
+    "ember-training-desc": "Une introduction approfondie à ember. Peut être suivi comme un tutoriel autonome mais aussi servir d'outil de formation.",
+    "cnrs": "CNRS, <a href=\"https://aramis.resinfo.org/doku.php?id=ateliers:ecosystemjs-23032017\">presentation de l'écosystème JavaScript</a>",
+    "cnrs-desc": "Un <a href=\"https://bmeurant.github.io/jsecosystem/#/\">atelier</a> de 2 heures sur l'écosystème JavaScript pour le réseau ARAMIS du CNRS à Lyon.",
+    "opensource": "Contributions OpenSource",
+    "opensource-desc": "Modestes contributions OpenSource sur <a href=\"https://github.com/emberjs/ember.js/pull/13553\">ember</a>, creation d'un <a href=\"https://github.com/bmeurant/ember-array-contains-helper\">addon ember</a>, etc.</a>",
+    "translations": "Traductions techniques",
+    "translations-desc": "Contribution à la <strong>traduction française de <a href=\"https://github.com/progit/progit2-fr/commits?author=bmeurant\">Git probook v2</a></strong>.<br>Traduction d'un article à propos<a href=\"https://www.infoq.com/fr/articles/ember-en-entreprise\"> ember en enterprise sur InfoQ</a>",
+    "articles": "Articles & Tutoriels",
+    "articles-desc": "<a href=\"http://baptiste-meurant.developpez.com/\">Tutoriels Spring, Tapestry & Hibernate</a>, <a href=\"https://cwiki.apache.org/confluence/display/TAPESTRY5/Tapstry5First+project+with+Tapestry5%2C+Spring+and+Hibernate\">traduits en anglais</a> par l'équipe Tapestry, <a href=\"http://putaindecode.io/fr/articles/js/ember/\"><strong>articles à propos d'ember</strong></a> et des <a href=\"https://medium.com/@bmeurant/enhance-your-ember-apps-with-fastboot-b693f1a66793\">SPAs</a>. Contributions diverses au <a href=\"https://blog.worldline.tech/authors/#baptiste-meurant\">blog technique Worldline</a>"
 }

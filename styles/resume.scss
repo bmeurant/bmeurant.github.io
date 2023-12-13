@@ -85,12 +85,12 @@ a {
     flex-wrap: wrap;
 
     .title {
-        width: 70%;
+        width: 64%;
         margin-bottom: 0.2rem;
     }
 
     .date {
-        width: 30%;
+        width: 36%;
         display: flex;
         justify-content: end;
         align-items: start;
@@ -773,6 +773,17 @@ body {
             li {
                 font-size: 0.9rem;
             }
+        }
+    }
+
+    .card-flex {  
+        .title {
+            width: 75%;
+            margin-bottom: 0.2rem;
+        }
+    
+        .date {
+            width: 25%;
         }
     }
   }
