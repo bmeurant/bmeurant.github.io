@@ -66,6 +66,18 @@ function updateXP(birthdate) {
   document.getElementById("xpNum").innerHTML = getYears(birthdate);
 }
 
-i18Loader(getLangFromLocale(locale));
+function updateDownloadPath(lang) {
+  document.getElementById("download").href = `files/resume-baptiste-meurant-${lang}.pdf`;
+}
+
+function updateEmail() {
+  document.getElementById("email").href = "mailto:baptiste.meurant@gmail.com";
+}
+
+let lang=getLangFromLocale(locale);
+
+i18Loader(lang);
 updateAge("01/17/1980");
 updateXP("10/01/2005");
+updateDownloadPath(lang);
+updateEmail();

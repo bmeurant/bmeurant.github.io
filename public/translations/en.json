@@ -65,11 +65,17 @@
     "translations-desc": "Contribution to the <strong>french translation of <a href=\"https://github.com/progit/progit2-fr/commits?author=bmeurant\">Git probook v2</a></strong>.<br>Translation of an article about<a href=\"https://www.infoq.com/fr/articles/ember-en-entreprise\"> emberjs in enterprise on InfoQ</a>",
     "articles": "Articles & Tutorials",
     "articles-desc": "<a href=\"http://baptiste-meurant.developpez.com/\">Spring, Tapestry & Hibernate tutorials</a> (in french), <a href=\"https://cwiki.apache.org/confluence/display/TAPESTRY5/Tapstry5First+project+with+Tapestry5%2C+Spring+and+Hibernate\">translated</a> by the Apache Tapestry team, <a href=\"http://putaindecode.io/fr/articles/js/ember/\"><strong>articles about ember</strong></a>(in french) and <a href=\"https://medium.com/@bmeurant/enhance-your-ember-apps-with-fastboot-b693f1a66793\">SPA</a>. Various contributions on <a href=\"https://blog.worldline.tech/authors/#baptiste-meurant\">Worldline Tech Blog</a>",
+    "languages": "Languages",
     "french": "French",
     "english": "English",
     "spanish": "Spanish",
     "lvl-mother-tongue": "Mother tongue",
     "lvl-proficient-c1": "Proficient (C1)",
     "lvl-intermediate": "Intermediate",
-    "lvl-learning": "Learning"
+    "lvl-learning": "Learning",
+    "interests": "Interests",
+    "puzzles": "puzzles, especially the more complex ones",
+    "music": "music, occasional singing lessons",
+    "outdoor": "outdoor activities, hikes, trips",
+    "egypt": "passion for ancient Egypt, learning hieroglyphic Egyptian"
 }

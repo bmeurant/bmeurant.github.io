@@ -297,7 +297,7 @@ body {
         display: none;
     }
 
-    .email, .website, .phone {
+    .email, .phone {
         display: none;
     }
 }
@@ -550,7 +550,7 @@ body {
     }
 
     .language {
-        width: 45%;
+        width: 40%;
         margin: 0 0.5rem;
         margin-top: 0.5rem;
         text-align: center;
@@ -574,7 +574,7 @@ body {
             text-indent: 100%;
             white-space: nowrap;
             overflow: hidden;
-            background-image: url("/public/images/mdw-ntr.png");
+            background-image: url("/images/mdw-ntr.png");
             background-repeat: no-repeat;
             background-size: contain;
             font-size: 1em;
@@ -583,6 +583,22 @@ body {
 
         .pie {
             width: 100px;
+        }
+    }
+}
+
+#interests {
+    font-size: 0.9rem;
+    
+    .inline-list {
+        padding-left: 1.5rem;
+    }
+
+    .interest {
+        i {
+            padding-right: 0.5rem;
+            width: 0.8rem;
+            color: $strong-emphasize-color;
         }
     }
 }
@@ -791,7 +807,6 @@ body {
 
         .section-light {
             line-height: 1.2;
-            margin-top: 1rem;
         }
     }
 
@@ -807,6 +822,8 @@ body {
 
 @media screen and (min-width: 992px) {
     #resume {
+        justify-content: space-between;
+
         & > * {
             padding-bottom: 0.5em;
         }
@@ -873,7 +890,16 @@ body {
             width: 25%;
         }
     }
-  }
+
+    #languages {
+        width: 55%;
+    }
+  
+    #interests {
+        width: 40%;
+    }
+
+}
 
 @media screen and (min-width: 1200px) {
 
@@ -908,7 +934,7 @@ body {
 
     .section-full {
         & > .title {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
         }
     }
 
@@ -938,6 +964,7 @@ body {
         box-shadow: none;
         padding-top: 0;
         padding-bottom: 0;
+        justify-content: space-between;
 
         & > * {
             padding: 0.3rem 0.5rem;
@@ -975,7 +1002,7 @@ body {
         }
 
         #description {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             margin: 0.5rem 0 0;
         }
     }
@@ -994,6 +1021,7 @@ body {
         order: 3;
         font-size: 0.7rem;
         margin: 0.25rem 0;
+        width: 100%;
 
         .title {
             font-size: 0.7rem;
@@ -1043,33 +1071,41 @@ body {
     }
 
     #skills {
+        #main-skills {
+            margin-bottom: 0.5rem;
+        }
+
         .skill-name, .skill-exp {
-            font-size: 0.6rem;
+            font-size: 0.65rem;
         }
 
         .section-light {
-            margin-top: 0;
-            line-height: 0.4;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+
+            i {
+                width: 0.5rem;
+            }
 
             .title {
                 font-size: 0.6em;
-                width: 25%;
             }
         }
 
         .skill-list {
-            margin-left: 0;
-            font-size: 0.6em;
+            font-size: 0.7em;
+            display: block;
         }
 
         .flex-list {
             height: 115px;
             text-align: center;
             display: block;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.8rem;
 
             .list-item {
-                font-size: 0.65rem;
+                font-size: 0.7rem;
                 text-align: left;
                 width: 22%;
                 margin: 0 0.5rem;
@@ -1092,7 +1128,7 @@ body {
         }
 
         .timeline-item-content {
-            margin: 0.3rem 0;
+            margin: 0.45rem 0;
         }
 
         .timeline-item-date-content {
@@ -1130,7 +1166,7 @@ body {
         .timeline-item-content-body {
             order: 5;
             margin-top: 0.2rem;
-            font-size: 0.6rem;
+            font-size: 0.7rem;
         }
 
         .timeline-item-sub-titles {
@@ -1166,11 +1202,58 @@ body {
     }
 
     #projects {
+        margin-top: 0.7rem;
+
         .flex-list {
             flex-direction: row;
             flex-wrap: wrap;
             justify-content: space-around;
             align-items: normal;
+        }
+    }
+
+    #education {
+        .timeline {
+            .timeline-item-title {
+                font-size: 0.9rem;
+            }
+
+            .timeline-item-content {
+                margin-top: 0;
+            }
+        }
+    }
+
+    #languages { 
+
+        .flex-list {
+            margin-top: 0;
+            margin-bottom: 0.3rem;
+        }
+
+        .language {
+            width: auto;
+
+            .pie {
+                --b: 6px;
+                width: 75px;
+                font-size: 17px;
+            }
+
+            .title {
+                font-size: 0.75rem;
+            }
+
+            .level {
+                font-size: 0.65rem;
+                margin-top: 0.3rem;
+            }
+        }
+    }
+
+    #interests {
+        .inline-list {
+            font-size: 0.7rem;
         }
     }
 }

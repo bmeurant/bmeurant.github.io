@@ -23,8 +23,8 @@
     <div id="wrapper">
         <div id="header">
             <span id="actions">
-                <button class="action"><i class="fa-solid fa-at"></i></button>
-                <button class="action" OnClick="javascript:window.print()" title="Print"><i class="fa-solid fa-print"></i></button>
+                <a id="email" class="action"><i class="fa-solid fa-at"></i></button>
+                <a id="download" class="action" href="/files/resume-baptiste-meurant-en.pdf" download="baptiste-meurant.pdf"><i class="fa-solid fa-download"></i></a>
             </span>
             <span id="langs">
                 <button class="langSelector" name="fr" title="Français"></button>
@@ -50,8 +50,8 @@
                     <h2 id="contactMe" class="title"><span class="label"><i class="fa-solid fa-circle-user"></i>&nbsp;<span data-i18n="contact-me" class="i18nelement">Contact Me</span></span></h2>
                     <ul class="inline-list flex-list">
                         <li class="email list-item"><a href="mailto:baptiste.meurant@gmail.com" title="mail"
-                            target="new"><i class="fa-solid fa-envelope"></i></a><span class="social-link">baptiste.meurant@gmail.com</span></li>
-                        <li class="phone list-item"><i class="fa-solid fa-phone"></i><span class="social-link">(+33)6 16 98 52 71</span></li>
+                            target="new"><i class="fa-solid fa-envelope"></i></a><span class="social-link"></span></li>
+                        <li class="phone list-item"><i class="fa-solid fa-phone"></i><span class="social-link"></span></li>
                         <li class="website list-item"><a href="https://bmeurant.github.io" title="personal website"
                             target="new"><i class="fa-solid fa-globe"></i></a><span class="social-link">https://bmeurant.github.io</span></li> 
                         <li class="github list-item"><a href="https://github.com/bmeurant" title="@bmeurant on GitHub"
@@ -288,6 +288,8 @@
                                 </div>
                             </div>
                         </li>
+                    </ul>
+                    <ul class="timeline page-break">
                         <li class="timeline-item">
                             <div class="timeline-item-logo">
                                 <i class="fa-regular fa-circle-dot"></i>
@@ -510,30 +512,31 @@
                     </ul>
                 </div>
             </div>
+            <div id="interests">
+                <div class="section-full">
+                    <h2 class="title">
+                        <span class="label">
+                            <i class="fa-solid fa-eye"></i>&nbsp;<span data-i18n="interests" class="i18nelement">Interests</span>
+                        </span>
+                    </h2>
+                    <ul class="inline-list">
+                        <li class="interest">
+                            <i class="fa-solid fa-puzzle-piece"></i><span class="i18nelement" data-i18n="puzzles">Puzzles</span>
+                        </li>
+                        <li class="interest">
+                            <i class="fa-solid fa-music"></i><span class="i18nelement" data-i18n="music">Music</span>
+                        </li>
+                        <li class="interest">
+                            <i class="fa-solid fa-person-hiking"></i><span class="i18nelement" data-i18n="outdoor">Outdoor activities</span>
+                        </li>
+                        <li class="interest">
+                            <i class="fa-solid fa-ankh"></i><span class="i18nelement" data-i18n="egypt">Egyptian civilization</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     <script type="module" src="/main.js"></script>
-
-<!--
-                    <div class="skills-cat languages">
-                        <h3>Languages</h3>
-
-                        <div class="skill">
-                            <span style="width: 100%;">French</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 75%;">English</span>
-                        </div>
-                        <div class="skill">
-                            <span style="width: 30%;">Spanish</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </article>
-    </section>
-</div>
-</div-->
-
 </body>
 </html>
