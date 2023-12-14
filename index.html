@@ -23,14 +23,23 @@
     <div id="wrapper">
         <div id="header">
             <span id="actions">
-                <a id="email" class="action"><i class="fa-solid fa-at"></i></button>
-                <a id="download" class="action" href="/files/resume-baptiste-meurant-en.pdf" download="baptiste-meurant.pdf"><i class="fa-solid fa-download"></i></a>
+                <a id="email" class="action i18nattribute" data-i18n="title:contact-me-mail"><i class="fa-solid fa-at"></i></a>
+                <a id="download" class="action i18nattribute" data-i18n="title:download" href="/files/resume-baptiste-meurant-en.pdf" download="baptiste-meurant.pdf"><i class="fa-solid fa-download"></i></a>
             </span>
             <span id="langs">
-                <button class="langSelector" name="fr" title="Français"></button>
-                <button class="langSelector" name="en" title="English"></button>
+                <button class="langSelector i18nattribute" data-i18n="title:french" name="fr" title="Français"></button>
+                <button class="langSelector i18nattribute" data-i18n="title:english" name="en" title="English"></button>
             </span>
         </div>
+        <nav id="nav-menu" role="navigation">
+            <a class="inverse i18nattribute" href="#identity" data-i18n="title:identity"><i class="fa-solid fa-address-card"></i></a>
+            <a class="i18nattribute" href="#skills" data-i18n="title:skills"><i class="fa-solid fa-user-gear"></i></a>
+            <a class="inverse i18nattribute" href="#work" data-i18n="title:work-experience"><i class="fa-solid fa-briefcase"></i></a>
+            <a class="i18nattribute" href="#projects" data-i18n="title:projects"><i class="fa-solid fa-play"></i></a>
+            <a class="inverse i18nattribute" href="#education" data-i18n="title:education"><i class="fa-solid fa-graduation-cap"></i></a>
+            <a class="i18nattribute" href="#languages" data-i18n="title:languages"><i class="fa-solid fa-comment"></i></a>
+            <a class="inverse i18nattribute" href="#interests" data-i18n="title:interests"><i class="fa-solid fa-eye"></i></a>
+        </nav>
         <div id="resume">
             <div id="summary">
                 <div id="profile">
@@ -43,8 +52,8 @@
                         <div id="age"><i class="fa-solid fa-cake-candles"></i><span id="ageNum">43</span> <span data-i18n="age-years" class="i18nelement">years</span></div>
                         <div id="xp"><i class="fa-solid fa-stopwatch"></i><span id="xpNum">12</span> <span data-i18n="xp-years" class="i18nelement">years of experience</span></div>
                     </div>
-                    <div id="jobTitle" data-i18n="title" class="i18nelement">title</div>
-                    <p id="description" data-i18n="description" class="i18nelement">description</p>
+                    <div id="jobTitle" data-i18n="title" class="i18nelement">Software <b>developer</b>, <b>Architect</b>, <b>Technical Director</b> at <b><a href='https://twitter.com/WorldlineFrance'>Worldline</a></b></div>
+                    <p id="description" data-i18n="description" class="i18nelement">Experienced <b>full-stack developer</b> and software <b>architect</b>. I am <b>rigorous</b>, <b>pragmatism</b> and commited to the principles of <b>software craftsmanship</b>. I like working in a <b>team</b>, with <b>motivated and passionate</b> people. I like <b>learning</b> from people, <b>sharing</b>, <b>leading</b>, <b>discussing</b> technologies, designs, architectures, etc. I try to maintain a <b>balance</b> between development and technical management.</p>
                 </div>
                 <div id="contact">
                     <h2 id="contactMe" class="title"><span class="label"><i class="fa-solid fa-circle-user"></i>&nbsp;<span data-i18n="contact-me" class="i18nelement">Contact Me</span></span></h2>
@@ -140,24 +149,12 @@
                     <p class="skill-list i18nelement" data-i18n="other-skills-list">Tech lead, Production, PreSales, Budget, Team leading, Teaching & Mentoring, Communication</p>
                 </div>
             </div>
-            <!--nav>
-                <p class="scroll"><i class="fa fa-fw fa-caret-down"></i>&nbsp;<i><b>Scroll</b> or <b>select</b> a
-                    section
-                    below
-                    to learn more about me.</i>&nbsp;<i class="fa fa-fw fa-caret-down"></i></p>
-                <ul>
-                    <li><a href="#about"><i class="fa fa-5x fa-fw fa-user"></i><br/>About me</a></li>
-                    <li><a href="#expertise"><i class="fa fa-5x fa-fw fa-code"></i><br/>Expertise</a></li>
-                    <li><a href="#experience"><i class="fa fa-5x fa-fw fa-suitcase"></i><br/>Experience</a></li>
-                    <li><a href="#education"><i class="fa fa-5x fa-fw fa-graduation-cap"></i><br/>Education</a></li>
-                </ul>
-            </nav-->
             <div id="work">
                 <div class="section-full">
                     <h2 class="title"><span class="label">
                         <i class="fa-solid fa-briefcase"></i>&nbsp;<span data-i18n="work-experience" class="i18nelement">Work experience</span>
                     </span></h2>
-                    <ul class="timeline">
+                    <ul class="timeline first">
                         <li class="timeline-item">
                             <div class="timeline-item-logo">
                                 <i class="fa-regular fa-circle-dot"></i>
@@ -341,7 +338,7 @@
                 <div class="section-full">
                     <h2 class="title">
                         <span class="label">
-                            <i class="fa-solid fa-graduation-cap"></i>&nbsp;<span data-i18n="projects" class="i18nelement">Things I have done</span>
+                            <i class="fa-solid fa-play"></i>&nbsp;<span data-i18n="projects" class="i18nelement">Things I have done</span>
                         </span>
                     </h2>
                     <ul class="inline-list flex-list">

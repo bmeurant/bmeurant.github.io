@@ -26,7 +26,7 @@ async function i18Loader(lang) {
     updateContent();
   });
 
-  function updateContent() {
+  function updateElements() {
     const elements = document.getElementsByClassName("i18nelement");
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i];
@@ -41,6 +41,29 @@ async function i18Loader(lang) {
 
       element.innerHTML = value;
     }
+  }
+
+  function updateAttributes() {
+    const elements = document.getElementsByClassName("i18nattribute");
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
+      const data = element.getAttribute("data-i18n");
+      const options = element.getAttribute("data-i18n-options");
+      const optKeys = JSON.parse(options);
+      const [attrName, k] = data.split(':');
+      let attrValue = i18next.t(k);
+
+      for (var optKey in optKeys) {
+        value = value.replace (`__${optKey}__`, optKeys[optKey]);
+      }
+
+      element.setAttribute(attrName, attrValue);
+    }
+  }
+
+  function updateContent() {
+    updateElements();
+    updateAttributes();
   }
 
   function updateUrl(lang) {
@@ -72,6 +95,21 @@ function updateDownloadPath(lang) {
 
 function updateEmail() {
   document.getElementById("email").href = "mailto:baptiste.meurant@gmail.com";
+}
+
+function showResponsiveMenu() {
+  var menu = document.getElementById("menu");
+  var icon = document.getElementById("hamburger-menu");
+  var root = document.getElementById("header");
+  if (menu.className === "") {
+      menu.className = "open";
+      icon.className = "open";
+      root.style.overflowY = "hidden";
+  } else {
+      menu.className = "";                    
+      icon.className = "";
+      root.style.overflowY = "";
+  }
 }
 
 let lang=getLangFromLocale(locale);

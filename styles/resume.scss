@@ -41,8 +41,33 @@ $smooth-emphasize-color: #a9d5d6;
     }
 }
 
+#nav-menu {
+    width: 35px;
+    z-index: 100;
+    position: fixed;
+    margin-top: 50px;
+    margin-left: -36px;
+    border-right: 1px solid white;
+    display: none;
+
+    a {
+        display: block;
+        padding: 5px 0;
+        text-align: center;
+
+        color: $strong-emphasize-color;
+        background-color: $smooth-emphasize-color;
+
+        &.inverse {
+            color: white;
+            background-color: $emphasize-color;
+        }
+    }
+}
+
 .action {
     background: none;
+    padding-left: 0.5rem;
 }
 
 a {
@@ -261,7 +286,7 @@ body {
 #contact, .location, #time {
     i {
         color: $emphasize-color;
-        padding-right: 0.2rem;
+        padding-right: 0.5rem;
     }
 }
 
@@ -357,6 +382,7 @@ body {
 // skills
 
 #skills {
+
     .flex-list {
         flex-direction: column;
 
@@ -516,6 +542,20 @@ body {
 
     &.page-break > .timeline-item:first-of-type {
         margin-top: 0;
+    }
+}
+
+// work
+
+#work {
+    ul.first li:last-of-type {
+        padding-bottom: 1rem;
+    }
+
+    ul.page-break {
+        li:first-of-type {
+            margin-top: -15px;
+        }
     }
 }
 
@@ -915,6 +955,10 @@ body {
     #profile {
         flex-basis: 15%;
     }
+
+    #nav-menu {
+        display: initial;
+    }
 }
 
 @media print {
@@ -1115,6 +1159,16 @@ body {
 
     #work {
         margin-top: 0.3rem;
+
+        ul.first li:last-of-type {
+            padding-bottom: inherit;
+        }
+    
+        ul.page-break {
+            li:first-of-type {
+                margin-top: inherit;
+            }
+        }
     }
 
     .timeline {
