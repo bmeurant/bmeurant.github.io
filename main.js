@@ -3,7 +3,7 @@ import { extractLocale, getLangFromLocale } from './javascript/i18n.js'
 import { langs } from './javascript/langs'
 import { getYears } from './javascript/dates.js'
 
-const { urlWithoutLocale, locale } = extractLocale(document.location.pathname);
+const locale = extractLocale(document.location);
 
 async function i18Loader(lang) {
   const jsons = await Promise.all(
@@ -67,7 +67,7 @@ async function i18Loader(lang) {
   }
 
   function updateUrl(lang) {
-    window.history.pushState({}, "", `/${lang}`);
+    window.history.pushState({}, "", `/?lang=${lang}`);
   }
 
   const langSelectors = document.querySelectorAll('.langSelector');
@@ -95,21 +95,6 @@ function updateDownloadPath(lang) {
 
 function updateEmail() {
   document.getElementById("email").href = "mailto:baptiste.meurant@gmail.com";
-}
-
-function showResponsiveMenu() {
-  var menu = document.getElementById("menu");
-  var icon = document.getElementById("hamburger-menu");
-  var root = document.getElementById("header");
-  if (menu.className === "") {
-      menu.className = "open";
-      icon.className = "open";
-      root.style.overflowY = "hidden";
-  } else {
-      menu.className = "";                    
-      icon.className = "";
-      root.style.overflowY = "";
-  }
 }
 
 let lang=getLangFromLocale(locale);

@@ -59,7 +59,7 @@
     "projects": "Things I have done",
     "resthub": "Contributor, leader <a href=\"https://github.com/resthub\">RESTHub</a>",
     "resthub-desc": "Open source stack to build Modern Web Applications based on Spring, Backbone, Hibernate. Discontinued.",
-    "ember-training": "Ember Training",
+    "ember-training": "<a href=\"https://bmeurant.github.io/ember-training\">Ember Training</a>",
     "ember-training-desc": "An in-depth introduction to ember. Can be followed as an autonomous tutorial but also to serve as a tool for training.",
     "cnrs": "CNRS, <a href=\"https://aramis.resinfo.org/doku.php?id=ateliers:ecosystemjs-23032017\">JavaScript ecosystem presentation</a>",
     "cnrs-desc": "A 2-hour <a href=\"https://bmeurant.github.io/jsecosystem/#/\">presentation</a> on the JavaScript ecosystem for the CNRS ARAMIS network in Lyon.",

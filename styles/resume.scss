@@ -33,11 +33,11 @@ $smooth-emphasize-color: #a9d5d6;
     background-position-y: top;
 
     &[name='fr'] {
-        background-image: url("images/flag-fr.svg");
+        background-image: url("/images/flag-fr.svg");
     }
 
     &[name='en'] {
-        background-image: url("images/flag-en.svg");
+        background-image: url("/images/flag-en.svg");
     }
 }
 

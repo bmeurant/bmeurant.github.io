@@ -1,24 +1,13 @@
 export {extractLocale, getLangFromLocale}
 
-import { locales, localeDefault } from './locales'
 import { langs, langDefault } from './langs'
 
-function extractLocale(pathname) {
-  const urlPaths = pathname.split('/');
+function extractLocale(location) {
+  const localeArg = location.search.split("lang=") || langDefault;
+  let locale = localeArg[1] || langDefault;
+  locale = locale.split("-")[0];
 
-  let locale;
-  let urlWithoutLocale;
-  // We remove the URL locale, for example `/de-DE/about` => `/about`
-  const firstPath = urlPaths[1];
-  if (locales.filter((locale) => locale !== localeDefault).includes(firstPath)) {
-      locale = firstPath;
-      urlWithoutLocale = '/' + urlPaths.slice(2).join('/');
-  } else {
-      locale = localeDefault;
-      urlWithoutLocale = pathname;
-  }
-
-  return { locale, urlWithoutLocale }
+  return locale;
 }
 
 function getLangFromLocale(locale) {
