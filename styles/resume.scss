@@ -400,6 +400,17 @@ body {
             display: inline-block;
         }
     }
+
+    .section-light.inverse {
+        line-height: 1.2;
+        padding: 0.5rem;
+        border-radius: 5px;
+
+        .title {
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+    }
 }
 
 .skill-name {
@@ -532,7 +543,7 @@ body {
 
         li {
             list-style: disc;
-            font-size: 0.8rem;
+            //font-size: 0.8rem;
         }
 
         p {
@@ -844,10 +855,6 @@ body {
         .skill-exp {
             font-size: 0.8rem;
         }
-
-        .section-light {
-            line-height: 1.2;
-        }
     }
 
     .timeline {
@@ -855,7 +862,7 @@ body {
             width: 100%;
         }
         .timeline-item-perimeter, .timeline-item-content-body li {
-            font-size: 0.85rem;
+            //font-size: 0.85rem;
         }
     }
 }
@@ -885,8 +892,12 @@ body {
         .section-light {
             .title {
                 width: 26%;
+
+                &.title-full {
+                    width: 100%;
+                }
             }
-    
+
             .skill-list {
                 margin-left: 0;
             }
@@ -915,7 +926,7 @@ body {
             font-size: 1rem;
 
             li {
-                font-size: 0.9rem;
+                //font-size: 0.9rem;
             }
         }
     }
@@ -1040,14 +1051,12 @@ body {
         }
         
         #jobTitle {
-            font-size: 0.9rem;
+            font-size: 1.2rem;
             text-align: left;
-            margin-top: 0.5rem;
         }
 
         #description {
             font-size: 0.8rem;
-            margin: 0.5rem 0 0;
         }
     }
 
@@ -1064,7 +1073,7 @@ body {
     #contact {
         order: 3;
         font-size: 0.7rem;
-        margin: 0.25rem 0;
+        margin: 1rem 0;
         width: 100%;
 
         .title {
@@ -1127,6 +1136,10 @@ body {
             margin-top: 0.5rem;
             margin-bottom: 0.5rem;
             line-height: 1;
+
+            &.inverse {
+                padding-top: 0;
+            }
 
             i {
                 width: 0.5rem;
@@ -1251,7 +1264,7 @@ body {
         }
 
         .timeline-item-content-body li {
-            font-size: 0.6rem;
+            //font-size: 0.6rem;
         }
     }
 

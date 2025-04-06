@@ -49,8 +49,8 @@
                 <div id="identity">
                     <h1 id="name">Baptiste Meurant</h1>
                     <div id="time">
-                        <div id="age"><i class="fa-solid fa-cake-candles"></i><span id="ageNum">43</span> <span data-i18n="age-years" class="i18nelement">years</span></div>
-                        <div id="xp"><i class="fa-solid fa-stopwatch"></i><span id="xpNum">12</span> <span data-i18n="xp-years" class="i18nelement">years of experience</span></div>
+                        <div id="age"><i class="fa-solid fa-cake-candles"></i><span id="ageNum">45</span> <span data-i18n="age-years" class="i18nelement">years</span></div>
+                        <div id="xp"><i class="fa-solid fa-stopwatch"></i><span data-i18n="xp-years" data-i18n-options='{"years": 19}' class="i18nelement">years of experience</span></div>
                     </div>
                     <div id="jobTitle" data-i18n="title" class="i18nelement">Software <b>developer</b>, <b>Architect</b>, <b>Technical Director</b> at <b><a href='https://twitter.com/WorldlineFrance'>Worldline</a></b></div>
                     <p id="description" data-i18n="description" class="i18nelement">Experienced <b>full-stack developer</b> and software <b>architect</b>. I am <b>rigorous</b>, <b>pragmatism</b> and commited to the principles of <b>software craftsmanship</b>. I like working in a <b>team</b>, with <b>motivated and passionate</b> people. I like <b>learning</b> from people, <b>sharing</b>, <b>leading</b>, <b>discussing</b> technologies, designs, architectures, etc. I try to maintain a <b>balance</b> between development and technical management.</p>
@@ -59,8 +59,8 @@
                     <h2 id="contactMe" class="title"><span class="label"><i class="fa-solid fa-circle-user"></i>&nbsp;<span data-i18n="contact-me" class="i18nelement">Contact Me</span></span></h2>
                     <ul class="inline-list flex-list">
                         <li class="email list-item"><a href="mailto:baptiste.meurant@gmail.com" title="mail"
-                            target="new"><i class="fa-solid fa-envelope"></i></a><span class="social-link"></span></li>
-                        <li class="phone list-item"><i class="fa-solid fa-phone"></i><span class="social-link"></span></li>
+                            target="new"><i class="fa-solid fa-envelope"></i></a><span id="email-contact" class="social-link"></span></li>
+                        <li class="phone list-item"><i class="fa-solid fa-phone"></i><span id="phone-contact" class="social-link"></span></li>
                         <li class="website list-item"><a href="https://bmeurant.github.io" title="personal website"
                             target="new"><i class="fa-solid fa-globe"></i></a><span class="social-link">https://bmeurant.github.io</span></li> 
                         <li class="github list-item"><a href="https://github.com/bmeurant" title="@bmeurant on GitHub"
@@ -74,79 +74,93 @@
                     </ul>
                 </div>
             </div>
-            <div id="skills" class="inverse">
+            <div id="skills">
                 <div class="section-full">
-                    <h2 class="title"><span class="label"><i class="fa-solid fa-user-gear"></i>&nbsp;<span data-i18n="main-skills" class="i18nelement">Main skills</span></span></h2>
-                    <ul id="main-skills" class="inline-list flex-list">
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-java">Java & ecosystem</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 18}'>Experience time: 18 years</div>
-                        </li>
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-spring">Spring, SpringBoot</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 90%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 17}'>Experience time: 17 years</div>
-                        </li>
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-jpa">JPA & Hibernate</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 75%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 17}'>Experience time: 17 years</div>
-                        </li>
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-db">SQL & Databases</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 17}'>Experience time: 17 years</div>
-                        </li>
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-javascript">JavaScript & ecosystem</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 75%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 10}'>Experience time: 10 years</div>
-                        </li>
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-html">HTML, CSS, Sass</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 15}'>Experience time: 15 years</div>
-                        </li>
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-ember">ember</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 7}'>Experience time: 7 years</div>
-                        </li>
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-git">Git</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 13}'>Experience time: 13 years</div>
-                        </li>
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-archi">Architecture & Methodology</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 12}'>Experience time: 12 years</div>
-                        </li>
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-rest">REST</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 65%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 14}'>Experience time: 14 years</div>
-                        </li>
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-cleancode">TDD, CleanCode</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 13}'>Experience time: 13 years</div>
-                        </li>
-                        <li class="list-item">
-                            <span class="skill-name i18nelement" data-i18n="skill-cloud-devops">Cloud & DevOps</span>
-                            <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 50%;"></div></div>
-                            <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 5}'>Experience time: 5 years</div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="section-light">
-                    <h2 id="otherTechSkills" class="title"><span class="label"><i class="fa-solid fa-gear"></i>&nbsp;<span data-i18n="other-tech-skills" class="i18nelement">Main skills</span></span></h2>
-                    <p class="skill-list i18nelement" data-i18n="other-tech-skills-list">Infrastructure, Agile, Containers, IaC, Automation, NoSQL, Linux, REST, Security, Open Source</p>
-                </div>
-                <div class="section-light">
-                    <h2 id="otherSkills" class="title"><span class="label"><i class="fa-solid fa-lightbulb"></i>&nbsp;<span data-i18n="other-skills" class="i18nelement">Main skills</span></span></h2>
-                    <p class="skill-list i18nelement" data-i18n="other-skills-list">Tech lead, Production, PreSales, Budget, Team leading, Teaching & Mentoring, Communication</p>
+                    <h2 class="title"><span class="label"><i class="fa-solid fa-user-gear"></i>&nbsp;<span data-i18n="skills" class="i18nelement">Skills</span></span></h2>
+                    <div class="section-light inverse">
+                        <h2 id="leaderShipSkills" class="title title-full"><span class="label"><i class="fa-solid fa-people-group"></i>&nbsp;<span data-i18n="leadership-skills" class="i18nelement">Leadership & Management Technique</span></span></h2>
+                        <p class="skill-list i18nelement" data-i18n="leadership-skills-list">Stratégie Technique, Tech Lead, Gestion d'équipe, Formation & Mentorat, Budget, FinOps, Communication</p>
+                    </div>
+                    <div class="section-light inverse">
+                        <h2 id="architectureSkills" class="title title-full"><span class="label"><i class="fa-solid fa-diagram-project"></i>&nbsp;<span data-i18n="architecture-skills" class="i18nelement">Architecture & Methodologies</span></span></h2>
+                        <p class="skill-list i18nelement" data-i18n="architecture-skills-list">Architecture logicielle & plateformes, Agile, DevOps, REST, CleanCode, CI/CD, Automatisation, IaC, Design for extension, Qualité, Performance, Scalabilité/p>
+                    </div>
+                    <div class="section-light inverse">
+                        <h2 id="techSkills" class="title title-full"><span class="label"><i class="fa-solid fa-terminal"></i>&nbsp;<span data-i18n="tech-skills" class="i18nelement">Tech skills</span></span></h2>
+                        <p class="skill-list i18nelement" data-i18n="tech-skills-list">Architecture logicielle & plateformes, Agile, DevOps, REST, CleanCode, CI/CD, Automatisation, IaC, Design for extension, Qualité, Performance, Scalabilité/p>
+                    </div>
+                    <!--div class="section-light inverse">
+                        <ul id="main-skills" class="inline-list flex-list">
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-java">Java & ecosystem</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 19}'>Experience time: 19 years</div>
+                            </li>
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-spring">Spring, SpringBoot</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 90%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 18}'>Experience time: 18 years</div>
+                            </li>
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-jpa">JPA & Hibernate</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 75%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 18}'>Experience time: 18 years</div>
+                            </li>
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-db">SQL & Databases</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 18}'>Experience time: 18 years</div>
+                            </li>
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-javascript">JavaScript & ecosystem</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 75%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 11}'>Experience time: 11 years</div>
+                            </li>
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-html">HTML, CSS, Sass</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 16}'>Experience time: 16 years</div>
+                            </li>
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-ember">ember</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 8}'>Experience time: 8 years</div>
+                            </li>
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-git">Git</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 80%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 14}'>Experience time: 14 years</div>
+                            </li>
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-archi">Architecture & Methodology</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 15}'>Experience time: 15 years</div>
+                            </li>
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-rest">REST</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 65%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 15}'>Experience time: 15 years</div>
+                            </li>
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-cleancode">TDD, CleanCode</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 70%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 14}'>Experience time: 14 years</div>
+                            </li>
+                            <li class="list-item">
+                                <span class="skill-name i18nelement" data-i18n="skill-cloud-devops">Cloud & DevOps</span>
+                                <div class="skill-bar-wrapper"><div class="skill-bar" style="width: 50%;"></div></div>
+                                <div class="skill-exp i18nelement" data-i18n="skill-exp" data-i18n-options='{"years": 6}'>Experience time: 6 years</div>
+                            </li>
+                        </ul>
+                    </div-->
+                    <div class="section-light">
+                        <h2 id="otherTechSkills" class="title"><span class="label"><i class="fa-solid fa-gear"></i>&nbsp;<span data-i18n="other-tech-skills" class="i18nelement">Other Tech skills</span></span></h2>
+                        <p class="skill-list i18nelement" data-i18n="other-tech-skills-list">Infrastructure, Agile, Containers, IaC, Automation, NoSQL, Linux, REST, Security, Open Source</p>
+                    </div>
+                    <div class="section-light">
+                        <h2 id="certifications" class="title"><span class="label"><i class="fa-solid fa-certificate"></i>&nbsp;<span data-i18n="certifications" class="i18nelement">Certifications</span></span></h2>
+                        <p class="skill-list i18nelement" data-i18n="certifications-list">SAFE (2019), Google Cloud Digital Leader (2024)</p>
+                    </div>
                 </div>
             </div>
             <div id="work">
@@ -177,9 +191,26 @@
                                         <div class="timeline-item-date-content">
                                             <div class="timeline-item-date date-badge child-date">
                                                 <i class="fa fa-calendar-check"></i>
-                                                <span class="i18nelement" data-i18n="feb">Feb</span>&nbsp;2023
+                                                <span class="i18nelement" data-i18n="sept">Sept</span>&nbsp;2024
                                                 &nbsp;-&nbsp;
                                                 <span class="i18nelement" data-i18n="present">Present</span>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item-sub-title-desc">
+                                            <h4 class="timeline-item-sub-title i18nelement" data-i18n="division-trusted-services">MeTS Trusted Services Division</h4>
+                                            <span class="timeline-item-perimeter i18nelement" data-i18n="division-numbers"
+                                                  data-i18n-options='{"projects": 200, "people": 1000, "dr": 12}'>
+                                                ~200 projects, ~1000 people, 12 direct reports
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item-sub-title-content">
+                                        <div class="timeline-item-date-content">
+                                            <div class="timeline-item-date date-badge child-date">
+                                                <i class="fa fa-calendar-check"></i>
+                                                <span class="i18nelement" data-i18n="feb">Feb</span>&nbsp;2023
+                                                &nbsp;-&nbsp;
+                                                <span class="i18nelement" data-i18n="sept">Sept</span>&nbsp;2024
                                             </div>
                                         </div>
                                         <div class="timeline-item-sub-title-desc">
@@ -213,6 +244,8 @@
                                 </div>
                             </div>
                         </li>
+                    </ul>
+                    <ul class="timeline page-break">
                         <li class="timeline-item no-margin">
                             <div class="timeline-item-logo">
                                 <i class="fa-regular fa-circle-dot"></i>
@@ -285,8 +318,6 @@
                                 </div>
                             </div>
                         </li>
-                    </ul>
-                    <ul class="timeline page-break">
                         <li class="timeline-item">
                             <div class="timeline-item-logo">
                                 <i class="fa-regular fa-circle-dot"></i>
@@ -405,7 +436,34 @@
                     </ul>
                 </div>
             </div>
-            <div id="education">
+            <div id="languages">
+                <div class="section-full">
+                    <h2 class="title">
+                        <span class="label">
+                            <i class="fa-solid fa-comment"></i>&nbsp;<span data-i18n="languages" class="i18nelement">Languages</span>
+                        </span>
+                    </h2>
+                    <ul class="inline-list flex-list">
+                        <li class="language">
+                            <div class="pie" style="--p:100;"><span class="title i18nelement" data-i18n="french">French</span></div>
+                            <div class="level i18nelement" data-i18n="lvl-mother-tongue">Mother tongue</div>
+                        </li>
+                        <li class="language">
+                            <div class="pie" style="--p:80;"><span class="title i18nelement" data-i18n="english">English</span></div>
+                            <div class="level i18nelement" data-i18n="lvl-proficient-c1">Proficient (C1)</div>
+                        </li>
+                        <li class="language">
+                            <div class="pie" style="--p:50;"><span class="title i18nelement" data-i18n="spanish">Spanish</span></div>
+                            <div class="level i18nelement" data-i18n="lvl-intermediate">Intermediate</div>
+                        </li>
+                        <li class="language">
+                            <div class="pie" style="--p:30;"><span class="title hieroglyphic">Egyptian hieroglyphic</span></div>
+                            <div class="level i18nelement" data-i18n="lvl-learning">Learning</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="education" class="page-break">
                 <div class="section-full">
                     <h2 class="title">
                         <span class="label">
@@ -492,33 +550,6 @@
                     </ul>
                 </div>
             </div>
-            <div id="languages">
-                <div class="section-full">
-                    <h2 class="title">
-                        <span class="label">
-                            <i class="fa-solid fa-comment"></i>&nbsp;<span data-i18n="languages" class="i18nelement">Languages</span>
-                        </span>
-                    </h2>
-                    <ul class="inline-list flex-list">
-                        <li class="language">
-                            <div class="pie" style="--p:100;"><span class="title i18nelement" data-i18n="french">French</span></div>
-                            <div class="level i18nelement" data-i18n="lvl-mother-tongue">Mother tongue</div>
-                        </li>
-                        <li class="language">
-                            <div class="pie" style="--p:80;"><span class="title i18nelement" data-i18n="english">English</span></div>
-                            <div class="level i18nelement" data-i18n="lvl-proficient-c1">Proficient (C1)</div>
-                        </li>
-                        <li class="language">
-                            <div class="pie" style="--p:50;"><span class="title i18nelement" data-i18n="spanish">Spanish</span></div>
-                            <div class="level i18nelement" data-i18n="lvl-intermediate">Intermediate</div>
-                        </li>
-                        <li class="language">
-                            <div class="pie" style="--p:30;"><span class="title hieroglyphic">Egyptian hieroglyphic</span></div>
-                            <div class="level i18nelement" data-i18n="lvl-learning">Learning</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
             <div id="interests">
                 <div class="section-full">
                     <h2 class="title">
@@ -527,9 +558,6 @@
                         </span>
                     </h2>
                     <ul class="inline-list">
-                        <li class="interest">
-                            <i class="fa-solid fa-puzzle-piece"></i><span class="i18nelement" data-i18n="puzzles">Puzzles</span>
-                        </li>
                         <li class="interest">
                             <i class="fa-solid fa-music"></i><span class="i18nelement" data-i18n="music">Music</span>
                         </li>

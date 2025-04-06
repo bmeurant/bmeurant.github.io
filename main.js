@@ -86,7 +86,7 @@ function updateAge(birthdate) {
 }
 
 function updateXP(birthdate) {
-  document.getElementById("xpNum").innerHTML = getYears(birthdate);
+  //document.getElementById("xpNum").innerHTML = getYears(birthdate);
 }
 
 function updateDownloadPath(lang) {
@@ -95,6 +95,11 @@ function updateDownloadPath(lang) {
 
 function updateEmail() {
   document.getElementById("email").href = "mailto:baptiste.meurant@gmail.com";
+  document.getElementById("email-contact").innerHTML = "baptiste.meurant@gmail.com";
+}
+
+function updatePhone() {
+  document.getElementById("phone-contact").innerHTML = "(+33) 6 16 98 52 71";
 }
 
 let lang=getLangFromLocale(locale);
@@ -104,3 +109,4 @@ updateAge("01/17/1980");
 updateXP("10/01/2005");
 updateDownloadPath(lang);
 updateEmail();
+updatePhone();
