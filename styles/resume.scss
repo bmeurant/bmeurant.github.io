@@ -892,6 +892,7 @@ body {
         .section-light {
             .title {
                 width: 26%;
+                padding-bottom: 0.5rem;
 
                 &.title-full {
                     width: 100%;
@@ -900,6 +901,7 @@ body {
 
             .skill-list {
                 margin-left: 0;
+                padding-left: 1.5rem;
             }
         }
     }
