@@ -393,11 +393,10 @@ body {
     }
 
     .section-light {
-        margin-top: 0.5rem;
+        margin-top: 1rem;
     
         .title {
             margin-bottom: 0.3rem;
-            display: inline-block;
         }
     }
 
@@ -438,6 +437,15 @@ body {
     margin: 0;
     margin-left: 1.6rem;
     display: inline-block;
+
+    .certif {
+        background-color: $smooth-emphasize-color;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-weight: 700;
+        white-space: nowrap;
+        line-height: 2rem;
+    }
 }
 
 // timeline
@@ -543,6 +551,7 @@ body {
 
         li {
             list-style: disc;
+            padding-bottom: 5px;
             //font-size: 0.8rem;
         }
 
@@ -849,7 +858,7 @@ body {
         }
 
         .skill-name, .skill-list {
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         .skill-exp {
@@ -891,7 +900,6 @@ body {
 
         .section-light {
             .title {
-                width: 26%;
                 padding-bottom: 0.5rem;
 
                 &.title-full {
